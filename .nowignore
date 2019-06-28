@@ -1,3 +1,7 @@
 README.md
 .next
+.env
+.build
+.gitignore
+build
 node_modules

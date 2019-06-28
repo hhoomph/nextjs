@@ -1,0 +1,90 @@
+$enable-gradients: true;
+@import "./bootstrap.scss";
+@import "./font.scss";
+$nav-font-size: 30px;
+$nav-color: rgb(72, 17, 175);
+.nav {
+  font-size: $nav-font-size;
+  color: $nav-color;
+}
+.layout {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+}
+.circle_img{
+  border-radius: 50px;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.App_header {
+  background-color: #282c3a;
+  min-height: 15vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+.App-logo {
+  animation: App-logo-spin infinite 1s linear;
+  height: 10vmin;
+  pointer-events: none;
+}
+.Counter_App {
+  text-align: center;
+  background-color: #4c2b3c;
+  color: white;
+  min-height: 50vmin;
+}
+.Todos_App {
+  text-align: center;
+  background-color: #37244c;
+  color: white;
+  min-height: 50vmin;
+}
+.App-link {
+  color: #61dafb;
+}
+.Badge_Counter {
+  // background-color: tomato;
+  font-size: 1.2rem !important;
+}
+.App_row {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  justify-items: center;
+  margin: auto;
+}
+.hidden {
+  display: none;
+}
+.add_input::placeholder {
+  color: #ba68c8;
+  opacity: 0.5;
+}
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 250ms ease-in;
+}
