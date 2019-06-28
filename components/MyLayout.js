@@ -1,4 +1,4 @@
-import Header from './Header';
+import Header from './header';
 import css from '../scss/style.scss';
 export default function Layout(props) {
   return (
