@@ -15,7 +15,7 @@ export default () => (
         </a>
       </Link>
       <Nav className="mr-auto">
-        <Link href="/Home" passHref>
+        <Link href="/" passHref>
           <Nav.Link>Home</Nav.Link>
         </Link>
         <Link href="/counter" passHref>

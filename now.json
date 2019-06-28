@@ -1,1 +1,3 @@
-{"version":2,"name":"nextjs","builds":[{"src":"next.config.js","use":"@now/next"}]}
+{ "version": 2, "name": "nextjs", "builds": [{ "src": "package.json", "use": "@now/next" }], "files": ["dist"], "engines": {
+  "node": "^0.10.7"
+} }
