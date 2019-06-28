@@ -5,7 +5,8 @@ const withSize = require('next-size');
 //const webpack = require('webpack');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 module.exports = withPlugins([withSass, withSize], {
-  target: 'serverless',
+  target: 'server',
+  staticFolder: '/static',
   distDir: 'build',
   webpack(config, options) {
     config.module.rules.push(
