@@ -55,7 +55,7 @@ export default () => {
   return (
     <TodoContext.Provider value={dispatch}>
       <section className="Todos_App container-fluid">
-        <h1> Todos ({todoState.length})</h1>
+        <h1> Todos ({(todoState != null) ? todoState.length : 0})</h1>
         <button onClick={() => dispatch({ type: 'add' })}> Add New</button>
         <br />
         <br />

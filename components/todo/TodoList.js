@@ -1,7 +1,7 @@
 import React from 'react';
 import TodoItem from './TodoItem';
 export default ({ items }) => {
-  if (items.length >= 1) {
+  if (items != null && items.length >= 1) {
     return items.map(item => <TodoItem key={item.id} {...item} />);
   } else {
     return (
