@@ -1,6 +1,8 @@
 $enable-gradients: true;
-@import "./bootstrap.scss";
-@import "./font.scss";
+@import './vars';
+@import './animation.scss';
+@import './bootstrap.scss';
+@import './font.scss';
 $nav-font-size: 30px;
 $nav-color: rgb(72, 17, 175);
 .nav {
@@ -12,19 +14,22 @@ $nav-color: rgb(72, 17, 175);
   padding: 20px;
   border: 1px solid #ddd;
 }
-.circle_img{
+.circle_img {
   border-radius: 50px;
+}
+// Flip Bottom Nav's Search Icon Image
+.footer_search {
+  transform: scaleX(-1);
 }
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 .App_header {
-  background-color: #282c3a;
+  background-color: #141e30;
+  background: $lawn_gradient;
   min-height: 15vh;
   display: flex;
   flex-direction: column;
@@ -40,7 +45,11 @@ body {
 }
 .Counter_App {
   text-align: center;
-  background-color: #4c2b3c;
+  background-color: #141e30;
+  background: $lawn_gradient;
+  background-size: 400% 400%;
+  animation: Gradient 8s both ease;
+  animation-iteration-count: infinite;
   color: white;
   min-height: 50vmin;
 }

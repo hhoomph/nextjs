@@ -1,0 +1,66 @@
+@import '../vars';
+.top_nav {
+  padding: 0;
+  padding-left: 5%;
+  padding-right: 5%;
+  border-bottom: 2px solid $border_color;
+  box-shadow: 0 1px 4px $border_color;
+  // Icons
+  .nav_Icons {
+    color: $topIcon_color;
+    font-size: 2.5em;
+    padding-right: 4.2%;
+    transition: all 0.2s;
+    &:hover {
+      color: $main_color;
+    }
+    .badge {
+      position: absolute;
+      left: 33px;
+      top: 0;
+      width: 25px;
+      height: 25px;
+      font-size: 1rem;
+      font-weight: 400;
+      padding: 6px;
+      border-radius: 50px;
+    }
+  }
+  form.inline {
+    @media screen and (min-width: 1280px) {
+      width: 70%;
+      .search_inline_blur {
+        margin-left: 58%;
+      }
+    }
+  }
+  // Search form
+  .top_search {
+    .search_input {
+      border-radius: 10px;
+    }
+    .search_input::placeholder {
+      padding-right: 16px;
+      color: #a8a8a8;
+      text-align: center;
+    }
+    .search_inline {
+      margin-top: -29px;
+      color: #a8a8a8;
+      width: 16px;
+      transition: all ease-in-out 0.2s;
+      cursor: pointer;
+      &:hover {
+        color: $main_color;
+        animation: blink1 0.8s both;
+        animation-iteration-count: infinite;
+      }
+    }
+    .search_inline_blur {
+      margin-left: 150px;
+    }
+    .search_inline_focus {
+      margin-left: 10px;
+    }
+  }
+}

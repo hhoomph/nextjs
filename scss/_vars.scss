@@ -1,0 +1,48 @@
+// Colors
+$theme-colors: (
+  'primary': #0074d9,
+  'danger': #ff4136,
+  'info': #17a2b8,
+  'success': #28a745,
+  'warning': #ffc107
+);
+$main_color: #fc874c;
+$mainLight_color: #feab2c;
+$mainMid_color: #fc884b;
+$mainDark_color: #fa6b65;
+$border_color: #dadada;
+$topIcon_color: #aaaaaa;
+$bottomIcon_color: #525257;
+$muted_color: #a8a8a8;
+// @ Media Break Point Size
+$break_large: 1400px;
+$break_small: 320px;
+// Gradiant Color Image
+$main_gradient: linear-gradient(90deg, #ffa51b 0%, #fc884b 51%, #fa5048 100%);
+$orange_gradient: linear-gradient(to right, #f12711, #f5af19);
+$orangeFun_gradient: linear-gradient(to right, #fc4a1a, #f7b733);
+$lightOrange_gradient: linear-gradient(to right, #fdc830, #f37335);
+$sun_gradient: linear-gradient(to right, #f2994a, #f2c94c);
+$html_gradient: linear-gradient(to right, #e44d26, #f16529);
+$extraOrange_gradient: linear-gradient(to right, #f7971e, #ffd200);
+$purple_gradient: linear-gradient(to right, #8e2de2, #4a00e0);
+$burning_gradient: linear-gradient(to right, #ff416c, #ff4b2b);
+$puz_gradient: linear-gradient(to right, #1e9600, #fff200, #ff0000);
+$sinCity_gradient: linear-gradient(to right, #ed213a, #93291e);
+$red_gradient: linear-gradient(to right, #ed213a, #93291e);
+$darkPurple_gradient: linear-gradient(to right, #200122, #6f0000);
+$magic_gradient: linear-gradient(to right, #59c173, #a17fe0, #5d26c1);
+$vans_gradient: linear-gradient(to right, #da4453, #89216b);
+$espresso_gradient: linear-gradient(to right, #ad5389, #3c1053);
+$lawn_gradient: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+$rose_gradient: linear-gradient(to right, #f4c4f3, #fc67fa);
+$wedding_gradient: linear-gradient(to right, #40e0d0, #ff8c00, #ff0080);
+$green_gradient: linear-gradient(to right, #00b09b, #96c93d);
+$limu_gradient: linear-gradient(to right, #cac531, #f3f9a7);
+$blu_gradient: linear-gradient(to right, #00f260, #0575e6);
+$water_gradient: linear-gradient(to right, #74ebd5, #acb6e5);
+$hydrogen_gradient: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6);
+$greenTerminal_gradient: linear-gradient(to right, #000000, #0f9b0f);
+$gray_gradient: linear-gradient(to right, #bdc3c7, #2c3e50);
+$royal_gradient: linear-gradient(to right, #141e30, #243b55);
+$deepSpace_gradient: linear-gradient(to right, #000000, #434343);

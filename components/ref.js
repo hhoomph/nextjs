@@ -8,7 +8,7 @@ const inputSelection = () => {
 };
 export default props => {
   return (
-    <div className="App_row p-2" style={{ width:'100%', marginTop: '-8px', background:'#4c2b3c' }}>
+    <div className="App_row p-2" style={{ width:'100%', marginTop: '-8px', background:'#24243e' }}>
       <button style={{ fontWeight: 'bold' }} type="button" onClick={inputSelection} className="btn btn-info btn-sm">
         Select Input Text
       </button>
