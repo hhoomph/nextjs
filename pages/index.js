@@ -19,7 +19,7 @@ const DynamicLogo = dynamic({
 function App() {
   // Determine Server Or Browser env
   if (typeof window !== 'undefined' && window.document !== undefined) {
-    console.log('browser');
+    //console.log('browser');
   } else if (process) {
     console.log('node');
   }

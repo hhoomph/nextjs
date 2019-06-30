@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { TiHomeOutline } from 'react-icons/ti';
 import { FiGrid } from 'react-icons/fi';
 import { FaSearch, FaRegUser, FaShoppingBasket, FaRegUserCircle } from 'react-icons/fa';
+import Head from 'next/head';
 import '../../scss/components/nav.scss';
 // const ReactDOM = require('react-dom');
 export default () => {
@@ -26,6 +27,9 @@ export default () => {
   };
   return (
     <>
+      <Head>
+        <meta name="mobile-web-app-capable" content="yes" />>
+      </Head>
       <Navbar className="d-none d-md-flex top_nav" bg="white" variant="white">
         <div className="col-4 d-flex">
           <Link href="/" passHref>
