@@ -1,12 +1,12 @@
-const dotEnvResult = require('dotenv').config();
 const withPlugins = require('next-compose-plugins');
 const withSass = require('@zeit/next-sass');
 const withImages = require('next-images');
 const withSize = require('next-size');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-if (dotEnvResult.error) {
-  throw dotEnvResult.error;
-}
+//const dotEnvResult = require('dotenv').config();
+// if (dotEnvResult.error) {
+//   throw dotEnvResult.error;
+// }
 module.exports = withPlugins([withSass, withSize], {
   // target: 'serverless',
   // staticFolder: '/static',
