@@ -3,5 +3,6 @@ README.md
 .env
 .build
 .gitignore
-build
+./build
 node_modules
+./node_modules

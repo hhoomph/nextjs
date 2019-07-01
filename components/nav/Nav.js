@@ -1,16 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
-import Button from 'react-bootstrap/Button';
 import Link from 'next/link';
 import { TiHomeOutline } from 'react-icons/ti';
 import { FiGrid } from 'react-icons/fi';
 import { FaSearch, FaRegUser, FaShoppingBasket, FaRegUserCircle } from 'react-icons/fa';
-import Head from 'next/head';
 import '../../scss/components/nav.scss';
-// const ReactDOM = require('react-dom');
 export default () => {
   const [search, setSearch] = useState('');
   const [searchFocus, setSearchFocus] = useState(false);
@@ -27,10 +20,7 @@ export default () => {
   };
   return (
     <>
-      <Head>
-        <meta name="mobile-web-app-capable" content="yes" />>
-      </Head>
-      <Navbar className="d-none d-md-flex top_nav" bg="white" variant="white">
+      <nav className="d-none d-md-flex top_nav navbar navbar-expand navbar-white bg-white">
         <div className="col-4 d-flex">
           <Link href="/" passHref>
             <a className="nav_Icons" style={{ color: '#fc874c' }}>
@@ -48,23 +38,9 @@ export default () => {
               <FiGrid />
             </a>
           </Link>
-          {/* <Nav className="mr-auto">
-            <Link href="/" passHref>
-              <Nav.Link>Home</Nav.Link>
-            </Link>
-            <Link href="/counter" passHref>
-              <Nav.Link>Counter</Nav.Link>
-            </Link>
-            <Link href="/counter" as={`/Counter-Cart`} passHref>
-              <Nav.Link>Counter Cart</Nav.Link>
-            </Link>
-            <Link href="/todo" passHref>
-              <Nav.Link>Todos</Nav.Link>
-            </Link>
-          </Nav> */}
         </div>
         <div className="col-4 d-flex justify-content-center">
-          <Form className="inline">
+          <form className="inline">
             <div className="top_search text-center">
               <input
                 type="text"
@@ -82,7 +58,7 @@ export default () => {
                 <FaSearch />
               </div>
             </div>
-          </Form>
+          </form>
         </div>
         <div className="col-4 d-flex justify-content-end">
           <Link href="/" passHref>
@@ -91,7 +67,7 @@ export default () => {
             </a>
           </Link>
         </div>
-      </Navbar>
+      </nav>
     </>
   );
 };

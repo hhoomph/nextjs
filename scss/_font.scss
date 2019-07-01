@@ -1,16 +1,16 @@
 $font_path: '../static/font/';
 @font-face {
   font-family: 'IranSans';
-  src: url('#{$font_path}iransansweb.woff') format('woff'), url('#{$font_path}iransansweb.ttf') format('TrueType');
+  src: url('#{$font_path}iransansweb.ttf') format('TrueType');
 }
-@font-face {
-  font-family: 'IranSansBold';
-  src: url($font_path+'iransansweb_bold.woff') format('woff'), url($font_path+'iransansweb_bold.ttf') format('TrueType');
-}
-@font-face {
-  font-family: 'IranSansLight';
-  src: url($font_path+'iransansweb_light.woff') format('woff'), url($font_path+'iransansweb_light.ttf') format('TrueType');
-}
+// @font-face {
+//   font-family: 'IranSansBold';
+//   src: url($font_path+'iransansweb_bold.ttf') format('TrueType');
+// }
+// @font-face {
+//   font-family: 'IranSansLight';
+//   src: url($font_path+'iransansweb_light.ttf') format('TrueType');
+// }
 html,
 body {
   font-family: 'IranSans', sans-serif !important;

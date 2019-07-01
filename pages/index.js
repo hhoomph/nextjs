@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import dynamic from 'next/dynamic';
+import fetch from 'isomorphic-unfetch';
 import css from '../scss/style.scss';
 import Nav from '../components/nav/Nav';
 import Counters from '../components/counter/counters';

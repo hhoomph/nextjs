@@ -1,0 +1,14 @@
+.error_page {
+  text-align: center;
+  padding: 10px;
+  padding-top: 22%;
+  font-family: IRANSANS, arial;
+  font-size: 20px;
+  color: #797877;
+  direction: rtl;
+  .error_number{
+    color: #000;
+    font-weight: bold;
+    font-size: 40px;
+  }
+}
