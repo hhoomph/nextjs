@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from 'react';
-import TodoList from './TodoList';
+import TodoList from './todoList';
 export const TodoContext = React.createContext();
 const todoReduser = (state, action) => {
   switch (action.type) {

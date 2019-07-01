@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import fetch from 'isomorphic-unfetch';
 import css from '../scss/style.scss';
 import Nav from '../components/Nav/Nav';
-import Counters from '../components/Counter/counters';
+import Counters from '../components/Counter/Counters';
 import MyRef from '../components/ref';
 import Todos from '../components/Todo/Todos';
 import Loader from '../components/Loader/Loader';

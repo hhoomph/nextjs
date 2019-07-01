@@ -1,7 +1,7 @@
 import React from 'react';
 import css from '../scss/style.scss';
 import Nav from '../components/Nav/Nav';
-import Counters from '../components/Counter/counters';
+import Counters from '../components/Counter/Counters';
 import { ReactComponent as Logo } from '../static/img/logo.svg';
 import Loader from '../components/loader/Loader';
 function App() {
