@@ -1,6 +1,6 @@
 import React from 'react';
 import css from '../scss/style.scss';
-import Nav from '../components/nav/Nav';
+import Nav from '../components/Nav/Nav';
 import Todos from '../components/todo/Todos';
 import { ReactComponent as Logo } from '../static/img/logo.svg';
 function App() {
