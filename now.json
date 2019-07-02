@@ -1,7 +1,7 @@
 {
   "version": 2,
   "name": "nextjs",
-  "builds": [{ "src": "next.config.js", "use": "@now/next" }, { "src": "server.js", "use": "@now/node-server", "config": { "distDir": "dist" } }],
+  "builds": [{ "src": "package.json", "use": "@now/next" }, { "src": "next.config.js", "use": "@now/next" }, { "src": "server.js", "use": "@now/node-server", "config": { "distDir": "dist" } }],
   "routes": [{ "src": "/p/(?<id>[^/]+)$", "dest": "/post?id=$id" }, { "src": "/Counter-Cart", "dest": "/counter" }],
   "files": ["dist"]
 }

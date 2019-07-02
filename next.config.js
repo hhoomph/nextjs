@@ -8,7 +8,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 //   throw dotEnvResult.error;
 // }
 module.exports = withPlugins([withSass, withSize], {
-  // target: 'serverless',
+  target: 'serverless',
   // staticFolder: '/static',
   // distDir: 'build',
   webpack(config, options) {
