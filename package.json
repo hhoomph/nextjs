@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
+    "now-build": "npm run prepare && next build",
     "start": "cross-env NODE_ENV=production node server.js"
   },
   "dependencies": {
