@@ -10,7 +10,7 @@ const Post = props => (
 );
 Post.getInitialProps = async function(context) {
   const { id } = context.query;
-  const res = await fetch(`https://reqres.in/api/users/${id}`);
+  const res = await fetch(`https://reqres.in/api/users/1`);
   const result = await res.json();
   const data = result.data;
   console.log(`Fetched show: ${data.first_name}`);
