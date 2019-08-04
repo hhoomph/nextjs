@@ -1,9 +1,7 @@
-import { withAmp } from 'next/amp';
 import Layout from '../components/MyLayout.js';
 import Link from 'next/link';
 import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
-import { Image } from '../components/image';
 import css from '../scss/style.scss';
 const Api = props => (
   <Layout>
@@ -13,7 +11,7 @@ const Api = props => (
         <li key={show.id}>
           <Link as={`/p/${show.id}`} href={`/post?id=${show.id}`}>
             <a>
-              <Image className={css.circle_img} src={show.avatar} width="50" height="50" />
+              <img className={css.circle_img} src={show.avatar} width="50" height="50" />
               {show.first_name} - {show.last_name}{' '}
             </a>
           </Link>
@@ -34,4 +32,4 @@ Api.getInitialProps = async function() {
     shows: data.data
   };
 };
-export default withAmp(Api, { hybrid: true });
+export default Api;

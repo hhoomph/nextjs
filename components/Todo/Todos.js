@@ -4,14 +4,24 @@ export const TodoContext = React.createContext();
 const todoReduser = (state, action) => {
   switch (action.type) {
     case 'add':
-      return [
-        ...state,
-        {
-          id: Date.now(),
-          text: '',
-          completed: false
-        }
-      ];
+      if (state == null) {
+        return [
+          {
+            id: Date.now(),
+            text: '',
+            completed: false
+          }
+        ];
+      } else {
+        return [
+          ...state,
+          {
+            id: Date.now(),
+            text: '',
+            completed: false
+          }
+        ];
+      }
     case 'remove':
       return state.filter(item => item.id !== action.payload);
     case 'complete':
