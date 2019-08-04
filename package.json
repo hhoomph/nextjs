@@ -65,6 +65,6 @@
     "webpack-cli": "^3.3.6"
   },
   "engines": {
-    "node": ">=8.10.x"
+    "node": "10.x"
   }
 }
