@@ -1,12 +1,16 @@
 import { withRouter } from 'next/router';
 import fetch from 'isomorphic-unfetch';
-import Layout from '../components/MyLayout.js';
+// Use AMP
+import { useAmp } from 'next/amp';
+export const config = { amp: 'hybrid' };
 const Post = props => (
-  <Layout>
-    <h1>{props.data.first_name}  {props.data.last_name}</h1>
+  <div>
+    <h1>
+      {props.data.first_name} {props.data.last_name}
+    </h1>
     <p>Email Address = {props.data.email.replace(/<[/]?p>/g, '')}</p>
     <img src={props.data.avatar} />
-  </Layout>
+  </div>
 );
 Post.getInitialProps = async function(context) {
   const { id } = context.query;

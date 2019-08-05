@@ -1,29 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
-import { TiHomeOutline } from 'react-icons/ti';
+import React, { useState, useEffect, memo } from 'react';
+import Link from '../Link';
+import Search from './Search';
 import { FiGrid } from 'react-icons/fi';
-import { FaSearch, FaRegUser, FaShoppingBasket, FaRegUserCircle } from 'react-icons/fa';
+import { FaShoppingBasket, FaRegUserCircle } from 'react-icons/fa';
+import { ReactComponent as HomeSvg } from '../../static/svg/home.svg';
+import { ReactComponent as MenuSvg } from '../../static/svg/menu.svg';
+import { ReactComponent as UserSvg } from '../../static/svg/profile.svg';
+import { ReactComponent as AddSvg } from '../../static/svg/plus.svg';
+import { ReactComponent as SearchSvg } from '../../static/svg/search.svg';
 import '../../scss/components/nav.scss';
-export default () => {
-  const [search, setSearch] = useState('');
-  const [searchFocus, setSearchFocus] = useState(false);
-  let searchInput = useRef();
-  const searchInlineClass = searchFocus ? 'search_inline search_inline_focus' : 'search_inline search_inline_blur';
-  const inputFocus = () => {
-    setSearchFocus(true);
-  };
-  const inputBlur = () => {
-    if (searchInput.current.value.length > 0) {
-    } else {
-      setSearchFocus(false);
-    }
-  };
+// check prev and next state to use Memo
+const areEqual = (prevProps, nextProps) => {
+  return prevProps === nextProps;
+};
+const Nav = () => {
   return (
     <>
       <nav className="d-none d-md-flex top_nav navbar navbar-expand navbar-white bg-white">
         <div className="col-4 d-flex">
           <Link href="/" passHref>
-            <a className="nav_Icons" style={{ color: '#fc874c' }}>
+            <a className="nav_Icons active">
               <FaShoppingBasket />
               <div className="badge badge-success">10</div>
             </a>
@@ -40,25 +36,7 @@ export default () => {
           </Link>
         </div>
         <div className="col-4 d-flex justify-content-center">
-          <form className="inline">
-            <div className="top_search text-center">
-              <input
-                type="text"
-                placeholder="جستجو"
-                className="form-control mr-sm-2 text-right search_input"
-                onFocus={() => {
-                  inputFocus();
-                }}
-                onBlur={() => {
-                  inputBlur();
-                }}
-                ref={searchInput}
-              />
-              <div className={searchInlineClass}>
-                <FaSearch />
-              </div>
-            </div>
-          </form>
+          <Search/>
         </div>
         <div className="col-4 d-flex justify-content-end">
           <Link href="/" passHref>
@@ -68,6 +46,36 @@ export default () => {
           </Link>
         </div>
       </nav>
+      <nav className="d-flex d-md-none bottom_nav navbar fixed-bottom navbar-white bg-white">
+        <div className="col-12 d-flex justify-content-center">
+          <Link href="/counter" passHref>
+            <a className="nav_Icons">
+              <UserSvg className="svg_Icons" />
+            </a>
+          </Link>
+          <Link href="/counter" passHref>
+            <a className="nav_Icons">
+              <SearchSvg className="svg_Icons" transform="rotate(90)" />
+            </a>
+          </Link>
+          <Link href="/" passHref>
+            <a className="nav_Icons">
+              <AddSvg className="svg_Icons" />
+            </a>
+          </Link>
+          <Link href="/todo" passHref>
+            <a className="nav_Icons">
+              <MenuSvg className="svg_Icons" />
+            </a>
+          </Link>
+          <Link href="/" passHref>
+            <a className="nav_Icons">
+              <HomeSvg className="svg_Icons" />
+            </a>
+          </Link>
+        </div>
+      </nav>
     </>
   );
 };
+export default memo(Nav, areEqual);

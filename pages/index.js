@@ -1,13 +1,16 @@
+
 import React, { Fragment } from 'react';
+import '../scss/style.scss';
 import dynamic from 'next/dynamic';
 import fetch from 'isomorphic-unfetch';
-import css from '../scss/style.scss';
 import Nav from '../components/Nav/Nav';
 import Counters from '../components/Counter/Counters';
 import MyRef from '../components/ref';
 import Todos from '../components/Todo/Todos';
 import Loader from '../components/Loader/Loader';
-//import { ReactComponent as Logo } from '../static/img/logo.svg';
+// Use AMP
+// import { useAmp } from 'next/amp';
+// export const config = { amp: 'hybrid' };
 const DynamicLogo = dynamic({
   loader: () => import('../static/img/logo.svg'),
   loading: () => (

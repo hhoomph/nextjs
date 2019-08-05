@@ -1,10 +1,9 @@
-import Layout from '../components/MyLayout.js';
 import Link from 'next/link';
 import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
 import css from '../scss/style.scss';
 const Api = props => (
-  <Layout>
+  <div>
     <h1>Batman TV Shows</h1>
     <ul>
       {props.shows.map(show => (
@@ -20,9 +19,13 @@ const Api = props => (
     </ul>{' '}
     <hr />
     <div>
-      Click <span style={{ color: 'red', cursor: 'pointer', fontWeight: 'bold' }} onClick={() => Router.push('/about')}>here</span> to see About Page
+      Click{' '}
+      <span style={{ color: 'red', cursor: 'pointer', fontWeight: 'bold' }} onClick={() => Router.push('/about')}>
+        here
+      </span>{' '}
+      to see About Page
     </div>
-  </Layout>
+  </div>
 );
 Api.getInitialProps = async function() {
   const res = await fetch('https://reqres.in/api/users');

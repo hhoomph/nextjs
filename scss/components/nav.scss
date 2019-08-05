@@ -14,6 +14,13 @@
     &:hover {
       color: $main_color;
     }
+    &.active {
+      color: $main_color;
+    }
+    .svg_Icons{
+      width: 2.5rem;
+      fill: $topIcon_color;
+    }
     .badge {
       position: absolute;
       left: 33px;
@@ -61,6 +68,41 @@
     }
     .search_inline_focus {
       margin-left: 10px;
+    }
+  }
+}
+.bottom_nav {
+  padding: 0;
+  border-top: 1px solid $border_color;
+  box-shadow: 0 0px 4px $border_color;
+  .nav_Icons {
+    color: $topIcon_color;
+    font-size: 2em;
+    width: 25%;
+    text-align: center;
+    transition: all 0.2s;
+    &:hover {
+      color: $main_color;
+    }
+    &.active {
+      color: $main_color;
+      .svg_Icons{
+        fill: $main_color;
+      }
+    }
+    &.active:after {
+      content: '';
+      display: block;
+      width: 55%;
+      margin: auto;
+      padding-top: 3px;
+      border-bottom: 2px solid;
+      border-radius: 5px;
+      background: $border_gradient;
+    }
+    .svg_Icons{
+      width: 2rem;
+      fill: $topIcon_color;
     }
   }
 }
