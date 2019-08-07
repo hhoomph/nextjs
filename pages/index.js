@@ -1,13 +1,13 @@
-
 import React, { Fragment } from 'react';
 import '../scss/style.scss';
 import dynamic from 'next/dynamic';
 import fetch from 'isomorphic-unfetch';
 import Nav from '../components/Nav/Nav';
-import Counters from '../components/Counter/Counters';
-import MyRef from '../components/ref';
-import Todos from '../components/Todo/Todos';
+import UserSuggest from '../components/UserSuggest/UserSuggest';
+import CatProductsRow from '../components/CatProductsRow/CatProductsRow';
+import Banners from '../components/Banner/Banners';
 import Loader from '../components/Loader/Loader';
+import ProductsRow from '../components/ProductRow/ProductRow';
 // Use AMP
 // import { useAmp } from 'next/amp';
 // export const config = { amp: 'hybrid' };
@@ -25,17 +25,15 @@ function App() {
   if (typeof window !== 'undefined' && window.document !== undefined) {
     //console.log('browser');
   } else if (process) {
-    console.log('node');
+    //console.log('node');
   }
   return (
     <>
       <Nav />
-      <header className="App_header">
-        <DynamicLogo className="App-logo mt-1" />
-      </header>
-      <Counters />
-      <MyRef />
-      <Todos />
+      <UserSuggest />
+      <CatProductsRow />
+      <Banners />
+      <ProductsRow/>
     </>
   );
 }

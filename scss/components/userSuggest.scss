@@ -1,0 +1,25 @@
+@import '../vars';
+.user_Suggestion{
+  .more{
+    font-size: 2em;
+    color: $topIcon_color;
+    margin-top: -8px;
+    float: left;
+    &:hover{
+      color: $main_color;
+    }
+  }
+  .user_link{
+    border-radius: 10rem;
+    background: $circleUser_gradient;
+    padding: 2px;
+    &:hover{
+      animation: shadow_drop infinite 0.35s ease-out;
+      background: $main_gradient;
+    }
+  }
+  img.rounded-circle{
+    width: 5.6em;
+    padding: 0;
+  }
+}

@@ -16,7 +16,7 @@ const areEqual = (prevProps, nextProps) => {
 const Nav = () => {
   return (
     <>
-      <nav className="d-none d-md-flex top_nav navbar navbar-expand navbar-white bg-white">
+      <nav className="d-none d-lg-flex top_nav navbar navbar-expand navbar-white bg-white">
         <div className="col-4 d-flex">
           <Link href="/" passHref>
             <a className="nav_Icons active">
@@ -46,7 +46,7 @@ const Nav = () => {
           </Link>
         </div>
       </nav>
-      <nav className="d-flex d-md-none bottom_nav navbar fixed-bottom navbar-white bg-white">
+      <nav className="d-flex d-lg-none bottom_nav navbar fixed-bottom navbar-white bg-white">
         <div className="col-12 d-flex justify-content-center">
           <Link href="/counter" passHref>
             <a className="nav_Icons">

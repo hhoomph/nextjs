@@ -1,10 +1,13 @@
 @import '../vars';
 .top_nav {
   padding: 0;
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: 5.5%;
+  padding-right: 5.5%;
   border-bottom: 2px solid $border_color;
   box-shadow: 0 1px 4px $border_color;
+  .navbar-brand{
+    margin-right: 0;
+  }
   // Icons
   .nav_Icons {
     color: $topIcon_color;
@@ -34,6 +37,9 @@
     }
   }
   form.inline {
+    .search_input{
+      background-color: #f5f5f5;
+    }
     @media screen and (min-width: 1280px) {
       width: 70%;
       .search_inline_blur {

@@ -3,12 +3,7 @@ $enable-gradients: true;
 @import './animation.scss';
 @import './bootstrap.scss';
 @import './font.scss';
-$nav-font-size: 30px;
-$nav-color: rgb(72, 17, 175);
-.nav {
-  font-size: $nav-font-size;
-  color: $nav-color;
-}
+// style for test component
 .layout {
   margin: 20px;
   padding: 20px;
@@ -16,16 +11,6 @@ $nav-color: rgb(72, 17, 175);
 }
 .circle_img {
   border-radius: 50px;
-}
-// Flip Bottom Nav's Search Icon Image
-.footer_search {
-  transform: scaleX(-1);
-}
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 .App_header {
   background-color: #141e30;
@@ -39,7 +24,7 @@ body {
   color: white;
 }
 .App-logo {
-  animation: App-logo-spin infinite 1s linear;
+  animation: spinner infinite 1s linear;
   height: 10vmin;
   pointer-events: none;
 }
@@ -63,7 +48,6 @@ body {
   color: #61dafb;
 }
 .Badge_Counter {
-  // background-color: tomato;
   font-size: 1.2rem !important;
 }
 .App_row {
@@ -74,20 +58,9 @@ body {
   justify-items: center;
   margin: auto;
 }
-.hidden {
-  display: none;
-}
 .add_input::placeholder {
   color: #ba68c8;
   opacity: 0.5;
-}
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
 .fade-enter {
   opacity: 0;
@@ -96,4 +69,19 @@ body {
 .fade-enter.fade-enter-active {
   opacity: 1;
   transition: opacity 250ms ease-in;
+}
+// End of style for test component
+.hidden {
+  display: none;
+}
+body{
+  background-color: #f5f5f5;
+}
+.container {
+  background-color: #ffffff;
+}
+@media (min-width: 1300px) {
+  .container {
+    max-width: 90%;
+  }
 }

@@ -1,0 +1,115 @@
+@import '../vars';
+.product_row {
+  margin: auto;
+  .product {
+    margin: 0;
+    padding: 0;
+    .product_frame {
+      text-align: center;
+      width: 160px;
+      height: 185px;
+      padding: 10px;
+      margin-top: 12px;
+      background: #f3f3f3;
+      border-radius: 15px;
+      box-shadow: 1px 6px 10px 0px #e6e6e6;
+      .product_link {
+        img {
+          width: 7rem;
+          height: 10rem;
+        }
+      }
+      .product_basket {
+        cursor: pointer;
+        background-color: #2fa841;
+        position: absolute;
+        right: 10px;
+        top: 78px;
+        border-radius: 50px;
+        text-align: center;
+        width: 40px;
+        height: 40px;
+        margin: auto;
+        p {
+          display: none;
+        }
+        .svg_Icons {
+          position: absolute;
+          font-size: 1.55rem;
+          top: 4px;
+          right: 8px;
+          fill: #fff;
+          padding-top: 5px;
+        }
+      }
+      .product_user {
+        position: absolute;
+        right: 3px;
+        top: 7px;
+        img {
+          width: 55px;
+        }
+      }
+    }
+    .product_text {
+      direction: rtl;
+      text-align: right;
+      background: #fff;
+      padding-right: 10px;
+      padding-top: 5px;
+      font-size: 1em;
+      p {
+        padding: 0;
+        margin: 0;
+      }
+      .price_old {
+        font-size: 0.8em;
+        color: $mainDark_color;
+        padding-right: 5px;
+        text-decoration: line-through;
+      }
+      span {
+      }
+    }
+  }
+  @media screen and (min-width: 992px) {
+    .product {
+      padding-right: 1rem;
+    }
+    .product_frame {
+      width: 235px !important;
+      height: 240px !important;
+      padding: 20px !important;
+      .product_link {
+        img {
+          width: 8.5rem !important;
+          height: 12rem !important;
+        }
+      }
+      .product_basket {
+        right: 50px !important;
+        top: 100px !important;
+        border-radius: 50px;
+        text-align: center;
+        width: 45px !important;
+        height: 45px !important;
+        margin: auto !important;
+        p {
+          display: none;
+        }
+        .svg_Icons {
+          font-size: 1.8rem  !important;
+          top: 4px  !important;
+          right: 8px  !important;
+        }
+      }
+      .product_user {
+        right: 40px !important;
+        top: 15px !important;
+        img {
+          width: 65px !important;
+        }
+      }
+    }
+  }
+}

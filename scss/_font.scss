@@ -14,5 +14,7 @@ $font_path: '../static/font/';
 html,
 body {
   font-family: 'IranSans', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   // direction: rtl;
 }
