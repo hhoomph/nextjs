@@ -8,6 +8,7 @@ import CatProductsRow from '../components/CatProductsRow/CatProductsRow';
 import Banners from '../components/Banner/Banners';
 import Loader from '../components/Loader/Loader';
 import ProductsRow from '../components/ProductRow/ProductRow';
+import IndexHeader from '../components/Head/IndexHeader';
 // Use AMP
 // import { useAmp } from 'next/amp';
 // export const config = { amp: 'hybrid' };
@@ -29,6 +30,7 @@ function App() {
   }
   return (
     <>
+      <IndexHeader/>
       <Nav />
       <UserSuggest />
       <CatProductsRow />

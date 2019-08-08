@@ -29,7 +29,7 @@ const Nav = () => {
               <FaRegUserCircle />
             </a>
           </Link>
-          <Link href="/todo" passHref>
+          <Link href="/category" passHref>
             <a className="nav_Icons">
               <FiGrid />
             </a>
@@ -63,7 +63,7 @@ const Nav = () => {
               <AddSvg className="svg_Icons" />
             </a>
           </Link>
-          <Link href="/todo" passHref>
+          <Link href="/category" passHref>
             <a className="nav_Icons">
               <MenuSvg className="svg_Icons" />
             </a>

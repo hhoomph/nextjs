@@ -1,0 +1,40 @@
+@import '../vars';
+.index_header {
+  padding-top: 1rem;
+  padding-left: 1.4rem;
+  padding-right: 1.4rem;
+  .navbar-brand {
+    img {
+      margin-top: -6px;
+      width: 3rem;
+      height: 2.5rem;
+    }
+  }
+  // Icons
+  .nav_Icons {
+    color: #525157;
+    font-size: 2em;
+    transition: all 0.2s;
+    &:hover {
+      color: $main_color;
+    }
+    &.active {
+      color: $main_color;
+    }
+    .svg_Icons {
+      width: 2rem;
+      fill: #525157;
+    }
+    .badge {
+      position: absolute;
+      left: 30px;
+      top: 0px;
+      width: 22px;
+      height: 22px;
+      font-size: 0.9rem;
+      font-weight: 400;
+      padding: 4px;
+      border-radius: 50px;
+    }
+  }
+}
