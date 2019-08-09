@@ -35,16 +35,17 @@
     li {
       position: relative;
       border-right: 1px solid #7a7572;
-      padding-top: 6px;
-      &:first-child, &:last-child{
+      padding-top: 12px;
+      &:first-child,
+      &:last-child {
         opacity: 0.7;
       }
-      &:hover{
+      &:hover {
         opacity: 1;
       }
       .bullet {
         position: absolute;
-        top: 23px;
+        top: 30px;
         right: -6px;
         width: 10px;
         height: 10px;
@@ -53,6 +54,9 @@
         -webkit-border-radius: 50%;
         -moz-border-radius: 50%;
         border-radius: 50%;
+        &:before {
+          top: 7px;
+        }
       }
       a {
         font-size: 1.2rem;
@@ -71,5 +75,10 @@
         color: #ffb523;
       }
     }
+  }
+  @media screen and (min-width: 992px) {
+    padding-right: 10%;
+    padding-left: 10%;
+    padding-top: 2% !important;
   }
 }
