@@ -1,8 +1,8 @@
 import React, { Fragment, useState, useEffect, memo } from 'react';
+import '../../scss/components/CategoryMenu.scss';
 import Link from '../Link';
 import Category from './Category';
 import { ReactComponent as LeftSvg } from '../../static/svg/left-arrow.svg';
-import '../../scss/components/CategoryMenu.scss';
 const CategoryMenu = () => {
   return (
     <div className="container-fluid overflow-hidden rtl pt-3 category_menu">

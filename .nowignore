@@ -1,8 +1,2 @@
 README.md
-.next
-.env
-.build
-.gitignore
-./build
-node_modules
-./node_modules
+yarn.lock

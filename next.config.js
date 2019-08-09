@@ -35,6 +35,10 @@ module.exports = withPlugins([withSass, withSize], {
       }
     );
     config.plugins.push(new OptimizeCSSAssetsPlugin({}));
+    // Fixes npm packages that depend on `fs` module
+    config.node = {
+      fs: 'empty'
+    };
     return config;
   }
 });
