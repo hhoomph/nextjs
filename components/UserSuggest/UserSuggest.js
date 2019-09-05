@@ -38,7 +38,7 @@ const UserSuggest = () => {
     }
   };
   return (
-    <div className="container mb-1 user_Suggestion">
+    <div className="container user_Suggestion">
       <div className="row">
         <div className="col">
           <div className="d-flex justify-content-start rtl pt-3">

@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect, memo } from 'react';
-import '../../scss/components/CategoryMenu.scss';
 import Link from '../Link';
+import '../../scss/components/CategoryMenu.scss';
 import Category from './Category';
 import { ReactComponent as LeftSvg } from '../../static/svg/left-arrow.svg';
 const CategoryMenu = () => {
@@ -40,4 +40,4 @@ const CategoryMenu = () => {
     </div>
   );
 };
-export default memo(CategoryMenu);
+export default CategoryMenu;

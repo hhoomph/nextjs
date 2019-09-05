@@ -14,6 +14,11 @@ app
       const queryParams = { id: req.params.id };
       app.render(req, res, actualPage, queryParams);
     });
+    server.get('/user/:id', (req, res) => {
+      const actualPage = '/user';
+      const queryParams = { id: req.params.id };
+      app.render(req, res, actualPage, queryParams);
+    });
     server.get('/Counter-Cart', (req, res) => {
       const actualPage = '/counter';
       app.render(req, res, actualPage);

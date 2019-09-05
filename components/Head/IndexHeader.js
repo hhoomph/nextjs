@@ -5,7 +5,7 @@ import { ReactComponent as SendSvg } from '../../static/svg/send.svg';
 import '../../scss/components/indexHeader.scss';
 const IndexHeader = () => {
   return (
-    <div className="container mt-1 index_header">
+    <div className="container d-lg-none mt-1 index_header">
       <div className="row d-flex d-lg-none">
         <div className="col-4">
           <Link href="/" passHref>

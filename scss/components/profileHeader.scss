@@ -1,0 +1,160 @@
+@import '../vars';
+.profile_header {
+  background-image: $main_gradient;
+  clip-path: ellipse(80% 89% at 50% 10%);
+  position: relative;
+  z-index: 1;
+  padding-top: 1.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 5rem;
+  // Icons
+  .nav_Icons {
+    color: #ffffff;
+    font-size: 2em;
+    transition: all 0.2s;
+    position: relative;
+    z-index: 2;
+    &:hover {
+      color: $main_color;
+    }
+    &.active {
+      color: $main_color;
+    }
+    .svg_Icons {
+      width: 2rem;
+      fill: #ffffff;
+      cursor: pointer;
+      &:hover {
+        fill: #313131;
+      }
+    }
+  }
+  .userInfo {
+    margin-top: -30px;
+  }
+  .user_img {
+    width: 7rem;
+    position: relative;
+    img {
+      width: 7rem;
+      background-color: #ffb386;
+    }
+    .svg_Icons {
+      width: 1.6rem;
+      fill: #ffffff;
+      position: absolute;
+      background: #3076fa;
+      border-radius: 50px;
+      padding: 5px;
+      top: 80px;
+      right: 98px;
+      cursor: pointer;
+    }
+    .status {
+      position: absolute;
+      top: 84px;
+      right: 92px;
+      width: 1.1rem;
+      height: 1.1rem;
+      border-radius: 2rem;
+    }
+    .online {
+      background: #00ff00;
+    }
+    .offline {
+      background: #ff0000;
+    }
+  }
+  .user_name {
+    font-size: 1.5rem;
+    color: #fff;
+  }
+  .stats {
+    font-size: 1.2rem;
+    color: #fff;
+    p {
+      margin-bottom: 0.3rem;
+    }
+    .friends,
+    .customers,
+    .products {
+      background: rgba(255, 255, 255, 0.22);
+      border-radius: 50px;
+      width: max-content;
+      margin: auto;
+      padding: 1px 10px 0;
+      overflow: hidden;
+    }
+  }
+}
+.info {
+  position: relative;
+  z-index: 2;
+  width: 85%;
+  margin-top: -70px;
+  border-radius: 10px;
+  padding: 0.4rem;
+  box-shadow: 0px 6px 23px 3px #bbb;
+  .top {
+    font-size: 1.2rem;
+    color: #f9854c;
+    p {
+      margin-bottom: 0.2rem;
+    }
+    .inventory,
+    .debt,
+    .orders {
+      background: #fee5bd;
+      border-radius: 15px;
+      min-width: max-content;
+      margin: auto;
+      padding: 0px 8px 0;
+      overflow: hidden;
+    }
+    .follow {
+      margin: auto;
+      margin-right: -6px;
+      float: right;
+      color: #fff;
+      min-width: 150px;
+      border-radius: 10px;
+      &:hover{
+        color: #fff;
+      }
+    }
+    .distance{
+      color: #ffa422;
+      p{
+        font-size: 0.9rem;
+        float: left;
+        margin-left: 2px;
+      }
+      .svg_Icons{
+        width: 2.6rem;
+        fill: #ffa422;
+        position: absolute;
+        left: 0;
+        top: -25px;
+      }
+    }
+  }
+  .title {
+    font-size: 1.5rem;
+    padding-right: 0.8rem;
+  }
+  .bio {
+    color: #676767;
+    padding-right: 0.8rem;
+  }
+  .btn {
+    float: left;
+    margin-top: -15px;
+  }
+  .logo_img{
+    opacity: 0.14;
+    width: 4rem;
+    float: left;
+    margin-top: -3rem;
+  }
+}

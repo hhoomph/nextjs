@@ -24,7 +24,7 @@ const Nav = () => {
               <div className="badge badge-success">10</div>
             </a>
           </Link>
-          <Link href="/counter" passHref>
+          <Link href="/profile" passHref>
             <a className="nav_Icons">
               <FaRegUserCircle />
             </a>
@@ -36,7 +36,7 @@ const Nav = () => {
           </Link>
         </div>
         <div className="col-4 d-flex justify-content-center">
-          <Search/>
+          <Search />
         </div>
         <div className="col-4 d-flex justify-content-end">
           <Link href="/" passHref>
@@ -47,8 +47,8 @@ const Nav = () => {
         </div>
       </nav>
       <nav className="d-flex d-lg-none bottom_nav navbar fixed-bottom navbar-white bg-white">
-        <div className="col-12 d-flex justify-content-center">
-          <Link href="/counter" passHref>
+        <div className="col-12 d-flex justify-content-center p-1" style={{ marginBottom: '-4px' }}>
+          <Link href="/profile" passHref>
             <a className="nav_Icons">
               <UserSvg className="svg_Icons" />
             </a>

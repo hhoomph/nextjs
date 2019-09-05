@@ -6,7 +6,7 @@ import nextCookie from 'next-cookies';
 import cookie from 'js-cookie';
 import '../scss/style.scss';
 import Nav from '../components/Nav/Nav';
-import ProfileHeader from '../components/Head/profileHeader';
+import UserHeader from '../components/Head/userHeader';
 import Product from '../components/Profile/product';
 const Category = dynamic({
   loader: () => import('../components/CatProductsRow/Category'),
@@ -17,7 +17,7 @@ function Page(props) {
   return (
     <>
       <Nav />
-      <ProfileHeader userImage={`../../static/img/profile.png`} />
+      <UserHeader userImage={`../../static/img/profile.png`} userOnline={true} />
       <div className="container mb-1 cat_product_row">
         <div className="row">
           <div className="col">
@@ -29,12 +29,12 @@ function Page(props) {
       </div>
       <div className="container mb-5 pb-3 pt-3">
         <div className="row d-flex justify-content-start rtl products">
-          <Product id={1} basket={false} showPrice={false} price={120000} delete={true} oldPrice={'140000'} image={'product.png'} />
-          <Product id={2} basket={false} showPrice={false} price={140000} delete={true} image={'product3.png'} />
-          <Product id={3} basket={false} showPrice={false} price={120000} delete={true} image={'product2.png'} />
-          <Product id={4} basket={false} showPrice={false} price={130000} delete={true} image={'product.png'} />
-          <Product id={5} basket={false} showPrice={false} price={120000} delete={true} image={'product3.png'} />
-          <Product id={6} basket={false} showPrice={false} price={110000} delete={true} oldPrice={'120000'} image={'product2.png'} />
+          <Product id={1} basket={true} showPrice={false} price={120000} oldPrice={'140000'} image={'product.png'} />
+          <Product id={2} basket={true} showPrice={false} price={140000} image={'product3.png'} />
+          <Product id={3} basket={true} showPrice={false} price={120000} image={'product2.png'} />
+          <Product id={4} basket={true} showPrice={false} price={130000} image={'product.png'} />
+          <Product id={5} basket={true} showPrice={false} price={120000} image={'product3.png'} />
+          <Product id={6} basket={true} showPrice={false} price={110000} oldPrice={'120000'} image={'product2.png'} />
         </div>
       </div>
     </>

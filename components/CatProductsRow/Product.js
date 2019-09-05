@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect, memo } from 'react';
 import Link from '../Link';
 import { FaShoppingBasket } from 'react-icons/fa';
 import WindowsWidth from '../WindowsWidth';
-import { numberSeprator, removeSeprator } from '../../utils/tools';
+import { numberSeparator, removeSeparator } from '../../utils/tools';
 const Product = props => {
   return (
     <div className="col-4 col-lg-2 product">
@@ -24,12 +24,12 @@ const Product = props => {
       </div>
       <div className="product_text mb-1">
         <p>
-          <span className="product_price">{numberSeprator(props.price)} </span>
+          <span className="product_price">{numberSeparator(props.price)} </span>
           <span className="product_currency">تومان</span>
         </p>
         {props.oldPrice && (
           <p className="price_old">
-            <span className="product_price">{numberSeprator(props.oldPrice)}</span>
+            <span className="product_price">{numberSeparator(props.oldPrice)}</span>
             <span className="product_currency">تومان</span>
           </p>
         )}

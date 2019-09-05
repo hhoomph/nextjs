@@ -15,19 +15,19 @@ export const isJSON = str => {
     return false;
   }
 };
-//  Add comma seprator to digit number
-export const numberSeprator = (num, sep) => {
+//  Add comma Separator to digit number
+export const numberSeparator = (num, sep) => {
   let number = typeof num === 'number' ? num.toString() : num,
-    separator = typeof sep === 'undefined' ? ',' : sep;
+  separator = typeof sep === 'undefined' ? ',' : sep;
   return number.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + separator);
 };
 //  Remove comma seprator From digit number
-export const removeSeprator = (num, sep) => {
+export const removeSeparator = (num, sep) => {
   let separator = typeof sep === 'undefined' ? ',' : sep;
   var re = new RegExp(separator, 'g');
   return num.replace(re, '');
 };
-//  Convert elemetn's value for remove all charachters exept number, Just Allow Type Numbers
+//  Convert elemetn's value for remove all characters exept number, Just Allow Type Numbers
 export const forceNumeric = e => {
   let $input = e.target.current;
   $input.val($input.val().replace(/[^\d]+/g, ''));
@@ -71,4 +71,4 @@ export const forceLetter = e => {
   $input.val($input.val().replace(/[&\/\\#,@@|+=!-_()$~%.'":*؟،×÷?<>{}]/g, ''));
   //$input.val($input.val().replace(/\s/g,''));       // space
 };
-export default numberSeprator;
+export default numberSeparator;

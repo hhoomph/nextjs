@@ -13,6 +13,10 @@
       background: #f3f3f3;
       border-radius: 15px;
       box-shadow: 1px 6px 10px 0px #e6e6e6;
+      transition: all ease-in-out 0.2s;
+      &:hover {
+        background: #e8e8e8;
+      }
       .product_link {
         img {
           width: 7rem;
@@ -30,6 +34,17 @@
         width: 40px;
         height: 40px;
         margin: auto;
+        &:hover {
+          border-radius: 150px;
+          animation: shadow_drop 0.8s both;
+          animation-iteration-count: infinite;
+          .svg_Icons {
+            fill: #ffe500;
+          }
+          p {
+            color: #ffe500;
+          }
+        }
         p {
           display: none;
         }
@@ -46,6 +61,11 @@
         position: absolute;
         right: 3px;
         top: 7px;
+        &:hover {
+          border-radius: 150px;
+          animation: shadow_drop 0.8s both;
+          animation-iteration-count: infinite;
+        }
         img {
           width: 55px;
         }
@@ -98,9 +118,9 @@
           display: none;
         }
         .svg_Icons {
-          font-size: 1.8rem  !important;
-          top: 4px  !important;
-          right: 8px  !important;
+          font-size: 1.8rem !important;
+          top: 4px !important;
+          right: 8px !important;
         }
       }
       .product_user {

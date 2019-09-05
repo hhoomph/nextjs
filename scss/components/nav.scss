@@ -82,7 +82,7 @@
   border-top: 1px solid $border_color;
   box-shadow: 0 0px 4px $border_color;
   .nav_Icons {
-    color: $topIcon_color;
+    color: $bottomIcon_color;
     font-size: 2em;
     width: 25%;
     text-align: center;
@@ -107,8 +107,8 @@
       background: $border_gradient;
     }
     .svg_Icons{
-      width: 2rem;
-      fill: $topIcon_color;
+      width: 1.9rem;
+      fill: $bottomIcon_color;
     }
   }
 }

@@ -1,0 +1,62 @@
+@import '../vars';
+.categories {
+  // overflow: auto;
+  border-bottom: 2.5px inset $border_color;
+  padding-bottom: 0;
+  padding-right: 0;
+  padding-left: 0;
+  ul {
+    flex-flow: row;
+    overflow-x: auto;
+    height: 56px;
+    margin-bottom: -2px;
+  }
+  a {
+    font-size: 1rem;
+    //@include fluid-type($min_width, $max_width, $min_font, $max_font);
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    color: #000;
+    margin-top: 8px;
+    width: max-content;
+    &:hover {
+      color: $main_color;
+    }
+    &.active {
+      color: $main_color;
+    }
+    &.active:after {
+      content: '';
+      display: block;
+      width: 100%;
+      margin: auto;
+      margin-top: 11px;
+      margin-bottom: -17px;
+      padding-top: 3px;
+      border-bottom: 2px inset;
+      border-radius: 5px;
+      background: $main_gradient;
+    }
+  }
+  .more {
+  }
+}
+@media screen and (min-width: 992px) {
+  .categories {
+    padding-right: 0.8rem;
+    padding-left: 0.8rem;
+    ul {
+      height: 76px;
+      margin-bottom: -18px;
+    }
+  }
+  .categories a {
+    font-size: 1.24rem;
+  }
+}
+@media screen and (min-width: 400px) {
+  .categories a {
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+  }
+}

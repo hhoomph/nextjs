@@ -1,0 +1,161 @@
+.products {
+  overflow: auto;
+  flex-flow: row;
+  .product {
+    margin: 0;
+    padding: 0;
+    .product_frame {
+      text-align: center;
+      width: 120px;
+      height: 145px;
+      padding: 10px;
+      background: #f3f3f3;
+      border-radius: 10px;
+      transition: all ease-in-out 0.2s;
+      &:hover {
+        background: #e8e8e8;
+      }
+      .product_link {
+        img {
+          width: 75px;
+          height: 110px;
+        }
+      }
+      .product_basket {
+        cursor: pointer;
+        position: relative;
+        background-color: #2fa841;
+        border-radius: 20px;
+        text-align: left;
+        width: 95%;
+        height: 32px;
+        display: block;
+        margin: auto;
+        margin-top: -25px;
+        &:hover {
+          border-radius: 150px;
+          animation: shadow_drop 0.8s both;
+          animation-iteration-count: infinite;
+          .svg_Icons {
+            fill: #ffe500;
+          }
+          p {
+            color: #ffe500;
+          }
+        }
+        p {
+          font-size: 14px;
+          color: #fff;
+          text-align: left;
+          padding-left: 10px;
+          padding-top: 5px;
+        }
+        .svg_Icons {
+          position: absolute;
+          top: 0px;
+          right: 4px;
+          font-size: 1.4rem;
+          fill: #fff;
+          display: block;
+          margin: auto;
+          padding-top: 7px;
+        }
+      }
+      .product_action {
+        position: absolute;
+        right: 5px;
+        top: 2px;
+        .svg_icon {
+          transition: all ease-in-out 0.2s;
+          font-size: 1.8rem;
+          background: #fff;
+          border-radius: 50px;
+          margin-right: 12px;
+          margin-top: 5px;
+          fill: #f11016;
+          cursor: pointer;
+          &:hover {
+            fill: #ff7c3e;
+            animation: blink1 0.8s both;
+            animation-iteration-count: infinite;
+          }
+        }
+        img {
+          width: 2.7rem;
+        }
+      }
+      .product_user {
+        position: absolute;
+        right: 5px;
+        top: 2px;
+        img {
+          width: 2.7rem;
+        }
+      }
+    }
+    .product_text {
+      direction: rtl;
+      text-align: right;
+      background: #fff;
+      padding-right: 10px;
+      padding-top: 5px;
+      font-size: 1em;
+      p {
+        padding: 0;
+        margin: 0;
+      }
+      .price_old {
+        font-size: 0.8em;
+        color: #fa6b65;
+        padding-right: 5px;
+        text-decoration: line-through;
+      }
+    }
+  }
+  @media screen and (min-width: 992px) {
+    .product_frame {
+      width: 160px;
+      height: 185px;
+      padding: 15px;
+      .product_link {
+        img {
+          width: 100px;
+          height: 140px;
+        }
+      }
+      .product_basket {
+        position: absolute !important;
+        right: 9px;
+        top: 51px;
+        border-radius: 50px;
+        text-align: center;
+        width: 32px !important;
+        height: 32px !important;
+        margin: auto !important;
+        p {
+          display: none;
+        }
+        .svg_Icons {
+          top: 2px !important;
+          right: 5px !important;
+          fill: #fff;
+          padding-top: 5px !important;
+        }
+      }
+      .product_action {
+        right: 10px;
+        top: 0px;
+        img {
+          width: 3rem;
+        }
+      }
+      .product_user {
+        right: 10px;
+        top: 0px;
+        img {
+          width: 3rem;
+        }
+      }
+    }
+  }
+}
