@@ -1,0 +1,80 @@
+@import '../vars';
+.login_header {
+  background: #fff;
+  clip-path: ellipse(80% 89% at 50% 10%);
+  position: relative;
+  z-index: 1;
+  padding-top: 2rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 2rem;
+  height: 30vh;
+  .logo {
+    width: 8rem;
+    height: 8rem;
+    display: block;
+    margin: auto;
+    &:hover {
+      animation: move_image_top 0.8s both;
+      animation-iteration-count: infinite;
+    }
+  }
+  @media screen and (min-width: 992px) {
+    height: 24.3vh;
+  }
+}
+.login {
+  background-image: $main_gradient;
+  min-height: 70vh;
+  margin-top: -50px;
+  padding-top: 50px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  .messages {
+    padding-right: 1%;
+    padding-left: 1%;
+    .text_message {
+      color: #fff;
+      font-size: 1.1rem;
+    }
+    .change_userName {
+      display: block;
+      margin: auto;
+      margin-top: -6px;
+      margin-bottom: 10px;
+      width: fit-content;
+      border-bottom: 1px solid #000;
+      a {
+        color: #000;
+        cursor: pointer;
+      }
+    }
+  }
+  input {
+    background: rgba(255, 255, 255, 0.309804);
+    direction: ltr;
+    text-align: left;
+    color: #fff;
+    border: none;
+    height: 46px;
+    &::placeholder {
+      color: #fff;
+      text-align: center;
+      font-size: 1rem;
+    }
+    &:hover {
+      animation: shadow_drop 0.8s both;
+      animation-iteration-count: infinite;
+    }
+  }
+  .timer {
+    height: 46px;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 50px;
+    text-align: center;
+    line-height: 45px;
+    font-size: 1rem;
+  }
+}

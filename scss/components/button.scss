@@ -1,0 +1,9 @@
+.btn-submit {
+  background: #fff;
+  color: #646464;
+  border: none;
+  &:hover {
+    animation: shadow_drop 0.8s both;
+    animation-iteration-count: infinite;
+  }
+}
