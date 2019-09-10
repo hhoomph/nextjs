@@ -26,19 +26,19 @@ class MyApp extends App {
     //   Router.push('/login');
     // }
     // Fetch Data
-    // const apiBaseUrl = `https://www.pooshako.com/api/`;
-    // const url = `${apiBaseUrl}Common/Location/GetProvinces`;
-    // const response = await fetch(url, {
-    //   method: 'POST',
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json'
-    //   }
-    //   //body: JSON.stringify(image)
-    // });
-    // if (response.ok) {
-    //   result = await response.json();
-    // }
+    const apiBaseUrl = `https://www.pooshako.com/api/`;
+    const url = `${apiBaseUrl}Common/Location/GetProvinces`;
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+      //body: JSON.stringify(image)
+    });
+    if (response.ok) {
+      result = await response.json();
+    }
     return { pageProps, result };
   }
   constructor() {

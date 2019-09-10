@@ -9,6 +9,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 // }
 module.exports = withPlugins([withSass, withSize], {
   target: 'serverless',
+  poweredByHeader: false,
   // staticFolder: '/static',
   // distDir: 'build',
   webpack(config, options) {

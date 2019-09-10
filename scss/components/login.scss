@@ -48,6 +48,12 @@
       a {
         color: #000;
         cursor: pointer;
+        transition: all ease-in-out 0.2s;
+        &:hover {
+          font-size: 1.02rem;
+          font-weight: bold;
+          border-bottom: 1px solid #000;
+        }
       }
     }
   }
@@ -76,5 +82,15 @@
     text-align: center;
     line-height: 45px;
     font-size: 1rem;
+  }
+  .btn.timer {
+    line-height: 28px;
+    transition: all ease-in-out 0.2s;
+    &:hover {
+      background: rgba(255, 255, 255, 0.56);
+      color: #000;
+      animation: shadow_drop 0.8s both;
+      animation-iteration-count: infinite;
+    }
   }
 }

@@ -80,14 +80,13 @@ body {
 .container {
   background-color: #ffffff;
 }
-@media (min-width: 1300px) {
-  .container {
-    max-width: 90%;
-  }
-}
-.spinner-border {
+.spinner-border,
+.loading_component,
+.preloader-icon__inner {
   margin: auto;
+  position: relative;
   display: block;
+  z-index: 99990;
 }
 .btn.btn-main,
 .btn-main {
@@ -106,5 +105,29 @@ body {
     background: #feaa2d;
     animation: shadow_drop 0.8s both;
     animation-iteration-count: infinite;
+  }
+}
+.Toastify {
+  .Toastify__toast-body,
+  .Toastify__toast {
+    direction: rtl !important;
+    font-family: 'IranSans', sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .Toastify__toast-container {
+    direction: rtl !important;
+    right: 0 !important;
+    left: initial !important;
+  }
+  .Toastify__progress-bar {
+    right: 0 !important;
+    left: initial !important;
+    transform-origin: right !important;
+  }
+}
+@media (min-width: 1300px) {
+  .container {
+    max-width: 90%;
   }
 }

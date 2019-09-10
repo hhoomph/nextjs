@@ -1,0 +1,47 @@
+@import '../vars';
+//@import '../node_modules/leaflet/dist/leaflet.css';
+.map_header {
+	position: absolute;
+	z-index: 999;
+	padding: 10px;
+	width: 80%;
+	top: 20px;
+	right: 10%;
+	left: 10%;
+	.svg_icon {
+		width: 2rem;
+		fill: #000;
+		cursor: pointer;
+		transition: all ease-in-out 0.2s;
+		&:hover {
+			animation: shake_bottom 0.8s both;
+			animation-iteration-count: infinite;
+			fill: #fc874c;
+		}
+	}
+	.menu {
+		width: 1.6rem;
+		float: right;
+		margin-top: 5px;
+	}
+	.microphone {
+		float: left;
+	}
+	.searchInput {
+		direction: rtl;
+		float: none;
+    border: none;
+    padding-top: 3px;
+		width: 70%;
+		max-width: 400px;
+		text-align: center;
+		display: inline-block;
+		margin: auto;
+	}
+	@media screen and (min-width: 992px) {
+		width: 80%;
+		top: 120px;
+		right: 10%;
+		left: 10%;
+	}
+}

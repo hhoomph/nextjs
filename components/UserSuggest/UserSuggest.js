@@ -1,11 +1,13 @@
-import React, { Fragment, useState, useEffect, memo } from 'react';
+import React, { Fragment, useContext, useState, useEffect, memo } from 'react';
 import User from './User';
 import Link from '../Link';
 import WindowsWidth from '../WindowsWidth';
 import { IoIosMore } from 'react-icons/io';
+import AppContext from '../../context/index';
 import '../../scss/components/userSuggest.scss';
 const UserSuggest = () => {
   const width = WindowsWidth();
+  const res = useContext(AppContext);
   const renderUsers = () => {
     // If Windows.Width < 992 (large) just show 5 coulmn users else show 11 users
     if (width < 992) {
@@ -36,14 +38,13 @@ const UserSuggest = () => {
         </>
       );
     }
+    // return res.result.result.map(v => <User id={v.Id} key={v.Id} image="user.png" title={v.Title} />);
   };
   return (
     <div className="container user_Suggestion">
       <div className="row">
         <div className="col">
-          <div className="d-flex justify-content-start rtl pt-3">
-            {renderUsers()}
-          </div>
+          <div className="d-flex justify-content-start rtl pt-3">{renderUsers()}</div>
           <Link href="/user" passHref>
             <a className="more ml-2">
               <IoIosMore />
