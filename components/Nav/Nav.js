@@ -53,7 +53,7 @@ const Nav = () => {
               <UserSvg className="svg_Icons" />
             </a>
           </Link>
-          <Link href="/counter" passHref>
+          <Link href="/map" passHref>
             <a className="nav_Icons">
               <SearchSvg className="svg_Icons" transform="rotate(90)" />
             </a>

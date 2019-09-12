@@ -8,6 +8,7 @@ import '../scss/style.scss';
 import { secondsToMs, forceNumeric } from '../utils/tools';
 import Nav from '../components/Nav/Nav';
 import MapHeader from '../components/Head/mapHeader';
+import UserSuggest from '../components/UserSuggest/UserSuggest2';
 import '../scss/components/mapPage.scss';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/scss/main.scss';
@@ -19,12 +20,25 @@ const MapComponent = dynamic({
 function Page(props) {
   toast.configure();
   if (typeof window !== 'undefined' && window.document !== undefined) {
+    //console.log('browser');
     return (
       <>
         <Nav />
         <MapHeader />
-        <div className="container mb-1 rtl">
+        <div className="container mb-1 rtl p-0" style={{ height: '65vh' }}>
           <MapComponent />
+        </div>
+        <div className="container mb-1 rtl">
+          <div className="row">
+            <div className="d-flex justify-content-center pr-2 map_user_suggestion">
+              <UserSuggest id="1" image="user.png" />
+              <UserSuggest id="2" image="profile.png" />
+              <UserSuggest id="3" image="user.png" />
+              <UserSuggest id="4" image="profile.png" />
+              <UserSuggest id="5" image="user.png" />
+              <UserSuggest id="6" image="profile.png" />
+            </div>
+          </div>
         </div>
       </>
     );
@@ -34,7 +48,21 @@ function Page(props) {
       <>
         <Nav />
         <MapHeader />
-        <div className="container mb-1 rtl justify-content-center">نقشه پشتیبانی نمی شود</div>
+        <div className="container mb-1 rtl justify-content-center p-0" style={{ height: '65vh' }}>
+          نقشه پشتیبانی نمی شود
+        </div>
+        <div className="container mb-1 rtl">
+          <div className="row">
+            <div className="col d-flex justify-content-start pr-2 map_user_suggestion">
+              <UserSuggest id="1" image="user.png" />
+              <UserSuggest id="2" image="profile.png" />
+              <UserSuggest id="3" image="user.png" />
+              <UserSuggest id="4" image="profile.png" />
+              <UserSuggest id="5" image="user.png" />
+              <UserSuggest id="6" image="profile.png" />
+            </div>
+          </div>
+        </div>
       </>
     );
   }

@@ -1,15 +1,22 @@
 @import '../vars';
 .user_Suggestion{
+  .over_flow{
+    overflow: hidden;
+    overflow-x: auto;
+  }
   .more{
     font-size: 2em;
     color: $topIcon_color;
-    margin-top: -8px;
-    float: left;
+    display: flex;
+    margin-bottom: -15px;
     &:hover{
       color: $main_color;
     }
   }
   .user_link{
+    width: fit-content;
+    height: auto;
+    display: block;
     border-radius: 10rem;
     background: $circleUser_gradient;
     padding: 2px;

@@ -1,11 +1,14 @@
 .products {
-  overflow: auto;
-  flex-flow: row;
+  // overflow: auto;
+  // flex-flow: row;
   .product {
     margin: 0;
     padding: 0;
+    margin-top: 2%;
     .product_frame {
+      position: relative;
       text-align: center;
+      margin: auto;
       width: 120px;
       height: 145px;
       padding: 10px;

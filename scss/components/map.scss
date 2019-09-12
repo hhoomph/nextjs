@@ -1,5 +1,5 @@
 #mapid {
-  height: 70vh;
+  height: 65vh;
   position: relative;
   width: 100%;
   overflow: hidden;
@@ -17,22 +17,52 @@
   margin-top: -70px !important;
   width: 5rem !important;
   height: auto !important;
+  filter: invert(57%) sepia(90%) saturate(999%) hue-rotate(346deg) brightness(100%) contrast(100%);
 }
 .leaflet-shadow-pane {
   z-index: 999 !important;
 }
 .leaflet-marker-shadow {
-  margin-left: -20px!important;
-  margin-top: -65px!important;
-  width: 3rem!important;
-  height: auto!important;
+  margin-left: -20px !important;
+  margin-top: -66px !important;
+  width: 3rem !important;
+  height: auto !important;
 }
 .leaflet-tooltip {
   right: -40px !important;
   left: auto !important;
 }
+.leaflet-tooltip-right {
+  margin-left: -15px !important;
+  position: relative !important;
+}
 .leaflet-popup {
   margin-bottom: 40px !important;
+}
+.leaflet-control-attribution {
+  display: none;
+}
+.current_location {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 100px;
+  background: #fff;
+  z-index: 999;
+  display: flex;
+  position: absolute;
+  top: auto;
+  bottom: 10px;
+  right: 10px;
+  left: auto;
+  margin: auto;
+  padding: 0;
+  cursor: pointer;
+  .svg_icon {
+    fill: #4caf50;
+    width: 1.9rem;
+    display: block;
+    margin: auto;
+  }
 }
 @media screen and (min-width: 992px) {
   .leaflet-top {
@@ -40,7 +70,7 @@
     bottom: auto !important;
   }
 }
-/* required styles */
+/*********** required styles *************/
 .leaflet-pane,
 .leaflet-tile,
 .leaflet-marker-icon,

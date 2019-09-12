@@ -1,9 +1,11 @@
 import React, { Fragment, useState, useEffect, memo } from 'react';
+import { useRouter } from 'next/router';
 import Link from '../Link';
 import '../../scss/components/CategoryMenu.scss';
 import Category from './Category';
 import { ReactComponent as LeftSvg } from '../../static/svg/left-arrow.svg';
 const CategoryMenu = () => {
+  const router = useRouter();
   return (
     <div className="container-fluid overflow-hidden rtl pt-3 category_menu">
       <div className="row mb-3 header_link">
@@ -13,11 +15,9 @@ const CategoryMenu = () => {
           </Link>
         </div>
         <div className="col-6 text-right">
-          <Link href="/" passHref>
-            <a>
-              <LeftSvg className="svg_icon" />
-            </a>
-          </Link>
+          <a onClick={() => router.back()} style={{ cursor: 'pointer' }}>
+            <LeftSvg className="svg_icon" />
+          </a>
         </div>
       </div>
       <div className="row pl-2">

@@ -14,7 +14,14 @@ import LoginHeader from '../components/Head/loginHeader';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/scss/main.scss';
 function Page(props) {
-  toast.configure();
+  toast.configure({
+    position: 'top-right',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true
+  });
   const View = () => {
     const [step, setStep] = useState(1);
     const [userName, setUserName] = useState('');
@@ -22,18 +29,12 @@ function Page(props) {
     const [timer, setTimer] = useState(0);
     const handleSubmit = () => {
       if (userName.length > 0) {
+        toast.dismiss();
         setStep(2);
         setTimer(60);
       } else {
         toast.dismiss();
-        toast.warn('لطفا شماره موبایل یا ایمیل خود را وارد کنید.', {
-          position: 'top-right',
-          autoClose: 55000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true
-        });
+        toast.warn('لطفا شماره موبایل یا ایمیل خود را وارد کنید.');
       }
     };
     const handleResend = () => {
@@ -41,14 +42,8 @@ function Page(props) {
         setStep(2);
         setTimer(60);
       } else {
-        toast.error('لطفا شماره موبایل یا ایمیل خود را وارد کنید.', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true
-        });
+        toast.dismiss();
+        toast.error('لطفا شماره موبایل یا ایمیل خود را وارد کنید.');
       }
     };
     useInterval(() => {

@@ -5,10 +5,13 @@
     margin: 0;
     padding: 0;
     .product_frame {
+      position: relative;
       text-align: center;
-      width: 160px;
-      height: 185px;
+      width: auto;
+      max-width: 400px;
+      height: 240px;
       padding: 10px;
+      margin: auto;
       margin-top: 12px;
       background: #f3f3f3;
       border-radius: 15px;
@@ -19,21 +22,22 @@
       }
       .product_link {
         img {
-          width: 7rem;
-          height: 10rem;
+          width: 8rem;
+          height: 11rem;
+          margin-top: 5px;
         }
       }
       .product_basket {
         cursor: pointer;
+        position: relative;
         background-color: #2fa841;
-        position: absolute;
-        right: 10px;
-        top: 78px;
-        border-radius: 50px;
-        text-align: center;
-        width: 40px;
-        height: 40px;
+        border-radius: 20px;
+        text-align: left;
+        width: 50%;
+        height: 32px;
+        display: block;
         margin: auto;
+        margin-top: -4px;
         &:hover {
           border-radius: 150px;
           animation: shadow_drop 0.8s both;
@@ -46,21 +50,27 @@
           }
         }
         p {
-          display: none;
+          font-size: 14px;
+          color: #fff;
+          text-align: center;
+          padding-right: 10px;
+          padding-top: 5px;
         }
         .svg_Icons {
           position: absolute;
-          font-size: 1.55rem;
-          top: 4px;
-          right: 8px;
+          top: 0px;
+          right: 4px;
+          font-size: 1.4rem;
           fill: #fff;
-          padding-top: 5px;
+          display: block;
+          margin: auto;
+          padding-top: 7px;
         }
       }
       .product_user {
         position: absolute;
-        right: 3px;
-        top: 7px;
+        right: 24%;
+        top: 0;
         &:hover {
           border-radius: 150px;
           animation: shadow_drop 0.8s both;
@@ -107,8 +117,9 @@
         }
       }
       .product_basket {
-        right: 50px !important;
-        top: 100px !important;
+        position: absolute !important;
+        right: 40px!important;
+        top: 95px!important;
         border-radius: 50px;
         text-align: center;
         width: 45px !important;
@@ -124,8 +135,8 @@
         }
       }
       .product_user {
-        right: 40px !important;
-        top: 15px !important;
+        right: 30px!important;
+        top: 10px!important;
         img {
           width: 65px !important;
         }

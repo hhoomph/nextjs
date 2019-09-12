@@ -1,12 +1,17 @@
 import React, { useState, useEffect, memo } from 'react';
 import Link from 'next/link';
-const User = (props) => {
+import WindowsWidth from '../WindowsWidth';
+const User = props => {
+  const width = WindowsWidth();
+  const userClass = width > 992 ? 'col-1' : 'col-3';
   return (
-    <Link href={`/user/${props.id}`} passHref>
-      <a className="mr-2 user_link">
-        <img src={`../../static/img/${props.image}`} alt="" className="rounded-circle img-thumbnail" />
-      </a>
-    </Link>
+    <div className={userClass}>
+      <Link href={`/user/${props.id}`} passHref>
+        <a className="mr-2 user_link">
+          <img src={`../../static/img/${props.image}`} alt="" className="rounded-circle img-thumbnail" />
+        </a>
+      </Link>
+    </div>
   );
 };
 export default memo(User);
