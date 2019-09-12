@@ -46,18 +46,19 @@ const MapComponent = props => {
   const position = [34.635059, 50.880823];
   const position1 = [34.635255, 50.876762];
   const position2 = [34.6327669608, 50.88060376];
-  const getLocation = () => {
+  const getLocation = async () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
+      await navigator.geolocation.getCurrentPosition(showPosition);
     } else {
-      console.log('Geolocation is not supported by this browser.');
+      await console.log('Geolocation is not supported by this browser.');
     }
   };
   const showPosition = position => {
+    updatePosition();
     setMarkPosition([position.coords.latitude, position.coords.longitude]);
   };
   const currentMarker = () => {
-    if (markPosition != null && markPosition.length > 1) {
+    if (markPosition.length > 1) {
       return (
         <Marker position={markPosition} icon={placeholderIcon} draggable={true} onDragend={() => updatePosition()} ref={markRef}>
           <Tooltip>مکان شما</Tooltip>
