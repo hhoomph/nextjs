@@ -9,6 +9,13 @@ app
   .then(() => {
     const server = express();
     server.use(cookieParser());
+    server.use((req, res, next) => {
+      res.header('Access-Control-Allow-Origin', '*');
+      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Authorization, Accept');
+      res.header('Access-Control-Allow-Credentials', 'true');
+      next();
+    });
     server.get('/p/:id', (req, res) => {
       const actualPage = '/post';
       const queryParams = { id: req.params.id };
@@ -17,6 +24,11 @@ app
     server.get('/user/:id', (req, res) => {
       const actualPage = '/user';
       const queryParams = { id: req.params.id };
+      //res.cookie('token', '234e234d!#D!##$^%D@W$!324', { maxAge: 900000, httpOnly: true});
+      // var cookie = req.cookies.token;
+      // if (typeof cookie != 'undefined') {
+      //   console.log('cookie exists', cookie);
+      // }
       app.render(req, res, actualPage, queryParams);
     });
     server.get('/Counter-Cart', (req, res) => {

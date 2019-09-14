@@ -53,6 +53,7 @@ function App(props) {
   );
 }
 App.getInitialProps = async function(context) {
+  // console.log(process.env.API_HOST);
   // const apiBaseUrl = `https://www.pooshako.com/api/`;
   // const url = `${apiBaseUrl}Common/Location/GetProvinces`;
   // const response = await fetch(url, {
@@ -65,6 +66,7 @@ App.getInitialProps = async function(context) {
   // });
   // const result = await response.json();
   // return { result };
-  cookie.set('token', 'tokenCookie', { expires: 30 });
+  //cookie.set('token', 'tokenCookie', { expires: 30 });
+  // cookie.remove('token');
 };
 export default App;

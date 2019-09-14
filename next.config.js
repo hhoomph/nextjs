@@ -1,12 +1,10 @@
+const webpack = require('webpack');
 const withPlugins = require('next-compose-plugins');
 const withSass = require('@zeit/next-sass');
 const withImages = require('next-images');
 const withSize = require('next-size');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-//const dotEnvResult = require('dotenv').config();
-// if (dotEnvResult.error) {
-//   throw dotEnvResult.error;
-// }
+const { parsed: localEnv } = require('dotenv').config();
 module.exports = withPlugins([withSass, withSize], {
   target: 'serverless',
   poweredByHeader: false,
@@ -35,7 +33,7 @@ module.exports = withPlugins([withSass, withSize], {
         }
       }
     );
-    config.plugins.push(new OptimizeCSSAssetsPlugin({}));
+    config.plugins.push(new OptimizeCSSAssetsPlugin({}), new webpack.EnvironmentPlugin(localEnv));
     // Fixes npm packages that depend on `fs` module
     config.node = {
       fs: 'empty'

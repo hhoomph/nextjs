@@ -5,6 +5,7 @@ import fetch from 'isomorphic-unfetch';
 import nextCookie from 'next-cookies';
 import cookie from 'js-cookie';
 import AppContext from '../context/index';
+import getHost from '../utils/get-host';
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {};
@@ -12,28 +13,28 @@ class MyApp extends App {
       pageProps = await Component.getInitialProps(ctx);
     }
     let result;
-    const { token } = nextCookie(ctx);
+    const { accessToken } = nextCookie(ctx);
     /*
      * If `ctx.req` is available it means we are on the server.
-     * Additionally if there's no token it means the user is not logged in.
+     * Additionally if there's no accessToken it means the user is not logged in.
      */
-    // if (ctx.req && !token) {
+    // if (ctx.req && !accessToken) {
     //   ctx.res.writeHead(302, { Location: '/login' });
     //   ctx.res.end();
     // }
     // // We already checked for server. This should only happen on client.
-    // if (!token) {
+    // if (!accessToken) {
     //   Router.push('/login');
     // }
     // Fetch Data
-    const apiBaseUrl = `https://www.pooshako.com/api/`;
-    const url = `${apiBaseUrl}Common/Location/GetProvinces`;
-    // const response = await fetch(url, {
-    //   method: 'POST',
+    const apiUrl = `${getHost()}Common/C_Location/GetAllProvince`;
+    // const response = await fetch(apiUrl, {
+    //   method: 'GET',
     //   headers: {
     //     Accept: 'application/json',
     //     'Content-Type': 'application/json'
-    //   }
+    //   },
+    //   credentials: 'include'
     //   //body: JSON.stringify(image)
     // });
     // if (response.ok) {
@@ -44,7 +45,7 @@ class MyApp extends App {
   constructor() {
     super();
     // this.state = {
-    //   token: token
+    //   accessToken: accessToken
     // };
   }
   componentDidMount() {}

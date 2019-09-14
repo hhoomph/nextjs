@@ -120,18 +120,18 @@
       color: #fff;
       min-width: 150px;
       border-radius: 10px;
-      &:hover{
+      &:hover {
         color: #fff;
       }
     }
-    .distance{
+    .distance {
       color: #ffa422;
-      p{
+      p {
         font-size: 0.9rem;
         float: left;
         margin-left: 2px;
       }
-      .svg_Icons{
+      .svg_Icons {
         width: 2.6rem;
         fill: #ffa422;
         position: absolute;
@@ -152,10 +152,37 @@
     float: left;
     margin-top: -15px;
   }
-  .logo_img{
+  .logo_img {
     opacity: 0.14;
     width: 4rem;
     float: left;
     margin-top: -3rem;
   }
+}
+.profile_menu {
+  z-index: 999;
+  background: rgba(255, 255, 255, 0.84);
+  top: 40px;
+  right: 15px;
+  border-radius: 10px;
+  visibility: visible;
+  opacity: 1;
+  transition: all ease-in-out 0.2s;
+  &:hover {
+    background: #fff;
+  }
+  a {
+    cursor: pointer;
+    &:hover {
+      color: #ff5722 !important;
+      animation: shake_right 0.8s both;
+      animation-iteration-count: infinite;
+    }
+  }
+}
+.profile_menu.hidden {
+  transition: all ease-in-out 0.3s !important;
+  visibility: hidden !important;
+  opacity: 0;
+  //display: none !important;
 }

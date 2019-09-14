@@ -5,7 +5,12 @@ import { ReactComponent as MenuCircleSvg } from '../../static/svg/menu-circle.sv
 import { ReactComponent as AddUserSvg } from '../../static/svg/add-user.svg';
 import { ReactComponent as PlusSvg } from '../../static/svg/plus.svg';
 import '../../scss/components/profileHeader.scss';
+import Logout from '../Auth/Logout';
 const Header = props => {
+  const toggleMenu = () => {
+    const menuDiv = document.getElementById('profileMenu');
+    menuDiv.classList.toggle('hidden');
+  };
   const UserImage = () => {
     if (props.userImage && props.userImage != null) {
       return <img src={props.userImage} alt="user image" className="rounded-circle" />;
@@ -18,18 +23,33 @@ const Header = props => {
       <div className="container profile_header">
         <div className="row">
           <div className="col-6 d-flex">
-            <Link href="/" passHref>
-              <a className="nav_Icons active">
-                <AddUserSvg className="svg_Icons" />
-              </a>
-            </Link>
+            <a className="nav_Icons active">
+              <AddUserSvg className="svg_Icons" />
+            </a>
           </div>
           <div className="col-6 d-flex justify-content-end">
-            <Link href="/" passHref>
-              <a className="nav_Icons">
-                <MenuCircleSvg className="svg_Icons" />
-              </a>
-            </Link>
+            <a
+              className="nav_Icons"
+              onClick={() => {
+                toggleMenu();
+              }}
+            >
+              <MenuCircleSvg className="svg_Icons" />
+            </a>
+            <div className="d-flex col p-3 rtl justify-content-start position-absolute flex-column profile_menu hidden" id="profileMenu">
+              <ul className="nav flex-column">
+                <a className="nav-link">دوستان</a>
+                <a className="nav-link">دنبال شده ها</a>
+                <a
+                  className="nav-link"
+                  onClick={() => {
+                    Logout();
+                  }}
+                >
+                  خروج
+                </a>
+              </ul>
+            </div>
           </div>
         </div>
         <div className="row">

@@ -4,10 +4,12 @@ import Loading from '../components/Loader/Loader';
 import fetch from 'isomorphic-unfetch';
 import nextCookie from 'next-cookies';
 import cookie from 'js-cookie';
+import Router from 'next/router';
 import '../scss/style.scss';
 import Nav from '../components/Nav/Nav';
 import ProfileHeader from '../components/Head/profileHeader';
 import Product from '../components/Profile/product';
+import Auth from '../components/Auth/Auth';
 const Category = dynamic({
   loader: () => import('../components/CatProductsRow/Category'),
   loading: () => <Loading />,
@@ -40,18 +42,21 @@ function Page(props) {
     </>
   );
 }
-Page.getInitialProps = async function(context) {
-  // const apiBaseUrl = `https://www.pooshako.com/api/`;
-  // const url = `${apiBaseUrl}Common/Location/GetProvinces`;
-  // const response = await fetch(url, {
-  //   method: 'POST',
-  //   headers: {
-  //     Accept: 'application/json',
-  //     'Content-Type': 'application/json'
-  //   }
-  //   //body: JSON.stringify(image)
-  // });
-  // const result = await response.json();
-  // return { result };
-};
-export default Page;
+// Page.getInitialProps = async function(context) {
+//   const { accessToken } = nextCookie(context);
+//   // we are on the Server
+//   if (context.req) {
+//     if (!accessToken) {
+//       context.res.writeHead(302, { Location: '/login' });
+//       context.res.end();
+//     }
+//     console.log('server', accessToken);
+//   } else {
+//     // we are on the Client
+//     if (!accessToken) {
+//       Router.push('/login');
+//     }
+//     console.log('client', accessToken);
+//   }
+// };
+export default Auth(Page);
