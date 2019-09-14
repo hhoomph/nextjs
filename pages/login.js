@@ -14,6 +14,7 @@ import Nav from '../components/Nav/Nav';
 import LoginHeader from '../components/Head/loginHeader';
 import { ToastContainer, toast } from 'react-toastify';
 import getHost from '../utils/get-host';
+import Router from 'next/router';
 function Page(props) {
   toast.configure({
     position: 'top-right',
@@ -28,9 +29,11 @@ function Page(props) {
     const [userName, setUserName] = useState('');
     const [code, setCode] = useState('');
     const [timer, setTimer] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
     const handleSubmitStep1 = async () => {
       toast.dismiss();
       if (userName.length > 0) {
+        setIsLoading(true);
         const apiUrl = `${getHost()}Common/C_Account/RegisterOrLogin`;
         const response = await fetch(apiUrl, {
           method: 'POST',
@@ -41,9 +44,11 @@ function Page(props) {
           },
           body: JSON.stringify({ phoneNumber_Or_Email: userName }),
           credentials: 'include'
+        }).catch(() => {
+          toast.error(`متاسفانه خطایی رخ داده است. لطفا دوباره امتحان کنید.`);
+          setIsLoading(false);
         });
-        console.log(response);
-        if (response.ok) {
+        if (response != undefined && response.ok) {
           const result = await response.json();
           if (result.isSuccess) {
             toast.success(`کد فعال سازی با موفقیت برای شما ارسال شد.`);
@@ -52,42 +57,10 @@ function Page(props) {
           } else {
             toast.warn(result.message);
           }
-        } else {
-          toast.error(response.statusText);
+          setIsLoading(false);
         }
       } else {
         toast.warn('لطفا شماره موبایل یا ایمیل خود را وارد کنید.');
-      }
-    };
-    const handleResend = async () => {
-      toast.dismiss();
-      if (userName.length > 0 && step == 2) {
-        const apiUrl = `${getHost()}Common/C_Account/RegisterOrLogin`;
-        const response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-          },
-          body: JSON.stringify({ phoneNumber_Or_Email: userName }),
-          credentials: 'include'
-        });
-        console.log(response);
-        if (response.ok) {
-          const result = await response.json();
-          if (result.isSuccess) {
-            toast.success(`کد فعال سازی با موفقیت برای شما ارسال شد.`);
-            setStep(2);
-            setTimer(60);
-          } else {
-            toast.warn(result.message);
-          }
-        } else {
-          toast.error(response.statusText);
-        }
-      } else {
-        toast.error('لطفا شماره موبایل یا ایمیل خود را وارد کنید.');
       }
     };
     useInterval(() => {
@@ -109,12 +82,13 @@ function Page(props) {
       if (timer > 0) {
         return <div className="btn-block mt-4 timer">{secondsToMs(timer)}</div>;
       } else {
-        return <SubmitButton onClick={() => handleResend()} text="ارسال مجدد" className="mt-4 btn btn-lg btn-block timer" />;
+        return <SubmitButton loading={isLoading} onClick={() => handleSubmitStep1()} text="ارسال مجدد" className="mt-4 btn btn-lg btn-block timer" />;
       }
     };
     const handleSubmitStep2 = async () => {
       toast.dismiss();
       if (userName.length > 0 && code.length > 0 && step == 2) {
+        setIsLoading(true);
         const apiUrl = `${getHost()}Common/C_Account/Token`;
         const response = await fetch(apiUrl, {
           method: 'POST',
@@ -125,22 +99,23 @@ function Page(props) {
           },
           body: JSON.stringify({ phoneNumber_Or_Email: userName, code: code }),
           credentials: 'include'
+        }).catch(() => {
+          toast.error(`متاسفانه خطایی رخ داده است. لطفا دوباره امتحان کنید.`);
+          setIsLoading(false);
         });
-        console.log(response);
-        if (response.ok) {
+        if (response != undefined && response.ok) {
           const result = await response.json();
           if (result.isSuccess) {
             const accessToken = result.data.accessToken;
             const refreshToken = result.data.refreshToken;
             cookie.set('accessToken', accessToken, { expires: 30 });
             cookie.set('refreshToken', refreshToken, { expires: 30 });
-            toast.success(`ورود شما با موفقیت انجام شد.`);
-            //Router.push('/profile');
+            //toast.success(`ورود شما با موفقیت انجام شد.`);
+            Router.push('/profile');
           } else {
             toast.warn(result.message);
           }
-        } else {
-          toast.error(response.statusText);
+          setIsLoading(false);
         }
       } else {
         toast.warn('لطفا کد ارسال شده به موبایل یا ایمیل خود را وارد کنید.');
@@ -157,8 +132,8 @@ function Page(props) {
           <div className="row">
             <div className="col d-flex justify-content-center">
               <form className="loginForm">
-                <input value={userName} onChange={e => setUserName(forceNumeric(e.target.value))} type="text" className="form-control mt-1 mb-4" placeholder=" موبایل &nbsp; | &nbsp; ایمیل " />
-                <SubmitButton onClick={() => handleSubmitStep1()} text="ادامه" className="btn btn-lg btn-block btn-submit" />
+                <input value={userName} onChange={e => setUserName(e.target.value)} type="text" className="form-control mt-1 mb-4" placeholder=" موبایل &nbsp; | &nbsp; ایمیل " />
+                <SubmitButton loading={isLoading} onClick={() => handleSubmitStep1()} text="ادامه" className="btn btn-lg btn-block btn-submit" />
               </form>
             </div>
           </div>
@@ -184,8 +159,8 @@ function Page(props) {
           <div className="row">
             <div className="col d-flex justify-content-center">
               <form className="loginForm">
-                <input value={code} onChange={e => setCode(e.target.value)} type="text" className="form-control mt-1 mb-4" placeholder=" کد ارسالی " />
-                <SubmitButton onClick={() => handleSubmitStep2()} text="ورود" className="btn btn-lg btn-block btn-submit" />
+                <input value={code} onChange={e => setCode(forceNumeric(e.target.value))} type="text" className="form-control mt-1 mb-4" placeholder=" کد ارسالی " />
+                <SubmitButton loading={isLoading} onClick={() => handleSubmitStep2()} text="ورود" className="btn btn-lg btn-block btn-submit" />
                 <Resend />
               </form>
             </div>

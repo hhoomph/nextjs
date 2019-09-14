@@ -24,6 +24,8 @@ function withAuthSync(WrappedComponent) {
     syncLogout(event) {
       if (event.key === 'logout') {
         console.log('logged out from storage!');
+        cookie.remove('accessToken');
+        cookie.remove('refreshToken');
         Router.push('/login');
       }
     }
