@@ -27,6 +27,7 @@ function Page(props) {
   const View = () => {
     const [step, setStep] = useState(1);
     const [userName, setUserName] = useState('');
+    const [reagent, setReagent] = useState('');
     const [code, setCode] = useState('');
     const [timer, setTimer] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
@@ -42,11 +43,8 @@ function Page(props) {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*'
           },
-          body: JSON.stringify({ phoneNumber_Or_Email: userName }),
+          body: JSON.stringify({ phoneNumber_Or_Email: userName, marketerCode: reagent }),
           credentials: 'include'
-        }).catch(() => {
-          toast.error(`متاسفانه خطایی رخ داده است. لطفا دوباره امتحان کنید.`);
-          setIsLoading(false);
         });
         if (response != undefined && response.ok) {
           const result = await response.json();
@@ -57,6 +55,9 @@ function Page(props) {
           } else {
             toast.warn(result.message);
           }
+          setIsLoading(false);
+        } else {
+          toast.error(`متاسفانه خطایی رخ داده است. لطفا دوباره امتحان کنید.`);
           setIsLoading(false);
         }
       } else {
@@ -99,9 +100,6 @@ function Page(props) {
           },
           body: JSON.stringify({ phoneNumber_Or_Email: userName, code: code }),
           credentials: 'include'
-        }).catch(() => {
-          toast.error(`متاسفانه خطایی رخ داده است. لطفا دوباره امتحان کنید.`);
-          setIsLoading(false);
         });
         if (response != undefined && response.ok) {
           const result = await response.json();
@@ -115,6 +113,9 @@ function Page(props) {
           } else {
             toast.warn(result.message);
           }
+          setIsLoading(false);
+        } else {
+          toast.error(`متاسفانه خطایی رخ داده است. لطفا دوباره امتحان کنید.`);
           setIsLoading(false);
         }
       } else {
@@ -132,7 +133,8 @@ function Page(props) {
           <div className="row">
             <div className="col d-flex justify-content-center">
               <form className="loginForm">
-                <input value={userName} onChange={e => setUserName(e.target.value)} type="text" className="form-control mt-1 mb-4" placeholder=" موبایل &nbsp; | &nbsp; ایمیل " />
+                <input value={userName} onChange={e => setUserName(e.target.value)} type="text" className="form-control mt-1 mb-3" placeholder=" موبایل &nbsp; | &nbsp; ایمیل " />
+                <input value={reagent} onChange={e => setReagent(e.target.value)} type="text" className="form-control mb-4" placeholder=" معرف " />
                 <SubmitButton loading={isLoading} onClick={() => handleSubmitStep1()} text="ادامه" className="btn btn-lg btn-block btn-submit" />
               </form>
             </div>

@@ -128,6 +128,12 @@ body {
     left: initial !important;
     transform-origin: right !important;
   }
+  .Toastify__toast--warning {
+    background: #fea92e;
+  }
+  .Toastify__toast--success {
+    background: #019e06;
+  }
 }
 // ******* Drop Down Menu ********
 .dropDownMenu {
