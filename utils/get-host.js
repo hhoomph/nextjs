@@ -10,8 +10,9 @@ function getHost(req, debug = false) {
   // Second Method
   // const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
   // const apiHost = process.browser ? `${protocol}://${window.location.host}/api/` : `${protocol}://${req.headers.host}/api/`;
-  const host = process.browser ? window.location : process.cwd();
-  if (host.startsWith('https://nextjs.hhoomph.now.sh')) {
+  // check host for https://nextjs.hhoomph.now.sh domain that not support .env file to get apiUrl
+  const host = process.browser ? window.location.host : process.cwd();
+  if (host.startsWith('https://nextjs')) {
     return `http://qarun.ir/api/`;
   }
   // return apiHost;
