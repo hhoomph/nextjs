@@ -108,6 +108,7 @@ body {
     animation-iteration-count: infinite;
   }
 }
+// ******* Toastify ********
 .Toastify {
   .Toastify__toast-body,
   .Toastify__toast {
@@ -126,6 +127,24 @@ body {
     right: 0 !important;
     left: initial !important;
     transform-origin: right !important;
+  }
+}
+// ******* Drop Down Menu ********
+.dropDownMenu {
+  .dropdown-toggle,
+  .dropdown-toggle:focus {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    &::before {
+      display: none !important;
+    }
+  }
+  .dropdown-item:not(.active):focus,
+  .dropdown-item:not(.active):hover {
+    color: none !important;
+    background: none !important;
   }
 }
 @media (min-width: 1300px) {

@@ -4,6 +4,7 @@ import { FaShoppingBasket, FaRegUserCircle } from 'react-icons/fa';
 import { ReactComponent as MenuCircleSvg } from '../../static/svg/menu-circle.svg';
 import { ReactComponent as AddUserSvg } from '../../static/svg/add-user.svg';
 import { ReactComponent as PlusSvg } from '../../static/svg/plus.svg';
+import { Dropdown } from 'react-bootstrap';
 import '../../scss/components/profileHeader.scss';
 import Logout from '../Auth/Logout';
 const Header = props => {
@@ -26,9 +27,22 @@ const Header = props => {
             <a className="nav_Icons active">
               <AddUserSvg className="svg_Icons" />
             </a>
+            {/* <Dropdown drop="left" className="dropDownMenu">
+              <Dropdown.Toggle>
+                <a className="nav_Icons active">
+                  <AddUserSvg className="svg_Icons" />
+                </a>
+              </Dropdown.Toggle>
+              <Dropdown.Menu className="rtl">
+                <Dropdown.Item eventKey="1">منو یک</Dropdown.Item>
+                <Dropdown.Item eventKey="2" active>من دو</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item eventKey="4">خروج</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown> */}
           </div>
           <div className="col-6 d-flex justify-content-end">
-            <a
+            {/* <a
               className="nav_Icons"
               onClick={() => {
                 toggleMenu();
@@ -49,7 +63,23 @@ const Header = props => {
                   خروج
                 </a>
               </ul>
-            </div>
+            </div> */}
+            <Dropdown drop="left" className="dropDownMenu">
+              <Dropdown.Toggle>
+                <a className="nav_Icons">
+                  <MenuCircleSvg className="svg_Icons" />
+                </a>
+              </Dropdown.Toggle>
+              <Dropdown.Menu className="rtl profile_menu">
+                <Dropdown.Item eventKey="1">دوستان</Dropdown.Item>
+                <Dropdown.Item eventKey="2">دنبال شده ها</Dropdown.Item>
+                <Dropdown.Item eventKey="3" active>
+                  پروفایل
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item eventKey="4">خروج</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
         </div>
         <div className="row">
