@@ -28,6 +28,9 @@
   width: 3rem !important;
   height: auto !important;
 }
+.leaflet-pane.leaflet-popup-pane{
+  z-index: 999;
+}
 .leaflet-tooltip {
   right: -40px !important;
   left: auto !important;
