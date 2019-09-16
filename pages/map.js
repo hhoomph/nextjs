@@ -25,7 +25,7 @@ function Page(props) {
       <>
         <Nav />
         <MapHeader />
-        <div className="container mb-1 rtl p-0" style={{ height: '65vh' }}>
+        <div className="container mb-1 rtl p-0 mapContainer">
           <MapComponent />
         </div>
         <div className="container mb-1 rtl">
@@ -48,7 +48,7 @@ function Page(props) {
       <>
         <Nav />
         <MapHeader />
-        <div className="container mb-1 rtl justify-content-center p-0" style={{ height: '65vh' }}>
+        <div className="container mb-1 rtl mapContainer justify-content-center p-0">
           نقشه پشتیبانی نمی شود
         </div>
         <div className="container mb-1 rtl">

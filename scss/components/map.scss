@@ -73,6 +73,11 @@
     bottom: auto !important;
   }
 }
+@media screen and (min-width: 1280px) {
+  #mapid {
+    height: 62vh;
+  }
+}
 /*********** required styles *************/
 .leaflet-pane,
 .leaflet-tile,

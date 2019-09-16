@@ -46,9 +46,15 @@ const MapComponent = props => {
   const position = [34.635059, 50.880823];
   const position1 = [34.635255, 50.876762];
   const position2 = [34.6327669608, 50.88060376];
+  // geolocation Options
+  const geoOptions = {
+    enableHighAccuracy: true,
+    maximumAge: 30000,
+    timeout: 10000
+  };
   const getLocation = async () => {
     if (navigator.geolocation) {
-      await navigator.geolocation.getCurrentPosition(showPosition);
+      await navigator.geolocation.getCurrentPosition(showPosition, errorGetPosition, geoOptions);
     } else {
       await console.log('Geolocation is not supported by this browser.');
     }
@@ -56,17 +62,28 @@ const MapComponent = props => {
   const showPosition = position => {
     updatePosition();
     setMarkPosition([position.coords.latitude, position.coords.longitude]);
+    console.log(`More or less ${position.coords.accuracy} meters.`);
+  };
+  const errorGetPosition = err => {
+    console.warn(`Geolocation ERROR(${err.code}): ${err.message}`);
   };
   const currentMarker = () => {
-    if (markPosition.length > 1) {
-      return (
-        <Marker position={markPosition} icon={placeholderIcon} draggable={true} onDragend={() => updatePosition()} ref={markRef}>
-          <Tooltip>مکان شما</Tooltip>
-        </Marker>
-      );
-    } else {
-      return '';
-    }
+    return markPosition.length > 1 ? (
+      <Marker
+        position={markPosition}
+        icon={placeholderIcon}
+        draggable={true}
+        onDragend={() => updatePosition()}
+        ref={markRef}
+        onclick={() => {
+          // save the position
+        }}
+      >
+        <Tooltip>مکان شما</Tooltip>
+      </Marker>
+    ) : (
+      ''
+    );
   };
   return (
     <div id="mapid">

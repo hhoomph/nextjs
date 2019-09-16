@@ -1,5 +1,7 @@
 @import '../vars';
-//@import '../node_modules/leaflet/dist/leaflet.css';
+.mapContainer{
+  height: 65vh;
+}
 .map_header {
 	position: absolute;
 	z-index: 999;
@@ -44,4 +46,9 @@
 		right: 10%;
 		left: 10%;
 	}
+}
+@media screen and (min-width: 1280px) {
+  .mapContainer{
+    height: 62vh;
+  }
 }
