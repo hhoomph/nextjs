@@ -173,10 +173,9 @@
   }
   a {
     cursor: pointer;
+    transition: all ease-in-out 0.2s;
     &:hover {
       color: #ff5722 !important;
-      animation: shake_right 0.8s both;
-      animation-iteration-count: infinite;
     }
   }
 }

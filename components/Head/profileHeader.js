@@ -77,7 +77,14 @@ const Header = props => {
                   پروفایل
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item eventKey="4">خروج</Dropdown.Item>
+                <Dropdown.Item
+                  eventKey="4"
+                  onClick={() => {
+                    Logout();
+                  }}
+                >
+                  خروج
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </div>

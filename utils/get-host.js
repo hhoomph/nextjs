@@ -12,10 +12,10 @@ function getHost(req, debug = false) {
   // check host for https://nextjs.hhoomph.now.sh domain that not support .env file to get apiUrl
   const host = process.browser ? window.location.host : process.cwd();
   if (host.startsWith('nextjs.hhoomph')) {
-    return `http://qarun.ir/api/`;
+    return `http://api.qarun.ir/api/`;
   }
   if (process.env == undefined) {
-    return `http://qarun.ir/api/`;
+    return `http://api.qarun.ir/api/`;
   }
   // return apiHost;
   if (debug == true) {
