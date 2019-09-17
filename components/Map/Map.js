@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useContext, useRef, useEffect, memo } from 'react';
 import L from 'leaflet';
-import { Circle, FeatureGroup, LayerGroup, LayersControl, Map, TileLayer, WMSTileLayer, Marker, Popup, Polyline, Polygon, Rectangle, Tooltip } from 'react-leaflet';
+import { Circle, LayerGroup, Map, TileLayer, Marker, Popup, Polyline, Polygon, Rectangle, Tooltip } from 'react-leaflet';
 import { ReactComponent as TargetSvg } from '../../static/svg/target.svg';
 import '../../scss/components/map.scss';
 /**
@@ -13,6 +13,14 @@ export const getDistance = (position1, position2) => {
   latlng1 = new L.latLng(position1);
   latlng2 = new L.latLng(position2);
   return latlng1.distanceTo(latlng2);
+};
+/**
+ *  Convert Leaflet latLng object to GPS coordinates (lat lng) array
+ * @ param {object} return Leaflet latLng object
+ * @return  !Array<string> GPS location [lat, lng]
+ */
+export const convertLatlngToArray = position => {
+  return [position.lat, position.lng];
 };
 const placeholderIcon = new L.Icon({
   iconUrl: '../../static/svg/placeholder-for-map.svg',
@@ -52,7 +60,9 @@ const MapComponent = props => {
     const marker = markRef.current;
     if (marker != null) {
       let latlng = marker.leafletElement.getLatLng();
-      setMarkPosition(latlng);
+      setMarkPosition(convertLatlngToArray(latlng));
+      const map = mapRef.current.leafletElement;
+      map.setView(convertLatlngToArray(latlng));
       // distance to position in meter
       console.log(latlng.distanceTo(position));
     }
@@ -89,9 +99,12 @@ const MapComponent = props => {
     }
   };
   const showPosition = position => {
-    updatePosition();
+    //updatePosition();
     setMarkPosition([position.coords.latitude, position.coords.longitude]);
     console.log(`More or less ${position.coords.accuracy} meters.`);
+    // const map = mapRef.current.leafletElement;
+    // L.marker([position.coords.latitude, position.coords.longitude], { icon: placeholderIcon }).addTo(map);
+    // map.setView([position.coords.latitude, position.coords.longitude]);
   };
   const errorGetPosition = err => {
     console.warn(`Geolocation ERROR(${err.code}): ${err.message}`);
@@ -102,7 +115,7 @@ const MapComponent = props => {
   };
   const currentMarker = () => {
     return markPosition.length > 1 ? (
-      <>
+      <LayerGroup>
         <Marker
           position={markPosition}
           icon={placeholderIcon}
@@ -116,14 +129,13 @@ const MapComponent = props => {
           <Tooltip>مکان شما</Tooltip>
         </Marker>
         <Circle center={markPosition} radius={1000} className="circle_radius" />
-      </>
+      </LayerGroup>
     ) : null;
   };
-  const outer = [position, position1, position2];
   return (
     <div id="mapid">
       <Map animate={true} center={markPosition.length > 1 ? markPosition : position} zoom={15} maxZoom={18} ref={mapRef} onLocationfound={handleLocationFound}>
-        <TileLayer attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <TileLayer attribution="Qarun" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {currentMarker()}
         <Marker position={position} icon={myIcon} draggable={false}>
           <Popup>
