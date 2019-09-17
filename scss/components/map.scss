@@ -28,7 +28,7 @@
   width: 3rem !important;
   height: auto !important;
 }
-.leaflet-pane.leaflet-popup-pane{
+.leaflet-pane.leaflet-popup-pane {
   z-index: 999;
 }
 .leaflet-tooltip {
@@ -66,6 +66,10 @@
     display: block;
     margin: auto;
   }
+}
+.circle_radius {
+  fill: rgba(255, 152, 0, 0.74);
+  stroke: #ff5722;
 }
 @media screen and (min-width: 992px) {
   .leaflet-top {

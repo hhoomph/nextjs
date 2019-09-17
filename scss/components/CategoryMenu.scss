@@ -1,4 +1,8 @@
 @import '../vars';
+@font-face {
+  font-family: 'morvarid';
+  src: url('../../static/font/morvarid.ttf') format('TrueType');
+}
 .category_menu {
   &::after {
     content: '';
@@ -19,6 +23,8 @@
       font-size: 2.2rem;
     }
     .qarun_title {
+      font-family: morvarid;
+      font-weight: 900;
       //background: linear-gradient(to bottom, #e9be18 0%, #fa7902 81%, #ff5b00 100%);
       background-image: linear-gradient(yellow, red);
       -webkit-background-clip: text;
@@ -36,11 +42,11 @@
       position: relative;
       border-right: 1px solid #797671;
       padding-top: 12px;
-      &:first-child{
-        border-image: linear-gradient( to top, #797671, rgba(0, 0, 0, 0) ) 1 100%;
+      &:first-child {
+        border-image: linear-gradient(to top, #797671, rgba(0, 0, 0, 0)) 1 100%;
       }
       &:last-child {
-        border-image: linear-gradient( to bottom, #797671, rgba(0, 0, 0, 0) ) 1 100%;
+        border-image: linear-gradient(to bottom, #797671, rgba(0, 0, 0, 0)) 1 100%;
       }
       &:hover {
         opacity: 1;
