@@ -1,11 +1,10 @@
-import React, { Fragment, useState, useContext, useRef, useEffect, memo } from 'react';
+import React, { Fragment, useReducer, useState, useContext, useRef, useEffect, memo } from 'react';
 import dynamic from 'next/dynamic';
 import Loading from '../components/Loader/Loader';
 import fetch from 'isomorphic-unfetch';
 import nextCookie from 'next-cookies';
 import cookie from 'js-cookie';
 import '../scss/style.scss';
-import { secondsToMs, forceNumeric } from '../utils/tools';
 import Nav from '../components/Nav/Nav';
 import MapHeader from '../components/Head/mapHeader';
 import UserSuggest from '../components/UserSuggest/UserSuggest2';
@@ -17,16 +16,27 @@ const MapComponent = dynamic({
   loading: () => <Loading />,
   ssr: false
 });
-function Page(props) {
-  toast.configure();
+const Page = props => {
+  toast.configure({
+    position: 'top-right',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true
+  });
+  const [searchValue, setSearchValue] = useState('');
+  const handleSearchChange = e => {
+    setSearchValue(e.current.value);
+  };
   if (typeof window !== 'undefined' && window.document !== undefined) {
     //console.log('browser');
     return (
       <>
         <Nav />
-        <MapHeader />
+        <MapHeader searchValue={searchValue} handleSearchChange={handleSearchChange} />
         <div className="container mb-1 rtl p-0 mapContainer">
-          <MapComponent />
+          <MapComponent id="map_id" searchValue={searchValue} />
         </div>
         <div className="container mb-1 rtl">
           <div className="row">
@@ -47,10 +57,8 @@ function Page(props) {
     return (
       <>
         <Nav />
-        <MapHeader />
-        <div className="container mb-1 rtl mapContainer justify-content-center p-0">
-          نقشه پشتیبانی نمی شود
-        </div>
+        <MapHeader searchValue={searchValue} handleSearchChange={handleSearchChange} />
+        <div className="container mb-1 rtl mapContainer justify-content-center p-0">نقشه پشتیبانی نمی شود</div>
         <div className="container mb-1 rtl">
           <div className="row">
             <div className="col d-flex justify-content-start pr-2 map_user_suggestion">
@@ -66,7 +74,7 @@ function Page(props) {
       </>
     );
   }
-}
+};
 Page.getInitialProps = async function(context) {
   // const apiBaseUrl = `https://www.pooshako.com/api/`;
   // const url = `${apiBaseUrl}Common/Location/GetProvinces`;

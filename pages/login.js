@@ -15,7 +15,7 @@ import LoginHeader from '../components/Head/loginHeader';
 import { ToastContainer, toast } from 'react-toastify';
 import getHost from '../utils/get-host';
 import Router from 'next/router';
-function Page(props) {
+const Page = props => {
   toast.configure({
     position: 'top-right',
     autoClose: 5000,
@@ -180,7 +180,7 @@ function Page(props) {
       </div>
     </>
   );
-}
+};
 Page.getInitialProps = async function(context) {
   // const apiBaseUrl = `https://www.pooshako.com/api/`;
   // const url = `${apiBaseUrl}Common/Location/GetProvinces`;

@@ -1,8 +1,11 @@
-#mapid {
+#map_id {
   height: 65vh;
   position: relative;
   width: 100%;
   overflow: hidden;
+}
+#map_2 {
+  height: 30vh;
 }
 .leaflet-container {
   overflow: hidden;
@@ -17,6 +20,7 @@
   margin-top: -70px !important;
   width: 5rem !important;
   height: auto !important;
+  border-radius: 100px;
   filter: invert(57%) sepia(90%) saturate(999%) hue-rotate(346deg) brightness(100%) contrast(100%);
 }
 .leaflet-shadow-pane {
@@ -27,6 +31,12 @@
   margin-top: -66px !important;
   width: 3rem !important;
   height: auto !important;
+}
+.current_pos_marker {
+  margin-left: -20px !important;
+  margin-top: -40px !important;
+  width: 3rem !important;
+  animation: geo_location_marker 1s infinite;
 }
 .leaflet-pane.leaflet-popup-pane {
   z-index: 999;
@@ -50,7 +60,7 @@
   height: 3rem;
   border-radius: 100px;
   background: #fff;
-  z-index: 999;
+  z-index: 1000;
   display: flex;
   position: absolute;
   top: auto;
@@ -71,6 +81,32 @@
   fill: rgba(255, 152, 0, 0.74);
   stroke: #ff5722;
 }
+.location_search_results {
+  position: absolute;
+  z-index: 1000;
+  padding: 10px;
+  width: 80%;
+  top: 77px;
+  min-height: 60px;
+  height: max-content;
+  right: 10%;
+  left: 10%;
+  background: #fff;
+  box-shadow: 0px 10px 2px 0px #4c4c4c42;
+  a {
+    direction: rtl !important;
+    text-align: center !important;
+    display: block !important;
+    margin: auto !important;
+    color: #222 !important;
+    font-family: IranSans !important;
+    font-size: 1rem !important;
+    cursor: pointer !important;
+    &:hover {
+      color: #000 !important;
+    }
+  }
+}
 @media screen and (min-width: 992px) {
   .leaflet-top {
     top: 20px !important;
@@ -78,8 +114,11 @@
   }
 }
 @media screen and (min-width: 1280px) {
-  #mapid {
+  #map_id {
     height: 62vh;
+  }
+  #map_2 {
+    height: 50vh;
   }
 }
 /*********** required styles *************/

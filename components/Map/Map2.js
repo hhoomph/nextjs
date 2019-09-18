@@ -1,16 +1,12 @@
 import React, { Fragment, useState, useContext, useRef, useEffect, memo } from 'react';
 import L from 'leaflet';
-import { Circle, LayerGroup, Map, TileLayer, Marker, Popup, Polyline, Tooltip } from 'react-leaflet';
+import { Circle, LayerGroup, Map, TileLayer, Marker, Popup, Polyline, Polygon, Rectangle, Tooltip, LayersControl } from 'react-leaflet';
 import { GeoSearchControl, OpenStreetMapProvider, EsriProvider } from 'leaflet-geosearch';
 import { ReactComponent as TargetSvg } from '../../static/svg/target.svg';
 import '../../scss/components/map.scss';
+import { setTimeout } from 'timers';
 const esriProvider = new EsriProvider();
 const provider = new OpenStreetMapProvider();
-// search
-// provider.search({ query: 'قم' }).then(function(result) {
-//   console.log(result);
-// });
-//const results = await provider.search({ query: 'قم' });
 /**
  *  Calculate distance between 2 GPS coordinates
  * @param !Array<string> first location [lat, lng]
@@ -47,47 +43,8 @@ const Icon = new L.Icon({
 });
 const MapComponent = props => {
   const [markPosition, setMarkPosition] = useState([]);
-  const [searchResult, setSearchResult] = useState([]);
   const markRef = useRef();
   const mapRef = useRef();
-  useEffect(() => {
-    if (props.searchValue != '' && props.searchValue.length >= 2) {
-      provider.search({ query: props.searchValue }).then(function(result) {
-        setSearchResult(result);
-        console.log(result);
-      });
-    }
-  }, [props.searchValue]);
-  const showSearchResult = () => {
-    return searchResult.length >= 1 ? (
-      <div className="location_search_results">
-        {searchResult.map(v => (
-          <a
-            key={v.raw.place_id}
-            title={v.label}
-            onClick={() => {
-              setMarkPosition([v.y, v.x]);
-              setSearchResult([]);
-            }}
-          >
-            {v.label}
-          </a>
-        ))}
-      </div>
-    ) : null;
-    // return searchResult.map(v => (
-    //   <a
-    //     key={v.x * v.y}
-    //     title={v.label}
-    //     onClick={() => {
-    //       setMarkPosition([v.y, v.x]);
-    //       setSearchResult([]);
-    //     }}
-    //   >
-    //     {v.label}
-    //   </a>
-    // ));
-  };
   const updatePosition = () => {
     const marker = markRef.current;
     if (marker != null) {
@@ -145,11 +102,33 @@ const MapComponent = props => {
     console.log(e.latlng);
     setMarkPosition([e.latlng.lat, e.latlng.lng]);
   };
+  const handleLoadMap = e => {
+    const map = e.target._map;
+    // Events : map.on('geosearch/marker/dragend', yourEventHandler)
+    const searchControl = new GeoSearchControl({
+      provider: provider,
+      autoComplete: true,
+      autoCompleteDelay: 250,
+      showMarker: true,
+      showPopup: false,
+      marker: {
+        icon: new L.Icon.Default(),
+        draggable: false
+      },
+      popupFormat: ({ query, result }) => result.label,
+      maxMarkers: 1,
+      retainZoomLevel: false,
+      animateZoom: true,
+      autoClose: false,
+      searchLabel: 'آدرس مورد نظر را وارد کنید',
+      keepResult: true
+    }).addTo(map);
+  };
   const currentMarker = () => {
     return markPosition.length > 1 ? (
-      <>
+      <LayerGroup>
         <Marker
-          className="current_location_marker"
+          id="crn_ps_marker"
           position={markPosition}
           icon={placeholderIcon}
           draggable={true}
@@ -159,17 +138,31 @@ const MapComponent = props => {
             // save the position
           }}
         >
+          <div className="crn_ps_marker" />
           <Tooltip>مکان شما</Tooltip>
         </Marker>
         <Circle center={markPosition} radius={1000} className="circle_radius" />
-      </>
+      </LayerGroup>
     ) : null;
   };
   return (
-    <div id="map_id">
-      <Map closePopupOnClick={true} animate={true} center={markPosition.length > 1 ? markPosition : position} zoom={15} maxZoom={18} ref={mapRef} onLocationfound={handleLocationFound}>
-        <TileLayer attribution="Qarun" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+    <div id={props.id} className={props.className} style={props.style}>
+      <Map
+        closePopupOnClick={true}
+        dragging={false}
+        keyboard={false}
+        tap={true}
+        attributionControl={true}
+        animate={true}
+        center={markPosition.length > 1 ? markPosition : position}
+        zoom={15}
+        maxZoom={18}
+        ref={mapRef}
+        onLocationfound={handleLocationFound}
+      >
+        <TileLayer attribution="Qarun" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" onLoad={handleLoadMap} />
         {currentMarker()}
+        <LayersControl />
         <Marker position={position} icon={myIcon} draggable={false}>
           <Popup>
             مجتمع ناشران <br /> شرکت سپهران
@@ -186,7 +179,6 @@ const MapComponent = props => {
         <div className="current_location" onClick={() => getLocation()} title="نمایش مکان شما">
           <TargetSvg className="svg_icon" />
         </div>
-        {showSearchResult()}
       </Map>
     </div>
   );
