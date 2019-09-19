@@ -73,8 +73,11 @@
   .stats {
     font-size: 1.2rem;
     color: #fff;
-    p {
-      margin-bottom: 0.3rem;
+    p,
+    .friendsTitle,
+    .customersTitle,
+    .productsTitle {
+      margin-bottom: 0.8rem;
     }
     .friends,
     .customers,

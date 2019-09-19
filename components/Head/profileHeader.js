@@ -71,10 +71,18 @@ const Header = props => {
                 </a>
               </Dropdown.Toggle>
               <Dropdown.Menu className="rtl profile_menu">
-                <Dropdown.Item eventKey="1">دوستان</Dropdown.Item>
+                <Dropdown.Item eventKey="1" active>
+                  دوستان
+                </Dropdown.Item>
                 <Dropdown.Item eventKey="2">دنبال شده ها</Dropdown.Item>
-                <Dropdown.Item eventKey="3" active>
-                  پروفایل
+                <Dropdown.Item
+                  eventKey="3"
+                  onClick={() => {
+                    console.log('show edit profile');
+                    props.setView('edit1');
+                  }}
+                >
+                  ویرایش پروفایل
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item
@@ -93,7 +101,7 @@ const Header = props => {
           <div className="col d-flex justify-content-center userInfo">
             <a className="mr-2 user_img">
               <UserImage />
-              <PlusSvg className="svg_Icons" />
+              {/* <PlusSvg className="svg_Icons" /> */}
             </a>
           </div>
         </div>
@@ -104,15 +112,15 @@ const Header = props => {
         </div>
         <div className="row stats rtl mt-2">
           <div className="col-4 d-block text-center">
-            <p>دوستان</p>
+            <p className="friendsTitle">دوستان</p>
             <p className="friends">167</p>
           </div>
           <div className="col-4 d-block text-center">
-            <p>مشتریان</p>
+            <p className="customersTitle">مشتریان</p>
             <p className="customers">5421</p>
           </div>
           <div className="col-4 d-block text-center">
-            <p>محصولات</p>
+            <p className="productsTitle">محصولات</p>
             <p className="products">203</p>
           </div>
         </div>
@@ -136,9 +144,9 @@ const Header = props => {
           <div className="col-12 pt-3">
             <h2 className="title">فروشگاه قارون</h2>
             <p className="bio">عرضه بهترین و باکیفیت ترین محصولات بازار با قیمت مناسب ارسال سریع و خدمات مناسب</p>
-            <Link href="/profileEdit" passHref>
+            {/* <Link href="/profileEdit" passHref>
               <a className="btn btn-main">ویرایش</a>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

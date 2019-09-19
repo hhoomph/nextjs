@@ -7,7 +7,7 @@ const withSize = require('next-size');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { parsed: localEnv } = require('dotenv').config();
 module.exports = withPlugins([withSass, withSize], {
-  target: 'serverless',
+  //target: 'serverless',
   poweredByHeader: false,
   // staticFolder: '/static',
   // distDir: 'build',
