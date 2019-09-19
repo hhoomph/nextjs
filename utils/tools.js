@@ -120,4 +120,8 @@ export const getDistance = (lat1, lon1, lat2, lon2) => {
   let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return earthRadiusKm * c;
 };
+// Email Validation Regex
+export const EMAIL_RX = /[A-Z0-9a-z._%+-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,64}/;
+// Moible Validation Regex
+export const Mobile_RX = /(\+98|0|98|0098)?([ ]|-|[()]){0,2}9[0-9]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/;
 export default numberSeparator;

@@ -91,7 +91,12 @@
   }
   @media screen and (min-width: 365px) {
     &::after {
-      bottom: -0;
+      bottom: -0px;
+    }
+  }
+  @media screen and (max-width: 310px) {
+    &::after {
+      bottom: -300px;
     }
   }
 }

@@ -15,6 +15,8 @@ import LoginHeader from '../components/Head/loginHeader';
 import { ToastContainer, toast } from 'react-toastify';
 import getHost from '../utils/get-host';
 import Router from 'next/router';
+const EMAIL_RX = /[A-Z0-9a-z._%+-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,64}/;
+const Mobile_RX = /(\+98|0|98|0098)?([ ]|-|[()]){0,2}9[0-9]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/;
 const Page = props => {
   toast.configure({
     position: 'top-right',
@@ -34,31 +36,35 @@ const Page = props => {
     const handleSubmitStep1 = async () => {
       toast.dismiss();
       if (userName.length > 0) {
-        setIsLoading(true);
-        const apiUrl = `${getHost()}Common/C_Account/RegisterOrLogin`;
-        const response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-          },
-          body: JSON.stringify({ phoneNumber_Or_Email: userName, marketerCode: reagent }),
-          credentials: 'include'
-        });
-        if (response != undefined && response.ok) {
-          const result = await response.json();
-          if (result.isSuccess) {
-            toast.success(`کد فعال سازی با موفقیت برای شما ارسال شد.`);
-            setStep(2);
-            setTimer(60);
+        if ((Mobile_RX.test(userName) && userName.length < 12) || EMAIL_RX.test(userName)) {
+          setIsLoading(true);
+          const apiUrl = `${getHost()}Common/C_Account/RegisterOrLogin`;
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({ phoneNumber_Or_Email: userName, marketerCode: reagent }),
+            credentials: 'include'
+          });
+          if (response != undefined && response.ok) {
+            const result = await response.json();
+            if (result.isSuccess) {
+              toast.success(`کد فعال سازی با موفقیت برای شما ارسال شد.`);
+              setStep(2);
+              setTimer(60);
+            } else {
+              toast.warn(result.message);
+            }
+            setIsLoading(false);
           } else {
-            toast.warn(result.message);
+            toast.error(`متاسفانه خطایی رخ داده است. لطفا دوباره امتحان کنید.`);
+            setIsLoading(false);
           }
-          setIsLoading(false);
         } else {
-          toast.error(`متاسفانه خطایی رخ داده است. لطفا دوباره امتحان کنید.`);
-          setIsLoading(false);
+          toast.warn('لطفا شماره موبایل یا ایمیل خود را به درستی وارد کنید.');
         }
       } else {
         toast.warn('لطفا شماره موبایل یا ایمیل خود را وارد کنید.');
@@ -142,11 +148,12 @@ const Page = props => {
         </>
       );
     } else if (step == 2) {
+      let change_txt = EMAIL_RX.test(userName) ? `کد ارسالی به ایمیل ${userName} را وارد نمایید` : `کد ارسالی به شماره ${userName} را وارد نمایید`;
       return (
         <>
           <div className="row">
             <div className="col d-block text-center messages">
-              <p className="text_message">کد ارسالی به شماره {userName} را وارد نمایید </p>
+              <p className="text_message"> {change_txt} </p>
               <div className="change_userName">
                 <a
                   onClick={() => {

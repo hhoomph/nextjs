@@ -43,7 +43,7 @@
       margin: auto;
       margin-top: -6px;
       margin-bottom: 10px;
-      width: fit-content;
+      width: max-content;
       border-bottom: 1px solid #000;
       a {
         color: #000;
@@ -92,5 +92,10 @@
       animation: shadow_drop 0.8s both;
       animation-iteration-count: infinite;
     }
+  }
+}
+@media screen and (max-width: 310px) {
+  .loginForm {
+    margin-bottom: 60px;
   }
 }

@@ -16,7 +16,7 @@
     background: $circleUser_gradient;
     display: block;
     margin: auto;
-    width: fit-content;
+    width: max-content;
     padding: 2px;
     text-align: center;
     border-radius: 10rem;
@@ -50,8 +50,13 @@
     padding-top: 4px;
   }
 }
+@media screen and (max-width: 500px) {
+  .map_user_suggestion {
+    margin-bottom: 70px;
+  }
+}
 @media screen and (max-width: 360px) {
-  .user_link img{
+  .user_link img {
     width: 4rem !important;
   }
   .user_name {
