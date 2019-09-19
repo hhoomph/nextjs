@@ -21,3 +21,4 @@ yarn-error.log*
 desktop.ini
 .vscode/
 .vscode/sftp.json
+web.config
