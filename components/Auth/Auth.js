@@ -1,39 +1,33 @@
-import { Component } from 'react';
+import { useEffect } from 'react';
 import Router from 'next/router';
 import nextCookie from 'next-cookies';
 import cookie from 'js-cookie';
-const getDisplayName = Component => Component.displayName || Component.name || 'Component';
-function withAuthSync(WrappedComponent) {
-  return class extends Component {
-    static displayName = `withAuthSync(${getDisplayName(WrappedComponent)})`;
-    static async getInitialProps(ctx) {
-      const accessToken = auth(ctx);
-      const componentProps = WrappedComponent.getInitialProps && (await WrappedComponent.getInitialProps(ctx));
-      return { ...componentProps, accessToken };
-    }
-    constructor(props) {
-      super(props);
-    }
-    componentDidMount() {
-      window.addEventListener('storage', this.syncLogout);
-    }
-    componentWillUnmount() {
-      window.removeEventListener('storage', this.syncLogout);
-      window.localStorage.removeItem('logout');
-    }
-    syncLogout(event) {
+export const withAuthSync = WrappedComponent => {
+  const Wrapper = props => {
+    const syncLogout = event => {
       if (event.key === 'logout') {
         console.log('logged out from storage!');
         cookie.remove('accessToken');
         cookie.remove('refreshToken');
         Router.push('/login');
       }
-    }
-    render() {
-      return <WrappedComponent {...this.props} />;
-    }
+    };
+    useEffect(() => {
+      window.addEventListener('storage', syncLogout);
+      return () => {
+        window.removeEventListener('storage', syncLogout);
+        window.localStorage.removeItem('logout');
+      };
+    }, [null]);
+    return <WrappedComponent {...props} />;
   };
-}
+  Wrapper.getInitialProps = async ctx => {
+    const accessToken = auth(ctx);
+    const componentProps = WrappedComponent.getInitialProps && (await WrappedComponent.getInitialProps(ctx));
+    return { ...componentProps, accessToken };
+  };
+  return Wrapper;
+};
 const auth = ctx => {
   const { accessToken } = nextCookie(ctx);
   /*
