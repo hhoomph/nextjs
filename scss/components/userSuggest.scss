@@ -1,32 +1,37 @@
 @import '../vars';
-.user_Suggestion{
-  .over_flow{
+.user_Suggestion {
+  .over_flow {
     overflow: hidden;
     overflow-x: auto;
   }
-  .more{
+  .more {
     font-size: 2em;
     color: $topIcon_color;
     display: flex;
     margin-bottom: -15px;
-    &:hover{
+    &:hover {
       color: $main_color;
     }
   }
-  .user_link{
+  .user_link {
     width: max-content;
     height: auto;
     display: block;
     border-radius: 10rem;
     background: $circleUser_gradient;
     padding: 2px;
-    &:hover{
+    &:hover {
       animation: shadow_drop infinite 0.35s ease-out;
       background: $main_gradient;
     }
   }
-  img.rounded-circle{
+  img.rounded-circle {
     width: 5.6em;
     padding: 0;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .user_Suggestion img.rounded-circle {
+    width: 3.5em !important;
   }
 }

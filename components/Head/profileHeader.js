@@ -8,13 +8,31 @@ import { Dropdown } from 'react-bootstrap';
 import '../../scss/components/profileHeader.scss';
 import Logout from '../Auth/Logout';
 const Header = props => {
+  const {
+    avatar,
+    biography,
+    amountOfDebt,
+    customerCount,
+    displayName,
+    email,
+    friendsCount,
+    id,
+    invitationlink,
+    marketingAmount,
+    phoneNumber,
+    productCount,
+    qerun,
+    userName,
+    walletCharge
+  } = props.profileData;
+  const avatarUrl = avatar !== null ? `http://api.qarun.ir/${avatar}` : null;
   const toggleMenu = () => {
     const menuDiv = document.getElementById('profileMenu');
     menuDiv.classList.toggle('hidden');
   };
   const UserImage = () => {
-    if (props.userImage && props.userImage != null) {
-      return <img src={props.userImage} alt="user image" className="rounded-circle" />;
+    if (avatarUrl !== null) {
+      return <img src={avatarUrl} alt="user image" className="rounded-circle" />;
     } else {
       return <img src={`../../static/svg/user-circle.svg`} alt="user image" className="rounded-circle" />;
     }
@@ -75,11 +93,18 @@ const Header = props => {
                   دوستان
                 </Dropdown.Item>
                 <Dropdown.Item eventKey="2">دنبال شده ها</Dropdown.Item>
+                {/* <Dropdown.Item
+                  eventKey="5"
+                  onClick={() => {
+                    props.setView(1);
+                  }}
+                >
+                  پروفایل
+                </Dropdown.Item> */}
                 <Dropdown.Item
                   eventKey="3"
                   onClick={() => {
-                    console.log('show edit profile');
-                    props.setView('edit1');
+                    props.setView(2);
                   }}
                 >
                   ویرایش پروفایل
@@ -107,21 +132,21 @@ const Header = props => {
         </div>
         <div className="row">
           <div className="col d-flex justify-content-center">
-            <p className="user_name mt-3">sima_k64</p>
+            <p className="user_name mt-3">{userName}</p>
           </div>
         </div>
         <div className="row stats rtl mt-2">
           <div className="col-4 d-block text-center">
             <p className="friendsTitle">دوستان</p>
-            <p className="friends">167</p>
+            <p className="friends">{friendsCount || 0}</p>
           </div>
           <div className="col-4 d-block text-center">
             <p className="customersTitle">مشتریان</p>
-            <p className="customers">5421</p>
+            <p className="customers">{customerCount || 0}</p>
           </div>
           <div className="col-4 d-block text-center">
             <p className="productsTitle">محصولات</p>
-            <p className="products">203</p>
+            <p className="products">{productCount || 0}</p>
           </div>
         </div>
       </div>
@@ -130,20 +155,20 @@ const Header = props => {
           <div className="col-12 d-flex top">
             <div className="col-4 d-block text-center">
               <p>موجودی</p>
-              <p className="inventory">5340k</p>
+              <p className="inventory">{`${walletCharge} ` || `0 `}</p>
             </div>
             <div className="col-4 d-block text-center">
-              <p>بدهی</p>
-              <p className="debt">324 k</p>
+              <p>قرون</p>
+              <p className="debt">{qerun ? `${qerun} ` : `0 `}</p>
             </div>
             <div className="col-4 d-block text-center">
               <p>سفارشات</p>
-              <p className="orders">11</p>
+              <p className="orders">{marketingAmount ? `${marketingAmount} ` : `0 `}</p>
             </div>
           </div>
           <div className="col-12 pt-3">
             <h2 className="title">فروشگاه قارون</h2>
-            <p className="bio">عرضه بهترین و باکیفیت ترین محصولات بازار با قیمت مناسب ارسال سریع و خدمات مناسب</p>
+            <p className="bio">{biography ? `${biography}` : ` `}</p>
             {/* <Link href="/profileEdit" passHref>
               <a className="btn btn-main">ویرایش</a>
             </Link> */}

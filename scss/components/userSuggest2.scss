@@ -56,13 +56,13 @@
   }
 }
 @media screen and (max-width: 360px) {
-  .user_link img {
+  .map_user_suggestion .user_link img {
     width: 4rem !important;
   }
-  .user_name {
+  .map_user_suggestion .user_name {
     font-size: 0.8rem !important;
   }
-  .follow {
+  .map_user_suggestion .follow {
     font-size: 70% !important;
   }
 }

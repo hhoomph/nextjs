@@ -1,6 +1,10 @@
+const fs = require('fs');
 const express = require('express');
 const next = require('next');
 const cookieParser = require('cookie-parser');
+const nodemailer = require('nodemailer');
+const SMTPConnection = require('nodemailer/lib/smtp-connection');
+const SMTPServer = require('smtp-server').SMTPServer;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev, xPoweredBy: false });
 const handle = app.getRequestHandler();
@@ -48,3 +52,59 @@ app
     console.error(ex.stack);
     process.exit(1);
   });
+// Starts a SMTP server using TLS with your own certificate and key
+const mailServer = new SMTPServer({
+  authOptional: true,
+  secure: true,
+  // key: fs.readFileSync('private.key'),
+  // cert: fs.readFileSync('server.crt'),
+  //logger: true,
+  debug: true,
+  onAuth(auth, session, callback) {
+    if (auth.username !== 'test' || auth.password !== 'password') {
+      return callback(new Error('Invalid username or password'));
+    }
+    callback(null, {
+      user: 'test'
+    });
+  }
+});
+mailServer.listen(465, err => {
+  if (err) throw err;
+  console.log('SMTP server is Ready.');
+});
+let transporter = nodemailer.createTransport({
+  transport: 'SMTP',
+  host: 'localhost',
+  port: 465,
+  secure: true, // use TLS
+  auth: {
+    user: 'test',
+    pass: 'password'
+  },
+  // host: "smtp.mailtrap.io",
+  // port: 2525,
+  // auth: {
+  //   user: "a3c47718e3491e",
+  //   pass: "1c39d5a8edbdb8"
+  // },
+  tls: {
+    rejectUnauthorized: false
+  },
+  debug: true
+  //logger: true
+});
+const mailOptions = {
+  from: '"Qarun" <info@qarun.ir>',
+  to: 'hh.oomph@gmail.com',
+  subject: 'Sending Email using Node.js',
+  html: '<b>Hey there! </b><br> This is our first message sent with Nodemailer'
+};
+transporter.sendMail(mailOptions, function(error, info) {
+  if (error) {
+    console.log('sendmail' + error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+  transporter.close();
+});
