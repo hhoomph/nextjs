@@ -1,9 +1,12 @@
 import React, { Fragment, useState, useContext, useRef, useEffect, memo } from 'react';
 import L from 'leaflet';
+import fetch from 'isomorphic-unfetch';
 import { Circle, LayerGroup, Map, TileLayer, Marker, Popup, Polyline, Tooltip } from 'react-leaflet';
 import { GeoSearchControl, OpenStreetMapProvider, EsriProvider } from 'leaflet-geosearch';
 import { ReactComponent as TargetSvg } from '../../static/svg/target.svg';
+import { FaSearch } from 'react-icons/fa';
 import '../../scss/components/map.scss';
+import { setTimeout } from 'core-js';
 const esriProvider = new EsriProvider();
 const provider = new OpenStreetMapProvider();
 /**
@@ -31,17 +34,25 @@ const placeholderIcon = new L.Icon({
   className: 'current_pos_marker'
 });
 const MapComponent = props => {
-  const [markPosition, setMarkPosition] = useState([]);
+  //const [markPosition, setMarkPosition] = useState(props.laLong);
+  const { markPosition, setMarkPosition, draggable, setCity, setState } = props;
   const [searchResult, setSearchResult] = useState([]);
+  const [loadingGetLocation, setLoadingGetLocation] = useState('');
+  const [searchValue, setSearchValue] = useState('');
   const markRef = useRef();
   const mapRef = useRef();
-  useEffect(() => {
-    if (props.searchValue != '' && props.searchValue.length >= 2) {
-      provider.search({ query: props.searchValue }).then(function(result) {
+  const handleSearch = () => {
+    if (searchValue != '' && searchValue.length >= 2) {
+      provider.search({ query: searchValue }).then(function(result) {
         setSearchResult(result);
       });
+    } else {
+      setSearchResult('');
     }
-  }, [props.searchValue]);
+  };
+  useEffect(() => {
+    handleSearch();
+  }, [searchValue]);
   const showSearchResult = () => {
     return searchResult.length >= 1 ? (
       <div className="location_search_results">
@@ -59,33 +70,29 @@ const MapComponent = props => {
         ))}
       </div>
     ) : null;
-    // return searchResult.map(v => (
-    //   <a
-    //     key={v.x * v.y}
-    //     title={v.label}
-    //     onClick={() => {
-    //       setMarkPosition([v.y, v.x]);
-    //       setSearchResult([]);
-    //     }}
-    //   >
-    //     {v.label}
-    //   </a>
-    // ));
   };
-  const updatePosition = () => {
+  const updatePosition = async () => {
     const marker = markRef.current;
     if (marker != null) {
       let latlng = marker.leafletElement.getLatLng();
       setMarkPosition(convertLatlngToArray(latlng));
-      const map = mapRef.current.leafletElement;
-      map.setView(convertLatlngToArray(latlng));
-      // distance to position in meter
-      console.log(latlng.distanceTo(position));
+      // Get City Name From Lat & Long (https://nominatim.openstreetmap.org)
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${convertLatlngToArray(latlng)[0]}&lon=${convertLatlngToArray(latlng)[1]}&zoom=10&addressdetails=1&extratags=1`,
+        {
+          method: 'GET'
+          //credentials: 'include'
+        }
+      );
+      if (res != undefined && res.ok) {
+        const result = await res.json();
+        setCity(result.name);
+        setState(result.address.state.replace('استان ', ''));
+      } else {
+        // network error
+      }
     }
   };
-  const position = [34.635059, 50.880823];
-  const position1 = [34.635255, 50.876762];
-  const position2 = [34.6327669608, 50.88060376];
   // geolocation Options
   const geoOptions = {
     enableHighAccuracy: true,
@@ -94,40 +101,22 @@ const MapComponent = props => {
   };
   const getLocation = async () => {
     /*
-     * Get Current Location With Leaflet Function
-     */
-    // const map = mapRef.current;
-    // if (map != null) {
-    //   map.leafletElement.locate({
-    //     setView: true,
-    //     maxZoom: 18,
-    //     maximumAge: 3000,
-    //     enableHighAccuracy: true
-    //   });
-    // }
-    /*
      * Get Current Location With Direct web Api
      */
+    setLoadingGetLocation('spinner_location');
     if (navigator.geolocation) {
       await navigator.geolocation.getCurrentPosition(showPosition, errorGetPosition, geoOptions);
     } else {
       await console.log('Geolocation is not supported by this browser.');
+      setLoadingGetLocation('');
     }
   };
   const showPosition = position => {
-    //updatePosition();
+    setLoadingGetLocation('');
     setMarkPosition([position.coords.latitude, position.coords.longitude]);
-    console.log(`More or less ${position.coords.accuracy} meters.`);
-    // const map = mapRef.current.leafletElement;
-    // L.marker([position.coords.latitude, position.coords.longitude], { icon: placeholderIcon }).addTo(map);
-    // map.setView([position.coords.latitude, position.coords.longitude]);
   };
   const errorGetPosition = err => {
     console.warn(`Geolocation ERROR(${err.code}): ${err.message}`);
-  };
-  const handleLocationFound = e => {
-    console.log(e.latlng);
-    setMarkPosition([e.latlng.lat, e.latlng.lng]);
   };
   const currentMarker = () => {
     return markPosition.length > 1 ? (
@@ -136,7 +125,7 @@ const MapComponent = props => {
           className="current_location_marker"
           position={markPosition}
           icon={placeholderIcon}
-          draggable={true}
+          draggable={draggable}
           onDragend={() => updatePosition()}
           ref={markRef}
           onclick={() => {
@@ -145,21 +134,44 @@ const MapComponent = props => {
         >
           <Tooltip>مکان شما</Tooltip>
         </Marker>
-        <Circle center={markPosition} radius={1000} className="circle_radius" />
+        {draggable && <Circle center={markPosition} radius={1000} className="circle_radius" />}
       </>
     ) : null;
   };
   return (
-    <div id="map_id">
-      <Map closePopupOnClick={true} animate={true} center={markPosition} zoom={15} maxZoom={18} ref={mapRef} onLocationfound={handleLocationFound}>
-        <TileLayer attribution="Qarun" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {currentMarker()}
-        <div className="current_location" onClick={() => getLocation()} title="نمایش مکان شما">
-          <TargetSvg className="svg_icon" />
+    <>
+      {draggable && (
+        <div className="row map_search m-auto">
+          <div className="col d-block text-center">
+            <input
+              onChange={e => setSearchValue(e.target.value)}
+              value={searchValue}
+              type="text"
+              className="form-control text-center m-auto d-inline-block"
+              placeholder="کجا هستید؟"
+              onBlur={() => {
+                setTimeout(() => {
+                  setSearchValue('');
+                }, 250);
+              }}
+            />
+            <FaSearch className="position-relative d-inline-block search_icon" />
+          </div>
         </div>
-        {showSearchResult()}
-      </Map>
-    </div>
+      )}
+      <div id="map_2">
+        <Map closePopupOnClick={true} animate={true} center={markPosition} zoom={13} maxZoom={18} ref={mapRef} dragging={draggable}>
+          <TileLayer attribution="Qarun" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          {currentMarker()}
+          {draggable && (
+            <div className="current_location" onClick={() => getLocation()} title="نمایش مکان شما">
+              <TargetSvg className={`svg_icon ${loadingGetLocation}`} />
+            </div>
+          )}
+          {showSearchResult()}
+        </Map>
+      </div>
+    </>
   );
 };
 export default memo(MapComponent);

@@ -73,38 +73,38 @@ mailServer.listen(465, err => {
   if (err) throw err;
   console.log('SMTP server is Ready.');
 });
-let transporter = nodemailer.createTransport({
-  transport: 'SMTP',
-  host: 'localhost',
-  port: 465,
-  secure: true, // use TLS
-  auth: {
-    user: 'test',
-    pass: 'password'
-  },
-  // host: "smtp.mailtrap.io",
-  // port: 2525,
-  // auth: {
-  //   user: "a3c47718e3491e",
-  //   pass: "1c39d5a8edbdb8"
-  // },
-  tls: {
-    rejectUnauthorized: false
-  },
-  debug: true
-  //logger: true
-});
-const mailOptions = {
-  from: '"Qarun" <info@qarun.ir>',
-  to: 'hh.oomph@gmail.com',
-  subject: 'Sending Email using Node.js',
-  html: '<b>Hey there! </b><br> This is our first message sent with Nodemailer'
-};
-transporter.sendMail(mailOptions, function(error, info) {
-  if (error) {
-    console.log('sendmail' + error);
-  } else {
-    console.log('Email sent: ' + info.response);
-  }
-  transporter.close();
-});
+// let transporter = nodemailer.createTransport({
+//   transport: 'SMTP',
+//   host: 'https://qarun.ir',
+//   port: 465,
+//   secure: true, // use TLS
+//   auth: {
+//     user: 'test',
+//     pass: 'password'
+//   },
+//   // host: "smtp.mailtrap.io",
+//   // port: 2525,
+//   // auth: {
+//   //   user: "a3c47718e3491e",
+//   //   pass: "1c39d5a8edbdb8"
+//   // },
+//   tls: {
+//     rejectUnauthorized: false
+//   },
+//   debug: true
+//   //logger: true
+// });
+// const mailOptions = {
+//   from: '"Qarun" <info@qarun.ir>',
+//   to: 'hh.oomph@gmail.com',
+//   subject: 'Sending Email using Node.js',
+//   html: '<b>Hey there! </b><br> This is our first message sent with Nodemailer'
+// };
+// transporter.sendMail(mailOptions, function(error, info) {
+//   if (error) {
+//     console.log('sendmail' + error);
+//   } else {
+//     console.log('Email sent: ' + info.response);
+//   }
+//   transporter.close();
+// });

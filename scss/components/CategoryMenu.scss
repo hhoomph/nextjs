@@ -85,18 +85,21 @@
     }
   }
   @media screen and (min-width: 992px) {
+    &::after {
+      bottom: -0px;
+    }
     padding-right: 10%;
     padding-left: 10%;
     padding-top: 2% !important;
   }
-  @media screen and (min-width: 365px) {
+  @media screen and (max-height: 550px) {
     &::after {
-      bottom: -0px;
+      bottom: -500px;
     }
   }
   @media screen and (max-width: 310px) {
     &::after {
-      bottom: -300px;
+      bottom: -400px;
     }
   }
 }

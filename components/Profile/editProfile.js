@@ -25,6 +25,10 @@ const EditProfile = props => {
   const [iban, setIban] = useState(props.profileData.iban || '');
   const [lat, setLat] = useState(props.profileData.lat);
   const [long, setLong] = useState(props.profileData.long);
+  const [markPosition, setMarkPosition] = useState([props.profileData.lat, props.profileData.long]);
+  const [city, setCity] = useState(null);
+  const [state, setState] = useState(null);
+  const [draggable, setDraggable] = useState(false);
   const [addresses, setAddresses] = useState(props.profileData.addresses[0] || '');
   const avatarUrl = props.profileData.avatar !== null ? `http://api.qarun.ir/${props.profileData.avatar}` : null;
   const [avatar, setAvatar] = useState(avatarUrl);
@@ -98,12 +102,12 @@ const EditProfile = props => {
           displayName: name,
           biography: biography,
           addresses: [addresses],
-          lat: lat,
-          long: long,
+          lat: markPosition[0],
+          long: markPosition[1],
           // lat: '34.635059',
           // long: '50.880823',
-          // iban: iban,
-          iban: 'iban',
+          iban: iban,
+          //iban: 'iban',
           id: id,
           userName: username,
           email: email,
@@ -200,10 +204,19 @@ const EditProfile = props => {
               <label htmlFor="addresses">آدرس</label>
               <input type="text" id="addresses" value={addresses} onChange={e => setAddresses(e.target.value)} className="form-control mt-1 mb-4" placeholder="آدرس خود را وارد کنید" />
             </div>
-            <div className="form-group">
+            <div className="map_part">
               <label>موقعیت روی نقشه</label>
+              <LocationMap markPosition={markPosition} setMarkPosition={setMarkPosition} draggable={draggable} setCity={setCity} setState={setState} />
               <br />
-              <a className="setLocation">تغییر موقعیت</a>
+              <a
+                className="setLocation"
+                onClick={() => {
+                  setDraggable(!draggable);
+                }}
+                title="لطفا علامت نارنجی نقشه را بر روی مکان مورد نظر خود قرار دهید "
+              >
+                برای تغییر موقعیت کلیک کنید
+              </a>
             </div>
           </form>
         </div>

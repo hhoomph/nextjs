@@ -139,7 +139,19 @@ const Page = props => {
           <div className="row">
             <div className="col d-flex justify-content-center">
               <form className="loginForm">
-                <input value={userName} onChange={e => setUserName(e.target.value)} type="text" className="form-control mt-1 mb-3" placeholder=" موبایل &nbsp; | &nbsp; ایمیل " />
+                <input
+                  value={userName}
+                  onChange={e => setUserName(e.target.value)}
+                  type="text"
+                  className="form-control mt-1 mb-3"
+                  placeholder=" موبایل &nbsp; | &nbsp; ایمیل "
+                  onKeyPress={e => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleSubmitStep1();
+                    }
+                  }}
+                />
                 <input value={reagent} onChange={e => setReagent(e.target.value)} type="text" className="form-control mb-4" placeholder=" معرف " />
                 <SubmitButton loading={isLoading} onClick={() => handleSubmitStep1()} text="ادامه" className="btn btn-lg btn-block btn-submit" />
               </form>
@@ -168,7 +180,19 @@ const Page = props => {
           <div className="row">
             <div className="col d-flex justify-content-center">
               <form className="loginForm">
-                <input value={code} onChange={e => setCode(forceNumeric(e.target.value))} type="text" className="form-control mt-1 mb-4" placeholder=" کد ارسالی " />
+                <input
+                  value={code}
+                  onChange={e => setCode(forceNumeric(e.target.value))}
+                  type="text"
+                  className="form-control mt-1 mb-4"
+                  placeholder=" کد ارسالی "
+                  onKeyPress={e => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleSubmitStep2();
+                    }
+                  }}
+                />
                 <SubmitButton loading={isLoading} onClick={() => handleSubmitStep2()} text="ورود" className="btn btn-lg btn-block btn-submit" />
                 <Resend />
               </form>
