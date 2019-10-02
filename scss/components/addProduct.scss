@@ -154,6 +154,37 @@
   }
   .add_image {
     .add_product_image {
+      .pictures {
+        overflow: auto;
+        flex-flow: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        margin: auto;
+        padding: 0;
+        .images_row {
+          display: grid;
+          //grid-template-columns: repeat(2, 1fr);
+          grid-auto-flow: column;
+          grid-template-rows: repeat(2, 1fr);
+          grid-gap: 1rem;
+          img {
+            display: block;
+            width: 11rem;
+            height: 15rem;
+            min-width: 10rem;
+            margin: auto;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 10px;
+            &:hover {
+              background: #FFC107;
+            }
+          }
+          img.active{
+            background: #ff9800;
+          }
+        }
+      }
     }
   }
   @media (min-width: 576px) {
@@ -173,7 +204,7 @@
       width: 90% !important;
       max-width: 90%;
       top: auto !important;
-      bottom: -10px !important;
+      bottom: -14px !important;
     }
   }
 }

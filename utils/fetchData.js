@@ -65,6 +65,10 @@ export default async (path, opts = {}, context, isFile = false) => {
       }
     } else {
       data = await res.json();
+      if (data.StatusCode == 6) {
+        // We need to log out here
+        return Logout();
+      }
     }
   } catch (error2) {
     error = new Error(`خطایی در اتصال به سرور رخ داده است، لطفا بعدا امتحان کنید (${url})`);

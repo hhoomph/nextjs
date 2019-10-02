@@ -11,6 +11,7 @@ import Select from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 import { numberSeparator, removeSeparator, forceNumeric } from '../utils/tools';
 import '../scss/components/addProduct.scss';
+import { setTimeout } from 'core-js';
 function Page(props) {
   const nextCtx = props.ctx;
   const categories = props.result.data;
@@ -43,7 +44,7 @@ function Page(props) {
   const removeTags = index => {
     setTags([...tags.filter(tag => tags.indexOf(tag) !== index)]);
   };
-  const [view, setView] = useState(2);
+  const [view, setView] = useState(1);
   toast.configure({
     position: 'top-right',
     autoClose: 2000,
@@ -52,8 +53,10 @@ function Page(props) {
     pauseOnHover: true,
     draggable: true
   });
+  let imgId = 0;
+  const [uploadedImages, setUploadedImages] = useState([{ id: ++imgId, url: '../static/img/product.png', active: true }]);
   const addProduct = async () => {
-    if (categoryId !== null) {
+    if (categoryId !== null && title != '') {
       setLoading(true);
       const result = await fetchData(
         'User/U_Product/Add',
@@ -84,7 +87,11 @@ function Page(props) {
       }
       setLoading(false);
     } else {
-      toast.warn('لطفا دسته بندی محصول خود را مشخص کنید.');
+      if (title == '') {
+        toast.warn('لطفا نام محصول را وارد کنید.');
+      } else if (categoryId == null) {
+        toast.warn('لطفا دسته بندی محصول خود را مشخص کنید.');
+      }
     }
   };
   const fileInput = useRef();
@@ -129,7 +136,11 @@ function Page(props) {
       true
     );
     if (result.isSuccess) {
-      setAvatar(`http://api.qarun.ir/${result.message}`);
+      setUploadedImages(...uploadedImages, {
+        id: ++imgId,
+        url: `http://api.qarun.ir/${result.data.value}`,
+        active: true
+      });
       toast.success('تصویر شما با موفقیت آپلود شد.');
     } else if (result.message != undefined) {
       toast.warn(result.message);
@@ -138,6 +149,9 @@ function Page(props) {
     }
     setUploading(false);
   };
+  const showUploadedImages = uploadedImages.map(image => (
+    <img src={image.url} className={image.active ? 'active' : ''} key={image.id} id={image.id} title="برای انتخاب یا عدم انتخاب بر روی عکس کلیک کنید" />
+  ));
   switch (view) {
     case 1:
       if (typeof window !== 'undefined') {
@@ -258,7 +272,9 @@ function Page(props) {
                 className="col-4 pt-2 text-center  border-left"
                 onClick={() => {
                   setView(3);
-                  fileInput.current.click();
+                  setTimeout(() => {
+                    fileInput.current.click();
+                  }, 200);
                 }}
               >
                 <a className="d-inline-block tab_link">گالری</a>
@@ -267,7 +283,9 @@ function Page(props) {
                 className="col-4 pt-2 text-center"
                 onClick={() => {
                   setView(4);
-                  fileInput.current.click();
+                  setTimeout(() => {
+                    fileInput.current.click();
+                  }, 200);
                 }}
               >
                 <a className="d-inline-block tab_link">دوربین</a>
@@ -281,8 +299,19 @@ function Page(props) {
                   </div>
                 </div>
                 <div className="row add_product_image">
-                  <div className="col d-flex justify-content-center">
-                    <input type="file" accept="image/*" capture onChange={uploadHandler} ref={fileInput} hidden={true} />
+                  <div className="col-md-10 d-flex pictures">
+                    <div className="images_row">
+                      {/* <img src="../static/img/product.png" className="active" title="برای انتخاب رو عکس کلیک کنید" />
+                      <img src="../static/img/product2.png" className="" title="برای انتخاب رو عکس کلیک کنید" />
+                      <img src="../static/img/product3.png" className="" title="برای انتخاب رو عکس کلیک کنید" />
+                      <img src="../static/img/product.png" className="" title="برای انتخاب رو عکس کلیک کنید" />
+                      <img src="../static/img/product2.png" className="" title="برای انتخاب رو عکس کلیک کنید" />
+                      <img src="../static/img/product3.png" className="" title="برای انتخاب رو عکس کلیک کنید" />
+                      <img src="../static/img/product.png" className="" title="برای انتخاب رو عکس کلیک کنید" />
+                      <img src="../static/img/product2.png" className="" title="برای انتخاب رو عکس کلیک کنید" />
+                      <img src="../static/img/product3.png" className="" title="برای انتخاب رو عکس کلیک کنید" /> */}
+                      {showUploadedImages}
+                    </div>
                   </div>
                 </div>
                 <div className="row">
@@ -312,7 +341,9 @@ function Page(props) {
                 className="col-4 pt-2 text-center  border-left active"
                 onClick={() => {
                   setView(3);
-                  fileInput.current.click();
+                  setTimeout(() => {
+                    fileInput.current.click();
+                  }, 200);
                 }}
               >
                 <a className="d-inline-block tab_link">گالری</a>
@@ -321,7 +352,9 @@ function Page(props) {
                 className="col-4 pt-2 text-center"
                 onClick={() => {
                   setView(4);
-                  fileInput.current.click();
+                  setTimeout(() => {
+                    fileInput.current.click();
+                  }, 200);
                 }}
               >
                 <a className="d-inline-block tab_link">دوربین</a>
@@ -335,8 +368,9 @@ function Page(props) {
                   </div>
                 </div>
                 <div className="row add_product_image">
-                  <div className="col d-flex justify-content-center">
-                    <input type="file" accept="image/*;capture=camera" capture="camera" onChange={uploadHandler} ref={fileInput} hidden={true} />
+                  <input type="file" accept="image/*;capture=camera" capture="camera" onChange={uploadHandler} ref={fileInput} hidden={true} />
+                  <div className="col-md-10 d-flex pictures">
+                    <div className="images_row">{showUploadedImages}</div>
                   </div>
                 </div>
                 <div className="row">
@@ -366,7 +400,9 @@ function Page(props) {
                 className="col-4 pt-2 text-center  border-left"
                 onClick={() => {
                   setView(3);
-                  fileInput.current.click();
+                  setTimeout(() => {
+                    fileInput.current.click();
+                  }, 200);
                 }}
               >
                 <a className="d-inline-block tab_link">گالری</a>
@@ -375,7 +411,9 @@ function Page(props) {
                 className="col-4 pt-2 text-center active"
                 onClick={() => {
                   setView(4);
-                  fileInput.current.click();
+                  setTimeout(() => {
+                    fileInput.current.click();
+                  }, 200);
                 }}
               >
                 <a className="d-inline-block tab_link">دوربین</a>
@@ -389,8 +427,9 @@ function Page(props) {
                   </div>
                 </div>
                 <div className="row add_product_image">
-                  <div className="col d-flex justify-content-center">
-                    <input type="file" accept="image/*;capture=camera" capture="camera" onChange={uploadHandler} ref={fileInput} hidden={true} />
+                  <input type="file" accept="image/*;capture=camera" capture="camera" onChange={uploadHandler} ref={fileInput} hidden={true} />
+                  <div className="col-md-10 d-flex pictures">
+                    <div className="images_row">{showUploadedImages}</div>
                   </div>
                 </div>
                 <div className="row">

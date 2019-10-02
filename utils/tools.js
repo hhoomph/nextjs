@@ -25,7 +25,7 @@ export const numberSeparator = (num, sep) => {
 export const removeSeparator = (num, sep) => {
   let separator = typeof sep === 'undefined' ? ',' : sep;
   var re = new RegExp(separator, 'g');
-  return num.replace(re, '');
+  return num.toString().replace(re, '');
 };
 // Convert elemetn's value for remove all characters exept number, Just Allow Type Numbers
 export const forceNumeric = e => {
