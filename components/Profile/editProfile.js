@@ -154,7 +154,7 @@ const EditProfile = props => {
       <div className="row">
         <div className="col d-block text-center profile_image">
           {uploading ? <Loading /> : avatar != null ? <img src={avatar} className="rounded-circle img-thumbnail" /> : <UserImageSvg className="rounded-circle img-thumbnail" />}
-          <input type="file" onChange={uploadHandler} ref={fileInput} hidden={true} />
+          <input type="file" accept="image/*" onChange={uploadHandler} ref={fileInput} hidden={true} />
           <a
             className="mt-3 change_image"
             onClick={() => {

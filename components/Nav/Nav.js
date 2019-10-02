@@ -58,7 +58,7 @@ const Nav = () => {
               <SearchSvg className="svg_Icons" transform="rotate(90)" />
             </a>
           </Link>
-          <Link href="/" passHref>
+          <Link href="/add-product" passHref>
             <a className="nav_Icons">
               <AddSvg className="svg_Icons" />
             </a>

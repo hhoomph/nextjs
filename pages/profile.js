@@ -1,9 +1,6 @@
 import React, { Fragment, useContext, useRef, useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Loading from '../components/Loader/Loader';
-import fetch from 'isomorphic-unfetch';
-import nextCookie from 'next-cookies';
-import cookie from 'js-cookie';
 import Router from 'next/router';
 import '../scss/style.scss';
 import Nav from '../components/Nav/Nav';
