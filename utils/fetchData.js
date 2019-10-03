@@ -29,7 +29,7 @@ export default async (path, opts = {}, context, isFile = false) => {
   }
   if (isFile) {
     // headers.Accept = 'text/plain';
-    // headers['Content-Type'] = 'multipart/form-data';
+    //headers['Content-Type'] = 'multipart/form-data';
   } else {
     headers.Accept = 'application/json';
     headers['Content-Type'] = 'application/json;charset=utf-8';

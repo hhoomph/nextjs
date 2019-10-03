@@ -54,7 +54,7 @@ function Page(props) {
     draggable: true
   });
   let imgId = 0;
-  const [uploadedImages, setUploadedImages] = useState([{ id: ++imgId, url: '../static/img/product.png', active: true }]);
+  const [uploadedImages, setUploadedImages] = useState([{ id: `img_${++imgId}`, url: '../static/img/product.png', active: true }]);
   const addProduct = async () => {
     if (categoryId !== null && title != '') {
       setLoading(true);
@@ -112,7 +112,7 @@ function Page(props) {
     //   if (file.size > 150000) {
     //     errs.push(`حجم فایل '${file.name}' بیشتر از حد مجاز است، لطفا فایل کم حجم تری انتخاب کنید.`);
     //   }
-    //   formData.append(`file${i}`, file);
+    //   formData.append(`File${i}`, file);
     // });
     if (types.every(type => file.type !== type)) {
       errs.push(`فرمت '${file.type}' پشتیبانی نمی شود.`);
@@ -137,7 +137,7 @@ function Page(props) {
     );
     if (result.isSuccess) {
       setUploadedImages(...uploadedImages, {
-        id: ++imgId,
+        id: `img_${++imgId}`,
         url: `http://api.qarun.ir/${result.data.value}`,
         active: true
       });
@@ -149,9 +149,15 @@ function Page(props) {
     }
     setUploading(false);
   };
-  const showUploadedImages = uploadedImages.map(image => (
-    <img src={image.url} className={image.active ? 'active' : ''} key={image.id} id={image.id} title="برای انتخاب یا عدم انتخاب بر روی عکس کلیک کنید" />
+  const showUploadedImages = uploadedImages.map((image, index) => (
+    <img src={image.url} className={image.active ? 'active' : ''} key={image.id} id={image.id} title="برای انتخاب یا عدم انتخاب بر روی عکس کلیک کنید" onClick={()=>toggleUploadedImages(index)} />
   ));
+  const toggleUploadedImages = index => {
+    const imgObject = uploadedImages.filter(image => uploadedImages.indexOf(image) == index)[0];
+    imgObject.active = !imgObject.active;
+    const otherImgObject = uploadedImages.filter(image => uploadedImages.indexOf(image) !== index);
+    setUploadedImages([...otherImgObject, imgObject]);
+  };
   switch (view) {
     case 1:
       if (typeof window !== 'undefined') {

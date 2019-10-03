@@ -169,15 +169,15 @@
           grid-gap: 1rem;
           img {
             display: block;
-            width: 11rem;
-            height: 15rem;
+            width: 10rem;
+            height: 14rem;
             min-width: 10rem;
             margin: auto;
             padding: 0.5rem;
             cursor: pointer;
             border-radius: 10px;
             &:hover {
-              background: #FFC107;
+              background: #ffc107;
             }
           }
           img.active{
@@ -204,7 +204,7 @@
       width: 90% !important;
       max-width: 90%;
       top: auto !important;
-      bottom: -14px !important;
+      bottom: -15px !important;
     }
   }
 }
