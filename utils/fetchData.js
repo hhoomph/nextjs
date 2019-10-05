@@ -43,7 +43,7 @@ export default async (path, opts = {}, context, isFile = false) => {
     res = await fetch(url, {
       ...opts,
       headers,
-      timeout: 20000,
+      timeout: 30000,
       credentials: 'include'
     });
     if (res.status === 403) {

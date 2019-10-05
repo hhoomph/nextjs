@@ -150,13 +150,38 @@ function Page(props) {
     setUploading(false);
   };
   const showUploadedImages = uploadedImages.map((image, index) => (
-    <img src={image.url} className={image.active ? 'active' : ''} key={image.id} id={image.id} title="برای انتخاب یا عدم انتخاب بر روی عکس کلیک کنید" onClick={()=>toggleUploadedImages(index)} />
+    <img src={image.url} className={image.active ? 'active' : ''} key={image.id} id={image.id} title="برای انتخاب یا عدم انتخاب بر روی عکس کلیک کنید" onClick={() => toggleUploadedImages(index)} />
   ));
   const toggleUploadedImages = index => {
     const imgObject = uploadedImages.filter(image => uploadedImages.indexOf(image) == index)[0];
     imgObject.active = !imgObject.active;
     const otherImgObject = uploadedImages.filter(image => uploadedImages.indexOf(image) !== index);
     setUploadedImages([...otherImgObject, imgObject]);
+  };
+  const setProductImages = async () => {
+    setLoading(true);
+    const selectedImages = uploadedImages.filter(image => image.active !== false).map(img => img.id);
+    //console.log(selectedImages);
+    // const result = await fetchData(
+    //   'User/U_Product/UploadProductImageFromSuggested',
+    //   {
+    //     method: 'POST',
+    //     body: JSON.stringify({
+    //       pictureIds: selectedImages,
+    //       productid: productId,
+    //     })
+    //   },
+    //   nextCtx
+    // );
+    // if (result.isSuccess) {
+    //   setView(2);
+    //   toast.success('محصول شما با موفقیت ثبت شد.');
+    // } else if (result.message != undefined) {
+    //   toast.warn(result.message);
+    // } else if (result.error != undefined) {
+    //   toast.error(result.error);
+    // }
+    // setLoading(false);
   };
   switch (view) {
     case 1:
@@ -322,7 +347,7 @@ function Page(props) {
                 </div>
                 <div className="row">
                   <div className="col pt-2 text-center">
-                    <a className="d-inline-block btn-main" onClick={() => addProduct()}>
+                    <a className="d-inline-block btn-main" onClick={() => setProductImages()}>
                       ثبت نهایی محصول
                       {loading ? <Loading className="font_icon" /> : <FaCheck className="font_icon" />}
                     </a>
@@ -381,7 +406,7 @@ function Page(props) {
                 </div>
                 <div className="row">
                   <div className="col pt-2 text-center">
-                    <a className="d-inline-block btn-main" onClick={() => addProduct()}>
+                    <a className="d-inline-block btn-main" onClick={() => setProductImages()}>
                       ثبت نهایی محصول
                       {loading ? <Loading className="font_icon" /> : <FaCheck className="font_icon" />}
                     </a>
@@ -440,7 +465,7 @@ function Page(props) {
                 </div>
                 <div className="row">
                   <div className="col pt-2 text-center">
-                    <a className="d-inline-block btn-main" onClick={() => addProduct()}>
+                    <a className="d-inline-block btn-main" onClick={() => setProductImages()}>
                       ثبت نهایی محصول
                       {loading ? <Loading className="font_icon" /> : <FaCheck className="font_icon" />}
                     </a>
