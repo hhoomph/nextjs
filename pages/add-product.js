@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useRef, useState, useEffect } from 'react';
+import React, { Fragment, useContext, useRef, useState, useEffect, memo } from 'react';
 import dynamic from 'next/dynamic';
 import Loading from '../components/Loader/Loading';
 import Router from 'next/router';
@@ -54,7 +54,8 @@ function Page(props) {
     draggable: true
   });
   let imgId = 0;
-  const [uploadedImages, setUploadedImages] = useState([{ id: `img_${++imgId}`, url: '../static/img/product.png', active: true }]);
+  const [uploadedImages, setUploadedImages] = useState([]);
+  //const [uploadedImages, setUploadedImages] = useState([{ id: `img_${++imgId}`, url: '../static/img/product.png', thumbnail: '../static/img/product.png', active: true }]);
   const addProduct = async () => {
     if (categoryId !== null && title != '') {
       setLoading(true);
@@ -78,8 +79,26 @@ function Page(props) {
       );
       if (result.isSuccess) {
         setProductId(result.data.productId);
-        setView(2);
         toast.success('محصول شما با موفقیت ایجاد شد، لطفا تصویر محصول را انتخاب کنید.');
+        const suggestedPicturesResult = await fetchData('Common/C_Image/ProductSuggestedPictures', {
+          method: 'POST',
+          body: JSON.stringify({
+            categoryId: categoryId ? categoryId.value : null,
+            productTitle: title,
+            page: 1,
+            pageSize: 100
+          })
+        });
+        if (suggestedPicturesResult.isSuccess) {
+          const suggestedPictures = suggestedPicturesResult.data.map(picture => {
+            return { id: picture.pictureId, url: `http://api.qarun.ir/${picture.picture}`, thumbnail: `http://api.qarun.ir/${picture.thumbNail}`, active: false };
+          });
+          if (suggestedPictures.length > 0) {
+            const all = uploadedImages.concat(suggestedPictures).sort((a, b) => a.id - b.id);
+            setUploadedImages(all);
+          }
+        }
+        setView(2);
       } else if (result.message != undefined) {
         toast.warn(result.message);
       } else if (result.error != undefined) {
@@ -136,11 +155,15 @@ function Page(props) {
       true
     );
     if (result.isSuccess) {
-      setUploadedImages(...uploadedImages, {
-        id: `img_${++imgId}`,
-        url: `http://api.qarun.ir/${result.data.value}`,
-        active: true
-      });
+      const all = uploadedImages
+        .concat({
+          id: result.data.pictureId,
+          url: `http://api.qarun.ir/${result.data.value}`,
+          thumbnail: `http://api.qarun.ir/${result.data.thumbNail}`,
+          active: true
+        })
+        .sort((a, b) => a.id - b.id);
+      setUploadedImages(all);
       toast.success('تصویر شما با موفقیت آپلود شد.');
     } else if (result.message != undefined) {
       toast.warn(result.message);
@@ -149,39 +172,45 @@ function Page(props) {
     }
     setUploading(false);
   };
-  const showUploadedImages = uploadedImages.map((image, index) => (
-    <img src={image.url} className={image.active ? 'active' : ''} key={image.id} id={image.id} title="برای انتخاب یا عدم انتخاب بر روی عکس کلیک کنید" onClick={() => toggleUploadedImages(index)} />
-  ));
+  const showUploadedImages = () =>
+    uploadedImages.map((image, index) => (
+      <img src={image.url} className={image.active ? 'active' : ''} key={image.id} id={image.id} title="برای انتخاب یا عدم انتخاب بر روی عکس کلیک کنید" onClick={() => toggleUploadedImages(index)} />
+    ));
+  // useEffect(() => {
+  //   showUploadedImages();
+  // }, [uploadedImages]);
   const toggleUploadedImages = index => {
     const imgObject = uploadedImages.filter(image => uploadedImages.indexOf(image) == index)[0];
     imgObject.active = !imgObject.active;
     const otherImgObject = uploadedImages.filter(image => uploadedImages.indexOf(image) !== index);
-    setUploadedImages([...otherImgObject, imgObject]);
+    const all = otherImgObject.concat(imgObject).sort((a, b) => a.id - b.id);
+    setUploadedImages(all);
+    //setUploadedImages([...otherImgObject, imgObject]);
   };
   const setProductImages = async () => {
     setLoading(true);
     const selectedImages = uploadedImages.filter(image => image.active !== false).map(img => img.id);
-    //console.log(selectedImages);
-    // const result = await fetchData(
-    //   'User/U_Product/UploadProductImageFromSuggested',
-    //   {
-    //     method: 'POST',
-    //     body: JSON.stringify({
-    //       pictureIds: selectedImages,
-    //       productid: productId,
-    //     })
-    //   },
-    //   nextCtx
-    // );
-    // if (result.isSuccess) {
-    //   setView(2);
-    //   toast.success('محصول شما با موفقیت ثبت شد.');
-    // } else if (result.message != undefined) {
-    //   toast.warn(result.message);
-    // } else if (result.error != undefined) {
-    //   toast.error(result.error);
-    // }
-    // setLoading(false);
+    const result = await fetchData(
+      'User/U_Product/UploadProductImageFromSuggested',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          pictureIds: selectedImages,
+          productid: productId,
+        })
+      },
+      nextCtx
+    );
+    if (result.isSuccess) {
+      //setView(2);
+      toast.success('محصول شما با موفقیت ثبت شد.');
+      Router.push('/profile');
+    } else if (result.message != undefined) {
+      toast.warn(result.message);
+    } else if (result.error != undefined) {
+      toast.error(result.error);
+    }
+    setLoading(false);
   };
   switch (view) {
     case 1:
@@ -341,7 +370,7 @@ function Page(props) {
                       <img src="../static/img/product.png" className="" title="برای انتخاب رو عکس کلیک کنید" />
                       <img src="../static/img/product2.png" className="" title="برای انتخاب رو عکس کلیک کنید" />
                       <img src="../static/img/product3.png" className="" title="برای انتخاب رو عکس کلیک کنید" /> */}
-                      {showUploadedImages}
+                      {showUploadedImages()}
                     </div>
                   </div>
                 </div>
@@ -401,7 +430,7 @@ function Page(props) {
                 <div className="row add_product_image">
                   <input type="file" accept="image/*;capture=camera" capture="camera" onChange={uploadHandler} ref={fileInput} hidden={true} />
                   <div className="col-md-10 d-flex pictures">
-                    <div className="images_row">{showUploadedImages}</div>
+                    <div className="images_row">{showUploadedImages()}</div>
                   </div>
                 </div>
                 <div className="row">
@@ -460,7 +489,7 @@ function Page(props) {
                 <div className="row add_product_image">
                   <input type="file" accept="image/*;capture=camera" capture="camera" onChange={uploadHandler} ref={fileInput} hidden={true} />
                   <div className="col-md-10 d-flex pictures">
-                    <div className="images_row">{showUploadedImages}</div>
+                    <div className="images_row">{showUploadedImages()}</div>
                   </div>
                 </div>
                 <div className="row">
