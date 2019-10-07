@@ -10,7 +10,7 @@ const CatProductsRow = () => {
       <div className="row">
         <div className="col">
           <div className="row d-flex justify-content-start rtl pr-2 categories">
-            <Category />
+            {/* <Category /> */}
           </div>
           <div className="row d-flex justify-content-start rtl pr-2 mb-3 cat_sort">
             <Sort />

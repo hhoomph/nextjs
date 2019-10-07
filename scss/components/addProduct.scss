@@ -166,12 +166,12 @@
           //grid-template-columns: repeat(2, 1fr);
           grid-auto-flow: column;
           grid-template-rows: repeat(2, 1fr);
-          grid-gap: 1rem;
+          grid-gap: 0.7rem;
           img {
             display: block;
-            width: 10rem;
-            height: 14rem;
-            min-width: 10rem;
+            width: 9rem;
+            height: 12rem;
+            min-width: 8rem;
             margin: auto;
             padding: 0.5rem;
             cursor: pointer;
@@ -180,8 +180,20 @@
               background: #ffc107;
             }
           }
-          img.active{
+          img.active {
             background: #ff9800;
+          }
+          @media (min-width: 576px) {
+            img {
+              width: 10rem;
+              height: 14rem;
+            }
+          }
+          @media screen and (min-width: 1400px) {
+            img {
+              width: 200px;
+              height: 250px;
+            }
           }
         }
       }

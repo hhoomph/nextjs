@@ -10,6 +10,7 @@ import { FaCheck, FaArrowLeft, FaArrowRight, FaTimes } from 'react-icons/fa';
 import Select from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 import { numberSeparator, removeSeparator, forceNumeric } from '../utils/tools';
+import SubmitButton from '../components/Button/SubmitButton';
 import '../scss/components/addProduct.scss';
 import { setTimeout } from 'core-js';
 function Page(props) {
@@ -55,7 +56,14 @@ function Page(props) {
   });
   let imgId = 0;
   const [uploadedImages, setUploadedImages] = useState([]);
-  //const [uploadedImages, setUploadedImages] = useState([{ id: `img_${++imgId}`, url: '../static/img/product.png', thumbnail: '../static/img/product.png', active: true }]);
+  // const [uploadedImages, setUploadedImages] = useState([
+  //   { id: `${++imgId}`, url: '../static/img/product.png', thumbnail: '../static/img/product2.png', active: true },
+  //   { id: `${++imgId}`, url: '../static/img/product.png', thumbnail: '../static/img/product3.png', active: true },
+  //   { id: `${++imgId}`, url: '../static/img/product.png', thumbnail: '../static/img/product.png', active: true },
+  //   { id: `${++imgId}`, url: '../static/img/product.png', thumbnail: '../static/img/product2.png', active: true },
+  //   { id: `${++imgId}`, url: '../static/img/product.png', thumbnail: '../static/img/product.png', active: true },
+  //   { id: `${++imgId}`, url: '../static/img/product.png', thumbnail: '../static/img/product3.png', active: true }
+  // ]);
   const addProduct = async () => {
     if (categoryId !== null && title != '') {
       setLoading(true);
@@ -120,19 +128,6 @@ function Page(props) {
     const file = e.target.files[0];
     const formData = new FormData();
     const types = ['image/png', 'image/jpeg', 'image/gif'];
-    // const files = Array.from(e.target.files);
-    // if (files.length > 3) {
-    //   return toast.warn('تنها امکان آپلود 3 فایل همزمان وجود دارد.');
-    // }
-    // files.forEach((file, i) => {
-    //   if (types.every(type => file.type !== type)) {
-    //     errs.push(`فرمت '${file.type}' پشتیبانی نمی شود.`);
-    //   }
-    //   if (file.size > 150000) {
-    //     errs.push(`حجم فایل '${file.name}' بیشتر از حد مجاز است، لطفا فایل کم حجم تری انتخاب کنید.`);
-    //   }
-    //   formData.append(`File${i}`, file);
-    // });
     if (types.every(type => file.type !== type)) {
       errs.push(`فرمت '${file.type}' پشتیبانی نمی شود.`);
     }
@@ -174,7 +169,14 @@ function Page(props) {
   };
   const showUploadedImages = () =>
     uploadedImages.map((image, index) => (
-      <img src={image.url} className={image.active ? 'active' : ''} key={image.id} id={image.id} title="برای انتخاب یا عدم انتخاب بر روی عکس کلیک کنید" onClick={() => toggleUploadedImages(index)} />
+      <img
+        src={image.thumbnail}
+        className={image.active ? 'active' : ''}
+        key={image.id}
+        id={image.id}
+        title="برای انتخاب یا عدم انتخاب بر روی عکس کلیک کنید"
+        onClick={() => toggleUploadedImages(index)}
+      />
     ));
   // useEffect(() => {
   //   showUploadedImages();
@@ -196,7 +198,7 @@ function Page(props) {
         method: 'POST',
         body: JSON.stringify({
           pictureIds: selectedImages,
-          productid: productId,
+          productid: productId
         })
       },
       nextCtx
@@ -351,7 +353,7 @@ function Page(props) {
                 <a className="d-inline-block tab_link">دوربین</a>
               </div>
             </div>
-            <div className="row mt-3 mb-5 add_image">
+            <div className="row mt-0 mb-5 add_image">
               <div className="col">
                 <div className="row">
                   <div className="col">
@@ -360,26 +362,14 @@ function Page(props) {
                 </div>
                 <div className="row add_product_image">
                   <div className="col-md-10 d-flex pictures">
-                    <div className="images_row">
-                      {/* <img src="../static/img/product.png" className="active" title="برای انتخاب رو عکس کلیک کنید" />
-                      <img src="../static/img/product2.png" className="" title="برای انتخاب رو عکس کلیک کنید" />
-                      <img src="../static/img/product3.png" className="" title="برای انتخاب رو عکس کلیک کنید" />
-                      <img src="../static/img/product.png" className="" title="برای انتخاب رو عکس کلیک کنید" />
-                      <img src="../static/img/product2.png" className="" title="برای انتخاب رو عکس کلیک کنید" />
-                      <img src="../static/img/product3.png" className="" title="برای انتخاب رو عکس کلیک کنید" />
-                      <img src="../static/img/product.png" className="" title="برای انتخاب رو عکس کلیک کنید" />
-                      <img src="../static/img/product2.png" className="" title="برای انتخاب رو عکس کلیک کنید" />
-                      <img src="../static/img/product3.png" className="" title="برای انتخاب رو عکس کلیک کنید" /> */}
-                      {showUploadedImages()}
-                    </div>
+                    <div className="images_row">{showUploadedImages()}</div>
                   </div>
                 </div>
                 <div className="row">
                   <div className="col pt-2 text-center">
-                    <a className="d-inline-block btn-main" onClick={() => setProductImages()}>
-                      ثبت نهایی محصول
-                      {loading ? <Loading className="font_icon" /> : <FaCheck className="font_icon" />}
-                    </a>
+                    <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main">
+                      <FaCheck className="font_icon" />
+                    </SubmitButton>
                   </div>
                 </div>
               </div>
@@ -420,7 +410,7 @@ function Page(props) {
                 <a className="d-inline-block tab_link">دوربین</a>
               </div>
             </div>
-            <div className="row mt-3 mb-5 add_image">
+            <div className="row mt-0 mb-5 add_image">
               <div className="col">
                 <div className="row">
                   <div className="col">
@@ -435,10 +425,9 @@ function Page(props) {
                 </div>
                 <div className="row">
                   <div className="col pt-2 text-center">
-                    <a className="d-inline-block btn-main" onClick={() => setProductImages()}>
-                      ثبت نهایی محصول
-                      {loading ? <Loading className="font_icon" /> : <FaCheck className="font_icon" />}
-                    </a>
+                    <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main">
+                      <FaCheck className="font_icon" />
+                    </SubmitButton>
                   </div>
                 </div>
               </div>
@@ -494,10 +483,9 @@ function Page(props) {
                 </div>
                 <div className="row">
                   <div className="col pt-2 text-center">
-                    <a className="d-inline-block btn-main" onClick={() => setProductImages()}>
-                      ثبت نهایی محصول
-                      {loading ? <Loading className="font_icon" /> : <FaCheck className="font_icon" />}
-                    </a>
+                    <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main">
+                      <FaCheck className="font_icon" />
+                    </SubmitButton>
                   </div>
                 </div>
               </div>

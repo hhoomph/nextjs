@@ -65,7 +65,7 @@ const UserSuggest = () => {
   return (
     <div className="container user_Suggestion">
       <div className="row">
-        <div className="col p-0">
+        <div className="col">
           <div className="d-flex justify-content-start rtl pt-3 pb-3 over_flow">{renderUsers()}</div>
         </div>
       </div>

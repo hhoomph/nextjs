@@ -1,5 +1,10 @@
 @import '../vars';
 .user_Suggestion {
+  .userClass {
+    // width: 20vw;
+    width: 20%;
+    padding: 0.7rem;
+  }
   .over_flow {
     overflow: hidden;
     overflow-x: auto;
@@ -26,12 +31,18 @@
     }
   }
   img.rounded-circle {
-    width: 5.6em;
+    // width: 5.6em;
+    width: 13.6vw;
     padding: 0;
   }
 }
-@media screen and (max-width: 1200px) {
+@media screen and (min-width: 1000px) {
   .user_Suggestion img.rounded-circle {
-    width: 3.5em !important;
+    width: 10vw !important;
+  }
+}
+@media screen and (min-width: 1400px) {
+  .user_Suggestion img.rounded-circle {
+    width: 5.5vw !important;
   }
 }

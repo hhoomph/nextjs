@@ -5,7 +5,7 @@
   padding-right: 5.5%;
   border-bottom: 2px solid $border_color;
   box-shadow: 0 1px 4px $border_color;
-  .navbar-brand{
+  .navbar-brand {
     margin-right: 0;
   }
   // Icons
@@ -20,7 +20,7 @@
     &.active {
       color: $main_color;
     }
-    .svg_Icons{
+    .svg_Icons {
       width: 2.5rem;
       fill: $topIcon_color;
     }
@@ -37,7 +37,7 @@
     }
   }
   form.inline {
-    .search_input{
+    .search_input {
       background-color: #f5f5f5;
     }
     @media screen and (min-width: 1280px) {
@@ -92,7 +92,7 @@
     }
     &.active {
       color: $main_color;
-      .svg_Icons{
+      .svg_Icons {
         fill: $main_color;
       }
     }
@@ -101,13 +101,17 @@
       display: block;
       width: 55%;
       margin: auto;
-      padding-top: 3px;
+      margin-top: 4px;
+      margin-bottom: -7px;
+      padding-top: 2px;
       border-bottom: 2px solid;
       border-radius: 5px;
       background: $border_gradient;
     }
-    .svg_Icons{
+    .svg_Icons {
       width: 1.9rem;
+      width: 32%;
+      height: 70%;
       fill: $bottomIcon_color;
     }
   }

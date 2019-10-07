@@ -4,7 +4,14 @@ import '../../scss/components/button.scss';
 const SubmitButton = props => {
   return (
     <button onClick={props.onClick} className={props.className} type="button" disabled={props.loading}>
-      {props.loading == true ? <Loading /> : props.text}
+      {props.loading == true ? (
+        <Loading />
+      ) : (
+        <>
+          {props.text} {props.children}
+        </>
+      )}
+      {/* {props.children} */}
     </button>
   );
 };
