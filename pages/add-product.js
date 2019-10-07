@@ -91,7 +91,7 @@ function Page(props) {
         });
         if (suggestedPicturesResult.isSuccess) {
           const suggestedPictures = suggestedPicturesResult.data.map(picture => {
-            return { id: picture.pictureId, url: `http://api.qarun.ir/${picture.picture}`, thumbnail: `http://api.qarun.ir/${picture.thumbNail}`, active: false };
+            return { id: picture.pictureId, url: `https://api.qarun.ir/${picture.picture}`, thumbnail: `https://api.qarun.ir/${picture.thumbNail}`, active: false };
           });
           if (suggestedPictures.length > 0) {
             const all = uploadedImages.concat(suggestedPictures).sort((a, b) => a.id - b.id);
@@ -158,8 +158,8 @@ function Page(props) {
       const all = uploadedImages
         .concat({
           id: result.data.pictureId,
-          url: `http://api.qarun.ir/${result.data.value}`,
-          thumbnail: `http://api.qarun.ir/${result.data.thumbNail}`,
+          url: `https://api.qarun.ir/${result.data.value}`,
+          thumbnail: `https://api.qarun.ir/${result.data.thumbNail}`,
           active: true
         })
         .sort((a, b) => a.id - b.id);
