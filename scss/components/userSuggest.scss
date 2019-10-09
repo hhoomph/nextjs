@@ -41,6 +41,11 @@
     width: 10vw !important;
   }
 }
+@media screen and (min-width: 1010px) and (max-width: 1300px) {
+  .user_Suggestion img.rounded-circle {
+    width: 9.6vw !important;
+  }
+}
 @media screen and (min-width: 1400px) {
   .user_Suggestion img.rounded-circle {
     width: 5.5vw !important;

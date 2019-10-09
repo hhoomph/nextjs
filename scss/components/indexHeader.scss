@@ -6,15 +6,18 @@
   .navbar-brand {
     margin-right: 0;
     img {
-      margin-top: -6px;
-      width: 3rem;
-      height: 2.9rem;
+      // width: 3rem;
+      // height: 2.9rem;
+      margin-top: -5px;
+      width: 13vw;
+      height: 5.2vw;
     }
   }
   // Icons
   .nav_Icons {
     color: #525157;
-    font-size: 2em;
+    // font-size: 2em;
+    font-size: 5.4vw;
     transition: all 0.2s;
     &:hover {
       color: $main_color;
@@ -23,19 +26,31 @@
       color: $main_color;
     }
     .svg_Icons {
-      width: 2rem;
+      // width: 2rem;
+      width: 5.4vw;
       fill: #525157;
     }
     .badge {
-      position: absolute;
-      left: 30px;
+      // position: absolute;
+      // left: 30px;
+      // width: 22px;
+      // height: 22px;
+      // padding: 4px;
+      // font-size: 0.9rem;
+      position: relative;
+      display: block;
+      left: 4.5vw;
       top: 0px;
-      width: 22px;
-      height: 22px;
-      font-size: 0.9rem;
+      margin-left: -2vw;
+      margin-top: -8vw;
+      width: 3.9vw;
+      height: 3.9vw;
+      line-height: normal;
+      font-size: 2vw;
       font-weight: 400;
-      padding: 4px;
-      border-radius: 50px;
+      padding: 0;
+      padding-top: 0.2em;
+      border-radius: 80px;
     }
   }
 }

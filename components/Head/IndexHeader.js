@@ -18,7 +18,7 @@ const IndexHeader = () => {
         <div className="col-4 d-flex justify-content-center">
           <Link href="/" passHref>
             <a className="navbar-brand">
-              <img src="../../static/img/splash.png" width="80" height="80" className="d-inline-block align-top" alt="" />
+              <img src="../../static/img/text-logo.png" width="80" height="80" className="d-inline-block align-top" alt="" />
             </a>
           </Link>
         </div>

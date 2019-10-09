@@ -12,7 +12,7 @@ const CatProductsRow = () => {
           <div className="row d-flex justify-content-start rtl pr-2 categories">
             {/* <Category /> */}
           </div>
-          <div className="row d-flex justify-content-start rtl pr-2 mb-3 cat_sort">
+          <div className="row d-flex justify-content-center rtl pr-2 mb-3 cat_sort">
             <Sort />
           </div>
           <div className="row d-flex justify-content-start rtl products">

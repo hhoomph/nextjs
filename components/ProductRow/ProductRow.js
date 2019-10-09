@@ -4,7 +4,7 @@ import Product from './Product';
 import '../../scss/components/productRow.scss';
 const ProductsRow = () => {
   return (
-    <div className="container mt-1 mb-5">
+    <div className="container mt-1 mb-5 pb-5">
       <div className="row rtl product_row">
         <Product id={1} price={120000} oldPrice={'140000'} image={'product.png'} userId={1} userImage={'user.png'} />
         <Product id={2} price={140000} image={'product3.png'} userId={2} userImage={'user.png'} />

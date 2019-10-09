@@ -8,9 +8,9 @@ const Product = props => {
   const productClass = () => {
     // If Windows.Width < 992 (large) just show 5 coulmn users else show 11 users
     if (width > 1442) {
-      return 'col-12 col-lg-3 col-xl-2 product';
+      return 'col-6 col-lg-3 col-xl-2 product';
     } else {
-      return 'col-12 col-lg-3 product';
+      return 'col-6 col-lg-3 product';
     }
   };
   return (
@@ -21,7 +21,7 @@ const Product = props => {
             <img src={`../../static/img/${props.image}`} alt="نام محصول" className="product_img" />
           </a>
         </Link>
-        <div className="product_basket" id={props.id} title="افزودن به سبد خرید">
+        <div className="product_basket" id={props.id}>
           <p>سبد خرید</p>
           <FaShoppingBasket className="svg_Icons" />
         </div>

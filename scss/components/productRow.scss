@@ -2,17 +2,17 @@
 .product_row {
   margin: auto;
   .product {
+    display: flex;
+    justify-content: center;
     margin: 0;
     padding: 0;
     .product_frame {
       position: relative;
       text-align: center;
-      width: auto;
-      max-width: 400px;
-      height: 240px;
+      width: 160px;
+      height: 210px;
       padding: 10px;
-      margin: auto;
-      margin-top: 12px;
+      margin-top: 15px;
       background: #f3f3f3;
       border-radius: 15px;
       box-shadow: 1px 6px 10px 0px #e6e6e6;
@@ -22,22 +22,21 @@
       }
       .product_link {
         img {
-          width: 8rem;
-          height: 11rem;
-          margin-top: 5px;
+          width: 7rem;
+          height: 10rem;
         }
       }
       .product_basket {
         cursor: pointer;
-        position: relative;
         background-color: #2fa841;
-        border-radius: 20px;
-        text-align: left;
-        width: 50%;
-        height: 32px;
-        display: block;
+        position: relative;
+        top: -10px;
+        border-radius: 50px;
+        text-align: center;
+        width: auto;
+        height: 40px;
         margin: auto;
-        margin-top: -4px;
+        z-index: 1;
         &:hover {
           border-radius: 150px;
           animation: shadow_drop 0.8s both;
@@ -50,27 +49,23 @@
           }
         }
         p {
-          font-size: 14px;
+          vertical-align: middle;
+          line-height: 2.5;
           color: #fff;
-          text-align: center;
-          padding-right: 10px;
-          padding-top: 5px;
         }
         .svg_Icons {
           position: absolute;
-          top: 0px;
-          right: 4px;
-          font-size: 1.4rem;
+          font-size: 1.55rem;
+          top: 4px;
+          right: 8px;
           fill: #fff;
-          display: block;
-          margin: auto;
-          padding-top: 7px;
+          padding-top: 5px;
         }
       }
       .product_user {
         position: absolute;
-        right: 24%;
-        top: 0;
+        right: 3px;
+        top: 7px;
         &:hover {
           border-radius: 150px;
           animation: shadow_drop 0.8s both;
@@ -108,7 +103,7 @@
     }
     .product_frame {
       width: 235px !important;
-      height: 240px !important;
+      height: 260px !important;
       padding: 20px !important;
       .product_link {
         img {
@@ -116,27 +111,26 @@
           height: 12rem !important;
         }
       }
-      .product_basket {
-        position: absolute !important;
-        right: 40px!important;
-        top: 95px!important;
-        border-radius: 50px;
-        text-align: center;
-        width: 45px !important;
-        height: 45px !important;
-        margin: auto !important;
-        p {
-          display: none;
-        }
-        .svg_Icons {
-          font-size: 1.8rem !important;
-          top: 4px !important;
-          right: 8px !important;
-        }
-      }
+      // .product_basket {
+      //   right: 50px !important;
+      //   top: 100px !important;
+      //   border-radius: 50px;
+      //   text-align: center;
+      //   width: 45px !important;
+      //   height: 45px !important;
+      //   margin: auto !important;
+      //   p {
+      //     display: none;
+      //   }
+      //   .svg_Icons {
+      //     font-size: 1.8rem !important;
+      //     top: 4px !important;
+      //     right: 8px !important;
+      //   }
+      // }
       .product_user {
-        right: 30px!important;
-        top: 10px!important;
+        right: 40px !important;
+        top: 15px !important;
         img {
           width: 65px !important;
         }
