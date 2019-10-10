@@ -6,9 +6,10 @@ import { ReactComponent as AddUserSvg } from '../../static/svg/add-user.svg';
 import { ReactComponent as DistanceSvg } from '../../static/svg/distance.svg';
 import '../../scss/components/profileHeader.scss';
 const Header = props => {
+  const profileData = props.profileData;
   const UserImage = () => {
-    if (props.userImage && props.userImage != null) {
-      return <img src={props.userImage} alt="user image" className="rounded-circle" />;
+    if (profileData.avatar && profileData.avatar != null) {
+      return <img src={`https://api.qarun.ir/${profileData.avatar}`} alt="user image" className="rounded-circle" />;
     } else {
       return <img src={`../../static/svg/user-circle.svg`} alt="user image" className="rounded-circle" />;
     }
@@ -49,21 +50,21 @@ const Header = props => {
         </div>
         <div className="row">
           <div className="col d-flex justify-content-center">
-            <p className="user_name mt-3">sima_k64</p>
+            <p className="user_name mt-3">{profileData.userName}</p>
           </div>
         </div>
         <div className="row stats rtl mt-2">
           <div className="col-4 d-block text-center">
             <p>دوستان</p>
-            <p className="friends">167</p>
+            <p className="friends">{profileData.friendsCount}</p>
           </div>
           <div className="col-4 d-block text-center">
             <p>مشتریان</p>
-            <p className="customers">5421</p>
+            <p className="customers">{profileData.customerCount}</p>
           </div>
           <div className="col-4 d-block text-center">
             <p>محصولات</p>
-            <p className="products">203</p>
+            <p className="products">{profileData.productCount}</p>
           </div>
         </div>
       </div>
@@ -75,13 +76,13 @@ const Header = props => {
             </div>
             <div className="col-6 d-block distance">
               <DistanceSvg className="svg_Icons" />
-              <p>14/4 کیلومتر</p>
+              <p>{profileData.geographicalDistance} کیلومتر</p>
             </div>
           </div>
           <div className="col-12 pt-3">
-            <h2 className="title">فروشگاه قارون</h2>
-            <p className="bio">عرضه بهترین و باکیفیت ترین محصولات بازار با قیمت مناسب ارسال سریع و خدمات مناسب</p>
-            <img className="logo_img" src={`../../static/img/logo_opacity.png`}/>
+            <h2 className="title">{profileData.displayName}</h2>
+            <p className="bio">{profileData.biography}</p>
+            <img className="logo_img" src={`../../static/img/logo_opacity.png`} />
           </div>
         </div>
       </div>

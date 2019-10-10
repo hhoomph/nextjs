@@ -74,6 +74,7 @@
             height: 21vw;
             display: block;
             margin: auto;
+            border-radius: .2vw;
           }
         }
         .product_basket {
@@ -134,7 +135,7 @@
           top: 2vw;
           transition: all ease-in-out 0.2s;
           img {
-            // width: 2.7rem;
+            border-radius: 8rem;
             width: 8vw;
           }
           &:hover {
@@ -179,14 +180,16 @@
       padding: 15px !important;
       .product_link {
         img {
-          width: 100px !important;
-          height: 140px !important;
+          width: auto;
+          max-width: 110px;
+          height: auto !important;
+          max-height: 140px !important;
         }
       }
       .product_basket {
         position: absolute !important;
-        right: 16px!important;
-        top: 60px!important;
+        right: 16px !important;
+        top: 60px !important;
         left: auto !important;
         border-radius: 50px !important;
         text-align: center !important;

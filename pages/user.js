@@ -1,9 +1,7 @@
 import React, { Fragment, useContext, useRef, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import Loading from '../components/Loader/Loader';
-import fetch from 'isomorphic-unfetch';
-import nextCookie from 'next-cookies';
-import cookie from 'js-cookie';
+import Loading from '../components/Loader/Loading';
+import fetchData from '../utils/fetchData';
 import '../scss/style.scss';
 import Nav from '../components/Nav/Nav';
 import UserHeader from '../components/Head/userHeader';
@@ -14,10 +12,11 @@ const Category = dynamic({
   ssr: true
 });
 function Page(props) {
+  const profileData = props.result.data || [];
   return (
     <>
       <Nav />
-      <UserHeader userImage={`../../static/img/profile.png`} userOnline={true} />
+      <UserHeader profileData={profileData} userOnline={true} />
       <div className="container mb-1 cat_product_row">
         <div className="row">
           <div className="col">
@@ -41,17 +40,17 @@ function Page(props) {
   );
 }
 Page.getInitialProps = async function(context) {
-  // const apiBaseUrl = `https://www.pooshako.com/api/`;
-  // const url = `${apiBaseUrl}Common/Location/GetProvinces`;
-  // const response = await fetch(url, {
-  //   method: 'POST',
-  //   headers: {
-  //     Accept: 'application/json',
-  //     'Content-Type': 'application/json'
-  //   }
-  //   //body: JSON.stringify(image)
-  // });
-  // const result = await response.json();
-  // return { result };
+  const { id } = context.query;
+  const result = await fetchData(
+    `User/U_Account/OtherUserProfile/${id}`,
+    {
+      method: 'GET'
+      // body: JSON.stringify({
+      //   username: id
+      // })
+    },
+    context
+  );
+  return { result };
 };
 export default Page;

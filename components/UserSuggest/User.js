@@ -6,9 +6,9 @@ const User = props => {
   const userClass = width > 992 ? 'col-1' : width > 400 ? 'col-2' : 'col-3';
   return (
     <div className={'userClass'}>
-      <Link href={`/user/${props.id}`} passHref>
+      <Link href={`/user/${props.userName}`} passHref>
         <a className="mr-2 user_link">
-          <img src={`../../static/img/${props.image}`} alt="" className="rounded-circle img-thumbnail" />
+          <img src={props.image} alt={props.alt} className="rounded-circle img-thumbnail" />
         </a>
       </Link>
     </div>

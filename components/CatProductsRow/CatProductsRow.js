@@ -3,25 +3,107 @@ import Link from '../Link';
 import Category from './Category';
 import Sort from './Sort';
 import Product from './Product';
+import fetchData from '../../utils/fetchData';
+import Loading from '../Loader/Loading';
 import '../../scss/components/catProductsRow.scss';
-const CatProductsRow = () => {
+const CatProductsRow = props => {
+  const [products, setProducts] = useState(props.products);
+  const [sortFilter, setSortFilter] = useState('New');
+  const handleSort = sortType => {
+    setSortFilter(sortType);
+  };
+  const [loading, setLoading] = useState(false);
+  const getProduct = async () => {
+    setLoading(true);
+    let GetMarketAround = await fetchData(
+      'User/U_Product/GetMarketAround',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          filters: sortFilter,
+          categoryId: 1,
+          page: 1,
+          pageSize: 10
+        })
+      },
+      props.ctx
+    );
+    if (GetMarketAround.isSuccess) {
+      let products = GetMarketAround.data || [];
+      setProducts(products);
+    } else if (result.message != undefined) {
+      //toast.warn(result.message);
+    } else if (result.error != undefined) {
+      //toast.error(result.error);
+    }
+    setLoading(false);
+  };
+  useEffect(() => {
+    getProduct();
+  }, [sortFilter]);
+  const renderProducts = () => {
+    if (loading) {
+      return (
+        <div style={{ display: 'block !important', width: '100%', height: '40px', textAlign: 'center' }}>
+          <Loading />
+        </div>
+      );
+    } else {
+      const productsElements = products.map(product => {
+        const productThumbNail = product.pictures[0] != undefined ? `https://api.qarun.ir/${product.pictures[0].thumbNail}` : '../../static/img/no-product-image.png';
+        return (
+          <Product
+            key={product.id}
+            id={product.id}
+            productName={product.title}
+            price={product.price}
+            oldPrice={product.lastPrice}
+            image={productThumbNail}
+            userId={product.sellerUserName}
+            sellerAvatar={`https://api.qarun.ir/${product.sellerAvatar}`}
+            sellerUserName={product.sellerUserName}
+          />
+        );
+      });
+      return productsElements;
+    }
+  };
+  // products.map(product => {
+  //   const productThumbNail = product.pictures[0] != undefined ? `https://api.qarun.ir/${product.pictures[0].thumbNail}` : '../../static/img/no-product-image.png';
+  //   if (loading) {
+  //     return <Loading />;
+  //   } else {
+  //     return (
+  //       <Product
+  //         key={product.id}
+  //         id={product.id}
+  //         productName={product.title}
+  //         price={product.price}
+  //         oldPrice={product.lastPrice}
+  //         image={productThumbNail}
+  //         userId={product.sellerUserName}
+  //         sellerAvatar={`https://api.qarun.ir/${product.sellerAvatar}`}
+  //         sellerUserName={product.sellerUserName}
+  //       />
+  //     );
+  //   }
+  // });
   return (
     <div className="container mb-1 cat_product_row">
       <div className="row">
         <div className="col">
-          <div className="row d-flex justify-content-start rtl pr-2 categories">
-            {/* <Category /> */}
-          </div>
+          <div className="row d-flex justify-content-start rtl pr-2 categories">{/* <Category /> */}</div>
           <div className="row d-flex justify-content-center rtl pr-2 mb-3 cat_sort">
-            <Sort />
+            <Sort handleSort={handleSort} />
           </div>
           <div className="row d-flex justify-content-start rtl products">
-            <Product id={1} price={120000} oldPrice={'140000'} image={'product.png'} userId={1} />
+            {renderProducts()}
+            {/* <Product id={1} price={120000} oldPrice={'140000'} image={'product.png'} userId={1} />
             <Product id={2} price={140000} image={'product3.png'} userId={2} />
             <Product id={3} price={120000} image={'product2.png'} userId={1} />
             <Product id={4} price={130000} image={'product.png'} userId={2} />
             <Product id={5} price={120000} image={'product3.png'} userId={3} />
-            <Product id={6} price={110000} oldPrice={'120000'} image={'product2.png'} userId={2}  />
+            <Product id={6} price={110000} oldPrice={'120000'} image={'product2.png'} userId={2} /> */}
           </div>
         </div>
       </div>

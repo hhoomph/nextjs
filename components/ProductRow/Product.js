@@ -18,16 +18,16 @@ const Product = props => {
       <div className="product_frame">
         <Link href={`/product/${props.id}`} passHref>
           <a className="product_link">
-            <img src={`../../static/img/${props.image}`} alt="نام محصول" className="product_img" />
+            <img src={props.image} alt={props.productName} className="product_img" />
           </a>
         </Link>
         <div className="product_basket" id={props.id}>
           <p>سبد خرید</p>
           <FaShoppingBasket className="svg_Icons" />
         </div>
-        <Link href={`/user/${props.userId}`} passHref>
+        <Link href={`/user/${props.sellerUserName}`} passHref>
           <a className="product_user">
-            <img src={`../../static/img/${props.userImage}`} alt="نام کاربر" className="product_img" />
+            <img src={props.sellerAvatar} alt={props.sellerUserName} className="product_img" />
           </a>
         </Link>
       </div>

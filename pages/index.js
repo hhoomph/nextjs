@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useRef, useEffect } from 'react';
 import '../scss/style.scss';
 import dynamic from 'next/dynamic';
-import fetch from 'isomorphic-unfetch';
+import fetchData from '../utils/fetchData';
 import Nav from '../components/Nav/Nav';
 import Loading from '../components/Loader/Loading';
 import IndexHeader from '../components/Head/IndexHeader';
@@ -32,6 +32,9 @@ const ProductsRow = dynamic({
   ssr: true
 });
 function App(props) {
+  const Following = props.Following.data || [];
+  const GetMarketAround = props.GetMarketAround.data || [];
+  const FriendsMarket = props.FriendsMarket.data || [];
   //const res = useContext(AppContext);
   //console.log(res.result);
   //console.log(props.result);
@@ -45,28 +48,45 @@ function App(props) {
     <>
       <IndexHeader />
       <Nav />
-      <UserSuggest />
-      <CatProductsRow />
+      <UserSuggest users={Following} />
+      <CatProductsRow products={GetMarketAround} />
       <Banners />
-      <ProductsRow />
+      <ProductsRow products={FriendsMarket} />
     </>
   );
 }
 App.getInitialProps = async function(context) {
-  // console.log(process.env.API_HOST);
-  // const apiBaseUrl = `https://www.pooshako.com/api/`;
-  // const url = `${apiBaseUrl}Common/Location/GetProvinces`;
-  // const response = await fetch(url, {
-  //   method: 'POST',
-  //   headers: {
-  //     Accept: 'application/json',
-  //     'Content-Type': 'application/json'
-  //   }
-  //   //body: JSON.stringify(image)
-  // });
-  // const result = await response.json();
-  // return { result };
-  //cookie.set('token', 'tokenCookie', { expires: 30 });
-  // cookie.remove('token');
+  const Following = await fetchData(
+    'User/U_Friends/Following',
+    {
+      method: 'GET'
+    },
+    context
+  );
+  const GetMarketAround = await fetchData(
+    'User/U_Product/GetMarketAround',
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        filters: 'New',
+        categoryId: 1,
+        page: 1,
+        pageSize: 10
+      })
+    },
+    context
+  );
+  const FriendsMarket = await fetchData(
+    'User/U_Product/FriendsMarket',
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        page: 1,
+        pageSize: 20
+      })
+    },
+    context
+  );
+  return { Following, GetMarketAround, FriendsMarket };
 };
 export default App;
