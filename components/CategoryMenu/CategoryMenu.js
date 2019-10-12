@@ -13,7 +13,10 @@ const CategoryMenu = props => {
       <div className="row mb-3 header_link">
         <div className="col-6 text-left">
           <Link href="/" passHref>
-            <a className="qarun_title">قارون</a>
+            <a className="qarun_title">
+            {/* قارون */}
+            <img src="../../static/img/text-logo.png" width="80" height="auto" className="d-inline-block align-top" alt="" />
+            </a>
           </Link>
         </div>
         <div className="col-6 text-right">

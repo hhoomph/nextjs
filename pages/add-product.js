@@ -298,7 +298,7 @@ function Page(props) {
                       type="text"
                       id="price"
                       className="form-control mt-1 mb-4  col-sm-10"
-                      placeholder="قیمت"
+                      placeholder="تومان"
                     />
                   </div>
                   <div className="form-group row">
@@ -311,7 +311,7 @@ function Page(props) {
                       type="text"
                       id="discount"
                       className="form-control mt-1 mb-4  col-sm-10"
-                      placeholder="تخفیف"
+                      placeholder="%"
                     />
                   </div>
                 </form>

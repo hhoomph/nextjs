@@ -16,9 +16,10 @@ const EditProfile = props => {
   const nextCtx = props.ctx;
   const id = props.profileData.id;
   const { profileData, setView } = props;
-  const user = (props.profileData.userName = props.profileData.phoneNumber) ? '' : props.profileData.userName || '';
+  // const user = (props.profileData.userName = props.profileData.phoneNumber) ? '' : props.profileData.userName || '';
+  // const [username, setUsername] = useState(user);
+  const [username, setUsername] = useState(props.profileData.userName);
   const [name, setName] = useState(props.profileData.displayName || '');
-  const [username, setUsername] = useState(user);
   const [biography, setBiography] = useState(props.profileData.biography || '');
   const [email, setEmail] = useState(props.profileData.email || '');
   const [phoneNumber, setPhoneNumber] = useState(props.profileData.phoneNumber || '');
@@ -107,7 +108,7 @@ const EditProfile = props => {
           // lat: '34.635059',
           // long: '50.880823',
           //iban: iban,
-          iban: null,
+          // iban: null,
           id: id,
           userName: username,
           email: email,

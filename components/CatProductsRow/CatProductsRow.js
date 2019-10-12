@@ -13,7 +13,7 @@ const CatProductsRow = props => {
     setSortFilter(sortType);
   };
   const [loading, setLoading] = useState(false);
-  const getProduct = async () => {
+  const getProducts = async () => {
     setLoading(true);
     let GetMarketAround = await fetchData(
       'User/U_Product/GetMarketAround',
@@ -31,15 +31,15 @@ const CatProductsRow = props => {
     if (GetMarketAround.isSuccess) {
       let products = GetMarketAround.data || [];
       setProducts(products);
-    } else if (result.message != undefined) {
-      //toast.warn(result.message);
-    } else if (result.error != undefined) {
-      //toast.error(result.error);
+    } else if (GetMarketAround.message != undefined) {
+      //toast.warn(GetMarketAround.message);
+    } else if (GetMarketAround.error != undefined) {
+      //toast.error(GetMarketAround.error);
     }
     setLoading(false);
   };
   useEffect(() => {
-    getProduct();
+    getProducts();
   }, [sortFilter]);
   const renderProducts = () => {
     if (loading) {
@@ -92,7 +92,7 @@ const CatProductsRow = props => {
     <div className="container mb-1 cat_product_row">
       <div className="row">
         <div className="col">
-          <div className="row d-flex justify-content-start rtl pr-2 categories">{/* <Category /> */}</div>
+          {/* <div className="row d-flex justify-content-start rtl pr-2 categories"> <Category /></div> */}
           <div className="row d-flex justify-content-center rtl pr-2 mb-3 cat_sort">
             <Sort handleSort={handleSort} />
           </div>

@@ -82,7 +82,7 @@ App.getInitialProps = async function(context) {
       method: 'POST',
       body: JSON.stringify({
         page: 1,
-        pageSize: 20
+        pageSize: 10
       })
     },
     context

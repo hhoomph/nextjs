@@ -1,12 +1,27 @@
 import React, { useState, useEffect, memo } from 'react';
 import Link from '../Link';
+import fetchData from '../../utils/fetchData';
+import Loading from '../Loader/Loader';
+import SubmitButton from '../Button/SubmitButton';
 import { FaShoppingBasket, FaRegUserCircle } from 'react-icons/fa';
 import { ReactComponent as SendSvg } from '../../static/svg/send.svg';
 import { ReactComponent as AddUserSvg } from '../../static/svg/add-user.svg';
 import { ReactComponent as DistanceSvg } from '../../static/svg/distance.svg';
+import { ToastContainer, toast } from 'react-toastify';
 import '../../scss/components/profileHeader.scss';
 const Header = props => {
+  const nextCtx = props.ctx;
   const profileData = props.profileData;
+  const [loading, setLoading] = useState(false);
+  const [followed, setFollowed] = useState(false);
+  toast.configure({
+    position: 'top-right',
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true
+  });
   const UserImage = () => {
     if (profileData.avatar && profileData.avatar != null) {
       return <img src={`https://api.qarun.ir/${profileData.avatar}`} alt="user image" className="rounded-circle" />;
@@ -20,6 +35,24 @@ const Header = props => {
     } else {
       return <div className="status offline" title="آفلاین" />;
     }
+  };
+  const followToggle = async () => {
+    setLoading(true);
+    const result = await fetchData(
+      `User/U_Friends/Follow?userId=${profileData.id}`,
+      {
+        method: 'GET'
+      },
+      nextCtx
+    );
+    if (result.isSuccess) {
+      setFollowed(true);
+    } else if (result.message != undefined) {
+      toast.warn(result.message);
+    } else if (result.error != undefined) {
+      toast.error(result.error);
+    }
+    setLoading(false);
   };
   return (
     <>
@@ -72,7 +105,8 @@ const Header = props => {
         <div className="row rtl">
           <div className="col-12 d-flex top">
             <div className="col-6 d-block">
-              <a className="btn btn-main follow">دنبال کردن</a>
+              {/* <a className="btn btn-main follow">دنبال کردن</a> */}
+              <SubmitButton loading={loading} onClick={() => followToggle()} text={followed ? 'دنبال نکردن' : 'دنبال کردن'} className="btn btn-main follow" />
             </div>
             <div className="col-6 d-block distance">
               <DistanceSvg className="svg_Icons" />
