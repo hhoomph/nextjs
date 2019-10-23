@@ -7,9 +7,8 @@ import '../../scss/components/productRow.scss';
 const ProductsRow = props => {
   const [products, setProducts] = useState(props.products);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
   const [isFetching, setIsFetching] = useState(false);
-  let ticking = false;
   const getProducts = async () => {
     setLoading(true);
     const FriendsMarket = await fetchData(
@@ -18,7 +17,7 @@ const ProductsRow = props => {
         method: 'POST',
         body: JSON.stringify({
           page: page,
-          pageSize: 10
+          pageSize: 6
         })
       },
       props.ctx
@@ -26,6 +25,7 @@ const ProductsRow = props => {
     if (FriendsMarket.isSuccess) {
       let newProducts = FriendsMarket.data || [];
       const p = products.concat(newProducts);
+      // Remove duplicate products in array with id
       const result = [];
       const map = new Map();
       for (const item of p) {
@@ -36,27 +36,16 @@ const ProductsRow = props => {
       }
       setProducts(result);
       setTimeout(() => setIsFetching(false), 200);
+      if (newProducts.length >= 6) {
+        setPage(page + 1);
+      }
     } else if (FriendsMarket.message != undefined) {
-      //toast.warn(FriendsMarket.message);
       setTimeout(() => setIsFetching(false), 200);
     } else if (FriendsMarket.error != undefined) {
       setTimeout(() => setIsFetching(false), 200);
-      //toast.error(FriendsMarket.error);
     }
     setLoading(false);
   };
-  // const handleScroll = () => {
-  //   console.log(window.pageYOffset, window.innerHeight);
-  //   if (!ticking && !loading) {
-  //     if (window.pageYOffset + 5 > window.innerHeight) {
-  //       setPage(page + 1);
-  //       //getProducts();
-  //       ticking = false;
-  //     } else {
-  //       //ticking = true;
-  //     }
-  //   }
-  // };
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -64,10 +53,11 @@ const ProductsRow = props => {
   useEffect(() => {
     if (!isFetching) return;
     getProducts();
-  }, [isFetching, page]);
+  }, [isFetching]);
   function handleScroll() {
     if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isFetching) return;
-    setPage(page + 1);
+    // console.log(page)
+    // setPage(page + 1);
     setIsFetching(true);
     // if (window.pageYOffset > window.innerHeight && !isFetching) {
     //   setIsFetching(true);
@@ -75,32 +65,31 @@ const ProductsRow = props => {
     //   return;
     // }
   }
-  const renderProducts = loading ? (
-    <div style={{ display: 'block !important', width: '100%', height: '40px', textAlign: 'center', marginTop: '1rem' }}>
-      <Loading />
-    </div>
-  ) : (
-    products.map(product => {
-      const productThumbNail = product.pictures[0] != undefined ? `https://api.qarun.ir/${product.pictures[0].thumbNail}` : '../../static/img/no-product-image.png';
-      return (
-        <Product
-          key={product.id}
-          id={product.id}
-          productName={product.title}
-          price={product.price}
-          oldPrice={product.lastPrice}
-          image={productThumbNail}
-          userId={product.sellerUserName}
-          sellerAvatar={`https://api.qarun.ir/${product.sellerAvatar}`}
-          sellerUserName={product.sellerUserName}
-        />
-      );
-    })
-  );
+  const renderProducts = products.map(product => {
+    const productThumbNail = product.pictures[0] != undefined ? `https://api.qarun.ir/${product.pictures[0].thumbNail}` : '../../static/img/no-product-image.png';
+    return (
+      <Product
+        key={product.id}
+        id={product.id}
+        productName={product.title}
+        price={product.price}
+        oldPrice={product.lastPrice}
+        image={productThumbNail}
+        userId={product.sellerUserName}
+        sellerAvatar={`https://api.qarun.ir/${product.sellerAvatar}`}
+        sellerUserName={product.sellerUserName}
+      />
+    );
+  });
   return (
     <div className="container mt-1 mb-5 pb-5">
       <div className="row rtl product_row">
         {renderProducts}
+        {loading && (
+          <div style={{ display: 'block !important', width: '100%', height: '40px', textAlign: 'center', marginTop: '0.1rem' }}>
+            <Loading />
+          </div>
+        )}
         {/* <Product id={1} price={120000} oldPrice={'140000'} image={'product.png'} userId={1} userImage={'user.png'} />
         <Product id={2} price={140000} image={'product3.png'} userId={2} userImage={'user.png'} />
         <Product id={3} price={120000} image={'product2.png'} userId={1} userImage={'profile.png'} />
