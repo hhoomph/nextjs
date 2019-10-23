@@ -12,7 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { numberSeparator, removeSeparator, forceNumeric } from '../utils/tools';
 import SubmitButton from '../components/Button/SubmitButton';
 import '../scss/components/addProduct.scss';
-import { setTimeout } from 'core-js';
+//import { setTimeout } from 'core-js';
 function Page(props) {
   const nextCtx = props.ctx;
   const categories = props.result.data;
@@ -37,8 +37,13 @@ function Page(props) {
   };
   const [tags, setTags] = useState([]);
   const addTags = event => {
-    if (event.key === 'Enter' && event.target.value !== '') {
-      setTags([...tags, event.target.value]);
+    if ((event.key === 'Enter' || event.key === 'Spacebar' || event.key === ' ') && event.target.value !== '') {
+      let reg = /^#.*/g;
+      let val = event.target.value;
+      if (!reg.test(val)) {
+        val = '#' + val;
+      }
+      setTags([...tags, val]);
       event.target.value = '';
     }
   };
@@ -216,9 +221,9 @@ function Page(props) {
   };
   switch (view) {
     case 1:
-      if (typeof window !== 'undefined') {
-        window.scroll(0, 0);
-      }
+      // if (typeof window !== 'undefined') {
+      //   window.scroll(0, 0);
+      // }
       return (
         <>
           <Nav />
@@ -265,7 +270,7 @@ function Page(props) {
                       type="text"
                       id="hashtags"
                       className="form-control mt-1 mb-4 col-sm-10"
-                      placeholder="برای اضافه شدن کلید اینتر را فشار دهید"
+                      placeholder="برای اضافه شدن کلید فاصله یا اینتر را فشار دهید"
                       style={{ borderBottom: 'none', borderBottomLeftRadius: '0', borderBottomRightRadius: '0' }}
                     />
                     <div className="tags-input col-sm-10 offset-sm-2">
@@ -495,9 +500,9 @@ function Page(props) {
       );
       break;
     default:
-      if (typeof window !== 'undefined') {
-        window.scroll(0, 0);
-      }
+      // if (typeof window !== 'undefined') {
+      //   window.scroll(0, 0);
+      // }
       return (
         <>
           <Nav />
