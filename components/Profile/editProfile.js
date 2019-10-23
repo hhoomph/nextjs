@@ -66,7 +66,7 @@ const EditProfile = props => {
     if (types.every(type => file.type !== type)) {
       errs.push(`فرمت '${file.type}' پشتیبانی نمی شود.`);
     }
-    if (file.size > 2150000) {
+    if (file.size > 4650000) {
       errs.push(`حجم فایل '${file.name}' بیشتر از حد مجاز است، لطفا فایل کم حجم تری انتخاب کنید.`);
     }
     formData.append(`file`, file);
