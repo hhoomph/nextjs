@@ -2,8 +2,12 @@
 .user_Suggestion {
   .userClass {
     // width: 20vw;
-    width: 20%;
-    padding: 0.7rem;
+    // width: 20%;
+    // padding: 0.7rem;
+    width: 23%;
+    padding: 0.4rem;
+    padding-right: 0;
+    padding-left: 0;
   }
   .over_flow {
     overflow: hidden;
@@ -32,7 +36,8 @@
   }
   img.rounded-circle {
     // width: 5.6em;
-    width: 13.6vw;
+    //width: 13.6vw;
+    width: 17vw;
     padding: 0;
   }
 }
@@ -49,5 +54,13 @@
 @media screen and (min-width: 1400px) {
   .user_Suggestion img.rounded-circle {
     width: 5.5vw !important;
+  }
+}
+@media screen and (min-width: 680px) and (max-width:770px) {
+  .user_Suggestion .userClass{
+    width: 24% !important;
+  }
+  .user_Suggestion img.rounded-circle {
+    width: 15vw !important;
   }
 }

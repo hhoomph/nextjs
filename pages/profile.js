@@ -45,7 +45,7 @@ function Page(props) {
             </div>
           </div>
           <div className="container mb-5 pb-3 pt-3">
-            <div className="row d-flex justify-content-start rtl products">
+            <div className="row d-flex justify-content-start rtl profile_products">
               <Product id={1} basket={false} showPrice={false} price={120000} delete={true} oldPrice={'140000'} image={'product.png'} />
               <Product id={2} basket={false} showPrice={false} price={140000} delete={true} image={'product3.png'} />
               <Product id={3} basket={false} showPrice={false} price={120000} delete={true} image={'product2.png'} />
@@ -83,7 +83,7 @@ function Page(props) {
             </div>
           </div>
           <div className="container mb-5 pb-3 pt-3">
-            <div className="row d-flex justify-content-start rtl products">
+            <div className="row d-flex justify-content-start rtl profile_products">
               <Product id={1} basket={false} showPrice={false} price={120000} delete={true} oldPrice={'140000'} image={'product.png'} />
               <Product id={2} basket={false} showPrice={false} price={140000} delete={true} image={'product3.png'} />
               <Product id={3} basket={false} showPrice={false} price={120000} delete={true} image={'product2.png'} />

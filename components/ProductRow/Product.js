@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect, memo } from 'react';
 import Link from '../Link';
 import { FaShoppingBasket } from 'react-icons/fa';
 import WindowsWidth from '../WindowsWidth';
-import { numberSeprator, removeSeprator } from '../../utils/tools';
+import { numberSeparator, removeSeprator } from '../../utils/tools';
 const Product = props => {
   const width = WindowsWidth();
   const productClass = () => {
@@ -30,19 +30,19 @@ const Product = props => {
             <img src={props.sellerAvatar} alt={props.sellerUserName} className="product_img" />
           </a>
         </Link>
-      </div>
-      {/* <div className="product_text mb-1">
-        <p>
-          <span className="product_price">{numberSeprator(props.price)} </span>
-          <span className="product_currency">تومان</span>
-        </p>
-        {props.oldPrice && (
-          <p className="price_old">
-            <span className="product_price">{numberSeprator(props.oldPrice)}</span>
+        <div className="product_text">
+          <p>
+            <span className="product_price">{numberSeparator(props.price)} </span>
             <span className="product_currency">تومان</span>
           </p>
-        )}
-      </div> */}
+          {props.oldPrice && (
+            <p className="price_old">
+              <span className="product_price">{numberSeparator(props.oldPrice)}</span>
+              <span className="product_currency">تومان</span>
+            </p>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

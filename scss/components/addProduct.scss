@@ -68,7 +68,7 @@
       min-height: 48px;
       width: 100%;
       padding: 0 8px;
-      border: 1px solid #c9c9c9;
+      // border: 1px solid #c9c9c9;
       border-radius: 6px;
       border-top-right-radius: 0;
       border-top-left-radius: 0;
@@ -128,6 +128,9 @@
     //     width: calc(100vw - 32px);
     //   }
     // }
+    .form-group{
+      margin-bottom: 0;
+    }
     .form-group input,
     .form-group textarea {
       // border: none;
@@ -136,6 +139,10 @@
       outline: none !important;
       outline-style: none !important;
       color: #444444;
+      border: none;
+      border-bottom: 1px solid #c9c9c9;
+      border-radius: 0;
+      line-height: 1;
       &:focus {
         // color: #000 !important;
         border-color: #fc874c;
@@ -145,6 +152,9 @@
       &::placeholder {
         color: #bbbbbb;
       }
+    }
+    .col-form-label{
+      line-height: 1;
     }
     .react_select {
       .css-1wa3eu0-placeholder {

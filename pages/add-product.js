@@ -265,14 +265,7 @@ function Page(props) {
                     <label htmlFor="hashtags" className="col-sm-2 col-form-label">
                       هشتگ های مرتبط
                     </label>
-                    <input
-                      onKeyUp={event => addTags(event)}
-                      type="text"
-                      id="hashtags"
-                      className="form-control mt-1 mb-4 col-sm-10"
-                      placeholder="برای اضافه شدن کلید فاصله یا اینتر را فشار دهید"
-                      style={{ borderBottom: 'none', borderBottomLeftRadius: '0', borderBottomRightRadius: '0' }}
-                    />
+                    <input onKeyUp={event => addTags(event)} type="text" id="hashtags" className="form-control mt-1 mb-4 col-sm-10" placeholder="برای اضافه شدن کلید فاصله یا اینتر را فشار دهید" />
                     <div className="tags-input col-sm-10 offset-sm-2">
                       <ul>
                         {tags.map((tag, index) => (
@@ -293,7 +286,7 @@ function Page(props) {
                   </div>
                   <div className="form-group row">
                     <label htmlFor="price" className="col-sm-2 col-form-label">
-                      قیمت
+                      قیمت (تومان)
                     </label>
                     <input
                       value={price}
@@ -308,7 +301,7 @@ function Page(props) {
                   </div>
                   <div className="form-group row">
                     <label htmlFor="discount" className="col-sm-2 col-form-label">
-                      تخفیف
+                      تخفیف (تومان)
                     </label>
                     <input
                       value={discount}
@@ -316,7 +309,7 @@ function Page(props) {
                       type="text"
                       id="discount"
                       className="form-control mt-1 mb-4  col-sm-10"
-                      placeholder="%"
+                      placeholder="تومان"
                     />
                   </div>
                 </form>

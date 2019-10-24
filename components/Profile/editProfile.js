@@ -6,6 +6,7 @@ import { FaCheck, FaTimes } from 'react-icons/fa';
 import { ReactComponent as UserImageSvg } from '../../static/img/user-circle.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import fetchData from '../../utils/fetchData';
+import Router from 'next/router';
 import '../../scss/components/profileEdit.scss';
 const LocationMap = dynamic({
   loader: () => import('../Map/LocationMap.js'),
@@ -107,8 +108,8 @@ const EditProfile = props => {
           long: markPosition[1],
           // lat: '34.635059',
           // long: '50.880823',
-          //iban: iban,
-          // iban: null,
+          iban: iban,
+          //iban: null,
           id: id,
           userName: username,
           email: email,
@@ -118,8 +119,10 @@ const EditProfile = props => {
       nextCtx
     );
     if (result.isSuccess) {
-      setAvatar(`https://api.qarun.ir/${result.message}`);
       toast.success('ویرایش نمایه با موفقیت انجام شد.');
+      setTimeout(() => {
+        setView(1);
+      }, 300);
     } else if (result.message != undefined) {
       toast.warn(result.message);
     } else if (result.error != undefined) {

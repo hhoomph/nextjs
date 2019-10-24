@@ -54,7 +54,8 @@
         width: 25vw;
         height: 31vw;
         padding: 4vw;
-        background: #f3f3f3;
+        // background: #f3f3f3;
+        border: 1px solid #c7c7c7;
         border-radius: 10px;
         transition: all ease-in-out 0.2s;
         position: relative;
@@ -110,6 +111,7 @@
             color: #fff;
             text-align: center;
             line-height: 2.2;
+            padding-right: 1.9vw;
             // padding-left: 10px;
             // padding-top: 5px;
           }
@@ -118,8 +120,8 @@
             // top: 0px;
             // right: 4px;
             // font-size: 1.4rem;
-            top: 1.2vw;
-            right: 1.9vw;
+            top: 1.5vw;
+            right: 2vw;
             font-size: 2.7vw;
             fill: #fff;
             display: block;
@@ -219,6 +221,12 @@
       padding: 0 !important;
       padding-top: 5px !important;
       font-size: 1em !important;
+    }
+  }
+  @media screen and (max-width: 362px) {
+    .products .product .product_frame .product_basket p {
+      font-size: 3vw;
+      line-height: 2;
     }
   }
 }

@@ -56,8 +56,8 @@ const CatProductsRow = props => {
             key={product.id}
             id={product.id}
             productName={product.title}
-            price={product.price}
-            oldPrice={product.lastPrice}
+            price={product.lastPrice}
+            oldPrice={product.price}
             image={productThumbNail}
             userId={product.sellerUserName}
             sellerAvatar={`https://api.qarun.ir/${product.sellerAvatar}`}
