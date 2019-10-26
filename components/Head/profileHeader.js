@@ -25,7 +25,7 @@ const Header = props => {
     userName,
     walletCharge
   } = props.profileData;
-  const avatarUrl = avatar !== null ? `https://api.qarun.ir/${avatar}` : null;
+  const avatarUrl = avatar !== null ? `https://qarun.ir/api/${avatar}` : null;
   const toggleMenu = () => {
     const menuDiv = document.getElementById('profileMenu');
     menuDiv.classList.toggle('hidden');

@@ -24,7 +24,7 @@ const Header = props => {
   });
   const UserImage = () => {
     if (profileData.avatar && profileData.avatar != null) {
-      return <img src={`https://api.qarun.ir/${profileData.avatar}`} alt="user image" className="rounded-circle" />;
+      return <img src={`https://qarun.ir/api/${profileData.avatar}`} alt="user image" className="rounded-circle" />;
     } else {
       return <img src={`../../static/svg/user-circle.svg`} alt="user image" className="rounded-circle" />;
     }
