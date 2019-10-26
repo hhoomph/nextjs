@@ -29,13 +29,15 @@ export const removeSeparator = (num, sep) => {
 };
 // Convert elemetn's value for remove all characters exept number, Just Allow Type Numbers
 export const forceNumeric = e => {
-  let $input = e.replace(/[^\d]+/g, '');
+  //let $input = e.replace(/[^\d]+/g, '');
+  let $input = e.replace(/[^0-9۰-۹]+/g, '');
   return $input;
 };
 // Just Allow 4 number
 export const forceNumeric4 = e => {
   let $input = e;
-  $input.replace(/[^\d]+/g, '');
+  //$input.replace(/[^\d]+/g, '');
+  $input.replace(/[^0-9۰-۹]+/g, '');
   if ($input.length > 4) {
     $input = $input.substring(0, 4);
   }
@@ -44,7 +46,8 @@ export const forceNumeric4 = e => {
 // Just Allow 6 number
 export const forceNumeric6 = e => {
   let $input = e;
-  $input.replace(/[^\d]+/g, '');
+  //$input.replace(/[^\d]+/g, '');
+  $input.replace(/[^0-9۰-۹]+/g, '');
   if ($input.length > 6) {
     $input = $input.substring(0, 6);
   }
