@@ -15,7 +15,7 @@ import '../scss/components/addProduct.scss';
 //import { setTimeout } from 'core-js';
 function Page(props) {
   const nextCtx = props.ctx;
-  const categories = props.result.data;
+  const categories = props.result.data || [];
   const categoriesOptions = categories.map(category => {
     return {
       value: category.id,

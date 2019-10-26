@@ -1,0 +1,2 @@
+product image : 800 width x 640 height 
+product thumnail 200 width x 250 height 

@@ -20,7 +20,8 @@ const EditProfile = dynamic({
 });
 function Page(props) {
   const [view, setView] = useState(1);
-  const [profileData, setProfileData] = useState(props.result.data);
+  const resultData = props.result.data || [];
+  const [profileData, setProfileData] = useState(resultData);
   // if (props.result.isSuccess) {
   //   setProfileData(props.result.data);
   // } else {

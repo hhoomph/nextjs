@@ -5,7 +5,7 @@ import '../../scss/components/CategoryMenu.scss';
 import Category from './Category';
 import { ReactComponent as LeftSvg } from '../../static/svg/left-arrow.svg';
 const CategoryMenu = props => {
-  const categories = props.categories;
+  const categories = props.categories || [];
   const router = useRouter();
   const showCats = categories.map(category => <Category key={category.id} id={category.id} name={category.titel} />);
   return (
