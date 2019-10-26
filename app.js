@@ -52,27 +52,27 @@ app
     console.error(ex.stack);
     process.exit(1);
   });
-// Starts a SMTP server using TLS with your own certificate and key
-const mailServer = new SMTPServer({
-  authOptional: true,
-  secure: true,
-  // key: fs.readFileSync('private.key'),
-  // cert: fs.readFileSync('server.crt'),
-  //logger: true,
-  debug: true,
-  onAuth(auth, session, callback) {
-    if (auth.username !== 'test' || auth.password !== 'password') {
-      return callback(new Error('Invalid username or password'));
-    }
-    callback(null, {
-      user: 'test'
-    });
-  }
-});
-mailServer.listen(465, err => {
-  if (err) throw err;
-  console.log('SMTP server is Ready.');
-});
+// // Starts a SMTP server using TLS with your own certificate and key
+// const mailServer = new SMTPServer({
+//   authOptional: true,
+//   secure: true,
+//   // key: fs.readFileSync('private.key'),
+//   // cert: fs.readFileSync('server.crt'),
+//   //logger: true,
+//   debug: true,
+//   onAuth(auth, session, callback) {
+//     if (auth.username !== 'test' || auth.password !== 'password') {
+//       return callback(new Error('Invalid username or password'));
+//     }
+//     callback(null, {
+//       user: 'test'
+//     });
+//   }
+// });
+// mailServer.listen(465, err => {
+//   if (err) throw err;
+//   console.log('SMTP server is Ready.');
+// });
 // let transporter = nodemailer.createTransport({
 //   transport: 'SMTP',
 //   host: 'https://qarun.ir',

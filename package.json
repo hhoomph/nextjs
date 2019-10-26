@@ -9,10 +9,10 @@
   },
   "author": "H.H <hh.oomph@gmail.com>",
   "scripts": {
-    "dev": "node server.js",
+    "dev": "node app.js",
     "build": "next build",
     "flow": "flow",
-    "start": "cross-env NODE_ENV=production node server.js"
+    "start": "cross-env NODE_ENV=production node app.js"
   },
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
