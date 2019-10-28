@@ -88,13 +88,13 @@ function Page(props) {
                 <FaPlus className="font_icon" />
               </SubmitButton>
             </div>
-            <div className="mt-2 rtl description">
+            <div className="mt-3 rtl description">
               <p className="describe_title">توضیحات</p>
               <p className="describe_text">متن توضیحات</p>
             </div>
           </div>
         </div>
-        <div className="container pt-2 related_products">
+        <div className="container mb-2 pt-2 related_products">
           <div className="row">
             <div className="col-12">
               <div className="related_product_ttile">
