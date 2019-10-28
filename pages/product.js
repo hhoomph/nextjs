@@ -14,11 +14,11 @@ import { ReactComponent as CommentSvg } from '../static/svg/comment.svg';
 import { ReactComponent as HeartSvg } from '../static/svg/heart-red.svg';
 import Carousel from 'react-bootstrap/Carousel';
 import '../scss/components/productPage.scss';
-const UserSuggest = dynamic({
-  loader: () => import('../components/UserSuggest/UserSuggest'),
-  loading: () => <Loading />,
-  ssr: false
-});
+// const UserSuggest = dynamic({
+//   loader: () => import('../components/UserSuggest/UserSuggest'),
+//   loading: () => <Loading />,
+//   ssr: false
+// });
 function Page(props) {
   // const Following = props.Following.data || [];
   // const GetMarketAround = props.GetMarketAround.data || [];
