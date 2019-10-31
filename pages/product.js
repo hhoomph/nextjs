@@ -76,7 +76,7 @@ function Page(props) {
             <div className="col-6 text-right">
               <HeartSvg className="svg_icon" />
             </div>
-            <div className="col-12 mt-2">
+            <div className="col-12 mt-1">
               <p className="text-right product_name">نام محصول</p>
             </div>
             <div className="col-12 rtl">
@@ -93,12 +93,12 @@ function Page(props) {
             </div>
           </div>
         </div>
-        <div className="container mb-2 pt-2 related_products">
+        <div className="container mb-3 pt-2 related_products">
           <div className="row">
             <div className="col-12">
               <div className="related_product_ttile">
                 محصولات مرتبط
-                <div class="arrow-down"></div>
+                <div className="arrow-down"></div>
               </div>
             </div>
           </div>
