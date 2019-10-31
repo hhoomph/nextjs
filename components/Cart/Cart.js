@@ -3,6 +3,7 @@ import Link from '../Link';
 import { FaTimesCircle, FaTimes, FaChevronUp, FaChevronDown } from 'react-icons/fa';
 import '../../scss/components/cart.scss';
 const Cart = props => {
+  const nextCtx = props.ctx;
   return (
     <div className="container cart">
       <div className="row cart_seller">

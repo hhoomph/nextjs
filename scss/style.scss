@@ -108,6 +108,9 @@ body {
     animation-iteration-count: infinite;
   }
 }
+.modal-open .modal {
+  z-index: 9999;
+}
 // ******* Toastify ********
 .Toastify {
   .Toastify__toast-body,

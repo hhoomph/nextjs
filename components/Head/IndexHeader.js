@@ -8,7 +8,7 @@ const IndexHeader = () => {
     <div className="container d-lg-none mt-1 index_header">
       <div className="row d-flex d-lg-none">
         <div className="col-4">
-          <Link href="/" passHref>
+          <Link href="/cart" passHref>
             <a className="nav_Icons active">
               <FaShoppingBasket />
               <div className="badge badge-success">10</div>

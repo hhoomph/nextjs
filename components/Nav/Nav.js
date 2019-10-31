@@ -18,7 +18,7 @@ const Nav = () => {
     <>
       <nav className="d-none d-lg-flex top_nav navbar navbar-expand navbar-white bg-white">
         <div className="col-4 d-flex">
-          <Link href="/" passHref>
+          <Link href="/cart" passHref>
             <a className="nav_Icons active">
               <FaShoppingBasket />
               <div className="badge badge-success">10</div>

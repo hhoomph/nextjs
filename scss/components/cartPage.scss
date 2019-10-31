@@ -54,12 +54,13 @@
 .cart_title {
   .page_title {
     display: inline-block;
+    color: #E65100;
   }
   .font_icon {
     display: inline-block;
   }
-  hr{
-    margin: 0;
-    border-top: 1px solid #fc91434a;
+  hr {
+    margin: 0.2rem;
+    //border-top: 1px solid #fc90432d;
   }
 }

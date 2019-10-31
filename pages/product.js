@@ -31,6 +31,7 @@ function Page(props) {
   } else if (process) {
     //console.log('node');
   }
+  const nextCtx = props.ctx;
   return (
     <>
       <Nav />

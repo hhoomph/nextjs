@@ -19,6 +19,7 @@ const Cart = dynamic({
   ssr: false
 });
 function Page(props) {
+  const nextCtx = props.ctx;
   return (
     <>
       <Nav />

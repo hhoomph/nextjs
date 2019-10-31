@@ -24,7 +24,7 @@ function Page(props) {
   // if (props.result.isSuccess) {
   //   setProfileData(props.result.data);
   // } else {
-  //   setProfileData({});
+  //   setProfileData([]);
   // }
   switch (view) {
     case 1:

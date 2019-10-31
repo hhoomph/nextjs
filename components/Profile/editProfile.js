@@ -7,6 +7,9 @@ import { ReactComponent as UserImageSvg } from '../../public/static/img/user-cir
 import { ToastContainer, toast } from 'react-toastify';
 import fetchData from '../../utils/fetchData';
 import Router from 'next/router';
+import ReactCrop from 'react-image-crop';
+import Modal from 'react-bootstrap/Modal';
+import 'react-image-crop/lib/ReactCrop.scss';
 import '../../scss/components/profileEdit.scss';
 const LocationMap = dynamic({
   loader: () => import('../Map/LocationMap.js'),
@@ -15,28 +18,109 @@ const LocationMap = dynamic({
 });
 const EditProfile = props => {
   const nextCtx = props.ctx;
-  const id = props.profileData.id;
   const { profileData, setView } = props;
-  // const user = (props.profileData.userName = props.profileData.phoneNumber) ? '' : props.profileData.userName || '';
+  const id = profileData.id || null;
+  // const user = (profileData.userName = profileData.phoneNumber) ? '' : profileData.userName || '';
   // const [username, setUsername] = useState(user);
-  const [username, setUsername] = useState(props.profileData.userName);
-  const [name, setName] = useState(props.profileData.displayName || '');
-  const [biography, setBiography] = useState(props.profileData.biography || '');
-  const [email, setEmail] = useState(props.profileData.email || '');
-  const [phoneNumber, setPhoneNumber] = useState(props.profileData.phoneNumber || '');
-  const [iban, setIban] = useState(props.profileData.iban || '');
-  const [lat, setLat] = useState(props.profileData.lat);
-  const [long, setLong] = useState(props.profileData.long);
-  const [markPosition, setMarkPosition] = useState([props.profileData.lat, props.profileData.long]);
+  const [username, setUsername] = useState(profileData.userName);
+  const [name, setName] = useState(profileData.displayName || '');
+  const [biography, setBiography] = useState(profileData.biography || '');
+  const [email, setEmail] = useState(profileData.email || '');
+  const [phoneNumber, setPhoneNumber] = useState(profileData.phoneNumber || '');
+  const [iban, setIban] = useState(profileData.iban || '');
+  const [lat, setLat] = useState(profileData.lat || 0);
+  const [long, setLong] = useState(profileData.long || 0);
+  const [markPosition, setMarkPosition] = useState([profileData.lat || 0, profileData.long || 0]);
   const [city, setCity] = useState(null);
   const [state, setState] = useState(null);
   const [draggable, setDraggable] = useState(false);
-  const [addresses, setAddresses] = useState(props.profileData.addresses[0] || '');
-  const avatarUrl = props.profileData.avatar !== null ? `https://qarun.ir/api/${props.profileData.avatar}` : null;
+  const _addresses = profileData.addresses !== undefined ? profileData.addresses[0] : '';
+  const [addresses, setAddresses] = useState(_addresses);
+  const avatarUrl = profileData.avatar !== undefined && profileData.avatar !== null ? `https://qarun.ir/api/${profileData.avatar}` : null;
   const [avatar, setAvatar] = useState(avatarUrl);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const fileInput = useRef();
+  // Add Crop Image
+  const [modalShow, setModalShow] = useState(false);
+  const [src, setSrc] = useState(null);
+  const [crop, setCrop] = useState({
+    unit: '%',
+    width: 50,
+    height: 50,
+    x: 25,
+    y: 25,
+    aspect: 4 / 5
+  });
+  const [croppedImageUrl, setCroppedImageUrl] = useState(null);
+  let imageRef = null;
+  let fileUrl = null;
+  const onSelectFile = e => {
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => setSrc(reader.result));
+      reader.readAsDataURL(e.target.files[0]);
+      setModalShow(true);
+    }
+  };
+  const onImageLoaded = image => {
+    imageRef = image;
+    //setCrop({ width: image.width, height: image.height });
+    return false;
+  };
+  const onCropComplete = crop => {
+    makeClientCrop(crop);
+  };
+  const onCropChange = (crop, percentCrop) => {
+    // You could also use percentCrop:
+    // this.setState({ crop: percentCrop });
+    setCrop(crop);
+  };
+  const makeClientCrop = async crop => {
+    if (imageRef && crop.width && crop.height) {
+      const _croppedImageUrl = await getCroppedImg(imageRef, crop, 'newFile.jpeg');
+      setCroppedImageUrl(_croppedImageUrl);
+    }
+  };
+  const getCroppedImg = (image, crop, fileName) => {
+    const canvas = document.createElement('canvas');
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    canvas.width = crop.width;
+    canvas.height = crop.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(image, crop.x * scaleX, crop.y * scaleY, crop.width * scaleX, crop.height * scaleY, 0, 0, crop.width, crop.height);
+    return new Promise((resolve, reject) => {
+      canvas.toBlob(blob => {
+        if (!blob) {
+          //reject(new Error('Canvas is empty'));
+          console.error('Canvas is empty');
+          return;
+        }
+        blob.name = fileName;
+        window.URL.revokeObjectURL(fileUrl);
+        fileUrl = window.URL.createObjectURL(blob);
+        resolve(fileUrl);
+      }, 'image/jpeg');
+    });
+  };
+  const MyVerticallyCenteredModal = () => {
+    return (
+      <Modal onHide={() => setModalShow(false)} show={modalShow} size="xl" aria-labelledby="contained-modal-title-vcenter" centered scrollable>
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">بارگذاری تصویر</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {src && <ReactCrop src={src} crop={crop} locked={true} onImageLoaded={onImageLoaded} onComplete={onCropComplete} onChange={onCropChange} />}
+          {/* {croppedImageUrl && <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />} */}
+        </Modal.Body>
+        <Modal.Footer>
+          <button onClick={() => setModalShow(false)}>بستن</button>
+        </Modal.Footer>
+      </Modal>
+    );
+  };
+  // End Of Crop Image
   toast.configure({
     position: 'top-right',
     autoClose: 2000,
@@ -158,7 +242,9 @@ const EditProfile = props => {
       <div className="row">
         <div className="col d-block text-center profile_image">
           {uploading ? <Loading /> : avatar != null ? <img src={avatar} className="rounded-circle img-thumbnail" /> : <UserImageSvg className="rounded-circle img-thumbnail" />}
-          <input type="file" accept="image/*" onChange={uploadHandler} ref={fileInput} hidden={true} />
+          {/* <input type="file" accept="image/*" onChange={uploadHandler} ref={fileInput} hidden={true} /> */}
+          <input type="file" accept="image/*" onChange={onSelectFile} ref={fileInput} hidden={true} />
+          <MyVerticallyCenteredModal />
           <a
             className="mt-3 change_image"
             onClick={() => {
