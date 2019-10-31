@@ -1,5 +1,4 @@
 import React from 'react';
-import '../scss/style.scss';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import fetchData from '../utils/fetchData';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, memo } from 'react';
 import Link from '../Link';
 import { FaShoppingBasket, FaRegUserCircle } from 'react-icons/fa';
-import { ReactComponent as SendSvg } from '../../static/svg/send.svg';
+import { ReactComponent as SendSvg } from '../../public/static/svg/send.svg';
 import '../../scss/components/indexHeader.scss';
 const IndexHeader = () => {
   return (
@@ -18,7 +18,7 @@ const IndexHeader = () => {
         <div className="col-4 d-flex justify-content-center">
           <Link href="/" passHref>
             <a className="navbar-brand">
-              <img src="../../static/img/text-logo.png" width="80" height="80" className="d-inline-block align-top" alt="" />
+              <img src="/static/img/text-logo.png" width="80" height="80" className="d-inline-block align-top" alt="" />
             </a>
           </Link>
         </div>

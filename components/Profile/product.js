@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect, memo } from 'react';
 import Link from '../Link';
 import { FaShoppingBasket, FaTimesCircle } from 'react-icons/fa';
-import { ReactComponent as RemoveSvg } from '../../static/svg/remove-button.svg';
+import { ReactComponent as RemoveSvg } from '../../public/static/svg/remove-button.svg';
 import WindowsWidth from '../WindowsWidth';
 import { numberSeparator, removeSeparator } from '../../utils/tools';
 import '../../scss/components/profileProduct.scss';
@@ -11,7 +11,7 @@ const Product = props => {
       <div className="product_frame">
         <Link href={`/product/${props.id}`} passHref>
           <a className="product_link">
-            <img src={`../../static/img/${props.image}`} alt="نام محصول" className="product_img" />
+            <img src={`/static/img/${props.image}`} alt="نام محصول" className="product_img" />
           </a>
         </Link>
         {props.basket && (

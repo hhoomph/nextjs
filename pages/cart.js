@@ -1,5 +1,4 @@
 import React, { Fragment, useContext, useState, useRef, useEffect, memo } from 'react';
-import '../scss/style.scss';
 import dynamic from 'next/dynamic';
 import fetchData from '../utils/fetchData';
 import Nav from '../components/Nav/Nav';
@@ -8,11 +7,17 @@ import Auth from '../components/Auth/Auth';
 import SubmitButton from '../components/Button/SubmitButton';
 import Link from '../components/Link';
 import { FaPlus, FaCheck, FaArrowLeft, FaArrowRight, FaTimes } from 'react-icons/fa';
-import { ReactComponent as MenuDotsSvg } from '../static/svg/menu-dots.svg';
-import { ReactComponent as ShareSvg } from '../static/svg/share.svg';
-import { ReactComponent as CommentSvg } from '../static/svg/comment.svg';
-import { ReactComponent as HeartSvg } from '../static/svg/heart-red.svg';
-import '../scss/components/cart.scss';
+import { ReactComponent as MenuDotsSvg } from '../public/static/svg/menu-dots.svg';
+import { ReactComponent as ShareSvg } from '../public/static/svg/share.svg';
+import { ReactComponent as CommentSvg } from '../public/static/svg/comment.svg';
+import { ReactComponent as HeartSvg } from '../public/static/svg/heart-red.svg';
+import { FaShoppingCart, FaCartPlus, FaCartArrowDown } from 'react-icons/fa';
+import '../scss/components/cartPage.scss';
+const Cart = dynamic({
+  loader: () => import('../components/Cart/Cart'),
+  loading: () => <Loading />,
+  ssr: false
+});
 function Page(props) {
   return (
     <>
@@ -27,6 +32,17 @@ function Page(props) {
           </div>
         </div>
       </div>
+      <div className="container cart_title">
+        <div className="row">
+          <div className="col text-center">
+            <FaCartPlus className="font_icon" />
+            <h5 className="mr-2 ml-2 page_title">سبد خرید </h5>
+            <FaCartArrowDown className="font_icon" />
+            <hr />
+          </div>
+        </div>
+      </div>
+      <Cart />
     </>
   );
 }

@@ -1,12 +1,12 @@
 @import '../vars';
-@font-face {
-  font-family: 'morvarid';
-  src: url('../../static/font/morvarid.ttf') format('TrueType');
-}
+// @font-face {
+//   font-family: 'morvarid';
+//   src: url('/static/font/morvarid.ttf') format('TrueType');
+// }
 .category_menu {
   &::after {
     content: '';
-    background-image: url('../../static/img/BackLayer.jpg');
+    background-image: url('/static/img/BackLayer.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position-x: right;

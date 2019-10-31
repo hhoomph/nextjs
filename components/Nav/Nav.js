@@ -3,11 +3,11 @@ import Link from '../Link';
 import Search from './Search';
 import { FiGrid } from 'react-icons/fi';
 import { FaShoppingBasket, FaRegUserCircle } from 'react-icons/fa';
-import { ReactComponent as HomeSvg } from '../../static/svg/home.svg';
-import { ReactComponent as MenuSvg } from '../../static/svg/menu.svg';
-import { ReactComponent as UserSvg } from '../../static/svg/profile.svg';
-import { ReactComponent as AddSvg } from '../../static/svg/plus.svg';
-import { ReactComponent as SearchSvg } from '../../static/svg/search.svg';
+import { ReactComponent as HomeSvg } from '../../public/static/svg/home.svg';
+import { ReactComponent as MenuSvg } from '../../public/static/svg/menu.svg';
+import { ReactComponent as UserSvg } from '../../public/static/svg/profile.svg';
+import { ReactComponent as AddSvg } from '../../public/static/svg/plus.svg';
+import { ReactComponent as SearchSvg } from '../../public/static/svg/search.svg';
 import '../../scss/components/nav.scss';
 // check prev and next state to use Memo
 const areEqual = (prevProps, nextProps) => {
@@ -41,7 +41,7 @@ const Nav = () => {
         <div className="col-4 d-flex justify-content-end">
           <Link href="/" passHref>
             <a className="navbar-brand">
-              <img src="../../static/img/splash.png" width="80" height="80" className="d-inline-block align-top" alt="" />
+              <img src="/static/img/splash.png" width="80" height="80" className="d-inline-block align-top" alt="" />
             </a>
           </Link>
         </div>

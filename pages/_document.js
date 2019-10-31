@@ -12,7 +12,7 @@ class MyDocument extends Document {
           <meta name="mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="description" content="App created for test development" />
-          <link rel="shortcut icon" href="../static/favicon.ico" />
+          <link rel="shortcut icon" href="../favicon.ico" />
         </Head>
         <body>
           <Main />

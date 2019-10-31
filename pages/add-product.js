@@ -2,7 +2,6 @@ import React, { Fragment, useContext, useRef, useState, useEffect, memo } from '
 import dynamic from 'next/dynamic';
 import Loading from '../components/Loader/Loading';
 import Router from 'next/router';
-import '../scss/style.scss';
 import Nav from '../components/Nav/Nav';
 import Auth from '../components/Auth/Auth';
 import fetchData from '../utils/fetchData';
@@ -62,12 +61,12 @@ function Page(props) {
   let imgId = 0;
   const [uploadedImages, setUploadedImages] = useState([]);
   // const [uploadedImages, setUploadedImages] = useState([
-  //   { id: `${++imgId}`, url: '../static/img/product.png', thumbnail: '../static/img/product2.png', active: true },
-  //   { id: `${++imgId}`, url: '../static/img/product.png', thumbnail: '../static/img/product3.png', active: true },
-  //   { id: `${++imgId}`, url: '../static/img/product.png', thumbnail: '../static/img/product.png', active: true },
-  //   { id: `${++imgId}`, url: '../static/img/product.png', thumbnail: '../static/img/product2.png', active: true },
-  //   { id: `${++imgId}`, url: '../static/img/product.png', thumbnail: '../static/img/product.png', active: true },
-  //   { id: `${++imgId}`, url: '../static/img/product.png', thumbnail: '../static/img/product3.png', active: true }
+  //   { id: `${++imgId}`, url: '/static/img/product.png', thumbnail: '/static/img/product2.png', active: true },
+  //   { id: `${++imgId}`, url: '/static/img/product.png', thumbnail: '/static/img/product3.png', active: true },
+  //   { id: `${++imgId}`, url: '/static/img/product.png', thumbnail: '/static/img/product.png', active: true },
+  //   { id: `${++imgId}`, url: '/static/img/product.png', thumbnail: '/static/img/product2.png', active: true },
+  //   { id: `${++imgId}`, url: '/static/img/product.png', thumbnail: '/static/img/product.png', active: true },
+  //   { id: `${++imgId}`, url: '/static/img/product.png', thumbnail: '/static/img/product3.png', active: true }
   // ]);
   const addProduct = async () => {
     if (categoryId !== null && title != '') {

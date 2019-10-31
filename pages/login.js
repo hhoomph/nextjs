@@ -5,7 +5,6 @@ import fetch from 'isomorphic-unfetch';
 import axios from 'axios';
 import nextCookie from 'next-cookies';
 import cookie from 'js-cookie';
-import '../scss/style.scss';
 import '../scss/components/login.scss';
 import { secondsToMs, forceNumeric } from '../utils/tools';
 import useInterval from '../components/useInterval';

@@ -4,9 +4,9 @@ import fetchData from '../../utils/fetchData';
 import Loading from '../Loader/Loader';
 import SubmitButton from '../Button/SubmitButton';
 import { FaShoppingBasket, FaRegUserCircle } from 'react-icons/fa';
-import { ReactComponent as SendSvg } from '../../static/svg/send.svg';
-import { ReactComponent as AddUserSvg } from '../../static/svg/add-user.svg';
-import { ReactComponent as DistanceSvg } from '../../static/svg/distance.svg';
+import { ReactComponent as SendSvg } from '../../public/static/svg/send.svg';
+import { ReactComponent as AddUserSvg } from '../../public/static/svg/add-user.svg';
+import { ReactComponent as DistanceSvg } from '../../public/static/svg/distance.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import '../../scss/components/profileHeader.scss';
 const Header = props => {
@@ -26,7 +26,7 @@ const Header = props => {
     if (profileData.avatar && profileData.avatar != null) {
       return <img src={`https://qarun.ir/api/${profileData.avatar}`} alt="user image" className="rounded-circle" />;
     } else {
-      return <img src={`../../static/svg/user-circle.svg`} alt="user image" className="rounded-circle" />;
+      return <img src={`/static/svg/user-circle.svg`} alt="user image" className="rounded-circle" />;
     }
   };
   const UserStatus = () => {
@@ -116,7 +116,7 @@ const Header = props => {
           <div className="col-12 pt-3">
             <h2 className="title">{profileData.displayName}</h2>
             <p className="bio">{profileData.biography}</p>
-            <img className="logo_img" src={`../../static/img/logo_opacity.png`} />
+            <img className="logo_img" src={`/static/img/logo_opacity.png`} />
           </div>
         </div>
       </div>

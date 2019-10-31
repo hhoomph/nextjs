@@ -2,7 +2,6 @@ import React, { Fragment, useContext, useRef, useState, useEffect } from 'react'
 import dynamic from 'next/dynamic';
 import Loading from '../components/Loader/Loader';
 import Router from 'next/router';
-import '../scss/style.scss';
 import Nav from '../components/Nav/Nav';
 import ProfileHeader from '../components/Head/profileHeader';
 import Product from '../components/Profile/product';
@@ -35,7 +34,7 @@ function Page(props) {
       return (
         <>
           <Nav />
-          <ProfileHeader profileData={profileData} setView={setView} userImage={`../../static/img/profile.png`} />
+          <ProfileHeader profileData={profileData} setView={setView} userImage={`/static/img/profile.png`} />
           <div className="container mb-1 cat_product_row">
             <div className="row">
               <div className="col">
@@ -73,7 +72,7 @@ function Page(props) {
       return (
         <>
           <Nav />
-          <ProfileHeader setView={setView} userImage={`../../static/img/profile.png`} />
+          <ProfileHeader setView={setView} userImage={`/static/img/profile.png`} />
           <div className="container mb-1 cat_product_row">
             <div className="row">
               <div className="col">

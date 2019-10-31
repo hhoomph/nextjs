@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useRef, useEffect } from 'react';
-import '../scss/style.scss';
+// import '../scss/style.scss';
 import dynamic from 'next/dynamic';
 import fetchData from '../utils/fetchData';
 import Nav from '../components/Nav/Nav';

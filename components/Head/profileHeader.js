@@ -1,9 +1,9 @@
 import React, { useState, useEffect, memo } from 'react';
 import Link from '../Link';
 import { FaShoppingBasket, FaRegUserCircle } from 'react-icons/fa';
-import { ReactComponent as MenuCircleSvg } from '../../static/svg/menu-circle.svg';
-import { ReactComponent as AddUserSvg } from '../../static/svg/add-user.svg';
-import { ReactComponent as PlusSvg } from '../../static/svg/plus.svg';
+import { ReactComponent as MenuCircleSvg } from '../../public/static/svg/menu-circle.svg';
+import { ReactComponent as AddUserSvg } from '../../public/static/svg/add-user.svg';
+import { ReactComponent as PlusSvg } from '../../public/static/svg/plus.svg';
 import { Dropdown } from 'react-bootstrap';
 import '../../scss/components/profileHeader.scss';
 import Logout from '../Auth/Logout';
@@ -25,7 +25,7 @@ const Header = props => {
     userName,
     walletCharge
   } = props.profileData;
-  const avatarUrl = avatar !== null ? `https://qarun.ir/api/${avatar}` : null;
+  const avatarUrl = avatar !== undefined && avatar !== null ? `https://qarun.ir/api/${avatar}` : null;
   const toggleMenu = () => {
     const menuDiv = document.getElementById('profileMenu');
     menuDiv.classList.toggle('hidden');
@@ -34,7 +34,7 @@ const Header = props => {
     if (avatarUrl !== null) {
       return <img src={avatarUrl} alt="user image" className="rounded-circle" />;
     } else {
-      return <img src={`../../static/svg/user-circle.svg`} alt="user image" className="rounded-circle" />;
+      return <img src={`/static/svg/user-circle.svg`} alt="user image" className="rounded-circle" />;
     }
   };
   return (

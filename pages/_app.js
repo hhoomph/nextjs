@@ -6,6 +6,7 @@ import nextCookie from 'next-cookies';
 import cookie from 'js-cookie';
 import AppContext from '../context/index';
 import getHost from '../utils/get-host';
+import '../scss/style.scss';
 class MyApp extends App {
   static async getInitialProps({ Component, router, ctx }) {
     let pageProps = {};

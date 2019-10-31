@@ -4,7 +4,6 @@ import Loading from '../components/Loader/Loader';
 import fetch from 'isomorphic-unfetch';
 import nextCookie from 'next-cookies';
 import cookie from 'js-cookie';
-import '../scss/style.scss';
 import Nav from '../components/Nav/Nav';
 import MapHeader from '../components/Head/mapHeader';
 import UserSuggest from '../components/UserSuggest/UserSuggest2';

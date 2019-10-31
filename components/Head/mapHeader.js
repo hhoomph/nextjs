@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, memo } from 'react';
 import Link from '../Link';
-import { ReactComponent as MicroSvg } from '../../static/svg/microphone.svg';
-import { ReactComponent as MenuSvg } from '../../static/svg/menu-line.svg';
+import { ReactComponent as MicroSvg } from '../../public/static/svg/microphone.svg';
+import { ReactComponent as MenuSvg } from '../../public/static/svg/menu-line.svg';
 const Header = props => {
   const searchInput = useRef(); 
   return (

@@ -6,8 +6,8 @@ const Banners = () => {
   return (
     <div className="container">
       <div className="row rtl banners">
-        <Banner link={'bannerLink'} image={'Layer 30.png'} />
-        <Banner link={'bannerLink'} image={'Layer 33.png'} />
+        <Banner link={'bannerLink'} image={'Layer30.png'} />
+        <Banner link={'bannerLink'} image={'Layer33.png'} />
       </div>
     </div>
   );

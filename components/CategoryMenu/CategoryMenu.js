@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Link from '../Link';
 import '../../scss/components/CategoryMenu.scss';
 import Category from './Category';
-import { ReactComponent as LeftSvg } from '../../static/svg/left-arrow.svg';
+import { ReactComponent as LeftSvg } from '../../public/static/svg/left-arrow.svg';
 const CategoryMenu = props => {
   const categories = props.categories || [];
   const router = useRouter();
@@ -15,7 +15,7 @@ const CategoryMenu = props => {
           <Link href="/" passHref>
             <a className="qarun_title">
             {/* قارون */}
-            <img src="../../static/img/text-logo.png" width="80" height="auto" className="d-inline-block align-top" alt="" />
+            <img src="/static/img/text-logo.png" width="80" height="auto" className="d-inline-block align-top" alt="" />
             </a>
           </Link>
         </div>

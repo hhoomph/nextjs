@@ -1,6 +1,6 @@
 import React, { useState, useEffect, memo } from 'react';
 import Link from '../Link';
-import { ReactComponent as PlusSvg } from '../../static/svg/plus.svg';
+import { ReactComponent as PlusSvg } from '../../public/static/svg/plus.svg';
 const Header = props => {
   return (
     <div className="container login_header">
@@ -8,7 +8,7 @@ const Header = props => {
         <div className="col d-flex justify-content-center">
           <Link href="/" passHref>
             <a>
-              <img className="logo" src="../../static/img/splash.png" />
+              <img className="logo" src="/static/img/splash.png" />
             </a>
           </Link>
         </div>

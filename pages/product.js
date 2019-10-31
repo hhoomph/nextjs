@@ -1,5 +1,4 @@
 import React, { Fragment, useContext, useState, useRef, useEffect, memo } from 'react';
-import '../scss/style.scss';
 import dynamic from 'next/dynamic';
 import fetchData from '../utils/fetchData';
 import Nav from '../components/Nav/Nav';
@@ -8,10 +7,10 @@ import Auth from '../components/Auth/Auth';
 import SubmitButton from '../components/Button/SubmitButton';
 import Link from '../components/Link';
 import { FaPlus } from 'react-icons/fa';
-import { ReactComponent as MenuDotsSvg } from '../static/svg/menu-dots.svg';
-import { ReactComponent as ShareSvg } from '../static/svg/share.svg';
-import { ReactComponent as CommentSvg } from '../static/svg/comment.svg';
-import { ReactComponent as HeartSvg } from '../static/svg/heart-red.svg';
+import { ReactComponent as MenuDotsSvg } from '../public/static/svg/menu-dots.svg';
+import { ReactComponent as ShareSvg } from '../public/static/svg/share.svg';
+import { ReactComponent as CommentSvg } from '../public/static/svg/comment.svg';
+import { ReactComponent as HeartSvg } from '../public/static/svg/heart-red.svg';
 import Carousel from 'react-bootstrap/Carousel';
 import '../scss/components/productPage.scss';
 // const UserSuggest = dynamic({
@@ -45,7 +44,7 @@ function Page(props) {
             </div>
             <div className="col-8 text-right">
               <p className="user_name">نام کاربری</p>
-              <img src="../static/img/user.png" className="userImage" />
+              <img src="/static/img/user.png" className="userImage" />
             </div>
           </div>
         </div>
@@ -54,14 +53,14 @@ function Page(props) {
             <div className="col-12">
               <Carousel fade={true} indicators={true} interval={6000} keyboard={true} pauseOnHover={true} slide={true} wrap={true} touch={true}>
                 <Carousel.Item>
-                  <img src="../static/img/1.jpg" className="product_image" />
+                  <img src="/static/img/1.jpg" className="product_image" />
                   <Carousel.Caption>
                     <h3>نام محصول</h3>
                     <p>توضیحات محصول</p>
                   </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
-                  <img src="../static/img/2.jpg" className="product_image" />
+                  <img src="/static/img/2.jpg" className="product_image" />
                 </Carousel.Item>
               </Carousel>
               <div className="discount_div">%10</div>

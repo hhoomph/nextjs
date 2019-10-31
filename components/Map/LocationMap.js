@@ -3,7 +3,7 @@ import L from 'leaflet';
 import fetch from 'isomorphic-unfetch';
 import { Circle, LayerGroup, Map, TileLayer, Marker, Popup, Polyline, Tooltip } from 'react-leaflet';
 import { GeoSearchControl, OpenStreetMapProvider, EsriProvider } from 'leaflet-geosearch';
-import { ReactComponent as TargetSvg } from '../../static/svg/target.svg';
+import { ReactComponent as TargetSvg } from '../../public/static/svg/target.svg';
 import { FaSearch } from 'react-icons/fa';
 import '../../scss/components/map.scss';
 import { setTimeout } from 'core-js';
@@ -29,7 +29,7 @@ export const convertLatlngToArray = position => {
   return [position.lat, position.lng];
 };
 const placeholderIcon = new L.Icon({
-  iconUrl: '../../static/svg/placeholder-for-map.svg',
+  iconUrl: '/static/svg/placeholder-for-map.svg',
   shadowUrl: null,
   className: 'current_pos_marker'
 });

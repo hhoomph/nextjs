@@ -2,7 +2,6 @@ import React, { Fragment, useContext, useRef, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Loading from '../components/Loader/Loading';
 import fetchData from '../utils/fetchData';
-import '../scss/style.scss';
 import Nav from '../components/Nav/Nav';
 import UserHeader from '../components/Head/userHeader';
 import Product from '../components/Profile/product';

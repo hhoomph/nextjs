@@ -2,7 +2,7 @@ import React, { Fragment, useState, useContext, useRef, useEffect, memo } from '
 import L from 'leaflet';
 import { Circle, LayerGroup, Map, TileLayer, Marker, Popup, Polyline, Polygon, Rectangle, Tooltip, LayersControl } from 'react-leaflet';
 import { GeoSearchControl, OpenStreetMapProvider, EsriProvider } from 'leaflet-geosearch';
-import { ReactComponent as TargetSvg } from '../../static/svg/target.svg';
+import { ReactComponent as TargetSvg } from '../../public/static/svg/target.svg';
 import '../../scss/components/map.scss';
 import { setTimeout } from 'timers';
 const esriProvider = new EsriProvider();
@@ -27,19 +27,19 @@ export const convertLatlngToArray = position => {
   return [position.lat, position.lng];
 };
 const placeholderIcon = new L.Icon({
-  iconUrl: '../../static/svg/placeholder-for-map.svg',
+  iconUrl: '/static/svg/placeholder-for-map.svg',
   shadowUrl: null,
   className: 'current_pos_marker'
 });
 const myIcon = new L.Icon({
-  iconUrl: '../../static/svg/location-pointer2.png',
+  iconUrl: '/static/svg/location-pointer2.png',
   iconRetinaUrl: null,
-  shadowUrl: '../../static/img/profile.png'
+  shadowUrl: '/static/img/profile.png'
 });
 const Icon = new L.Icon({
-  iconUrl: '../../static/svg/location-pointer2.png',
+  iconUrl: '/static/svg/location-pointer2.png',
   iconRetinaUrl: null,
-  shadowUrl: '../../static/img/user.png'
+  shadowUrl: '/static/img/user.png'
 });
 const MapComponent = props => {
   const [markPosition, setMarkPosition] = useState([]);

@@ -12,7 +12,7 @@ const UserSuggest = props => {
     <div className={userClass}>
       <Link href={`/user/${props.id}`} passHref>
         <a className="user_link">
-          <img src={`../../static/img/${props.image}`} alt="" className="rounded-circle img-thumbnail" />
+          <img src={`/static/img/${props.image}`} alt="" className="rounded-circle img-thumbnail" />
         </a>
       </Link>
       <p className="user_name m-2">سیما کاظمی</p>
