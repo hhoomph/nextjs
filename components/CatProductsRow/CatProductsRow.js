@@ -28,12 +28,12 @@ const CatProductsRow = props => {
       },
       props.ctx
     );
-    if (GetMarketAround.isSuccess) {
+    if (GetMarketAround !== undefined && GetMarketAround.isSuccess) {
       let products = GetMarketAround.data || [];
       setProducts(products);
-    } else if (GetMarketAround.message != undefined) {
+    } else if (GetMarketAround !== undefined && GetMarketAround.message != undefined) {
       //toast.warn(GetMarketAround.message);
-    } else if (GetMarketAround.error != undefined) {
+    } else if (GetMarketAround !== undefined && GetMarketAround.error != undefined) {
       //toast.error(GetMarketAround.error);
     }
     setLoading(false);
@@ -50,7 +50,7 @@ const CatProductsRow = props => {
       );
     } else {
       const productsElements = products.map(product => {
-        const productThumbNail = product.pictures[0] != undefined ? `https://qarun.ir/api/${product.pictures[0].thumbNail}` : '/static/img/no-product-image.png';
+        const productThumbNail = product.pictures[0] != undefined ? `https://api.qarun.ir/${product.pictures[0].thumbNail}` : '/static/img/no-product-image.png';
         return (
           <Product
             key={product.id}
@@ -60,7 +60,7 @@ const CatProductsRow = props => {
             oldPrice={product.price}
             image={productThumbNail}
             userId={product.sellerUserName}
-            sellerAvatar={`https://qarun.ir/api/${product.sellerAvatar}`}
+            sellerAvatar={`https://api.qarun.ir/${product.sellerAvatar}`}
             sellerUserName={product.sellerUserName}
           />
         );
@@ -69,7 +69,7 @@ const CatProductsRow = props => {
     }
   };
   // products.map(product => {
-  //   const productThumbNail = product.pictures[0] != undefined ? `https://qarun.ir/api/${product.pictures[0].thumbNail}` : '/static/img/no-product-image.png';
+  //   const productThumbNail = product.pictures[0] != undefined ? `https://api.qarun.ir/${product.pictures[0].thumbNail}` : '/static/img/no-product-image.png';
   //   if (loading) {
   //     return <Loading />;
   //   } else {
@@ -82,7 +82,7 @@ const CatProductsRow = props => {
   //         oldPrice={product.lastPrice}
   //         image={productThumbNail}
   //         userId={product.sellerUserName}
-  //         sellerAvatar={`https://qarun.ir/api/${product.sellerAvatar}`}
+  //         sellerAvatar={`https://api.qarun.ir/${product.sellerAvatar}`}
   //         sellerUserName={product.sellerUserName}
   //       />
   //     );

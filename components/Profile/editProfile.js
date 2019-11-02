@@ -36,7 +36,7 @@ const EditProfile = props => {
   const [draggable, setDraggable] = useState(false);
   const _addresses = profileData.addresses !== undefined ? profileData.addresses[0] : '';
   const [addresses, setAddresses] = useState(_addresses);
-  const avatarUrl = profileData.avatar !== undefined && profileData.avatar !== null ? `https://qarun.ir/api/${profileData.avatar}` : null;
+  const avatarUrl = profileData.avatar !== undefined && profileData.avatar !== null ? `https://api.qarun.ir/${profileData.avatar}` : null;
   const [avatar, setAvatar] = useState(avatarUrl);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -50,10 +50,10 @@ const EditProfile = props => {
     height: 50,
     x: 25,
     y: 25,
-    aspect: 4 / 5
+    aspect: 4 / 4
   });
   const [croppedImageUrl, setCroppedImageUrl] = useState(null);
-  let imageRef = null;
+  const [imageRef, setImageRef] = useState(null);
   let fileUrl = null;
   const onSelectFile = e => {
     if (e.target.files && e.target.files.length > 0) {
@@ -64,36 +64,31 @@ const EditProfile = props => {
     }
   };
   const onImageLoaded = image => {
-    imageRef = image;
-    //setCrop({ width: image.width, height: image.height });
-    return false;
+    setImageRef(image);
   };
-  const onCropComplete = crop => {
-    makeClientCrop(crop);
+  const onCropComplete = c => {
+    makeClientCrop(c);
   };
-  const onCropChange = (crop, percentCrop) => {
-    // You could also use percentCrop:
-    // this.setState({ crop: percentCrop });
-    setCrop(crop);
+  const onCropChange = (c, percentCrop) => {
+    setCrop(c);
   };
-  const makeClientCrop = async crop => {
-    if (imageRef && crop.width && crop.height) {
-      const _croppedImageUrl = await getCroppedImg(imageRef, crop, 'newFile.jpeg');
+  const makeClientCrop = async c => {
+    if (imageRef !== null && c.width && c.height) {
+      const _croppedImageUrl = await getCroppedImg(imageRef, c, 'newFile.jpg');
       setCroppedImageUrl(_croppedImageUrl);
     }
   };
-  const getCroppedImg = (image, crop, fileName) => {
+  const getCroppedImg = (image, c, fileName) => {
     const canvas = document.createElement('canvas');
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
-    canvas.width = crop.width;
-    canvas.height = crop.height;
+    canvas.width = c.width;
+    canvas.height = c.height;
     const ctx = canvas.getContext('2d');
-    ctx.drawImage(image, crop.x * scaleX, crop.y * scaleY, crop.width * scaleX, crop.height * scaleY, 0, 0, crop.width, crop.height);
+    ctx.drawImage(image, c.x * scaleX, c.y * scaleY, c.width * scaleX, c.height * scaleY, 0, 0, c.width, c.height);
     return new Promise((resolve, reject) => {
       canvas.toBlob(blob => {
         if (!blob) {
-          //reject(new Error('Canvas is empty'));
           console.error('Canvas is empty');
           return;
         }
@@ -103,22 +98,6 @@ const EditProfile = props => {
         resolve(fileUrl);
       }, 'image/jpeg');
     });
-  };
-  const MyVerticallyCenteredModal = () => {
-    return (
-      <Modal onHide={() => setModalShow(false)} show={modalShow} size="xl" aria-labelledby="contained-modal-title-vcenter" centered scrollable>
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">بارگذاری تصویر</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {src && <ReactCrop src={src} crop={crop} locked={true} onImageLoaded={onImageLoaded} onComplete={onCropComplete} onChange={onCropChange} />}
-          {/* {croppedImageUrl && <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />} */}
-        </Modal.Body>
-        <Modal.Footer>
-          <button onClick={() => setModalShow(false)}>بستن</button>
-        </Modal.Footer>
-      </Modal>
-    );
   };
   // End Of Crop Image
   toast.configure({
@@ -131,8 +110,12 @@ const EditProfile = props => {
   });
   const uploadHandler = async e => {
     toast.dismiss();
+    setModalShow(false);
     const errs = [];
-    const file = e.target.files[0];
+    //const file = e.target.files[0];
+    const file = new File([setCroppedImageUrl], 'newFile.jpg', {type: 'image/jpeg', lastModified: Date.now()});
+    //const file = blob2file(setCroppedImageUrl);
+    console.log(file)
     const formData = new FormData();
     const types = ['image/png', 'image/jpeg', 'image/gif'];
     // const files = Array.from(e.target.files);
@@ -169,7 +152,7 @@ const EditProfile = props => {
       true
     );
     if (result.isSuccess) {
-      setAvatar(`https://qarun.ir/api/${result.message}`);
+      setAvatar(`https://api.qarun.ir/${result.message}`);
       toast.success('تصویر شما با موفقیت آپلود شد.');
     } else if (result.message != undefined) {
       toast.warn(result.message);
@@ -244,7 +227,7 @@ const EditProfile = props => {
           {uploading ? <Loading /> : avatar != null ? <img src={avatar} className="rounded-circle img-thumbnail" /> : <UserImageSvg className="rounded-circle img-thumbnail" />}
           {/* <input type="file" accept="image/*" onChange={uploadHandler} ref={fileInput} hidden={true} /> */}
           <input type="file" accept="image/*" onChange={onSelectFile} ref={fileInput} hidden={true} />
-          <MyVerticallyCenteredModal />
+          {/* <MyVerticallyCenteredModal /> */}
           <a
             className="mt-3 change_image"
             onClick={() => {
@@ -255,6 +238,38 @@ const EditProfile = props => {
           </a>
         </div>
       </div>
+      <Modal onHide={() => setModalShow(false)} show={modalShow} size="xl" aria-labelledby="contained-modal-title-vcenter" centered scrollable>
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">بارگذاری تصویر</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {src && (
+            <ReactCrop
+              src={src}
+              crop={crop}
+              locked={false}
+              onImageLoaded={e => {
+                onImageLoaded(e);
+              }}
+              onComplete={e => {
+                onCropComplete(e);
+              }}
+              onChange={e => {
+                onCropChange(e);
+              }}
+              minWidth={640}
+              minHeight={800}
+            />
+          )}
+          {/* {croppedImageUrl && <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />} */}
+        </Modal.Body>
+        <Modal.Footer className="justify-content-center">
+          {/* <button onClick={() => setModalShow(false)}>بستن</button> */}
+          <button className="btn btn-success" onClick={() => uploadHandler()}>
+            بارگذاری{' '}
+          </button>
+        </Modal.Footer>
+      </Modal>
       <div className="row mt-3 mb-5 edit_form">
         <div className="col">
           <form className="profileForm">
