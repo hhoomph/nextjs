@@ -273,6 +273,9 @@ function Page(props) {
     }
     setLoading(false);
   };
+  const scrollToFocused = (e) => {
+    //document.body.scrollTop = $(this).offset().top;
+  }
   switch (view) {
     case 1:
       // if (typeof window !== 'undefined') {
@@ -470,7 +473,7 @@ function Page(props) {
                   </div>
                 </div>
                 <div className="row add_product_image">
-                  <input type="file" accept="image/*;capture=camera" capture="camera" onChange={onSelectFile} ref={fileInput} hidden={true} />
+                  <input type="file" accept="image/*" onChange={onSelectFile} ref={fileInput} hidden={true} />
                   <div className="col-md-10 d-flex pictures">
                     <div className="images_row">{showUploadedImages()}</div>
                   </div>
@@ -560,7 +563,7 @@ function Page(props) {
                   </div>
                 </div>
                 <div className="row add_product_image">
-                  <input type="file" accept="image/*;capture=camera" capture="camera" onChange={onSelectFile} ref={fileInput} hidden={true} />
+                  <input type="file" accept="image/*" capture onChange={onSelectFile} ref={fileInput} hidden={true} />
                   <div className="col-md-10 d-flex pictures">
                     <div className="images_row">{showUploadedImages()}</div>
                   </div>
