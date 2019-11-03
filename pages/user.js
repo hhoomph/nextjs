@@ -11,6 +11,7 @@ const Category = dynamic({
   ssr: true
 });
 function Page(props) {
+  console.log(props.result);
   const profileData = props.result.data || [];
   return (
     <>
@@ -38,7 +39,7 @@ function Page(props) {
     </>
   );
 }
-Page.getInitialProps = async function(context) {
+Page.getInitialProps = async function (context) {
   const { id } = context.query;
   const result = await fetchData(
     `User/U_Account/OtherUserProfile/${id}`,
@@ -50,6 +51,7 @@ Page.getInitialProps = async function(context) {
     },
     context
   );
+  console.log(result);
   return { result };
 };
 export default Page;

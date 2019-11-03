@@ -19,12 +19,8 @@ import '../scss/components/productPage.scss';
 //   ssr: false
 // });
 function Page(props) {
-  // const Following = props.Following.data || [];
-  // const GetMarketAround = props.GetMarketAround.data || [];
-  // const FriendsMarket = props.FriendsMarket.data || [];
-  //const res = useContext(AppContext);
-  //console.log(res.result);
-  //console.log(props.result);
+  const productData = props.result.data || [];
+  console.log(productData);
   // Determine Server Or Browser env
   if (typeof window !== 'undefined' && window.document !== undefined) {
     //console.log('browser');
@@ -53,18 +49,18 @@ function Page(props) {
           <div className="row">
             <div className="col-12">
               <Carousel fade={true} indicators={true} interval={6000} keyboard={true} pauseOnHover={true} slide={true} wrap={true} touch={true}>
-                <Carousel.Item>
+                {/* <Carousel.Item>
                   <img src="/static/img/1.jpg" className="product_image" />
                   <Carousel.Caption>
-                    <h3>نام محصول</h3>
-                    <p>توضیحات محصول</p>
+                    <h3>{productData.title || ''}</h3>
+                    <p>{productData.description || ''}</p>
                   </Carousel.Caption>
-                </Carousel.Item>
+                </Carousel.Item> */}
                 <Carousel.Item>
-                  <img src="/static/img/2.jpg" className="product_image" />
+                  <img src={productData.picture ? 'https://api.qarun.ir/' + productData.picture : '/static/img/2.jpg'} className="product_image" />
                 </Carousel.Item>
               </Carousel>
-              <div className="discount_div">%10</div>
+              <div className="discount_div">%{productData.discount || ''}</div>
             </div>
           </div>
         </div>
@@ -78,10 +74,10 @@ function Page(props) {
               <HeartSvg className="svg_icon" />
             </div>
             <div className="col-12 mt-1">
-              <p className="text-right product_name">نام محصول</p>
+              <p className="text-right product_name">{productData.title || ''}</p>
             </div>
             <div className="col-12 rtl">
-              <span className="price_title"> قیمت :</span> <span className="price">750,000 تومان</span> <span className="price_old">800,000 تومان</span>
+              <span className="price_title"> قیمت :</span> <span className="price">{productData.lastPrice || ''} تومان</span> <span className="price_old">{productData.price || ''} تومان</span>
             </div>
             <div className="col-12 mt-1 text-center">
               <SubmitButton loading={false} text="افزودن به سبد خرید" className="d-inline-block btn-main">
@@ -109,37 +105,17 @@ function Page(props) {
   );
 }
 Page.getInitialProps = async function(context) {
-  // const Following = await fetchData(
-  //   'User/U_Friends/Following',
-  //   {
-  //     method: 'GET'
-  //   },
-  //   context
-  // );
-  // const GetMarketAround = await fetchData(
-  //   'User/U_Product/GetMarketAround',
-  //   {
-  //     method: 'POST',
-  //     body: JSON.stringify({
-  //       filters: 'New',
-  //       categoryId: 1,
-  //       page: 1,
-  //       pageSize: 10
-  //     })
-  //   },
-  //   context
-  // );
-  // const FriendsMarket = await fetchData(
-  //   'User/U_Product/FriendsMarket',
-  //   {
-  //     method: 'POST',
-  //     body: JSON.stringify({
-  //       page: 1,
-  //       pageSize: 6
-  //     })
-  //   },
-  //   context
-  // );
-  // return { Following, GetMarketAround, FriendsMarket };
+  const { id } = context.query;
+  const result = await fetchData(
+    `User/U_Product/ProductDetails?ProductId=${id}`,
+    {
+      method: 'GET'
+      // body: JSON.stringify({
+      //   username: id
+      // })
+    },
+    context
+  );
+  return { result, id };
 };
 export default Auth(Page);

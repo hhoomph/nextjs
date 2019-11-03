@@ -37,6 +37,16 @@ app
       // }
       app.render(req, res, actualPage, queryParams);
     });
+    server.get('/product/:id', (req, res) => {
+      const actualPage = '/product';
+      const queryParams = { id: req.params.id };
+      //res.cookie('token', '234e234d!#D!##$^%D@W$!324', { maxAge: 900000, httpOnly: true});
+      // var cookie = req.cookies.token;
+      // if (typeof cookie != 'undefined') {
+      //   console.log('cookie exists', cookie);
+      // }
+      app.render(req, res, actualPage, queryParams);
+    });
     server.get('/Counter-Cart', (req, res) => {
       const actualPage = '/counter';
       app.render(req, res, actualPage);
