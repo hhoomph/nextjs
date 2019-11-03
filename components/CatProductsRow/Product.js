@@ -21,8 +21,20 @@ const Product = props => {
             <img src={props.sellerAvatar} alt={props.sellerUserName} className="product_img" />
           </a>
         </Link>
+        <div className="product_text mb-1">
+          <p>
+            <span className="product_price">{numberSeparator(props.price)} </span>
+            <span className="product_currency">تومان</span>
+          </p>
+          {props.oldPrice && (
+            <p className="price_old">
+              <span className="product_price">{numberSeparator(props.oldPrice)}</span>
+              <span className="product_currency">تومان</span>
+            </p>
+          )}
+        </div>
       </div>
-      <div className="product_text mb-1">
+      {/* <div className="product_text mb-1">
         <p>
           <span className="product_price">{numberSeparator(props.price)} </span>
           <span className="product_currency">تومان</span>
@@ -33,7 +45,7 @@ const Product = props => {
             <span className="product_currency">تومان</span>
           </p>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };
