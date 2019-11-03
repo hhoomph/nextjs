@@ -23,6 +23,8 @@
     }
   }
   .user_link {
+    width: -moz-max-content;
+    width: -webkit-max-content;
     width: max-content;
     height: auto;
     display: block;
@@ -57,7 +59,7 @@
   }
 }
 @media screen and (min-width: 680px) and (max-width:770px) {
-  .user_Suggestion .userClass{
+  .user_Suggestion .userClass {
     width: 24% !important;
   }
   .user_Suggestion img.rounded-circle {

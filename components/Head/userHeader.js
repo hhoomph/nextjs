@@ -13,7 +13,8 @@ const Header = props => {
   const nextCtx = props.ctx;
   const profileData = props.profileData;
   const [loading, setLoading] = useState(false);
-  const [followed, setFollowed] = useState(false);
+  const [followed, setFollowed] = useState(profileData.followed);
+  console.log(followed)
   toast.configure({
     position: 'top-right',
     autoClose: 2000,
@@ -46,7 +47,25 @@ const Header = props => {
       nextCtx
     );
     if (result.isSuccess) {
-      setFollowed(true);
+      setFollowed(!followed);
+    } else if (result.message != undefined) {
+      toast.warn(result.message);
+    } else if (result.error != undefined) {
+      toast.error(result.error);
+    }
+    setLoading(false);
+  };
+  const unFollowToggle = async () => {
+    setLoading(true);
+    const result = await fetchData(
+      `User/U_Friends/UnFollow?userId=${profileData.id}`,
+      {
+        method: 'GET'
+      },
+      nextCtx
+    );
+    if (result.isSuccess) {
+      setFollowed(!followed);
     } else if (result.message != undefined) {
       toast.warn(result.message);
     } else if (result.error != undefined) {
@@ -105,8 +124,20 @@ const Header = props => {
         <div className="row rtl">
           <div className="col-12 d-flex top">
             <div className="col-6 d-block">
-              {/* <a className="btn btn-main follow">دنبال کردن</a> */}
-              <SubmitButton loading={loading} onClick={() => followToggle()} text={followed ? 'دنبال نکردن' : 'دنبال کردن'} className="btn btn-main follow" />
+              {(followed) ? <SubmitButton loading={loading} onClick={() => unFollowToggle()} text='لغو دنبال' className="btn btn-main unfollow"/> : <SubmitButton loading={loading} onClick={() => followToggle()} text='دنبال کردن' className="btn btn-main follow"/> }
+              {/* <SubmitButton
+                loading={loading}
+                onClick={() => {
+                  console.log(followed)
+                  if (followed) {
+                    unFollowToggle();
+                  } else {
+                    followToggle();
+                  }
+                }}
+                text={followed ? 'لغو دنبال' : 'دنبال کردن'}
+                className="btn btn-main follow"
+              /> */}
             </div>
             <div className="col-6 d-block distance">
               <DistanceSvg className="svg_Icons" />

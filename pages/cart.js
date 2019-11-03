@@ -26,10 +26,12 @@ function Page(props) {
       <div className="container cart_page">
         <div className="row mb-3 p-2 header_link">
           <div className="col pt-2 text-center">
-            <a className="d-inline-block btn-main" onClick={() => addProduct()}>
-              ادامه
-              {/* {loading ? <Loading className="font_icon" /> : <FaArrowLeft className="font_icon" />} */}
-            </a>
+            <Link href="/checkout" passHref>
+              <a className="d-inline-block btn-main">
+                ادامه
+                {/* {loading ? <Loading className="font_icon" /> : <FaArrowLeft className="font_icon" />} */}
+              </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -44,10 +46,10 @@ function Page(props) {
         </div>
       </div>
       <div className="container cart_page">
-        <Cart />
-        <Cart />
-        <Cart />
-        <Cart />
+        <Cart sellerName={'فروشنده ی یک'} />
+        <Cart sellerName={'فروشنده ی دو'} />
+        <Cart sellerName={'فروشنده ی سه'} />
+        <Cart sellerName={'فروشنده ی چهار'} />
         <div className="row mt-3 mb-3 pb-5 cart_amount_detail">
           <div className="col-12 d-block rtl">
             <span className="total">مبلغ کل : </span> <span className="total_price">1,765,320 تومان</span>

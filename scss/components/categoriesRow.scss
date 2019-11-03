@@ -18,6 +18,7 @@
     padding-right: 0.3rem;
     color: #000;
     margin-top: 8px;
+    width: -moz-max-content;
     width: max-content;
     &:hover {
       color: $main_color;
