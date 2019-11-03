@@ -6,6 +6,7 @@
   position: sticky;
   z-index: 999;
   top: -4px;
+  box-shadow: 0 1px 1px 1px #dcdcdc;
   .navbar-brand {
     margin-right: 0;
     img {
@@ -22,7 +23,7 @@
   .nav_Icons {
     color: #525157;
     // font-size: 2em;
-    font-size: 5.4vw;
+    font-size: 6.3vw;
     transition: all 0.2s;
     &:hover {
       color: $main_color;
@@ -32,7 +33,7 @@
     }
     .svg_Icons {
       // width: 2rem;
-      width: 5.4vw;
+      width: 5.5vw;
       fill: #525157;
     }
     .badge {
@@ -46,16 +47,16 @@
       display: block;
       left: 4.5vw;
       top: 0px;
-      margin-left: -2vw;
-      margin-top: -8vw;
-      width: 3.9vw;
-      height: 3.9vw;
-      line-height: normal;
-      font-size: 2vw;
+      margin-left: -1.9vw;
+      margin-top: -9.6vw;
+      width: 4.5vw;
+      height: 4.5vw;
+      line-height: 1.2;
+      font-size: 3vw;
       font-weight: 400;
-      padding: 0;
-      padding-top: 0.2em;
-      border-radius: 80px;
+      // padding: 0;
+      // padding-top: 0.2em;
+      border-radius: 90px;
     }
   }
 }
