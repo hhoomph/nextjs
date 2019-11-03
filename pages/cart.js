@@ -33,17 +33,33 @@ function Page(props) {
           </div>
         </div>
       </div>
-      <div className="container cart_title">
-        <div className="row">
+      <div className="container ">
+        <div className="row cart_title">
           <div className="col text-center">
             <FaCartPlus className="font_icon" />
             <h5 className="mr-2 ml-2 page_title">سبد خرید </h5>
             <FaCartArrowDown className="font_icon" />
-            <hr />
+            {/* <hr /> */}
           </div>
         </div>
       </div>
-      <Cart />
+      <div className="container cart_page">
+        <Cart />
+        <Cart />
+        <Cart />
+        <Cart />
+        <div className="row mt-3 mb-3 pb-5 cart_amount_detail">
+          <div className="col-12 d-block rtl">
+            <span className="total">مبلغ کل : </span> <span className="total_price">1,765,320 تومان</span>
+          </div>
+          <div className="col-12 d-block rtl">
+            <span className="discount">مجموع تخفیف : </span> <span className="total_discount">65,320 تومان</span>
+          </div>
+          <div className="col-12 d-block rtl">
+            <span className="final">مبلغ قابل پرداخت : </span> <span className="final_price">1,000,000 تومان</span>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
