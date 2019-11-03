@@ -14,7 +14,6 @@ const Header = props => {
   const profileData = props.profileData;
   const [loading, setLoading] = useState(false);
   const [followed, setFollowed] = useState(profileData.followed);
-  console.log(followed)
   toast.configure({
     position: 'top-right',
     autoClose: 2000,

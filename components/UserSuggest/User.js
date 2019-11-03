@@ -11,6 +11,7 @@ const User = props => {
           <img src={props.image} alt={props.alt} className="rounded-circle img-thumbnail" />
         </a>
       </Link>
+      <p className="user_Suggest_name text-truncate">{props.userName}</p>
     </div>
   );
 };

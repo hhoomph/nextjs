@@ -53,7 +53,7 @@ const MapComponent = props => {
       const map = mapRef.current.leafletElement;
       map.setView(convertLatlngToArray(latlng));
       // distance to position in meter
-      console.log(latlng.distanceTo(position));
+      //console.log(latlng.distanceTo(position));
     }
   };
   const position = [34.635059, 50.880823];
@@ -90,7 +90,7 @@ const MapComponent = props => {
   const showPosition = position => {
     //updatePosition();
     setMarkPosition([position.coords.latitude, position.coords.longitude]);
-    console.log(`More or less ${position.coords.accuracy} meters.`);
+    //console.log(`More or less ${position.coords.accuracy} meters.`);
     // const map = mapRef.current.leafletElement;
     // L.marker([position.coords.latitude, position.coords.longitude], { icon: placeholderIcon }).addTo(map);
     // map.setView([position.coords.latitude, position.coords.longitude]);
@@ -99,7 +99,7 @@ const MapComponent = props => {
     console.warn(`Geolocation ERROR(${err.code}): ${err.message}`);
   };
   const handleLocationFound = e => {
-    console.log(e.latlng);
+    //console.log(e.latlng);
     setMarkPosition([e.latlng.lat, e.latlng.lng]);
   };
   const handleLoadMap = e => {

@@ -115,7 +115,7 @@ const EditProfile = props => {
     //const file = e.target.files[0];
     const file = new File([setCroppedImageUrl], 'newFile.jpg', {type: 'image/jpeg', lastModified: Date.now()});
     //const file = blob2file(setCroppedImageUrl);
-    console.log(file)
+    //console.log(file)
     const formData = new FormData();
     const types = ['image/png', 'image/jpeg', 'image/gif'];
     // const files = Array.from(e.target.files);

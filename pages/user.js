@@ -11,7 +11,7 @@ const Category = dynamic({
   ssr: true
 });
 function Page(props) {
-  console.log(props.result);
+  //console.log(props.result);
   const profileData = props.result.data || [];
   return (
     <>
@@ -51,7 +51,7 @@ Page.getInitialProps = async function (context) {
     },
     context
   );
-  console.log(result);
+  //console.log(result);
   return { result };
 };
 export default Page;

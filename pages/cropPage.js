@@ -19,7 +19,7 @@ function Page(props) {
   let fileUrl = null;
   const onSelectFile = e => {
     if (e.target.files && e.target.files.length > 0) {
-      console.log(e.target.files[0])
+      //console.log(e.target.files[0])
       const reader = new FileReader();
       reader.addEventListener('load', () => setSrc(reader.result));
       reader.readAsDataURL(e.target.files[0]);

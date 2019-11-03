@@ -54,7 +54,7 @@ const MapComponent = props => {
     if (props.searchValue != '' && props.searchValue.length >= 2) {
       provider.search({ query: props.searchValue }).then(function(result) {
         setSearchResult(result);
-        console.log(result);
+        //console.log(result);
       });
     }
   }, [props.searchValue]);
@@ -96,7 +96,7 @@ const MapComponent = props => {
       const map = mapRef.current.leafletElement;
       map.setView(convertLatlngToArray(latlng));
       // distance to position in meter
-      console.log(latlng.distanceTo(position));
+      //console.log(latlng.distanceTo(position));
     }
   };
   const position = [34.635059, 50.880823];
@@ -142,7 +142,7 @@ const MapComponent = props => {
     console.warn(`Geolocation ERROR(${err.code}): ${err.message}`);
   };
   const handleLocationFound = e => {
-    console.log(e.latlng);
+    //console.log(e.latlng);
     setMarkPosition([e.latlng.lat, e.latlng.lng]);
   };
   const currentMarker = () => {
