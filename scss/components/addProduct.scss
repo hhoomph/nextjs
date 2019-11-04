@@ -1,6 +1,6 @@
 @import '../vars';
 .add_product {
-  padding-top: 80px;
+  padding-top: 3.5rem;
   padding-bottom: 50px;
   .header_link {
     background: #fafafa;
@@ -56,6 +56,12 @@
       &:hover {
         color: #e4e4e4 !important;
       }
+    }
+  }
+  .add_product_form {
+    padding-bottom: 80%;
+    @media screen and (min-width: 600px) {
+      padding-bottom: 0%;
     }
   }
   .productForm {
@@ -128,7 +134,7 @@
     //     width: calc(100vw - 32px);
     //   }
     // }
-    .form-group{
+    .form-group {
       margin-bottom: 0;
     }
     .form-group input,
@@ -153,7 +159,7 @@
         color: #bbbbbb;
       }
     }
-    .col-form-label{
+    .col-form-label {
       line-height: 1;
     }
     .react_select {

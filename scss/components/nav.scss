@@ -103,11 +103,11 @@
     }
     &.active:after {
       content: '';
-      display: block;
-      width: 55%;
+      // display: block;
+      width: 52%;
       margin: auto;
-      margin-top: 4px;
-      margin-bottom: -7px;
+      margin-top: 0px;
+      margin-bottom: -8px;
       padding-top: 2px;
       border-bottom: 2px solid;
       border-radius: 5px;

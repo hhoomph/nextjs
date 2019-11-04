@@ -273,9 +273,20 @@ function Page(props) {
     }
     setLoading(false);
   };
-  const scrollToFocused = (e) => {
-    //document.body.scrollTop = $(this).offset().top;
+  // Change Scroll on Input Focus
+  let initialOffset;
+  if (typeof window !== 'undefined') {
+    initialOffset = document.documentElement.scrollTop;
   }
+  const scrollToFocused = e => {
+    let offset = e.target.offsetTop;
+    console.log('eTarg:', offset);
+    initialOffset = document.documentElement.scrollTop;
+    document.documentElement.scrollTop = offset - 10;
+  };
+  const scrollToFocusOut = e => {
+    //document.documentElement.scrollTop = initialOffset;
+  };
   switch (view) {
     case 1:
       // if (typeof window !== 'undefined') {
@@ -293,14 +304,23 @@ function Page(props) {
                 </a>
               </div>
             </div>
-            <div className="row mt-3 mb-5 add_form">
+            <div className="row mt-3 mb-5 add_product_form">
               <div className="col">
                 <form className="productForm">
                   <div className="form-group row">
                     <label htmlFor="name" className="col-sm-2 col-form-label">
                       نام محصول
                     </label>
-                    <input value={title} onChange={e => setTitle(e.target.value)} type="text" id="name" className="form-control mt-1 mb-4 col-sm-10" placeholder="نام محصول" />
+                    <input
+                      value={title}
+                      onChange={e => setTitle(e.target.value)}
+                      type="text"
+                      id="name"
+                      className="form-control mt-1 mb-4 col-sm-10"
+                      placeholder="نام محصول"
+                      onFocus={scrollToFocused}
+                      onBlur={scrollToFocusOut}
+                    />
                   </div>
                   <div className="form-group row">
                     <label htmlFor="category" className="col-sm-2 col-form-label">
@@ -316,13 +336,23 @@ function Page(props) {
                       options={categoriesOptions}
                       placeholder="انتخاب کنید"
                       theme={theme => ({ ...theme, borderWidth: 'thin', boxShadow: '0px 0px 2px 0px #FF5722 !important', colors: { ...theme.colors, primary25: '#ffd698', primary: '#ff9800' } })}
+                      onFocus={scrollToFocused}
+                      onBlur={scrollToFocusOut}
                     />
                   </div>
                   <div className="form-group row">
                     <label htmlFor="hashtags" className="col-sm-2 col-form-label">
                       هشتگ های مرتبط
                     </label>
-                    <input onKeyUp={event => addTags(event)} type="text" id="hashtags" className="form-control mt-1 mb-4 col-sm-10" placeholder="برای اضافه شدن کلید فاصله یا اینتر را فشار دهید" />
+                    <input
+                      onKeyUp={event => addTags(event)}
+                      type="text"
+                      id="hashtags"
+                      className="form-control mt-1 mb-4 col-sm-10"
+                      placeholder="برای اضافه شدن کلید فاصله یا اینتر را فشار دهید"
+                      onFocus={scrollToFocused}
+                      onBlur={scrollToFocusOut}
+                    />
                     <div className="tags-input col-sm-10 offset-sm-2">
                       <ul>
                         {tags.map((tag, index) => (
@@ -339,7 +369,15 @@ function Page(props) {
                       توضیحات
                     </label>
                     {/* <input type="text" id="description" className="form-control mt-1 mb-4  col-sm-10" placeholder="توضیحات" /> */}
-                    <textarea value={description} onChange={e => setDescription(e.target.value)} id="description" className="form-control mt-1 mb-4  col-sm-10" placeholder="توضیحات" />
+                    <textarea
+                      value={description}
+                      onChange={e => setDescription(e.target.value)}
+                      id="description"
+                      className="form-control mt-1 mb-4  col-sm-10"
+                      placeholder="توضیحات"
+                      onFocus={scrollToFocused}
+                      onBlur={scrollToFocusOut}
+                    />
                   </div>
                   <div className="form-group row">
                     <label htmlFor="price" className="col-sm-2 col-form-label">
@@ -354,6 +392,8 @@ function Page(props) {
                       id="price"
                       className="form-control mt-1 mb-4  col-sm-10"
                       placeholder="تومان"
+                      onFocus={scrollToFocused}
+                      onBlur={scrollToFocusOut}
                     />
                   </div>
                   <div className="form-group row">
@@ -367,6 +407,8 @@ function Page(props) {
                       id="discount"
                       className="form-control mt-1 mb-4  col-sm-10"
                       placeholder="تومان"
+                      onFocus={scrollToFocused}
+                      onBlur={scrollToFocusOut}
                     />
                   </div>
                 </form>
