@@ -53,17 +53,17 @@
   }
 }
 @media screen and (min-width: 1000px) {
-  .user_Suggestion img.rounded-circle {
+  .user_Suggestion img.rounded-circle, .user_Suggest_name {
     width: 10vw !important;
   }
 }
 @media screen and (min-width: 1010px) and (max-width: 1300px) {
-  .user_Suggestion img.rounded-circle {
+  .user_Suggestion img.rounded-circle, .user_Suggest_name {
     width: 9.6vw !important;
   }
 }
 @media screen and (min-width: 1400px) {
-  .user_Suggestion img.rounded-circle {
+  .user_Suggestion img.rounded-circle, .user_Suggest_name {
     width: 5.5vw !important;
   }
 }

@@ -214,15 +214,19 @@
       }
     }
     .product_frame {
-      width: 160px !important;
-      height: 185px !important;
+      // width: 160px !important;
+      // height: 185px !important;
+      // padding: 15px !important;
+      width: 200px !important;
+      height: 275px !important;
       padding: 15px !important;
+      margin-bottom: 5px !important;
       .product_link {
         img {
-          width: auto;
-          max-width: 110px;
-          height: auto !important;
-          max-height: 140px !important;
+          // width: auto;
+          // max-width: 110px;
+          // height: auto !important;
+          // max-height: 140px !important;
         }
       }
       .product_basket {
@@ -255,10 +259,12 @@
       }
     }
     .product_text {
-      padding: 0 !important;
-      padding-top: 5px !important;
+      // padding: 0 !important;
+      // padding-top: 5px !important;
+      // font-size: 1em !important;
+      // margin-top: -22px;
       font-size: 1em !important;
-      margin-top: -22px;
+      margin-top: -30px !important;
     }
   }
   @media screen and (max-width: 362px) {
