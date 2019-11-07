@@ -13,7 +13,7 @@ import '../../scss/components/nav.scss';
 const areEqual = (prevProps, nextProps) => {
   return prevProps === nextProps;
 };
-const Nav = () => {
+const Nav = props => {
   return (
     <>
       <nav className="d-none d-lg-flex top_nav navbar navbar-expand navbar-white bg-white">
@@ -21,7 +21,7 @@ const Nav = () => {
           <Link href="/cart" passHref>
             <a className="nav_Icons active">
               <FaShoppingBasket />
-              <div className="badge badge-success">10</div>
+              <div className="badge badge-success">{props.cartCount}</div>
             </a>
           </Link>
           <Link href="/profile" passHref>

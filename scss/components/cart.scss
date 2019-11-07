@@ -43,6 +43,8 @@
       width: auto;
       height: auto;
       max-width: 12vw;
+      padding: 3px;
+      border-radius: 10rem;
     }
   }
   .products_rows {
@@ -56,9 +58,11 @@
         padding-bottom: 1%;
       }
       .product_img {
+        cursor: pointer;
         width: 100%;
         height: auto;
         max-width: 4rem;
+        padding: 3px;
       }
       .product_name {
         flex-grow: 3;

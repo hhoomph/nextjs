@@ -5,7 +5,7 @@ import fetchData from '../utils/fetchData';
 import Nav from '../components/Nav/Nav';
 import Loading from '../components/Loader/Loading';
 import IndexHeader from '../components/Head/IndexHeader';
-import AppContext from '../context/index';
+import AppContext from '../context/context';
 import nextCookie from 'next-cookies';
 import cookie from 'js-cookie';
 // Use AMP
@@ -35,6 +35,14 @@ function App(props) {
   const Following = props.Following.data || [];
   const GetMarketAround = props.GetMarketAround.data || [];
   const FriendsMarket = props.FriendsMarket.data || [];
+  const cartData = props.cartData.data || [];
+  const getCartCount = cartData
+    .map(cart => cart.cartDetailsSelectDtos)
+    .flat()
+    .reduce((acc, val) => {
+      const { count } = val;
+      return acc + count;
+    }, 0);
   //const res = useContext(AppContext);
   //console.log(res.result);
   //console.log(props.result);
@@ -46,8 +54,8 @@ function App(props) {
   }
   return (
     <>
-      <IndexHeader />
-      <Nav />
+      <IndexHeader cartCount={getCartCount} />
+      <Nav cartCount={getCartCount} />
       <UserSuggest users={Following} />
       <CatProductsRow products={GetMarketAround} />
       <Banners />
@@ -87,6 +95,13 @@ App.getInitialProps = async function(context) {
     },
     context
   );
-  return { Following, GetMarketAround, FriendsMarket };
+  const cartData = await fetchData(
+    'User/U_Cart/GetAll',
+    {
+      method: 'GET'
+    },
+    context
+  );
+  return { Following, GetMarketAround, FriendsMarket, cartData };
 };
 export default App;

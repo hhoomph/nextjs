@@ -21,6 +21,7 @@ function Page(props) {
   const [view, setView] = useState(1);
   const resultData = props.result.data || [];
   const [profileData, setProfileData] = useState(resultData);
+  console.log(profileData)
   // if (props.result.isSuccess) {
   //   setProfileData(props.result.data);
   // } else {

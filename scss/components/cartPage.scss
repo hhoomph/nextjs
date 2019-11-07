@@ -17,9 +17,10 @@
     color: #fff !important;
     font-size: 1rem;
     min-width: 150px;
+    direction: rtl;
     .font_icon {
-      margin-right: 6px;
-      margin-left: 6px;
+      margin-right: 0.5rem;
+      //margin-left: 6px;
     }
     .spinner-border {
       display: inline-block;

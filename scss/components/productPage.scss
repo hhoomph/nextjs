@@ -20,7 +20,11 @@
       height: auto;
       max-width: 12vw;
     }
+    .font_icon {
+      margin-top: 2.5vw;
+    }
     .svg_icon {
+      cursor: pointer;
       width: 5vw;
       max-height: 60px;
       fill: rgb(41, 41, 41);
@@ -31,8 +35,9 @@
   .product_images {
     .product_image {
       width: 100%;
-      max-width: 800px;
+      max-width: 640px;
       height: auto;
+      max-height: 800px;
       margin: auto;
       display: block;
     }
@@ -46,10 +51,10 @@
       }
     }
     .discount_div {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       width: 2.2rem;
       height: 2.2rem;
-      border: 1px solid #212529;
+      border: 1px solid #bf360c;
       border-radius: 5rem;
       text-align: center;
       align-items: center;
@@ -59,14 +64,47 @@
       top: 1em;
       left: 1.5em;
       z-index: 999;
+      color: #ffffff;
+      background: rgba(230, 81, 0, 0.76);
     }
   }
   .product_details {
-    .svg_icon {
-      width: 6vw;
-      height: auto;
-      max-width: 42px;
-      fill: #292929;
+    ._top_icons {
+      .comment_counter {
+        display: inline-block;
+        position: relative;
+        .comment_count {
+          position: absolute;
+          font-size: 0.7rem;
+          top: 0.33rem;
+          width: 8vw;
+          max-width: 42px;
+          text-align: center;
+          @media screen and (min-width: 500px) {
+            top: 0.6rem;
+          }
+          z-index: 0;
+        }
+        .font_icon {
+          position: relative;
+          z-index: 1;
+        }
+      }
+      .font_icon {
+        cursor: pointer;
+        font-size: 2rem;
+        color: #333333;
+      }
+      svg {
+        width: 8vw;
+        height: auto;
+        max-width: 42px;
+        //fill: #292929;
+        cursor: pointer;
+        path {
+          //fill: #292929;
+        }
+      }
     }
     .product_name {
       font-size: 1.3rem;

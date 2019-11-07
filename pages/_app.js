@@ -4,7 +4,7 @@ import Head from 'next/head';
 import fetch from 'isomorphic-unfetch';
 import nextCookie from 'next-cookies';
 import cookie from 'js-cookie';
-import AppContext from '../context/index';
+import AppContext from '../context/context';
 import getHost from '../utils/get-host';
 import '../scss/style.scss';
 class MyApp extends App {
@@ -12,6 +12,9 @@ class MyApp extends App {
     let pageProps = {};
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
+    }
+    if (router.route !== '/login') {
+      //console.log(router);
     }
     return { pageProps };
   }
@@ -21,7 +24,8 @@ class MyApp extends App {
     //   accessToken: accessToken
     // };
   }
-  componentDidMount() {}
+  componentDidMount() {
+  }
   componentWillUnmount() {}
   render() {
     const { Component, pageProps } = this.props;

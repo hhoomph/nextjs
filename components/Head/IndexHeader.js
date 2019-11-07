@@ -3,7 +3,7 @@ import Link from '../Link';
 import { FaShoppingBasket, FaRegUserCircle } from 'react-icons/fa';
 import { ReactComponent as SendSvg } from '../../public/static/svg/send.svg';
 import '../../scss/components/indexHeader.scss';
-const IndexHeader = () => {
+const IndexHeader = (props) => {
   return (
     <div className="container d-lg-none mt-1 index_header">
       <div className="row d-flex d-lg-none">
@@ -11,7 +11,7 @@ const IndexHeader = () => {
           <Link href="/cart" passHref>
             <a className="nav_Icons active">
               <FaShoppingBasket />
-              <div className="badge badge-success">10</div>
+              <div className="badge badge-success">{props.cartCount}</div>
             </a>
           </Link>
         </div>

@@ -3,7 +3,7 @@ import User from './User';
 import Link from '../Link';
 import WindowsWidth from '../WindowsWidth';
 import { IoIosMore } from 'react-icons/io';
-import AppContext from '../../context/index';
+import AppContext from '../../context/context';
 import '../../scss/components/userSuggest.scss';
 import { FiUsers } from 'react-icons/fi';
 const UserSuggest = props => {
