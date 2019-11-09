@@ -8,3 +8,15 @@ export const cartReduser = (state, action) => {
       return state;
   }
 };
+export const cartCountReduser = (state, action) => {
+  switch (action.type) {
+    case 'refresh':
+      return action.payload;
+    case 'add':
+      return state + 1;
+    case 'remove':
+      return state - 1;
+    default:
+      return state;
+  }
+};

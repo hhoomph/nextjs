@@ -67,6 +67,9 @@ function Page(props) {
       return 0;
     }
   };
+  const showProductImages = productData.pictures.map((image, index) => <Carousel.Item key={index}>
+    <img src={`https://api.qaroon.ir/${image}`} className="product_image" />
+  </Carousel.Item>);
   console.log(productData);
   // Determine Server Or Browser env
   if (typeof window !== 'undefined' && window.document !== undefined) {
@@ -88,8 +91,8 @@ function Page(props) {
               </a>
             </div>
             <div className="col-8 text-right">
-              <p className="user_name">نام کاربری</p>
-              <img src="/static/img/user.png" className="userImage" />
+              <p className="user_name">{productData.sellerUserName || ''}</p>
+              <img src={(productData.sellerUserAvatar) ? `https://api.qaroon.ir/${productData.sellerUserAvatar}` : `/static/img/user.png`} className="userImage" />
             </div>
           </div>
         </div>
@@ -104,9 +107,10 @@ function Page(props) {
                     <p>{productData.description || ''}</p>
                   </Carousel.Caption>
                 </Carousel.Item> */}
-                <Carousel.Item>
-                  <img src={productData.picture ? 'https://api.qarun.ir/' + productData.picture : '/static/img/2.jpg'} className="product_image" />
-                </Carousel.Item>
+                {/* <Carousel.Item>
+                  <img src={productData.picture ? 'https://api.qaroon.ir/' + productData.picture : '/static/img/no-product-image.png'} className="product_image" />
+                </Carousel.Item> */}
+                {showProductImages}
               </Carousel>
               <div className="discount_div">%{discountPercent()}</div>
             </div>
@@ -158,7 +162,8 @@ function Page(props) {
     </>
   );
 }
-Page.getInitialProps = async function(context) {
+Page.getInitialProps = async function (context) {
+  //console.log(context);
   const { id } = context.query;
   const result = await fetchData(
     `User/U_Product/ProductDetails?ProductId=${id}`,

@@ -66,7 +66,7 @@ const ProductsRow = props => {
     // }
   }
   const renderProducts = products.map(product => {
-    const productThumbNail = product.pictures[0] != undefined ? `https://api.qarun.ir/${product.pictures[0].thumbNail}` : '/static/img/no-product-image.png';
+    const productThumbNail = product.pictures[0] != undefined ? `https://api.qaroon.ir/${product.pictures[0].thumbNail}` : '/static/img/no-product-image.png';
     return (
       <Product
         key={product.id}
@@ -76,7 +76,7 @@ const ProductsRow = props => {
         oldPrice={product.price}
         image={productThumbNail}
         userId={product.sellerUserName}
-        sellerAvatar={`https://api.qarun.ir/${product.sellerAvatar}`}
+        sellerAvatar={`https://api.qaroon.ir/${product.sellerAvatar}`}
         sellerUserName={product.sellerUserName}
       />
     );

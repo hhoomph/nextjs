@@ -21,15 +21,20 @@
   }
   .header_link {
     a {
-      font-size: 2.2rem;
+      //font-size: 2.2rem;
     }
     .qarun_title {
       font-family: morvarid;
       font-weight: 900;
       //background: linear-gradient(to bottom, #e9be18 0%, #fa7902 81%, #ff5b00 100%);
-      background-image: linear-gradient(yellow, red);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      // background-image: linear-gradient(yellow, red);
+      // -webkit-background-clip: text;
+      // -webkit-text-fill-color: transparent;
+      img {
+        width: 19vw;
+        height: auto;
+        max-width: 100px;
+      }
     }
     .svg_icon {
       width: 5%;

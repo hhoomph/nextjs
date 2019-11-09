@@ -1,11 +1,12 @@
-import React, { Fragment, useContext, useRef, useEffect } from 'react';
+import React, { Fragment, useContext, useRef, useEffect, useReducer } from 'react';
 // import '../scss/style.scss';
 import dynamic from 'next/dynamic';
 import fetchData from '../utils/fetchData';
 import Nav from '../components/Nav/Nav';
 import Loading from '../components/Loader/Loading';
 import IndexHeader from '../components/Head/IndexHeader';
-import AppContext from '../context/context';
+import { CartCountContext } from '../context/context';
+import { cartCountReduser } from '../context/reducer';
 import nextCookie from 'next-cookies';
 import cookie from 'js-cookie';
 // Use AMP
@@ -43,6 +44,7 @@ function App(props) {
       const { count } = val;
       return acc + count;
     }, 0);
+  const [cartCount, cartCountDispatch] = useReducer(cartCountReduser, getCartCount);
   //const res = useContext(AppContext);
   //console.log(res.result);
   //console.log(props.result);
@@ -53,14 +55,14 @@ function App(props) {
     //console.log('node');
   }
   return (
-    <>
-      <IndexHeader cartCount={getCartCount} />
-      <Nav cartCount={getCartCount} />
+    <CartCountContext.Provider value={cartCountDispatch}>
+      <IndexHeader cartCount={cartCount} />
+      <Nav cartCount={cartCount} />
       <UserSuggest users={Following} />
       <CatProductsRow products={GetMarketAround} />
       <Banners />
       <ProductsRow products={FriendsMarket} />
-    </>
+    </CartCountContext.Provider>
   );
 }
 App.getInitialProps = async function(context) {

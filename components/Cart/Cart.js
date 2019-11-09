@@ -13,7 +13,7 @@ const Cart = props => {
   const nextCtx = props.ctx;
   const [showRow, setShowRow] = useState(true);
   const { cartData } = props;
-  const renderProductsRow = cartData.cartDetailsSelectDtos.map(product => <ProductRow key={product.productId} productId={product.productId} productName={product.productTitle} productImage={product.pictures[0].thumbNail} productPrice={product.productPrice} shopingCartId={props.shopingCartId} productQuantity={product.count} setLoading={props.setLoading} />);
+  const renderProductsRow = cartData.cartDetailsSelectDtos.map(product => <ProductRow key={product.productId} productId={product.productId} productName={product.productTitle} productImage={product.pictures[0].thumbNail} productPrice={product.productPrice} shopingCartId={product.id} productQuantity={product.count} setLoading={props.setLoading} />);
   const toggleRow = () => {
     if (showRow) {
       return <FaChevronUp onClick={() => setShowRow(!showRow)} className="font_icon up" />;

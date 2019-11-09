@@ -1,18 +1,46 @@
-import React, { Fragment, useState, useEffect, memo } from 'react';
+import React, { Fragment, useState, useEffect, useContext, memo } from 'react';
 import Link from '../Link';
+import fetchData from '../../utils/fetchData';
+import Router from 'next/router';
 import { FaShoppingBasket } from 'react-icons/fa';
 import WindowsWidth from '../WindowsWidth';
 import { numberSeparator, removeSeparator } from '../../utils/tools';
+import { CartCountContext } from '../../context/context';
 const Product = props => {
+  const cartCountDispatch = useContext(CartCountContext);
+  const addToCart = async () => {
+    //setLoading(true);
+    const result = await fetchData(
+      'User/U_Cart/Add',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          productId: props.id,
+          count: 1
+        })
+      },
+      props.ctx
+    );
+    if (result.isSuccess) {
+      //toast.success('محصول شما با موفقیت به سبد خرید اضافه شد.');
+      cartCountDispatch({ type: 'add' });
+    } else if (result.message != undefined) {
+      //toast.warn(result.message);
+    } else if (result.error != undefined) {
+      //toast.error(result.error);
+    }
+    //setLoading(false);
+  };
   return (
     <div className="col-4 col-lg-2 product">
       <div className="product_frame">
+        {/* <Link href={`/product/${props.productName}`} as={`/product/${props.id}`} passHref> */}
         <Link href={`/product/${props.id}`} passHref>
           <a className="product_link">
             <img src={props.image} alt={props.productName} className="product_img" />
           </a>
         </Link>
-        <div className="product_basket" id={props.id}>
+        <div className="product_basket" id={props.id} onClick={addToCart}>
           <p>سبد خرید</p>
           <FaShoppingBasket className="svg_Icons" />
         </div>

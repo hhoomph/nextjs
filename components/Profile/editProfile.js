@@ -36,7 +36,7 @@ const EditProfile = props => {
   const [draggable, setDraggable] = useState(false);
   const _addresses = profileData.addresses !== undefined ? profileData.addresses[0] : '';
   const [addresses, setAddresses] = useState(_addresses);
-  const avatarUrl = profileData.avatar !== undefined && profileData.avatar !== null ? `https://api.qarun.ir/${profileData.avatar}` : null;
+  const avatarUrl = profileData.avatar !== undefined && profileData.avatar !== null ? `https://api.qaroon.ir/${profileData.avatar}` : null;
   const [avatar, setAvatar] = useState(avatarUrl);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -152,7 +152,7 @@ const EditProfile = props => {
       true
     );
     if (result.isSuccess) {
-      setAvatar(`https://api.qarun.ir/${result.message}`);
+      setAvatar(`https://api.qaroon.ir/${result.message}`);
       toast.success('تصویر شما با موفقیت آپلود شد.');
     } else if (result.message != undefined) {
       toast.warn(result.message);

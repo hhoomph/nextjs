@@ -39,10 +39,10 @@ function Page(props) {
       sellerId={cart.sellerId}
       userId={cart.userId}
       cartData={cart}
-      sellerAvatar={`https://api.qarun.ir/${cart.sellerAvatar}`}
+      sellerAvatar={`https://api.qaroon.ir/${cart.sellerAvatar}`}
       sellerName={''}
       setLoading={setLoading}
-      shopingCartId={cart.id}
+      // shopingCartId={cart.id}
     />
   ));
   const totalPrices = cartData
@@ -67,24 +67,35 @@ function Page(props) {
       }
       return acc;
     }, {});
+  const getCartCount = cartData
+    .map(cart => cart.cartDetailsSelectDtos)
+    .flat()
+    .reduce((acc, val) => {
+      const { count } = val;
+      return acc + count;
+    }, 0);
   const handleOrder = async () => {
-    setLoading(true);
-    const Res = await fetchData(
-      'User/U_Order/AddS1',
-      {
-        method: 'POST'
-      },
-      props.ctx
-    );
-    if (Res !== undefined && Res.isSuccess) {
-      toast.success(Res.message);
-      Router.push('/checkout');
-    } else if (Res !== undefined && Res.message != undefined) {
-      toast.warn(Res.message);
-    } else if (Res !== undefined && Res.error != undefined) {
-      toast.error(Res.error);
+    if (getCartCount > 0) {
+      setLoading(true);
+      const Res = await fetchData(
+        'User/U_Order/AddS1',
+        {
+          method: 'POST'
+        },
+        props.ctx
+      );
+      if (Res !== undefined && Res.isSuccess) {
+        toast.success(Res.message);
+        Router.push('/checkout');
+      } else if (Res !== undefined && Res.message != undefined) {
+        toast.warn(Res.message);
+      } else if (Res !== undefined && Res.error != undefined) {
+        toast.error(Res.error);
+      }
+      setLoading(false);
+    } else {
+      toast.warn('سبد خرید شما خالی است.');
     }
-    setLoading(false);
   };
   // const getCartData = async () => {
   //   setLoading(true);

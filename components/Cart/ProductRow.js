@@ -52,7 +52,7 @@ const ProductRow = props => {
     const result = await fetchData(
       'User/U_Cart/Reduce',
       {
-        method: 'PUT',
+        method: 'POST',
         body: JSON.stringify({
           shopingCartId: shopingCartId
         })
@@ -69,7 +69,7 @@ const ProductRow = props => {
     const result = await fetchData(
       'User/U_Cart/Delete',
       {
-        method: 'DELETE',
+        method: 'POST',
         body: JSON.stringify({
           shopingCartId: shopingCartId
         })
@@ -85,7 +85,7 @@ const ProductRow = props => {
     <div className="col-12 p-0 rtl d-flex justify-content-start product_row">
       <div className="col-3 p-0  align-self-center">
         <Link href={`/product/${productId}`} passHref>
-          <img className="product_img" src={`https://api.qarun.ir/${props.productImage}`} />
+          <img className="product_img" src={`https://api.qaroon.ir/${props.productImage}`} />
         </Link>
       </div>
       <div className="col-9 p-0 align-self-center">

@@ -6,7 +6,8 @@
   position: sticky;
   z-index: 999;
   top: -4px;
-  box-shadow: 0 1px 1px 1px #dcdcdc;
+  //box-shadow: 0 1px 1px 1px #dcdcdc;
+  box-shadow: 0 1px 0px 0px #f9f9f9;
   .navbar-brand {
     margin-right: 0;
     img {
@@ -30,6 +31,7 @@
     }
     &.active {
       color: $main_color;
+      // color: #706f74;
     }
     .svg_Icons {
       // width: 2rem;
@@ -49,14 +51,19 @@
       top: 0px;
       margin-left: -1.9vw;
       margin-top: -9.6vw;
-      width: 4.5vw;
-      height: 4.5vw;
+      // width: 4.5vw;
+      // height: 4.5vw;
+      width: 1.3rem;
+      height: 1.3rem;
       line-height: 1.2;
-      font-size: 3vw;
+      //font-size: 3vw;
+      font-size: 0.69rem;
       font-weight: 400;
       // padding: 0;
       // padding-top: 0.2em;
       border-radius: 90px;
+      padding-left: 4px;
+      padding-top: 4px;
     }
   }
 }
