@@ -48,6 +48,8 @@ const EditProfile = props => {
     unit: '%',
     width: 50,
     height: 50,
+    minWidth: 600,
+    minHeight: 600,
     x: 25,
     y: 25,
     aspect: 4 / 4
@@ -82,21 +84,25 @@ const EditProfile = props => {
     const canvas = document.createElement('canvas');
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
-    canvas.width = c.width;
-    canvas.height = c.height;
+    canvas.width = 600;
+    canvas.height = 600;
     const ctx = canvas.getContext('2d');
-    ctx.drawImage(image, c.x * scaleX, c.y * scaleY, c.width * scaleX, c.height * scaleY, 0, 0, c.width, c.height);
+    ctx.drawImage(image, c.x * scaleX, c.y * scaleY, c.width * scaleX, c.height * scaleY, 0, 0, 600, 600);
     return new Promise((resolve, reject) => {
-      canvas.toBlob(blob => {
-        if (!blob) {
-          console.error('Canvas is empty');
-          return;
-        }
-        blob.name = fileName;
-        window.URL.revokeObjectURL(fileUrl);
-        fileUrl = window.URL.createObjectURL(blob);
-        resolve(fileUrl);
-      }, 'image/jpeg');
+      canvas.toBlob(
+        blob => {
+          if (!blob) {
+            console.error('Canvas is empty');
+            return;
+          }
+          blob.name = fileName;
+          //window.URL.revokeObjectURL(fileUrl);
+          //fileUrl = window.URL.createObjectURL(blob);
+          resolve(blob);
+        },
+        'image/jpeg',
+        1
+      );
     });
   };
   // End Of Crop Image
@@ -113,8 +119,10 @@ const EditProfile = props => {
     setModalShow(false);
     const errs = [];
     //const file = e.target.files[0];
-    const file = new File([setCroppedImageUrl], 'newFile.jpg', {type: 'image/jpeg', lastModified: Date.now()});
-    //const file = blob2file(setCroppedImageUrl);
+    const file = new File([croppedImageUrl], 'newFile.jpg', { type: 'image/jpeg', lastModified: Date.now() });
+    //const file = setCroppedImageUrl;
+    //file.type = 'image/jpeg';
+    //file.name = 'newFile.jpg';
     //console.log(file)
     const formData = new FormData();
     const types = ['image/png', 'image/jpeg', 'image/gif'];
@@ -134,7 +142,7 @@ const EditProfile = props => {
     if (types.every(type => file.type !== type)) {
       errs.push(`فرمت '${file.type}' پشتیبانی نمی شود.`);
     }
-    if (file.size > 4650000) {
+    if (file.size > 1050000) {
       errs.push(`حجم فایل '${file.name}' بیشتر از حد مجاز است، لطفا فایل کم حجم تری انتخاب کنید.`);
     }
     formData.append(`file`, file);
@@ -153,7 +161,7 @@ const EditProfile = props => {
     );
     if (result.isSuccess) {
       setAvatar(`https://api.qaroon.ir/${result.message}`);
-      toast.success('تصویر شما با موفقیت آپلود شد.');
+      //toast.success('تصویر شما با موفقیت آپلود شد.');
     } else if (result.message != undefined) {
       toast.warn(result.message);
     } else if (result.error != undefined) {
@@ -186,10 +194,11 @@ const EditProfile = props => {
       nextCtx
     );
     if (result.isSuccess) {
-      toast.success('ویرایش نمایه با موفقیت انجام شد.');
-      setTimeout(() => {
-        setView(1);
-      }, 300);
+      // toast.success('ویرایش نمایه با موفقیت انجام شد.');
+      // setTimeout(() => {
+      //   setView(1);
+      // }, 300);
+      setView(1);
     } else if (result.message != undefined) {
       toast.warn(result.message);
     } else if (result.error != undefined) {

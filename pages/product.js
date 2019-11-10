@@ -48,10 +48,8 @@ function Page(props) {
       props.ctx
     );
     if (result.isSuccess) {
-      toast.success('محصول شما با موفقیت به سبد خرید اضافه شد.');
-      setTimeout(() => {
-        Router.push('/cart');
-      }, 200);
+      //toast.success('محصول شما با موفقیت به سبد خرید اضافه شد.');
+      Router.push('/cart');
     } else if (result.message != undefined) {
       toast.warn(result.message);
     } else if (result.error != undefined) {
@@ -67,9 +65,11 @@ function Page(props) {
       return 0;
     }
   };
-  const showProductImages = productData.pictures.map((image, index) => <Carousel.Item key={index}>
-    <img src={`https://api.qaroon.ir/${image}`} className="product_image" />
-  </Carousel.Item>);
+  const showProductImages = productData.pictures.map((image, index) => (
+    <Carousel.Item key={index}>
+      <img src={`https://api.qaroon.ir/${image}`} className="product_image" />
+    </Carousel.Item>
+  ));
   console.log(productData);
   // Determine Server Or Browser env
   if (typeof window !== 'undefined' && window.document !== undefined) {
@@ -91,8 +91,12 @@ function Page(props) {
               </a>
             </div>
             <div className="col-8 text-right">
-              <p className="user_name">{productData.sellerUserName || ''}</p>
-              <img src={(productData.sellerUserAvatar) ? `https://api.qaroon.ir/${productData.sellerUserAvatar}` : `/static/img/user.png`} className="userImage" />
+              <Link href={`/user/${productData.sellerUserName}`} passHref>
+                <a>
+                  <p className="user_name">{productData.sellerUserName || ''}</p>
+                  <img src={productData.sellerUserAvatar ? `https://api.qaroon.ir/${productData.sellerUserAvatar}` : `/static/img/user.png`} className="userImage" />
+                </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -162,7 +166,7 @@ function Page(props) {
     </>
   );
 }
-Page.getInitialProps = async function (context) {
+Page.getInitialProps = async function(context) {
   //console.log(context);
   const { id } = context.query;
   const result = await fetchData(

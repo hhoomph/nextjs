@@ -70,6 +70,8 @@ function Page(props) {
     unit: '%',
     width: 50,
     height: 50,
+    minWidth: 640,
+    minHeight: 800,
     x: 25,
     y: 25,
     aspect: 4 / 5
@@ -104,10 +106,10 @@ function Page(props) {
     const canvas = document.createElement('canvas');
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
-    canvas.width = c.width;
-    canvas.height = c.height;
+    canvas.width = 640;
+    canvas.height = 800;
     const ctx = canvas.getContext('2d');
-    ctx.drawImage(image, c.x * scaleX, c.y * scaleY, c.width * scaleX, c.height * scaleY, 0, 0, c.width, c.height);
+    ctx.drawImage(image, c.x * scaleX, c.y * scaleY, c.width * scaleX, c.height * scaleY, 0, 0, 640, 800);
     return new Promise((resolve, reject) => {
       canvas.toBlob(blob => {
         if (!blob) {
@@ -115,9 +117,9 @@ function Page(props) {
           return;
         }
         blob.name = fileName;
-        window.URL.revokeObjectURL(fileUrl);
-        fileUrl = window.URL.createObjectURL(blob);
-        resolve(fileUrl);
+        //window.URL.revokeObjectURL(fileUrl);
+        //fileUrl = window.URL.createObjectURL(blob);
+        resolve(blob);
       }, 'image/jpeg');
     });
   };
@@ -182,15 +184,16 @@ function Page(props) {
   const fileInput = useRef();
   const uploadHandler = async e => {
     toast.dismiss();
+    setModalShow(false);
     const errs = [];
     // const file = e.target.files[0];
-    const file = new File([setCroppedImageUrl], 'newFile.jpg', { type: 'image/jpeg', lastModified: Date.now() });
+    const file = new File([croppedImageUrl], 'newFile.jpg', { type: 'image/jpeg', lastModified: Date.now() });
     const formData = new FormData();
     const types = ['image/png', 'image/jpeg', 'image/gif'];
     if (types.every(type => file.type !== type)) {
       errs.push(`فرمت '${file.type}' پشتیبانی نمی شود.`);
     }
-    if (file.size > 5550000) {
+    if (file.size > 1550000) {
       errs.push(`حجم فایل '${file.name}' بیشتر از حد مجاز است، لطفا فایل کم حجم تری انتخاب کنید.`);
     }
     formData.append(`File`, file);
@@ -218,7 +221,7 @@ function Page(props) {
         })
         .sort((a, b) => a.id - b.id);
       setUploadedImages(all);
-      toast.success('تصویر شما با موفقیت آپلود شد.');
+      //toast.success('تصویر شما با موفقیت آپلود شد.');
     } else if (result.message != undefined) {
       toast.warn(result.message);
     } else if (result.error != undefined) {
