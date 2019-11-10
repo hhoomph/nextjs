@@ -16,6 +16,7 @@ const areEqual = (prevProps, nextProps) => {
 const Nav = props => {
   return (
     <>
+      {/* Top Navbar in Desktop Mode */}
       <nav className="d-none d-lg-flex top_nav navbar navbar-expand navbar-white bg-white">
         <div className="col-4 d-flex">
           <Link href="/cart" passHref>
@@ -46,6 +47,21 @@ const Nav = props => {
           </Link>
         </div>
       </nav>
+      {/* Bottom Navbar in Desktop Mode */}
+      <nav className="d-none d-lg-flex fixed-bottom top_nav navbar navbar-expand navbar-white desktop_bottom">
+        <div className="col-12 d-flex justify-content-center">
+          <Link href="/terms" passHref>
+            <a className="nav-link">شرایط و قوانین</a>
+          </Link>
+          <Link href="/contact" passHref>
+            <a className="nav-link">تماس با ما</a>
+          </Link>
+          <Link href="/about-us" passHref>
+            <a className="nav-link">درباره ما</a>
+          </Link>
+        </div>
+      </nav>
+      {/* Bottom Navbar in Mobile Mode */}
       <nav className="d-flex d-lg-none bottom_nav navbar fixed-bottom navbar-white bg-white">
         <div className="col-12 d-flex justify-content-center p-1">
           <Link href="/profile" passHref>
