@@ -280,7 +280,7 @@ const EditProfile = props => {
         </Modal.Footer>
       </Modal>
       <div className="row mt-3 mb-5 edit_form">
-        <div className="col">
+        <div className="col pb-3">
           <form className="profileForm">
             <div className="form-group">
               <label htmlFor="name">نام</label>

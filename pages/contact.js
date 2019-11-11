@@ -4,32 +4,51 @@ import Loading from '../components/Loader/Loading';
 import fetchData from '../utils/fetchData';
 import Nav from '../components/Nav/Nav';
 import SubmitButton from '../components/Button/SubmitButton';
+import { ToastContainer, toast } from 'react-toastify';
+import '../scss/components/aboutPage.scss';
 function Page(props) {
+  toast.configure({
+    position: 'top-right',
+    autoClose: 1000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true
+  });
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [text, setText] = useState('');
   const sendForm = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setName('');
-      setPhone('');
-      setEmail('');
-      setText('');
-      setLoading(false);
-    }, 500);
+    toast.dismiss();
+    if (name === '' || phone === '' || email === '' || text === '') {
+      toast.warn('لطفا تمامی فیلد ها را بدرستی وارد نمایید.');
+    } else {
+      setLoading(true);
+      setTimeout(() => {
+        setName('');
+        setPhone('');
+        setEmail('');
+        setText('');
+        setLoading(false);
+        toast.success('پیام شما با موفقیت ثبت شد.');
+      }, 900);
+    }
   };
   return (
     <>
       <Nav />
-      <div className="container mb-5">
+      <div className="container mb-5 about_page">
         <div className="row">
           <div className="col-12 mb-5">
-            <div className="row d-flex justify-content-start rtl pr-2 pt-4 mb-5">
-              <h3>تماس با قارون</h3>
+            <div className="row d-flex justify-content-start rtl pt-4 mb-5">
+              <div className="col-12 text-center page_title">
+                <h2>تماس با قارون</h2>
+                <hr />
+              </div>
               <div className="col-12 mt-3">
-                <form className="checkoutForm">
+                <form className="contactForm">
                   <div className="form-group row">
                     <label htmlFor="name" className="col-form-label">
                       نام

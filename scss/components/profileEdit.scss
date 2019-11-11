@@ -47,6 +47,11 @@
     }
   }
   .edit_form {
+    .profileForm {
+      width: 95% !important;
+      margin: auto !important;
+      display: block !important;
+    }
     .setLocation {
       font-size: 1rem;
       color: #2196f3;
@@ -55,7 +60,8 @@
     .form-group label {
       color: #8a8a8a;
     }
-    .form-group input,  .form-group textarea{
+    .form-group input,
+    .form-group textarea {
       border: none;
       border-bottom: 1px solid #c9c9c9;
       border-radius: 0;

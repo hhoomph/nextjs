@@ -1,0 +1,53 @@
+@import '../vars';
+.about_page {
+  .page_title {
+    h2 {
+      font-size: 1.65rem;
+      color: #fb7759;
+      // text-decoration: underline;
+      // text-decoration-color: #fea532;
+    }
+    hr {
+      margin: 0.7rem;
+      border: 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.0);
+      box-shadow: 0px 1px 3px 0px #d2d2d2;
+    }
+  }
+  .content_text {
+    text-align: justify;
+    direction: rtl;
+    font-size: 1rem;
+    color: #6b6b6b;
+  }
+  .btn-main {
+    min-width: 100px;
+    min-height: 38px;
+    .spinner-border.text-warning {
+      width: 1.6rem !important;
+      height: 1.6rem !important;
+      color: #fff !important;
+    }
+  }
+  .contactForm {
+    width: 87% !important;
+    margin: auto !important;
+    display: block !important;
+    .form-group {
+      margin-bottom: 0;
+    }
+    .form-group input,
+    .form-group textarea {
+      outline: none !important;
+      outline-style: none !important;
+      color: #444;
+      border: none;
+      border-bottom: 1px solid #c9c9c9;
+      border-radius: 0;
+      line-height: 1;
+    }
+    .form-group label {
+      line-height: 1;
+    }
+  }
+}
