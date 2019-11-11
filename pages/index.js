@@ -37,17 +37,16 @@ function App(props) {
   const GetMarketAround = props.GetMarketAround.data || [];
   const FriendsMarket = props.FriendsMarket.data || [];
   const cartData = props.cartData.data || [];
+  if (cartData.length > 0) {
+  }
   const getCartCount = cartData
     .map(cart => cart.cartDetailsSelectDtos)
-    .flat()
+    .reduce((acc, val) => acc.concat(val), [])
     .reduce((acc, val) => {
       const { count } = val;
       return acc + count;
     }, 0);
   const [cartCount, cartCountDispatch] = useReducer(cartCountReduser, getCartCount);
-  //const res = useContext(AppContext);
-  //console.log(res.result);
-  //console.log(props.result);
   // Determine Server Or Browser env
   if (typeof window !== 'undefined' && window.document !== undefined) {
     //console.log('browser');

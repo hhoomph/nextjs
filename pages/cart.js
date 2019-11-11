@@ -47,7 +47,7 @@ function Page(props) {
   ));
   const totalPrices = cartData
     .map(cart => cart.cartDetailsSelectDtos)
-    .flat()
+    .reduce((acc, val) => acc.concat(val), [])
     .reduce((acc, val) => {
       const { totalDiscount, totalLastPrice, totalPrice } = val;
       if (acc['totalDiscount']) {
@@ -69,7 +69,7 @@ function Page(props) {
     }, {});
   const getCartCount = cartData
     .map(cart => cart.cartDetailsSelectDtos)
-    .flat()
+    .reduce((acc, val) => acc.concat(val), [])
     .reduce((acc, val) => {
       const { count } = val;
       return acc + count;
