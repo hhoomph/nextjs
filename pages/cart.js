@@ -11,8 +11,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { FaPlus, FaCheck, FaArrowLeft, FaArrowRight, FaTimes } from 'react-icons/fa';
 import { FaShoppingCart, FaCartPlus, FaCartArrowDown } from 'react-icons/fa';
 import { numberSeparator, removeSeparator } from '../utils/tools';
-import { CartContext } from '../context/context';
-import { cartReduser } from '../context/reducer';
+import { CartContext, CartCountContext } from '../context/context';
+import { cartReduser, cartCountReduser } from '../context/reducer';
 import '../scss/components/cartPage.scss';
 const Cart = dynamic({
   loader: () => import('../components/Cart/Cart'),
@@ -21,9 +21,16 @@ const Cart = dynamic({
 });
 function Page(props) {
   const nextCtx = props.ctx;
-  //const [cartData, setCartData] = useState(props.cartData.data || []);
   const [cartData, cartDispatch] = useReducer(cartReduser, props.cartData.data || []);
   const [loading, setLoading] = useState(false);
+  const getCartCount = cartData
+    .map(cart => cart.cartDetailsSelectDtos)
+    .reduce((acc, val) => acc.concat(val), [])
+    .reduce((acc, val) => {
+      const { count } = val;
+      return acc + count;
+    }, 0);
+  const [cartCount, cartCountDispatch] = useReducer(cartCountReduser, getCartCount);
   toast.configure({
     position: 'top-right',
     autoClose: 3000,
@@ -32,7 +39,7 @@ function Page(props) {
     pauseOnHover: true,
     draggable: true
   });
-  console.log(cartData);
+  //console.log(cartData);
   const renderCart = cartData.map(cart => (
     <Cart
       key={cart.sellerId}
@@ -67,13 +74,6 @@ function Page(props) {
       }
       return acc;
     }, {});
-  const getCartCount = cartData
-    .map(cart => cart.cartDetailsSelectDtos)
-    .reduce((acc, val) => acc.concat(val), [])
-    .reduce((acc, val) => {
-      const { count } = val;
-      return acc + count;
-    }, 0);
   const handleOrder = async () => {
     if (getCartCount > 0) {
       setLoading(true);
@@ -97,69 +97,53 @@ function Page(props) {
       toast.warn('سبد خرید شما خالی است.');
     }
   };
-  // const getCartData = async () => {
-  //   setLoading(true);
-  //   const getCartDataRes = await fetchData(
-  //     'User/U_Cart/GetAll',
-  //     {
-  //       method: 'GET'
-  //     },
-  //     props.ctx
-  //   );
-  //   if (getCartDataRes !== undefined && getCartDataRes.isSuccess) {
-  //     let cData = getCartDataRes.data || [];
-  //     cartDispatch({ type: 'refresh', payload: cData });
-  //     //setCartData(cData);
-  //   } else if (getCartDataRes !== undefined && getCartDataRes.message != undefined) {
-  //     //toast.warn(getCartDataRes.message);
-  //   } else if (getCartDataRes !== undefined && getCartDataRes.error != undefined) {
-  //     //toast.error(getCartDataRes.error);
-  //   }
-  //   setLoading(false);
-  // };
   return (
     <CartContext.Provider value={cartDispatch}>
-      <Nav />
-      <div className="container cart_page">
-        <div className="row mb-3 p-2 header_link">
-          <div className="col pt-2 text-center">
-            {/* <Link href="/checkout" passHref>
+      <CartCountContext.Provider value={cartCountDispatch}>
+        <Nav cartCount={cartCount} />
+        <div className="container cart_page">
+          <div className="row mb-3 p-2 header_link">
+            <div className="col pt-2 text-center">
+              {/* <Link href="/checkout" passHref>
               <a className="d-inline-block btn-main">
                 ادامه
                 {loading ? <Loading className="font_icon" /> : <FaArrowLeft className="font_icon" />}
               </a>
             </Link> */}
-            <a className="d-inline-block btn-main" onClick={handleOrder}>
-              ادامه
-              {loading ? <Loading className="font_icon" /> : <FaArrowLeft className="font_icon" />}
-            </a>
+              <a className="d-inline-block btn-main" onClick={handleOrder}>
+                ادامه
+                {loading ? <Loading className="font_icon" /> : <FaArrowLeft className="font_icon" />}
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="container ">
-        <div className="row cart_title">
-          <div className="col text-center">
-            <FaCartPlus className="font_icon" />
-            <h5 className="mr-2 ml-2 page_title">سبد خرید </h5>
-            <FaCartArrowDown className="font_icon" />
-            {/* <hr /> */}
+        <div className="container ">
+          <div className="row cart_title">
+            <div className="col text-center">
+              <FaCartPlus className="font_icon" />
+              <h5 className="mr-2 ml-2 page_title">سبد خرید </h5>
+              <FaCartArrowDown className="font_icon" />
+              {/* <hr /> */}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="container cart_page">
-        {renderCart}
-        <div className="row mt-3 mb-3 pb-5 cart_amount_detail">
-          <div className="col-12 d-block rtl">
-            <span className="total">مبلغ کل : </span> <span className="total_price">{totalPrices.totalPrice !== undefined ? numberSeparator(totalPrices.totalPrice) : '0'} تومان</span>
-          </div>
-          <div className="col-12 d-block rtl">
-            <span className="discount">مجموع تخفیف : </span> <span className="total_discount">{totalPrices.totalDiscount !== undefined ? numberSeparator(totalPrices.totalDiscount) : '0'} تومان</span>
-          </div>
-          <div className="col-12 d-block rtl">
-            <span className="final">مبلغ قابل پرداخت : </span> <span className="final_price">{totalPrices.totalLastPrice !== undefined ? numberSeparator(totalPrices.totalLastPrice) : '0'} تومان</span>
+        <div className="container cart_page">
+          {renderCart}
+          <div className="row mt-3 mb-3 pb-5 cart_amount_detail">
+            <div className="col-12 d-block rtl">
+              <span className="total">مبلغ کل : </span> <span className="total_price">{totalPrices.totalPrice !== undefined ? numberSeparator(totalPrices.totalPrice) : '0'} تومان</span>
+            </div>
+            <div className="col-12 d-block rtl">
+              <span className="discount">مجموع تخفیف : </span>{' '}
+              <span className="total_discount">{totalPrices.totalDiscount !== undefined ? numberSeparator(totalPrices.totalDiscount) : '0'} تومان</span>
+            </div>
+            <div className="col-12 d-block rtl">
+              <span className="final">مبلغ قابل پرداخت : </span>{' '}
+              <span className="final_price">{totalPrices.totalLastPrice !== undefined ? numberSeparator(totalPrices.totalLastPrice) : '0'} تومان</span>
+            </div>
           </div>
         </div>
-      </div>
+      </CartCountContext.Provider>
     </CartContext.Provider>
   );
 }

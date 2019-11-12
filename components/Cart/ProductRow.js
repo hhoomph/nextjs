@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect, useContext, memo } from 'react';
 import Link from '../Link';
 import fetchData from '../../utils/fetchData';
-import { CartContext } from '../../context/context';
+import { CartContext, CartCountContext } from '../../context/context';
 import { FaTimesCircle, FaPlusSquare, FaMinusSquare } from 'react-icons/fa';
 import { numberSeparator, removeSeparator } from '../../utils/tools';
 import '../../scss/components/cart.scss';
@@ -10,6 +10,7 @@ const ProductRow = props => {
   const { shopingCartId, productId, setLoading } = props;
   const [productQuantity, setProductQuantity] = useState(props.productQuantity);
   const cartDispatch = useContext(CartContext);
+  const cartCountDispatch = useContext(CartCountContext);
   const handleSelect = e => {
     setProductQuantity(e.target.value);
   };
@@ -44,6 +45,7 @@ const ProductRow = props => {
     );
     if (result.isSuccess) {
       getCartData();
+      cartCountDispatch({ type: 'add' });
     }
     setLoading(false);
   };
@@ -61,6 +63,7 @@ const ProductRow = props => {
     );
     if (result.isSuccess) {
       getCartData();
+      cartCountDispatch({ type: 'remove' });
     }
     setLoading(false);
   };
