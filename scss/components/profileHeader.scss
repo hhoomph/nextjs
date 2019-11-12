@@ -140,14 +140,14 @@
       margin: auto;
       margin-right: -6px;
       float: right;
-      color: #fff;
+      color: #333;
       min-width: 150px;
       border-radius: 10px;
-      background: #909090;
+      background: #ffffff;
+      border: 1px solid #929292;
       opacity: 0.8;
       &:hover,
       &:active {
-        color: #fff;
         opacity: 1;
       }
     }
@@ -188,7 +188,7 @@
 }
 .profile_menu {
   z-index: 999;
-  background: rgba(255, 255, 255, 0.84);
+  background: rgba(255, 255, 255, 0.9);
   top: 40px;
   right: 15px;
   border-radius: 10px;

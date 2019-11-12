@@ -53,6 +53,9 @@ const Nav = props => {
           <Link href="/terms" passHref>
             <a className="nav-link">شرایط و قوانین</a>
           </Link>
+          <Link href="/complaint" passHref>
+            <a className="nav-link">ثبت شکایات</a>
+          </Link>
           <Link href="/contact" passHref>
             <a className="nav-link">تماس با ما</a>
           </Link>

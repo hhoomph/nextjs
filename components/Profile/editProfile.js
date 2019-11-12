@@ -199,6 +199,7 @@ const EditProfile = props => {
       //   setView(1);
       // }, 300);
       setView(1);
+      //Router.push('/profile');
     } else if (result.message != undefined) {
       toast.warn(result.message);
     } else if (result.error != undefined) {

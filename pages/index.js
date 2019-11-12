@@ -59,7 +59,7 @@ function App(props) {
       <Nav cartCount={cartCount} />
       <UserSuggest users={Following} />
       <CatProductsRow products={GetMarketAround} />
-      <Banners />
+      {/* <Banners /> */}
       <ProductsRow products={FriendsMarket} />
     </CartCountContext.Provider>
   );

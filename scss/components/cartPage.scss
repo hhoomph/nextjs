@@ -45,6 +45,12 @@
       float: left;
     }
   }
+  .empty_cart{
+    .font_icon{
+      font-size: 8rem;
+      color: #fd983d;
+    }
+  }
   @media (min-width: 576px) {
     .header_link {
       max-width: 540px;

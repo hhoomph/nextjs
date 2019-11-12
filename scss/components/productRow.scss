@@ -9,13 +9,21 @@
     .product_frame {
       position: relative;
       text-align: center;
-      width: 160px;
-      height: 210px;
+      //width: 160px;
+      // height: 210px;
+      height: 250px;
       padding: 10px;
-      margin-top: 6px;
+      padding-right: 0;
+      padding-left: 0;
+      padding-top: 0;
+      //margin-top: 6px;
+      margin-top: 20px;
       // background: #f3f3f3;
       border: 1px solid #e4e4e4;
-      border-radius: 5px;
+      //border-radius: 5px;
+      border-radius: 8px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
       box-shadow: 0px 0px 4px 0px #e6e6e6;
       transition: all ease-in-out 0.2s;
       &:hover {
@@ -25,17 +33,21 @@
         img {
           // width: 7rem;
           // height: 10rem;
-          max-width: 8rem;
-          max-height: 10rem;
+          max-width: 10rem;
+          max-height: 12rem;
           width: auto;
           height: auto;
+          border-radius: 8px;
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
         }
       }
       .product_basket {
         cursor: pointer;
         background-color: #2fa841;
         position: relative;
-        top: -10px;
+        //top: -10px;
+        top: 8px;
         border-radius: 50px;
         text-align: center;
         // width: auto;
@@ -74,8 +86,10 @@
       }
       .product_user {
         position: absolute;
-        right: 3px;
-        top: 7px;
+        // right: 3px;
+        // top: 7px;
+        right: -8px;
+        top: -5px;
         &:hover {
           border-radius: 150px;
           animation: shadow_drop 0.8s both;
@@ -94,8 +108,10 @@
       // padding-right: 10px;
       // padding-top: 5px;
       // font-size: 1em;
-      margin-top: -38px;
+      // margin-top: -38px;
+      margin-top: -30px;
       font-size: 0.8rem;
+      padding-left: 4px;
       p {
         padding: 0;
         margin: 0;

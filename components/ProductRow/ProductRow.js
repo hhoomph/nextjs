@@ -82,7 +82,7 @@ const ProductsRow = props => {
     );
   });
   return (
-    <div className="container mt-1 mb-5 pb-5">
+    <div className="container mt-1 mb-5 p-0 pb-5">
       <div className="row rtl product_row">
         {renderProducts}
         {loading && (

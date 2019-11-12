@@ -21,12 +21,22 @@ function Page(props) {
   const [view, setView] = useState(1);
   const resultData = props.result.data || [];
   const [profileData, setProfileData] = useState(resultData);
-  console.log(profileData)
-  // if (props.result.isSuccess) {
-  //   setProfileData(props.result.data);
-  // } else {
-  //   setProfileData([]);
-  // }
+  console.log(profileData);
+  const getProfileData = async () => {
+    const result = await fetchData(
+      'User/U_Account/Profile',
+      {
+        method: 'GET'
+      },
+      props.ctx
+    );
+    if (result.isSuccess) {
+      setProfileData(result.data);
+    }
+  };
+  useEffect(() => {
+    getProfileData();
+  }, [view]);
   switch (view) {
     case 1:
       if (typeof window !== 'undefined') {

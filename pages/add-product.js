@@ -147,7 +147,7 @@ function Page(props) {
       );
       if (result.isSuccess) {
         setProductId(result.data.productId);
-        toast.success('محصول شما با موفقیت ایجاد شد، لطفا تصویر محصول را انتخاب کنید.');
+        //toast.success('محصول شما با موفقیت ایجاد شد، لطفا تصویر محصول را انتخاب کنید.');
         const suggestedPicturesResult = await fetchData('Common/C_Image/ProductSuggestedPictures', {
           method: 'POST',
           body: JSON.stringify({

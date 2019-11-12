@@ -4,9 +4,9 @@ const Sort = props => {
   const handleSort = props.handleSort;
   const [sorts, setSorts] = useState([
     { id: 0, name: 'تازه', filter: 'New', active: true },
-    { id: 1, name: 'محبوب', filter: 'Popular', active: false },
+    { id: 1, name: 'تخفیف', filter: 'Discount', active: false },
     { id: 2, name: 'پرفروش', filter: 'BestSeller', active: false },
-    { id: 3, name: 'تخفیف', filter: 'Discount', active: false },
+    { id: 3, name: 'محبوب', filter: 'Popular', active: false },
     { id: 4, name: 'فعال', filter: 'NotSet', active: false }
   ]);
   const toggleActiveSort = index => {

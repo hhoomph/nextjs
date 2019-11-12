@@ -167,7 +167,7 @@ const Header = props => {
             </div>
           </div>
           <div className="col-12 pt-3">
-            <h2 className="title">فروشگاه قارون</h2>
+            <h2 className="title">{displayName}</h2>
             <p className="bio">{biography ? `${biography}` : ` `}</p>
             {/* <Link href="/profileEdit" passHref>
               <a className="btn btn-main">ویرایش</a>

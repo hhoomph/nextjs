@@ -132,7 +132,7 @@ const MapComponent = props => {
             // save the position
           }}
         >
-          <Tooltip>مکان شما</Tooltip>
+          <Tooltip>مکان نما را روی موقعیت خود تنظیم کنید</Tooltip>
         </Marker>
         {draggable && <Circle center={markPosition} radius={1000} className="circle_radius" />}
       </>
@@ -159,7 +159,7 @@ const MapComponent = props => {
           </div>
         </div>
       )}
-      <div id="map_2">
+      <div id="map_2" hidden={props.hidden}>
         <Map closePopupOnClick={true} animate={true} center={markPosition} zoom={13} maxZoom={18} ref={mapRef} dragging={draggable}>
           <TileLayer attribution="Qarun" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           {currentMarker()}

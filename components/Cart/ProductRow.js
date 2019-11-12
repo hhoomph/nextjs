@@ -95,7 +95,8 @@ const ProductRow = props => {
         <div className="col-12 p-1 d-flex">
           <div className="product_name text-truncate">{props.productName}</div>
           <div className="product_close" onClick={deleteProduct}>
-            <FaTimesCircle className="font_icon" />
+            {/* <FaTimesCircle className="font_icon" /> */}
+            حذف
           </div>
         </div>
         <div className="col-12 p-1 d-flex">
