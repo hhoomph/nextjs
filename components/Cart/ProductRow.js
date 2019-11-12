@@ -67,7 +67,7 @@ const ProductRow = props => {
     }
     setLoading(false);
   };
-  const deleteProduct = async () => {
+  const deleteProduct = async productQuantity => {
     setLoading(true);
     const result = await fetchData(
       'User/U_Cart/Delete',
@@ -81,6 +81,7 @@ const ProductRow = props => {
     );
     if (result.isSuccess) {
       getCartData();
+      cartCountDispatch({ type: 'delete', payload: productQuantity });
     }
     setLoading(false);
   };
@@ -94,7 +95,7 @@ const ProductRow = props => {
       <div className="col-9 p-0 align-self-center">
         <div className="col-12 p-1 d-flex">
           <div className="product_name text-truncate">{props.productName}</div>
-          <div className="product_close" onClick={deleteProduct}>
+          <div className="product_close" onClick={() => deleteProduct(productQuantity)}>
             {/* <FaTimesCircle className="font_icon" /> */}
             حذف
           </div>

@@ -16,6 +16,8 @@ export const cartCountReduser = (state, action) => {
       return state + 1;
     case 'remove':
       return state - 1;
+    case 'delete':
+      return state - action.payload;
     default:
       return state;
   }
