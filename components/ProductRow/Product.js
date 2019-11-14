@@ -62,11 +62,13 @@ const Product = props => {
             <span className="product_price">{numberSeparator(props.price)} </span>
             <span className="product_currency">تومان</span>
           </p>
-          {props.oldPrice && (
+          {props.oldPrice && props.oldPrice !== props.price ? (
             <p className="price_old">
               <span className="product_price">{numberSeparator(props.oldPrice)}</span>
               <span className="product_currency">تومان</span>
             </p>
+          ) : (
+            <p className="price_old"></p>
           )}
         </div>
       </div>

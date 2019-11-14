@@ -50,6 +50,9 @@ function App(props) {
   // Determine Server Or Browser env
   if (typeof window !== 'undefined' && window.document !== undefined) {
     //console.log('browser');
+    //screen.orientation.lock("portrait-primary");
+    screen.orientation.lock("portrait");
+    //screen.lockOrientation("portrait");
   } else if (process) {
     //console.log('node');
   }

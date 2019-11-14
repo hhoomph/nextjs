@@ -8,7 +8,7 @@ import Product from '../components/Profile/product';
 import Auth from '../components/Auth/Auth';
 import fetchData from '../utils/fetchData';
 const Category = dynamic({
-  loader: () => import('../components/CatProductsRow/Category'),
+  loader: () => import('../components/profile/Category'),
   loading: () => <Loading />,
   ssr: true
 });
@@ -20,8 +20,26 @@ const EditProfile = dynamic({
 function Page(props) {
   const [view, setView] = useState(1);
   const resultData = props.result.data || [];
+  const productsCount = props.userProducts.data.count || 0;
+  const productsData = props.userProducts.data.model || [];
   const [profileData, setProfileData] = useState(resultData);
-  console.log(profileData);
+  const [userCounts, setCounts] = useState(productsCount);
+  const [userproducts, setUserproducts] = useState(productsData);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(2);
+  const [isFetching, setIsFetching] = useState(false);
+  console.log(profileData, props.userProducts);
+  const showProducts = userproducts.map(product => (
+    <Product
+      key={product.productId}
+      id={product.productId}
+      profile={true}
+      isDisable={product.isDisable}
+      price={product.price}
+      oldPrice={product.lastPrice}
+      image={product.picture !== undefined && product.picture !== null ? `https://api.qaroon.ir/${product.picture}` : 'static/img/no-product-image.png'}
+    />
+  ));
   const getProfileData = async () => {
     const result = await fetchData(
       'User/U_Account/Profile',
@@ -34,8 +52,41 @@ function Page(props) {
       setProfileData(result.data);
     }
   };
+  const getUserProduct = async () => {
+    setLoading(true);
+    const result = await fetchData(
+      'User/U_Product/UserProduct',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          userId: profileData.id,
+          categoryId: 1,
+          page: page,
+          pageSize: 6
+        })
+      },
+      props.ctx
+    );
+    if (result.isSuccess) {
+      setUserproducts(result.data);
+    }
+    setLoading(false);
+  };
+  const getCategoriesForUser = async () => {
+    const result = await fetchData(
+      'User/U_Product/CategoiesHaveProduct',
+      {
+        method: 'GET'
+      },
+      props.ctx
+    );
+    if (result.isSuccess) {
+      console.log(result.data);
+    }
+  };
   useEffect(() => {
     getProfileData();
+    getCategoriesForUser();
   }, [view]);
   switch (view) {
     case 1:
@@ -56,14 +107,7 @@ function Page(props) {
             </div>
           </div>
           <div className="container mb-5 pb-3 pt-3">
-            <div className="row d-flex justify-content-start rtl profile_products">
-              <Product id={1} basket={false} showPrice={false} price={120000} delete={true} oldPrice={'140000'} image={'product.png'} />
-              <Product id={2} basket={false} showPrice={false} price={140000} delete={true} image={'product3.png'} />
-              <Product id={3} basket={false} showPrice={false} price={120000} delete={true} image={'product2.png'} />
-              <Product id={4} basket={false} showPrice={false} price={130000} delete={true} image={'product.png'} />
-              <Product id={5} basket={false} showPrice={false} price={120000} delete={true} image={'product3.png'} />
-              <Product id={6} basket={false} showPrice={false} price={110000} delete={true} oldPrice={'120000'} image={'product2.png'} />
-            </div>
+            <div className="row d-flex justify-content-start rtl profile_products">{showProducts}</div>
           </div>
         </>
       );
@@ -94,14 +138,7 @@ function Page(props) {
             </div>
           </div>
           <div className="container mb-5 pb-3 pt-3">
-            <div className="row d-flex justify-content-start rtl profile_products">
-              <Product id={1} basket={false} showPrice={false} price={120000} delete={true} oldPrice={'140000'} image={'product.png'} />
-              <Product id={2} basket={false} showPrice={false} price={140000} delete={true} image={'product3.png'} />
-              <Product id={3} basket={false} showPrice={false} price={120000} delete={true} image={'product2.png'} />
-              <Product id={4} basket={false} showPrice={false} price={130000} delete={true} image={'product.png'} />
-              <Product id={5} basket={false} showPrice={false} price={120000} delete={true} image={'product3.png'} />
-              <Product id={6} basket={false} showPrice={false} price={110000} delete={true} oldPrice={'120000'} image={'product2.png'} />
-            </div>
+            <div className="row d-flex justify-content-start rtl profile_products">{showProducts}</div>
           </div>
         </>
       );
@@ -116,22 +153,19 @@ Page.getInitialProps = async function(context) {
     },
     context
   );
-  let userProducts = [];
-  if (result.isSuccess) {
-    const products = await fetchData(
-      'User/U_Product/UserProduct',
-      {
-        method: 'POST',
-        body: JSON.stringify({
-          userId: result.data.id,
-          categoryId: 1,
-          page: 1,
-          pageSize: 10
-        })
-      },
-      context
-    );
-  }
+  const userProducts = await fetchData(
+    'User/U_Product/UserProduct',
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        userId: result.data.id,
+        categoryId: 1,
+        page: 1,
+        pageSize: 10
+      })
+    },
+    context
+  );
   return { result, userProducts };
 };
 export default Auth(Page);

@@ -123,7 +123,11 @@ const Header = props => {
         <div className="row rtl">
           <div className="col-12 d-flex top">
             <div className="col-6 d-block">
-              {(followed) ? <SubmitButton loading={loading} onClick={() => unFollowToggle()} text='لغو دنبال' className="btn btn-main unfollow"/> : <SubmitButton loading={loading} onClick={() => followToggle()} text='دنبال کردن' className="btn btn-main follow"/> }
+              {followed ? (
+                <SubmitButton loading={loading} onClick={() => unFollowToggle()} text="لغو دنبال" className="btn btn-main unfollow" />
+              ) : (
+                <SubmitButton loading={loading} onClick={() => followToggle()} text="دنبال کردن" className="btn btn-main follow" />
+              )}
               {/* <SubmitButton
                 loading={loading}
                 onClick={() => {
@@ -140,7 +144,7 @@ const Header = props => {
             </div>
             <div className="col-6 d-block distance">
               <DistanceSvg className="svg_Icons" />
-              <p>{profileData.geographicalDistance} کیلومتر</p>
+              <p>{parseFloat(profileData.geographicalDistance).toFixed(2)} کیلومتر</p>
             </div>
           </div>
           <div className="col-12 pt-3">

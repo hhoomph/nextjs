@@ -44,6 +44,9 @@
       margin-top: -6px;
       margin-bottom: 10px;
       width: -moz-max-content;
+      width: -o-max-content;
+      width: -ms-max-content;
+      width: -webkit-max-content;
       width: max-content;
       border-bottom: 1px solid #000;
       a {

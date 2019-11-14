@@ -8,6 +8,7 @@
     padding: 0.4rem;
     padding-right: 0;
     padding-left: 0;
+    margin-left: 0.5rem;
   }
   .over_flow {
     overflow: hidden;
@@ -24,8 +25,11 @@
   }
   .user_link {
     width: -moz-max-content;
+    width: -o-max-content;
+    width: -ms-max-content;
     width: -webkit-max-content;
     width: max-content;
+    max-width: 6rem;
     height: auto;
     display: block;
     border-radius: 10rem;
@@ -53,17 +57,20 @@
   }
 }
 @media screen and (min-width: 1000px) {
-  .user_Suggestion img.rounded-circle, .user_Suggest_name {
+  .user_Suggestion img.rounded-circle,
+  .user_Suggest_name {
     width: 10vw !important;
   }
 }
 @media screen and (min-width: 1010px) and (max-width: 1300px) {
-  .user_Suggestion img.rounded-circle, .user_Suggest_name {
+  .user_Suggestion img.rounded-circle,
+  .user_Suggest_name {
     width: 9.6vw !important;
   }
 }
 @media screen and (min-width: 1400px) {
-  .user_Suggestion img.rounded-circle, .user_Suggest_name {
+  .user_Suggestion img.rounded-circle,
+  .user_Suggest_name {
     width: 5.5vw !important;
   }
 }

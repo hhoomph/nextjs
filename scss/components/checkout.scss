@@ -39,6 +39,9 @@
         z-index: 9;
         background: #fff;
         width: -moz-max-content;
+        width: -o-max-content;
+        width: -ms-max-content;
+        width: -webkit-max-content;
         width: max-content;
         max-width: 130px;
         margin-right: 8px;

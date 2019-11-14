@@ -12,13 +12,16 @@
     margin-bottom: -2px;
   }
   a {
-    font-size: 1rem;
+    font-size: 0.85rem;
     //@include fluid-type($min_width, $max_width, $min_font, $max_font);
     padding-left: 0.3rem;
     padding-right: 0.3rem;
     color: #000;
     margin-top: 8px;
     width: -moz-max-content;
+    width: -o-max-content;
+    width: -ms-max-content;
+    width: -webkit-max-content;
     width: max-content;
     &:hover {
       color: $main_color;

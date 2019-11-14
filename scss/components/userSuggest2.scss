@@ -17,7 +17,11 @@
     display: block;
     margin: auto;
     width: -moz-max-content;
+    width: -o-max-content;
+    width: -ms-max-content;
+    width: -webkit-max-content;
     width: max-content;
+    max-width: 6rem;
     padding: 2px;
     text-align: center;
     border-radius: 10rem;

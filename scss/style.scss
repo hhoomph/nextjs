@@ -77,6 +77,72 @@ $enable-gradients: true;
 body {
   background-color: #f5f5f5;
 }
+// .over_flow::-webkit-scrollbar {
+//   -webkit-border-radius: 10px;
+//   border-radius: 10px;
+//   position: relative;
+//   -ms-touch-action: none;
+//   background: rgba(0, 0, 0, .1)
+// }
+// .over_flow::-webkit-scrollbar-track {
+//   -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+// }
+// .over_flow::-webkit-scrollbar-thumb {
+//   background-color: #F57C00;
+//   outline: 1px solid slategrey;
+// }
+// 
+// digikala scrollbar style
+// .swiper-pagination-lock {
+//   display: none
+// }
+// .swiper-scrollbar {
+//   -webkit-border-radius: 10px;
+//   border-radius: 10px;
+//   position: relative;
+//   -ms-touch-action: none;
+//   background: rgba(0, 0, 0, .1)
+// }
+// .swiper-container-horizontal>.swiper-scrollbar {
+//   position: absolute;
+//   left: 1%;
+//   bottom: 3px;
+//   z-index: 50;
+//   height: 5px;
+//   width: 98%
+// }
+// .swiper-container-vertical>.swiper-scrollbar {
+//   position: absolute;
+//   right: 3px;
+//   top: 1%;
+//   z-index: 50;
+//   width: 5px;
+//   height: 98%
+// }
+// .swiper-scrollbar-drag {
+//   height: 100%;
+//   width: 100%;
+//   position: relative;
+//   background: rgba(0, 0, 0, .5);
+//   -webkit-border-radius: 10px;
+//   border-radius: 10px;
+//   left: 0;
+//   top: 0
+// }
+// .swiper-scrollbar-cursor-drag {
+//   cursor: move
+// }
+// .swiper-scrollbar-lock {
+//   display: none
+// }
+// .over_flow::-webkit-scrollbar, .cat_product_row .cat_sort ul.nav::-webkit-scrollbar {
+//   height: 2px;
+//   -webkit-border-radius: 10px;
+//   border-radius: 10px;
+//   position: relative;
+//   -ms-touch-action: none;
+//   background: rgba(0, 0, 0, .1)
+// }
 .container {
   background-color: #ffffff;
 }
@@ -94,7 +160,10 @@ body {
   color: #ffffff;
   border-radius: 15px;
   width: -moz-max-content;
-  min-width: max-content;
+  width: -o-max-content;
+  width: -ms-max-content;
+  width: -webkit-max-content;
+  width: max-content;
   padding-top: 5px;
   padding-bottom: 5px;
   padding-right: 20px;

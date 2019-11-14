@@ -15,7 +15,7 @@ const UserSuggest = props => {
   return (
     <div className="container user_Suggestion">
       <div className="row">
-        <div className="col pt-1">
+        <div className="col p-0 pt-1">
           <div className="d-flex justify-content-start rtl over_flow">{renderUsers}</div>
         </div>
       </div>

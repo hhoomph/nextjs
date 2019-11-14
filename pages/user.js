@@ -11,7 +11,7 @@ const Category = dynamic({
   ssr: true
 });
 function Page(props) {
-  //console.log(props.result);
+  console.log(props.result);
   const profileData = props.result.data || [];
   return (
     <>

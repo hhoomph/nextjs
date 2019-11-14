@@ -283,7 +283,7 @@ function Page(props) {
   }
   const scrollToFocused = e => {
     let offset = e.target.offsetTop;
-    console.log('eTarg:', offset);
+    //console.log('eTarg:', offset);
     initialOffset = document.documentElement.scrollTop;
     document.documentElement.scrollTop = offset - 10;
   };
@@ -384,7 +384,7 @@ function Page(props) {
                   </div>
                   <div className="form-group row">
                     <label htmlFor="price" className="col-sm-2 col-form-label">
-                      قیمت 
+                      قیمت
                     </label>
                     <input
                       value={price}
@@ -401,7 +401,7 @@ function Page(props) {
                   </div>
                   <div className="form-group row">
                     <label htmlFor="discount" className="col-sm-2 col-form-label">
-                      تخفیف 
+                      تخفیف
                     </label>
                     <input
                       value={discount}
