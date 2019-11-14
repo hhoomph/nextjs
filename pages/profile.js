@@ -116,6 +116,22 @@ Page.getInitialProps = async function(context) {
     },
     context
   );
-  return { result };
+  let userProducts = [];
+  if (result.isSuccess) {
+    const products = await fetchData(
+      'User/U_Product/UserProduct',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          userId: result.data.id,
+          categoryId: 1,
+          page: 1,
+          pageSize: 10
+        })
+      },
+      context
+    );
+  }
+  return { result, userProducts };
 };
 export default Auth(Page);
