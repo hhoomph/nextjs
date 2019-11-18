@@ -2,59 +2,31 @@ import React, { Fragment, useState, useEffect, memo } from 'react';
 import Link from '../Link';
 import { IoIosMore } from 'react-icons/io';
 import '../../scss/components/categoriesRow.scss';
-const Category = (props) => {
-  const renderCatLi = () => {
-      return (
-        <>
-          <li className="nav-item">
-            <Link href="/category/" passHref>
-              <a className="nav-link active">سوپر مارکت</a>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link href="/category/" passHref>
-              <a className="nav-link">رستوران و فست فود</a>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link href="/category/" passHref>
-              <a className="nav-link">نان و شیرینی</a>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link href="/category/" passHref>
-              <a className="nav-link">سوپر مارکت</a>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link href="/category/" passHref>
-              <a className="nav-link">رستوران و فست فود</a>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link href="/category/" passHref>
-              <a className="nav-link">نان و شیرینی</a>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link href="/category/" passHref>
-              <a className="nav-link">سوپر مارکت</a>
-            </Link>
-          </li>
-        </>
-      );
-    // }
-  };
+const Category = props => {
+  const showCats = props.categories.map(cat => (
+    <li key={cat.id} className="nav-item user_cats">
+      <a
+        className={props.catActive == cat.id ? `nav-link active` : `nav-link`}
+        id={cat.id}
+        onClick={() => {
+          props.setCatActive(cat.id);
+          //props.setPage(1);
+        }}
+      >
+        {cat.titel}
+      </a>
+    </li>
+  ));
   return (
     <ul className="nav">
-      {renderCatLi()}
-      <li className="nav-item">
+      {showCats}
+      {/* <li className="nav-item">
         <Link href="/categories" passHref>
           <a className="more nav-link">
             <IoIosMore />
           </a>
         </Link>
-      </li>
+      </li> */}
     </ul>
   );
 };

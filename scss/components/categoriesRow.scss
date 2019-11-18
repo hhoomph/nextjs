@@ -12,18 +12,20 @@
     margin-bottom: -2px;
   }
   a {
+    cursor: pointer;
     font-size: 0.85rem;
     //@include fluid-type($min_width, $max_width, $min_font, $max_font);
     padding-left: 0.3rem;
     padding-right: 0.3rem;
     color: #000;
     margin-top: 8px;
+    margin-left: 6px;
     width: -moz-max-content;
     width: -o-max-content;
     width: -ms-max-content;
     width: -webkit-max-content;
     width: max-content;
-    &:hover {
+    &:hover, &:active{
       color: $main_color;
     }
     &.active {
@@ -43,6 +45,15 @@
     }
   }
   .more {
+  }
+}
+.categories{
+  .user_cats{
+    a {
+      &:hover, &:active{
+        color: $main_color;
+      }
+    }
   }
 }
 @media screen and (min-width: 992px) {

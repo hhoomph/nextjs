@@ -1,42 +1,126 @@
-import React, { Fragment, useContext, useRef, useEffect } from "react";
-import dynamic from "next/dynamic";
-import Loading from "../components/Loader/Loading";
-import fetchData from "../utils/fetchData";
-import Nav from "../components/Nav/Nav";
-import UserHeader from "../components/Head/userHeader";
-import Product from "../components/Profile/product";
+import React, { Fragment, useContext, useReducer, useState, useRef, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+import Loading from '../components/Loader/Loading';
+import fetchData from '../utils/fetchData';
+import Nav from '../components/Nav/Nav';
+import UserHeader from '../components/Head/userHeader';
+import Product from '../components/Profile/product';
+import { UserProductsContext } from '../context/context';
+import { userProductsReducer } from '../context/reducer';
 const Category = dynamic({
-  loader: () => import("../components/CatProductsRow/Category"),
+  loader: () => import('../components/profile/Category'),
   loading: () => <Loading />,
   ssr: true
 });
 function Page(props) {
-  console.log(props.result);
   const profileData = props.result.data || [];
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [isFetching, setIsFetching] = useState(false);
+  const productsData = props.userProducts.data.model || [];
+  const [userProducts, userProductsDispatch] = useReducer(userProductsReducer, productsData);
+  const userCategories = props.userCategories.data || [];
+  const [catActive, setCatActive] = useState(userCategories.length > 1 ? userCategories[0].id : null);
+  //console.log(profileData, props.userProducts, userCategories);
+  const showProducts = userProducts.map(product => (
+    <Product
+      key={product.productId}
+      id={product.productId}
+      profile={false}
+      isDisable={product.isDisable}
+      price={product.price}
+      oldPrice={product.lastPrice}
+      image={product.picture !== undefined && product.picture !== null ? `https://api.qaroon.ir/${product.picture}` : 'static/img/no-product-image.png'}
+    />
+  ));
+  const getUserProduct = async () => {
+    setLoading(true);
+    const result = await fetchData(
+      'User/U_Product/UserProduct',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          userId: profileData.id,
+          categoryId: catActive,
+          page: page,
+          pageSize: 6
+        })
+      },
+      props.ctx
+    );
+    if (result.isSuccess) {
+      userProductsDispatch({ type: 'add', payload: result.data.model });
+      setTimeout(() => setIsFetching(false), 200);
+      setPage(page + 1);
+    } else if (result.message != undefined) {
+      setTimeout(() => setIsFetching(false), 200);
+    } else if (result.error != undefined) {
+      setTimeout(() => setIsFetching(false), 200);
+    }
+    setLoading(false);
+  };
+  const getUserProductFromCat = async () => {
+    setLoading(true);
+    const result = await fetchData(
+      'User/U_Product/UserProduct',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          userId: profileData.id,
+          categoryId: catActive,
+          page: 1,
+          pageSize: 6
+        })
+      },
+      props.ctx
+    );
+    if (result.isSuccess) {
+      userProductsDispatch({ type: 'refresh', payload: [] });
+      userProductsDispatch({ type: 'refresh', payload: result.data.model });
+      setPage(2);
+    }
+    setLoading(false);
+  };
+  function handleScroll() {
+    if (window.pageYOffset + 350 > window.innerHeight && !isFetching) {
+      setIsFetching(true);
+    } else {
+      return;
+    }
+  }
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  useEffect(() => {
+    if (!isFetching) return;
+    getUserProduct();
+  }, [isFetching]);
+  useEffect(() => {
+    getUserProductFromCat();
+  }, [catActive]);
   return (
-    <>
+    <UserProductsContext.Provider value={userProductsDispatch}>
       <Nav />
       <UserHeader profileData={profileData} userOnline={true} />
       <div className="container mb-1 cat_product_row">
         <div className="row">
           <div className="col">
             <div className="row d-flex justify-content-start rtl pr-2 categories">
-              <Category />
+              <Category categories={userCategories} catActive={catActive} setCatActive={setCatActive} setPage={setPage} />
             </div>
           </div>
         </div>
       </div>
       <div className="container mb-5 pb-3 pt-3">
-        <div className="row d-flex justify-content-start rtl products">
-          <Product id={1} basket={true} showPrice={false} price={120000} oldPrice={"140000"} image={"product.png"} />
-          <Product id={2} basket={true} showPrice={false} price={140000} image={"product3.png"} />
-          <Product id={3} basket={true} showPrice={false} price={120000} image={"product2.png"} />
-          <Product id={4} basket={true} showPrice={false} price={130000} image={"product.png"} />
-          <Product id={5} basket={true} showPrice={false} price={120000} image={"product3.png"} />
-          <Product id={6} basket={true} showPrice={false} price={110000} oldPrice={"120000"} image={"product2.png"} />
-        </div>
+        <div className="row d-flex justify-content-start rtl profile_products">{showProducts}</div>
+        {loading && (
+          <div style={{ display: 'block !important', width: '100%', height: '40px', textAlign: 'center', marginTop: '0.1rem' }}>
+            <Loading />
+          </div>
+        )}
       </div>
-    </>
+    </UserProductsContext.Provider>
   );
 }
 Page.getInitialProps = async function(context) {
@@ -44,14 +128,30 @@ Page.getInitialProps = async function(context) {
   const result = await fetchData(
     `User/U_Account/OtherUserProfile/${id}`,
     {
-      method: "GET"
-      // body: JSON.stringify({
-      //   username: id
-      // })
+      method: 'GET'
     },
     context
   );
-  //console.log(result);
-  return { result };
+  const userProducts = await fetchData(
+    'User/U_Product/UserProduct',
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        userId: id,
+        categoryId: 1,
+        page: 1,
+        pageSize: 10
+      })
+    },
+    context
+  );
+  const userCategories = await fetchData(
+    'User/U_Product/CategoiesHaveProduct',
+    {
+      method: 'GET'
+    },
+    context
+  );
+  return { result, userProducts, userCategories };
 };
 export default Page;

@@ -14,10 +14,13 @@ function Page(props) {
             <div className="row d-flex justify-content-start rtl pt-4">
               <div className="col-12 text-center page_title">
                 <h2>تماس با ما</h2>
-                <hr/>
+                <hr />
               </div>
               <div className="col-12 mt-3">
-                <p className="content_text">تماس با ما</p>
+                <p className="content_text">آدرس : قم - خیابان معلم - مجتمع ناشران - واحد 309</p>
+                <p className="content_text">تلفن : 02537730041</p>
+                <p className="content_text">همراه : 09301502230</p>
+                <p className="content_text">ایمیل : info@qarun.ir</p>
               </div>
             </div>
           </div>

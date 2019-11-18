@@ -5,6 +5,7 @@ import { FiGrid } from 'react-icons/fi';
 import { FaShoppingBasket, FaRegUserCircle } from 'react-icons/fa';
 import { ReactComponent as HomeSvg } from '../../public/static/svg/home.svg';
 import { ReactComponent as MenuSvg } from '../../public/static/svg/menu.svg';
+import { ReactComponent as HeartGray } from '../../public/static/svg/insta/heart-gray.svg';
 import { ReactComponent as UserSvg } from '../../public/static/svg/profile.svg';
 import { ReactComponent as AddSvg } from '../../public/static/svg/plus.svg';
 import { ReactComponent as SearchSvg } from '../../public/static/svg/search.svg';
@@ -85,6 +86,7 @@ const Nav = props => {
           <Link href="/category" passHref>
             <a className="nav_Icons">
               <MenuSvg className="svg_Icons" />
+              {/* <HeartGray className="svg_Icons" /> */}
             </a>
           </Link>
           <Link href="/" passHref>
