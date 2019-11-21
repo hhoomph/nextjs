@@ -1,4 +1,4 @@
-@import '../vars';
+@import "../vars";
 .top_nav {
   padding: 0;
   padding-left: 5.5%;
@@ -62,6 +62,11 @@
       color: #a8a8a8;
       text-align: center;
     }
+    // .search_input::-ms-input-placeholder {
+    //   padding-right: 16px;
+    //   color: #a8a8a8;
+    //   text-align: center;
+    // }
     .search_inline {
       margin-top: -29px;
       color: #a8a8a8;
@@ -102,7 +107,7 @@
       }
     }
     &.active:after {
-      content: '';
+      content: "";
       // display: block;
       width: 52%;
       margin: auto;

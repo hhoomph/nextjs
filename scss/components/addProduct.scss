@@ -1,4 +1,4 @@
-@import '../vars';
+@import "../vars";
 .add_product {
   padding-top: 3.5rem;
   padding-bottom: 50px;
@@ -158,6 +158,9 @@
         box-shadow: none;
       }
       &::placeholder {
+        color: #bbbbbb;
+      }
+      &::-ms-input-placeholder {
         color: #bbbbbb;
       }
     }

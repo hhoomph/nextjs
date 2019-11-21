@@ -1,4 +1,4 @@
-@import '../vars';
+@import "../vars";
 .login_header {
   background: #fff;
   clip-path: ellipse(80% 89% at 50% 10%);
@@ -61,6 +61,15 @@
       }
     }
   }
+  .btn-submit {
+    background: #fff;
+    color: #646464;
+    border: none;
+    &:hover {
+      animation: shadow_drop 0.8s both;
+      animation-iteration-count: infinite;
+    }
+  }
   input {
     background: rgba(255, 255, 255, 0.309804);
     direction: ltr;
@@ -69,6 +78,11 @@
     border: none;
     height: 46px;
     &::placeholder {
+      color: #fff;
+      text-align: center;
+      font-size: 1rem;
+    }
+    &::-ms-input-placeholder {
       color: #fff;
       text-align: center;
       font-size: 1rem;

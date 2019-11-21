@@ -77,14 +77,14 @@ const Header = props => {
       <div className="container profile_header">
         <div className="row">
           <div className="col-6 pl-4 d-flex">
-            <Link href="/" passHref>
+            <Link href="" passHref>
               <a className="nav_Icons active">
                 <AddUserSvg className="svg_Icons" />
               </a>
             </Link>
           </div>
           <div className="col-6 pr-4 d-flex justify-content-end">
-            <Link href="/" passHref>
+            <Link href="" passHref>
               <a className="nav_Icons">
                 <SendSvg className="svg_Icons" />
               </a>

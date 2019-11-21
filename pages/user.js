@@ -1,14 +1,14 @@
-import React, { Fragment, useContext, useReducer, useState, useRef, useEffect } from 'react';
-import dynamic from 'next/dynamic';
-import Loading from '../components/Loader/Loading';
-import fetchData from '../utils/fetchData';
-import Nav from '../components/Nav/Nav';
-import UserHeader from '../components/Head/userHeader';
-import Product from '../components/Profile/product';
-import { UserProductsContext } from '../context/context';
-import { userProductsReducer } from '../context/reducer';
+import React, { Fragment, useContext, useReducer, useState, useRef, useEffect } from "react";
+import dynamic from "next/dynamic";
+import Loading from "../components/Loader/Loading";
+import fetchData from "../utils/fetchData";
+import Nav from "../components/Nav/Nav";
+import UserHeader from "../components/Head/userHeader";
+import Product from "../components/Profile/product";
+import { UserProductsContext } from "../context/context";
+import { userProductsReducer } from "../context/reducer";
 const Category = dynamic({
-  loader: () => import('../components/profile/Category'),
+  loader: () => import("../components/profile/Category"),
   loading: () => <Loading />,
   ssr: true
 });
@@ -17,7 +17,10 @@ function Page(props) {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
-  const productsData = props.userProducts.data.model || [];
+  const productsData =
+    props.userProducts.data !== undefined && props.userProducts.data.model !== undefined
+      ? props.userProducts.data.model
+      : [];
   const [userProducts, userProductsDispatch] = useReducer(userProductsReducer, productsData);
   const userCategories = props.userCategories.data || [];
   const [catActive, setCatActive] = useState(userCategories.length > 1 ? userCategories[0].id : null);
@@ -30,15 +33,19 @@ function Page(props) {
       isDisable={product.isDisable}
       price={product.price}
       oldPrice={product.lastPrice}
-      image={product.picture !== undefined && product.picture !== null ? `https://api.qaroon.ir/${product.picture}` : 'static/img/no-product-image.png'}
+      image={
+        product.picture !== undefined && product.picture !== null
+          ? `https://api.qaroon.ir/${product.picture}`
+          : "static/img/no-product-image.png"
+      }
     />
   ));
   const getUserProduct = async () => {
     setLoading(true);
     const result = await fetchData(
-      'User/U_Product/UserProduct',
+      "User/U_Product/UserProduct",
       {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({
           userId: profileData.id,
           categoryId: catActive,
@@ -49,7 +56,7 @@ function Page(props) {
       props.ctx
     );
     if (result.isSuccess) {
-      userProductsDispatch({ type: 'add', payload: result.data.model });
+      userProductsDispatch({ type: "add", payload: result.data.model });
       setTimeout(() => setIsFetching(false), 200);
       setPage(page + 1);
     } else if (result.message != undefined) {
@@ -62,9 +69,9 @@ function Page(props) {
   const getUserProductFromCat = async () => {
     setLoading(true);
     const result = await fetchData(
-      'User/U_Product/UserProduct',
+      "User/U_Product/UserProduct",
       {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({
           userId: profileData.id,
           categoryId: catActive,
@@ -74,9 +81,9 @@ function Page(props) {
       },
       props.ctx
     );
-    if (result.isSuccess) {
-      userProductsDispatch({ type: 'refresh', payload: [] });
-      userProductsDispatch({ type: 'refresh', payload: result.data.model });
+    if (result !== undefined && result.isSuccess) {
+      userProductsDispatch({ type: "refresh", payload: [] });
+      userProductsDispatch({ type: "refresh", payload: result.data.model });
       setPage(2);
     }
     setLoading(false);
@@ -89,8 +96,8 @@ function Page(props) {
     }
   }
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   useEffect(() => {
     if (!isFetching) return;
@@ -107,7 +114,12 @@ function Page(props) {
         <div className="row">
           <div className="col">
             <div className="row d-flex justify-content-start rtl pr-2 categories">
-              <Category categories={userCategories} catActive={catActive} setCatActive={setCatActive} setPage={setPage} />
+              <Category
+                categories={userCategories}
+                catActive={catActive}
+                setCatActive={setCatActive}
+                setPage={setPage}
+              />
             </div>
           </div>
         </div>
@@ -115,7 +127,15 @@ function Page(props) {
       <div className="container mb-5 pb-3 pt-3">
         <div className="row d-flex justify-content-start rtl profile_products">{showProducts}</div>
         {loading && (
-          <div style={{ display: 'block !important', width: '100%', height: '40px', textAlign: 'center', marginTop: '0.1rem' }}>
+          <div
+            style={{
+              display: "block !important",
+              width: "100%",
+              height: "40px",
+              textAlign: "center",
+              marginTop: "0.1rem"
+            }}
+          >
             <Loading />
           </div>
         )}
@@ -128,14 +148,14 @@ Page.getInitialProps = async function(context) {
   const result = await fetchData(
     `User/U_Account/OtherUserProfile/${id}`,
     {
-      method: 'GET'
+      method: "GET"
     },
     context
   );
   const userProducts = await fetchData(
-    'User/U_Product/UserProduct',
+    "User/U_Product/UserProduct",
     {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({
         userId: id,
         categoryId: 1,
@@ -155,9 +175,9 @@ Page.getInitialProps = async function(context) {
   // );
   // Get All Categories
   const userCategories = await fetchData(
-    'Common/C_Category/GetAllParentAsync',
+    "Common/C_Category/GetAllParentAsync",
     {
-      method: 'GET'
+      method: "GET"
     },
     context
   );

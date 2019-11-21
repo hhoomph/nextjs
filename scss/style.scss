@@ -1,81 +1,31 @@
 $enable-gradients: true;
-@import './vars';
-@import './animation.scss';
-@import './bootstrap.scss';
-@import './font.scss';
-// style for test component
-.layout {
-  margin: 20px;
-  padding: 20px;
-  border: 1px solid #ddd;
-}
-.circle_img {
-  border-radius: 50px;
-}
-.App_header {
-  background-color: #141e30;
-  background: $lawn_gradient;
-  min-height: 15vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-.App-logo {
-  animation: spinner infinite 1s linear;
-  height: 10vmin;
-  pointer-events: none;
-}
-.Counter_App {
-  text-align: center;
-  background-color: #141e30;
-  background: $lawn_gradient;
-  background-size: 400% 400%;
-  animation: Gradient 8s both ease;
-  animation-iteration-count: infinite;
-  color: white;
-  min-height: 50vmin;
-}
-.Todos_App {
-  text-align: center;
-  background-color: #37244c;
-  color: white;
-  min-height: 50vmin;
-}
-.App-link {
-  color: #61dafb;
-}
-.Badge_Counter {
-  font-size: 1.2rem !important;
-}
-.App_row {
-  width: 50%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  justify-items: center;
-  margin: auto;
-}
-.add_input::placeholder {
-  color: #ba68c8;
-  opacity: 0.5;
-}
-.fade-enter {
-  opacity: 0;
-  z-index: 1;
-}
-.fade-enter.fade-enter-active {
-  opacity: 1;
-  transition: opacity 250ms ease-in;
-}
-// End of style for test component
+@import "./vars";
+@import "./animation.scss";
+@import "./bootstrap.scss";
+@import "./font.scss";
 .hidden {
   display: none;
 }
 body {
   background-color: #f5f5f5;
+}
+@media only screen and (orientation: landscape) {
+  // html {
+  //   height: 100vw;
+  //   transform: rotate(90deg);
+  // }
+  // html {
+  //   transform: rotate(90deg);
+  //   transform-origin: right top;
+  //   width: 100vh;
+  //   height: 100vw;
+  //   overflow-x: hidden;
+  //   position: absolute;
+  //   top: 100%;
+  //   bottom: 0;
+  //   right: 0;
+  //   bottom: 0;
+  // }
 }
 // .over_flow::-webkit-scrollbar {
 //   -webkit-border-radius: 10px;
@@ -91,7 +41,7 @@ body {
 //   background-color: #F57C00;
 //   outline: 1px solid slategrey;
 // }
-// 
+//
 // digikala scrollbar style
 // .swiper-pagination-lock {
 //   display: none
@@ -135,14 +85,19 @@ body {
 // .swiper-scrollbar-lock {
 //   display: none
 // }
-// .over_flow::-webkit-scrollbar, .cat_product_row .cat_sort ul.nav::-webkit-scrollbar {
+// .over_flow::-webkit-scrollbar,
+// .cat_product_row .cat_sort ul.nav::-webkit-scrollbar {
 //   height: 2px;
 //   -webkit-border-radius: 10px;
 //   border-radius: 10px;
 //   position: relative;
 //   -ms-touch-action: none;
-//   background: rgba(0, 0, 0, .1)
+//   background: rgba(0, 0, 0, 0.1);
 // }
+.over_flow,
+.cat_product_row .cat_sort ul.nav {
+  scrollbar-width: thin;
+}
 .container {
   background-color: #ffffff;
 }
@@ -193,7 +148,7 @@ body {
   .Toastify__toast-body,
   .Toastify__toast {
     direction: rtl !important;
-    font-family: 'IranSans', sans-serif !important;
+    font-family: "IranSans", sans-serif !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: right;

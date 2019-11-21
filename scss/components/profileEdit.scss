@@ -1,4 +1,4 @@
-@import '../vars';
+@import "../vars";
 .edit_profile {
   padding-top: 100px;
   padding-bottom: 0;
@@ -75,6 +75,9 @@
         box-shadow: none;
       }
       &::placeholder {
+        color: #bbbbbb;
+      }
+      &::-ms-input-placeholder {
         color: #bbbbbb;
       }
     }

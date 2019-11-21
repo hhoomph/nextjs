@@ -5,16 +5,13 @@
 }
 .user_Suggestion {
   .userClass {
-    // width: 20vw;
-    // width: 20%;
-    // padding: 0.7rem;
     width: 23%;
-    padding: 0.4rem;
+    padding: 0.35rem;
     padding-right: 0;
     padding-left: 0;
     margin: auto;
     margin-right: 0.1rem;
-    margin-left: 0.5rem;
+    margin-left: 0rem;
   }
   .over_flow {
     overflow: hidden;
@@ -48,6 +45,9 @@
   }
   .self_user .user_link {
     padding: 2px;
+  }
+  .self_user .user_link img{
+    width: 18vw;
   }
   .user_Suggest_name {
     font-size: 0.75rem;

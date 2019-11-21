@@ -29,7 +29,7 @@ const FirstCatProductsRow = props => {
       },
       props.ctx
     );
-    if (GetMarketAroundInCategory.isSuccess) {
+    if (GetMarketAroundInCategory !== undefined && GetMarketAroundInCategory.isSuccess) {
       setProducts(GetMarketAroundInCategory.data);
       if (GetMarketAroundInCategory.data.length <= 0) {
         setHide(true);

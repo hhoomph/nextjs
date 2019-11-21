@@ -102,7 +102,7 @@ function App(props) {
       },
       props.ctx
     );
-    if (getUserFollowers.isSuccess) {
+    if (getUserFollowers !== undefined && getUserFollowers.isSuccess) {
       const allUsers = suggestionUsers.concat(getUserFollowers.data);
       // Remove duplicate Users in array with id
       const res = [];
@@ -131,7 +131,9 @@ function App(props) {
   } else if (process) {
     //console.log('node');
   }
-  const showFirstCatProductsRow = allCategories.map(cat => <FirstCatProductsRow key={cat.id} id={cat.id} title={cat.titel} />);
+  const showFirstCatProductsRow = allCategories.map(cat => (
+    <FirstCatProductsRow key={cat.id} id={cat.id} title={cat.titel} />
+  ));
   return (
     <CartCountContext.Provider value={cartCountDispatch}>
       <IndexHeader cartCount={cartCount} />

@@ -1,0 +1,25 @@
+{
+  "icons": [
+    {
+      "src": "/static/img/splash.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "density": "1"
+    }
+  ],
+  "name": "Qarun",
+  "display": "standalone",
+  "short_name": "Qarun",
+  "lang": "fa",
+  "dir": "rtl",
+  "description": "Qarun Web App",
+  "scope": "/",
+  "start_url": "/",
+  "background_color": "#FFFFFF",
+  "theme_color": "#f96d01",
+  "version": "0.1",
+  "manifest_version": "0.1",
+  "orientation": "portrait",
+  "permissions": ["notifications", "webRequest"],
+  "author": "Sepehran Co."
+}
