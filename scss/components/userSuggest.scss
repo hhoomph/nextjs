@@ -1,4 +1,8 @@
-@import '../vars';
+@import "../vars";
+@font-face {
+  font-family: "morvarid";
+  src: url("/static/font/morvarid.ttf") format("TrueType");
+}
 .user_Suggestion {
   .userClass {
     // width: 20vw;
@@ -8,6 +12,8 @@
     padding: 0.4rem;
     padding-right: 0;
     padding-left: 0;
+    margin: auto;
+    margin-right: 0.1rem;
     margin-left: 0.5rem;
   }
   .over_flow {
@@ -34,14 +40,17 @@
     display: block;
     border-radius: 10rem;
     background: $circleUser_gradient;
-    padding: 2px;
+    padding: 1px;
     &:hover {
       animation: shadow_drop infinite 0.35s ease-out;
       background: $main_gradient;
     }
   }
+  .self_user .user_link {
+    padding: 2px;
+  }
   .user_Suggest_name {
-    font-size: .75rem;
+    font-size: 0.75rem;
     text-align: center;
     align-self: center;
     padding: 0;
@@ -54,6 +63,159 @@
     //width: 13.6vw;
     width: 17vw;
     padding: 0;
+  }
+}
+.first_user_suggest {
+  h2 {
+    font-family: "morvarid";
+    font-size: 1.6rem;
+    color: #424242;
+    @media screen and (min-width: 992px) {
+      font-size: 2rem;
+      padding-top: 2px;
+    }
+  }
+  .intro_text {
+    font-size: 3.2vw;
+    color: #757575;
+    @media screen and (min-width: 992px) {
+      font-size: 1.1rem;
+    }
+  }
+  .user {
+    margin: 0;
+    padding: 0;
+    .user_frame {
+      text-align: center;
+      width: 38.8vw;
+      max-height: 64vw;
+      height: auto;
+      padding: 10px 0 0;
+      padding-bottom: 1rem;
+      box-shadow: 0 0 2px 0 #b1b1b1;
+      border-radius: 4px;
+      transition: all 0.2s ease-in-out;
+      position: relative;
+      margin: 4% auto auto;
+      &:hover {
+        background: #f5f5f5;
+      }
+      .user_link {
+        width: 100%;
+        height: 100%;
+        display: block;
+        margin: auto;
+        max-width: 5.5rem;
+        img {
+          width: 100%;
+          height: auto;
+          display: block;
+          margin: auto;
+          border-radius: 12rem;
+        }
+      }
+      .user_follow {
+        cursor: pointer;
+        z-index: 9;
+        //background-color: #fe9102;
+        transition: all 0.2s ease-in-out;
+        position: relative;
+        border-radius: 4px;
+        text-align: center;
+        width: 85%;
+        margin: auto;
+        height: 2rem;
+        display: flex;
+        justify-content: center;
+        align-self: center;
+        &:hover {
+          // animation: shadow_drop 1s both;
+          // animation-iteration-count: infinite;
+          //background-color: #fabb05;
+          .svg_Icons {
+            fill: #ffe500;
+          }
+          p {
+            color: #000000;
+          }
+        }
+        .btn-main {
+          cursor: pointer;
+          border-radius: 4px;
+          &:hover,
+          &:active {
+            animation: shadow_drop 1s both;
+            animation-iteration-count: infinite;
+          }
+          .spinner-border {
+            width: 1.3rem;
+            height: 1.3rem;
+          }
+        }
+        .unfollow {
+          background: #757575;
+        }
+        p,
+        .btn-main {
+          display: block;
+          margin: auto;
+          font-size: 0.8rem;
+          color: #fff;
+          text-align: center;
+        }
+        .svg_Icons {
+          position: absolute;
+          position: relative;
+          font-size: 6vw;
+          fill: #fff;
+          display: flex;
+          justify-content: center;
+          align-self: center;
+        }
+      }
+      .user_close {
+        cursor: pointer;
+        position: absolute;
+        right: 2px;
+        top: 2px;
+        font-size: 1rem;
+        color: #757575;
+        transition: all ease-in-out 0.2s;
+        img {
+          border-radius: 8rem;
+          width: 10vw;
+        }
+        &:active {
+          animation: blink 1s both;
+          animation-iteration-count: infinite;
+        }
+      }
+      .user_text {
+        direction: rtl;
+        position: relative;
+        text-align: center;
+        font-size: 0.75rem;
+        margin-top: 1rem;
+        p {
+          padding: 0;
+          margin: 0;
+        }
+        .user_name {
+          font-weight: bold;
+          min-height: 18px;
+        }
+        .user_display_name {
+          font-weight: normal;
+          min-height: 18px;
+        }
+      }
+      @media screen and (min-width: 992px) {
+        width: 13vw;
+        .user_link {
+          max-width: 6.5rem;
+        }
+      }
+    }
   }
 }
 @media screen and (min-width: 1000px) {
@@ -74,7 +236,7 @@
     width: 5.5vw !important;
   }
 }
-@media screen and (min-width: 680px) and (max-width:770px) {
+@media screen and (min-width: 680px) and (max-width: 770px) {
   .user_Suggestion .userClass {
     width: 24% !important;
   }

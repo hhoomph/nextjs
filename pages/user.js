@@ -145,8 +145,17 @@ Page.getInitialProps = async function(context) {
     },
     context
   );
+  // Get user's Categories
+  // const userCategories = await fetchData(
+  //   'User/U_Product/CategoiesHaveProduct',
+  //   {
+  //     method: 'GET'
+  //   },
+  //   context
+  // );
+  // Get All Categories
   const userCategories = await fetchData(
-    'User/U_Product/CategoiesHaveProduct',
+    'Common/C_Category/GetAllParentAsync',
     {
       method: 'GET'
     },

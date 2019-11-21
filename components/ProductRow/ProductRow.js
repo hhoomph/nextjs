@@ -1,9 +1,9 @@
-import React, { Fragment, useState, useEffect, memo } from 'react';
-import Link from '../Link';
-import Product from './Product';
-import fetchData from '../../utils/fetchData';
-import Loading from '../Loader/Loading';
-import '../../scss/components/productRow.scss';
+import React, { Fragment, useState, useEffect, memo } from "react";
+import Link from "../Link";
+import Product from "./Product";
+import fetchData from "../../utils/fetchData";
+import Loading from "../Loader/Loading";
+import "../../scss/components/productRow.scss";
 const ProductsRow = props => {
   const [products, setProducts] = useState(props.products);
   const [loading, setLoading] = useState(false);
@@ -12,9 +12,9 @@ const ProductsRow = props => {
   const getProducts = async () => {
     setLoading(true);
     const FriendsMarket = await fetchData(
-      'User/U_Product/FriendsMarket',
+      "User/U_Product/FriendsMarket",
       {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({
           page: page,
           pageSize: 6
@@ -47,15 +47,16 @@ const ProductsRow = props => {
     setLoading(false);
   };
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   useEffect(() => {
     if (!isFetching) return;
     getProducts();
   }, [isFetching]);
   function handleScroll() {
-    if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isFetching) return;
+    if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isFetching)
+      return;
     // console.log(page)
     // setPage(page + 1);
     setIsFetching(true);
@@ -66,7 +67,10 @@ const ProductsRow = props => {
     // }
   }
   const renderProducts = products.map(product => {
-    const productThumbNail = product.pictures[0] != undefined ? `https://api.qaroon.ir/${product.pictures[0].thumbNail}` : '/static/img/no-product-image.png';
+    const productThumbNail =
+      product.pictures[0] != undefined
+        ? `https://api.qaroon.ir/${product.pictures[0].thumbNail}`
+        : "/static/img/no-product-image.png";
     return (
       <Product
         key={product.id}
@@ -84,9 +88,20 @@ const ProductsRow = props => {
   return (
     <div className="container mt-1 mb-5 p-0 pb-5">
       <div className="row rtl product_row">
+        <div className="col-12 mt-2 cat_title">
+          <h3>دوستان</h3>
+        </div>
         {renderProducts}
         {loading && (
-          <div style={{ display: 'block !important', width: '100%', height: '40px', textAlign: 'center', marginTop: '0.1rem' }}>
+          <div
+            style={{
+              display: "block !important",
+              width: "100%",
+              height: "40px",
+              textAlign: "center",
+              marginTop: "0.1rem"
+            }}
+          >
             <Loading />
           </div>
         )}

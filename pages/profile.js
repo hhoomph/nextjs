@@ -31,6 +31,7 @@ function Page(props) {
   const userCategories = props.userCategories.data || [];
   const [catActive, setCatActive] = useState(userCategories.length > 1 ? userCategories[0].id : null);
   //console.log(profileData, props.userProducts, userCategories);
+  console.log(profileData)
   const showProducts = userProducts.map(product => (
     <Product
       key={product.productId}

@@ -1,6 +1,33 @@
-@import '../vars';
+@import "../vars";
 .product_row {
   margin: auto;
+  .cat_title {
+    margin-bottom: -0.5rem;
+    padding-right: 0.5rem;
+    h3 {
+      color: #424242;
+      font-size: 1.2rem;
+      margin: 0;
+      padding-top: 0.3rem;
+      float: right;
+      font-family: morvarid;
+    }
+    .more {
+      cursor: pointer;
+      margin: 0;
+      padding: 0;
+      width: auto;
+      height: auto;
+      min-width: 0;
+      border: none;
+      line-height: initial;
+      float: left;
+      display: block;
+      color: #ee944f;
+      font-size: 1rem;
+      text-decoration: none;
+    }
+  }
   .product {
     display: flex;
     justify-content: center;
@@ -22,8 +49,8 @@
       border: 1px solid #e4e4e4;
       //border-radius: 5px;
       border-radius: 8px;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
       box-shadow: 0px 0px 4px 0px #e6e6e6;
       transition: all ease-in-out 0.2s;
       &:hover {
@@ -128,38 +155,23 @@
   }
   @media screen and (min-width: 992px) {
     .product {
-      padding-right: 1rem;
+      //padding-right: 1rem;
     }
     .product_frame {
-      width: 235px !important;
-      height: 260px !important;
-      padding: 20px !important;
+      width: inherit;
+      max-width: 226px;
+      height: 340px !important;
       .product_link {
         img {
-          width: 8.5rem !important;
-          height: 12rem !important;
+          width: 224px !important;
+          height: 280px !important;
+          max-width: 26rem !important;
+          max-height: 30rem !important;
         }
       }
-      // .product_basket {
-      //   right: 50px !important;
-      //   top: 100px !important;
-      //   border-radius: 50px;
-      //   text-align: center;
-      //   width: 45px !important;
-      //   height: 45px !important;
-      //   margin: auto !important;
-      //   p {
-      //     display: none;
-      //   }
-      //   .svg_Icons {
-      //     font-size: 1.8rem !important;
-      //     top: 4px !important;
-      //     right: 8px !important;
-      //   }
-      // }
       .product_user {
-        right: 34px !important;
-        top: 12px !important;
+        // right: 34px !important;
+        // top: 12px !important;
         img {
           width: 65px !important;
         }

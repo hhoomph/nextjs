@@ -1,14 +1,14 @@
-import React, { Fragment, useState, useEffect, memo } from 'react';
-import Link from '../Link';
-import Category from './Category';
-import Sort from './Sort';
-import Product from './Product';
-import fetchData from '../../utils/fetchData';
-import Loading from '../Loader/Loading';
-import '../../scss/components/catProductsRow.scss';
+import React, { Fragment, useState, useEffect, memo } from "react";
+import Link from "../Link";
+import Category from "./Category";
+import Sort from "./Sort";
+import Product from "./Product";
+import fetchData from "../../utils/fetchData";
+import Loading from "../Loader/Loading";
+import "../../scss/components/catProductsRow.scss";
 const CatProductsRow = props => {
   const [products, setProducts] = useState(props.products);
-  const [sortFilter, setSortFilter] = useState('New');
+  const [sortFilter, setSortFilter] = useState("New");
   const handleSort = sortType => {
     setSortFilter(sortType);
   };
@@ -16,9 +16,9 @@ const CatProductsRow = props => {
   const getProducts = async () => {
     setLoading(true);
     let GetMarketAround = await fetchData(
-      'User/U_Product/GetMarketAround',
+      "User/U_Product/GetMarketAround",
       {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({
           filters: sortFilter,
           categoryId: 1,
@@ -44,13 +44,16 @@ const CatProductsRow = props => {
   const renderProducts = () => {
     if (loading) {
       return (
-        <div style={{ display: 'block !important', width: '100%', height: '40px', textAlign: 'center' }}>
+        <div style={{ display: "block !important", width: "100%", height: "40px", textAlign: "center" }}>
           <Loading />
         </div>
       );
     } else {
       const productsElements = products.map(product => {
-        const productThumbNail = product.pictures[0] != undefined ? `https://api.qaroon.ir/${product.pictures[0].thumbNail}` : '/static/img/no-product-image.png';
+        const productThumbNail =
+          product.pictures[0] != undefined
+            ? `https://api.qaroon.ir/${product.pictures[0].thumbNail}`
+            : "/static/img/no-product-image.png";
         return (
           <Product
             key={product.id}
@@ -94,6 +97,12 @@ const CatProductsRow = props => {
         <div className="col">
           {/* <div className="row d-flex justify-content-start rtl pr-2 categories"> <Category /></div> */}
           <div className="row d-flex justify-content-center rtl pr-1 mb-3 cat_sort">
+            <div className="col-12 mt-2 cat_title">
+              <h3>اطراف</h3>
+              <Link href={``} passHref>
+                <a className="more">بیشتر</a>
+              </Link>
+            </div>
             <Sort handleSort={handleSort} />
           </div>
           <div className="row d-flex justify-content-start rtl products">

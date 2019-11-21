@@ -11,7 +11,7 @@ const UserSuggest = props => {
   const width = WindowsWidth();
   const userClass = width > 992 ? 'col-1' : 'col-3';
   const res = useContext(AppContext);
-  const renderUsers = users.map(user => <User key={user.id} id={user.id} userName={user.userName} alt={user.displayName} image={`https://api.qaroon.ir/${user.userAvatar}`} />);
+  const renderUsers = users.map(user => <User key={user.id} id={user.id} userName={user.userName} alt={user.displayName} image={`https://api.qaroon.ir/${user.userAvatar}`} self={user.self} />);
   return (
     <div className="container user_Suggestion">
       <div className="row">
