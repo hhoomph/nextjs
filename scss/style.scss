@@ -9,6 +9,16 @@ $enable-gradients: true;
 body {
   background-color: #f5f5f5;
 }
+* {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+// Hide ScrollBar in Mobile Size
+@media only screen and (max-width: 800px) {
+  *::-webkit-scrollbar {
+    height: 1px;
+  }
+}
 @media only screen and (orientation: landscape) {
   // html {
   //   height: 100vw;

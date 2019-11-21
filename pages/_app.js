@@ -1,13 +1,13 @@
-import React, { useReducer } from 'react';
-import App from 'next/app';
-import Head from 'next/head';
-import fetchData from '../utils/fetchData';
-import nextCookie from 'next-cookies';
-import cookie from 'js-cookie';
-import { CartCountContext } from '../context/context';
-import { cartCountReduser } from '../context/reducer';
-import getHost from '../utils/get-host';
-import '../scss/style.scss';
+import React, { useReducer } from "react";
+import App from "next/app";
+import Head from "next/head";
+import fetchData from "../utils/fetchData";
+import nextCookie from "next-cookies";
+import cookie from "js-cookie";
+import { CartCountContext } from "../context/context";
+import { cartCountReduser } from "../context/reducer";
+import getHost from "../utils/get-host";
+import "../scss/style.scss";
 class MyApp extends App {
   static async getInitialProps({ Component, router, ctx }) {
     let pageProps = {};
@@ -28,7 +28,7 @@ class MyApp extends App {
     // } else if (GetCartCount !== undefined && GetCartCount.message != undefined) {
     // } else if (GetCartCount !== undefined && GetCartCount.error != undefined) {
     // }
-    if (router.route !== '/login') {
+    if (router.route !== "/login") {
       //console.log(router);
     }
     return { pageProps };
@@ -43,7 +43,12 @@ class MyApp extends App {
   componentWillUnmount() {}
   render() {
     const { Component, pageProps } = this.props;
-    return <Component {...pageProps} />;
+    return (
+      <>
+        <title>قارون</title>
+        <Component {...pageProps} />
+      </>
+    );
   }
 }
 export default MyApp;

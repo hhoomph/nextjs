@@ -7,6 +7,7 @@ import Loading from "../components/Loader/Loading";
 import IndexHeader from "../components/Head/IndexHeader";
 import { CartCountContext } from "../context/context";
 import { cartCountReduser } from "../context/reducer";
+import Modal from "react-bootstrap/Modal";
 // Use AMP
 // import { useAmp } from 'next/amp';
 // export const config = { amp: 'hybrid' };
@@ -127,7 +128,20 @@ function App(props) {
     //console.log('browser');
     //screen.orientation.lock("portrait-primary");
     //screen.orientation.lock("portrait");
-    //screen.lockOrientation("portrait");
+    let deferredPrompt;
+    window.addEventListener("beforeinstallprompt", e => {
+      deferredPrompt = e;
+      deferredPrompt.prompt();
+      // Wait for the user to respond to the prompt
+      deferredPrompt.userChoice.then(choiceResult => {
+        if (choiceResult.outcome === "accepted") {
+          console.log("User accepted the A2HS prompt");
+        } else {
+          console.log("User dismissed the A2HS prompt");
+        }
+        deferredPrompt = null;
+      });
+    });
   } else if (process) {
     //console.log('node');
   }
@@ -150,10 +164,6 @@ function App(props) {
           <ProductsRow products={FriendsMarket} />
         </>
       )}
-      {/* <UserSuggest users={Following} /> */}
-      {/* <CatProductsRow products={GetMarketAround} /> */}
-      {/* <Banners /> */}
-      {/* <ProductsRow products={FriendsMarket} /> */}
     </CartCountContext.Provider>
   );
 }

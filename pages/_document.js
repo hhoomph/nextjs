@@ -15,8 +15,8 @@ class MyDocument extends Document {
           <meta name="mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="description" content="App created for test development" />
-          <link rel="manifest" href="manifest.json" />
-          <link rel="shortcut icon" href="favicon.ico" />
+          <link rel="manifest" href="../manifest.json" />
+          <link rel="shortcut icon" href="../favicon.ico" />
           <meta name="theme-color" content="#f96d01" />
           <meta httpEquiv="ScreenOrientation" content="autoRotate:disabled" />
         </Head>
