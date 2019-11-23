@@ -197,6 +197,13 @@
     span[aria-label="انتخاب کنید"] {
       color: #a9a9a9;
     }
+    .rrs__option.rrs__option--next-selection {
+      background: #fbf6f1;
+      color: #fa6e62;
+    }
+    .rrs__option:hover {
+      color: #ef6c00;
+    }
     @media screen and (max-width: 768px) {
       .rrs--options-visible .rrs__options {
         max-height: none;

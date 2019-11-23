@@ -17,7 +17,7 @@ export const isJSON = str => {
 };
 // Add comma Separator to digit number
 export const numberSeparator = (num, sep) => {
-  let number = removeSeparator(num).toString(),
+  let number = fixNumbers(removeSeparator(num).toString()),
     separator = typeof sep === 'undefined' ? ',' : sep;
   return number.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + separator);
 };

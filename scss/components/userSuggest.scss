@@ -38,15 +38,21 @@
     border-radius: 10rem;
     background: $circleUser_gradient;
     padding: 1px;
+    margin-left: 20px;
+    margin-right: 0;
     &:hover {
       animation: shadow_drop infinite 0.35s ease-out;
       background: $main_gradient;
     }
   }
+  .self_user {
+    margin-right: 6px;
+    margin-left: 2px;
+  }
   .self_user .user_link {
     padding: 2px;
   }
-  .self_user .user_link img{
+  .self_user .user_link img {
     width: 18vw;
   }
   .user_Suggest_name {
@@ -67,8 +73,8 @@
 }
 .first_user_suggest {
   h2 {
-    font-family: "morvarid";
-    font-size: 1.6rem;
+    //font-family: "morvarid";
+    font-size: 1.1rem;
     color: #424242;
     @media screen and (min-width: 992px) {
       font-size: 2rem;

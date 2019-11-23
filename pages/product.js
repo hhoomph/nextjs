@@ -11,6 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { FaPlus, FaRegComment, FaRegHeart, FaEllipsisV } from 'react-icons/fa';
 import { FiShare2 } from 'react-icons/fi';
 import { ReactComponent as MenuDotsSvg } from '../public/static/svg/menu-dots.svg';
+import { numberSeparator, removeSeparator, forceNumeric } from '../utils/tools';
 // import { ReactComponent as ShareSvg } from '../public/static/svg/share.svg';
 // import { ReactComponent as CommentSvg } from '../public/static/svg/comment.svg';
 // import { ReactComponent as HeartSvg } from '../public/static/svg/heart-red.svg';
@@ -139,7 +140,7 @@ function Page(props) {
               <p className="text-right product_name">{productData.title || ''}</p>
             </div>
             <div className="col-12 rtl">
-              <span className="price_title"> قیمت :</span> <span className="price">{productData.lastPrice || ''} تومان</span> <span className="price_old">{productData.price || ''} تومان</span>
+              <span className="price_title"> قیمت :</span> <span className="price">{numberSeparator(productData.lastPrice) || ''} تومان</span> <span className="price_old">{numberSeparator(productData.price) || ''} تومان</span>
             </div>
             <div className="col-12 mt-1 text-center">
               <SubmitButton loading={loading} onClick={addToCart} text="افزودن به سبد خرید" className="d-inline-block btn-main">

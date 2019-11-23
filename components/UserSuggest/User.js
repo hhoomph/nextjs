@@ -7,7 +7,7 @@ const User = props => {
   return props.self ? (
     <div className="userClass self_user">
       <Link href={`/activity`} passHref>
-        <a className="mr-2 user_link">
+        <a className="user_link">
           <img src={props.image} alt={props.alt} className="rounded-circle img-thumbnail" />
         </a>
       </Link>
@@ -16,7 +16,7 @@ const User = props => {
   ) : (
     <div className="userClass">
       <Link href={`/user/${props.userName}`} passHref>
-        <a className="mr-2 user_link">
+        <a className="user_link">
           <img src={props.image} alt={props.alt} className="rounded-circle img-thumbnail" />
         </a>
       </Link>

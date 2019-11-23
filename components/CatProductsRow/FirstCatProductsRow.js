@@ -82,7 +82,7 @@ const FirstCatProductsRow = props => {
               <h3>{props.title}</h3>
               {more && (
                 <Link href={`category/${props.id}`} passHref>
-                  <a className="more">بیشتر</a>
+                  <a className="more">همه</a>
                 </Link>
               )}
             </div>
