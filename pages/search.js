@@ -5,15 +5,20 @@ import fetch from 'isomorphic-unfetch';
 import nextCookie from 'next-cookies';
 import cookie from 'js-cookie';
 import Nav from '../components/Nav/Nav';
-import MapHeader from '../components/Head/mapHeader';
 import UserSuggest from '../components/UserSuggest/UserSuggest2';
 import '../scss/components/mapPage.scss';
 import { ToastContainer, toast } from 'react-toastify';
+import { FaGripLines } from 'react-icons/fa';
 import 'react-toastify/scss/main.scss';
 const MapComponent = dynamic({
   loader: () => import('../components/Map/Map'),
   loading: () => <Loading />,
   ssr: false
+});
+const MapHeader = dynamic({
+  loader: () => import('../components/Head/mapHeader'),
+  loading: () => <Loading />,
+  ssr: true
 });
 const Page = props => {
   toast.configure({
@@ -24,6 +29,7 @@ const Page = props => {
     pauseOnHover: true,
     draggable: true
   });
+  const [view, setView] = useState(1);
   const [searchValue, setSearchValue] = useState('');
   const handleSearchChange = e => {
     setSearchValue(e.current.value);
@@ -33,15 +39,19 @@ const Page = props => {
     return (
       <>
         <Nav />
-        <MapHeader searchValue={searchValue} handleSearchChange={handleSearchChange} />
+        <MapHeader setView={setView} searchValue={searchValue} handleSearchChange={handleSearchChange} />
         <div className="container mb-1 rtl p-0 mapContainer">
           <MapComponent id="map_id" searchValue={searchValue} />
         </div>
         <div className="container mb-1 rtl">
           <div className="row">
-            <div className="d-flex justify-content-center pr-2 map_user_suggestion">
+            <div className="col-12 d-flex justify-content-center pt-0 scroller_div">
+              <FaGripLines className="font-icon scroller_line" />
+            </div>
+            <div className="col-12 d-flex justify-content-center p-0 pt-4 map_user_suggestion">
+              {/* <FaGripLines className="font-icon scroller_line" /> */}
               <UserSuggest id="1" image="user.png" />
-              <UserSuggest id="2" image="profile.png" />
+              <UserSuggest id="2" active={true} image="profile.png" />
               <UserSuggest id="3" image="user.png" />
               <UserSuggest id="4" image="profile.png" />
               <UserSuggest id="5" image="user.png" />
@@ -60,9 +70,13 @@ const Page = props => {
         <div className="container mb-1 rtl mapContainer justify-content-center p-0">نقشه پشتیبانی نمی شود</div>
         <div className="container mb-1 rtl">
           <div className="row">
-            <div className="col d-flex justify-content-start pr-2 map_user_suggestion">
+            <div className="col-12 d-flex justify-content-center pt-0 scroller_div">
+              <FaGripLines className="font-icon scroller_line" />
+            </div>
+            <div className="col-12 d-flex justify-content-start pt-4 map_user_suggestion">
+              {/* <FaGripLines className="font-icon scroller_line" /> */}
               <UserSuggest id="1" image="user.png" />
-              <UserSuggest id="2" image="profile.png" />
+              <UserSuggest id="2" active={true} image="profile.png" />
               <UserSuggest id="3" image="user.png" />
               <UserSuggest id="4" image="profile.png" />
               <UserSuggest id="5" image="user.png" />

@@ -7,9 +7,9 @@ import AppContext from '../../context/context';
 import '../../scss/components/userSuggest2.scss';
 const UserSuggest = props => {
   const width = WindowsWidth();
-  const userClass = width > 992 ? 'p-2 text-center col-2' : 'p-2 text-center col-4';
+  const userClass = width > 992 ? 'p-2 text-center col-2 user_div' : 'p-2 text-center col-4 user_div';
   return (
-    <div className={userClass}>
+    <div className={userClass + (props.active ? ' active' : '')}>
       <Link href={`/user/${props.id}`} passHref>
         <a className="user_link">
           <img src={`/static/img/${props.image}`} alt="" className="rounded-circle img-thumbnail" />

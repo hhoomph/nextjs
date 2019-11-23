@@ -1,54 +1,70 @@
 @import '../vars';
-.mapContainer{
-  height: 65vh;
+.mapContainer {
+  height: 62vh;
 }
 .map_header {
-	position: absolute;
-	z-index: 999;
-	padding: 10px;
-	width: 80%;
-	top: 20px;
-	right: 10%;
-	left: 10%;
-	.svg_icon {
-		width: 2rem;
-		fill: #000;
-		cursor: pointer;
-		transition: all ease-in-out 0.2s;
-		&:hover {
-			animation: shake_bottom 0.8s both;
-			animation-iteration-count: infinite;
-			fill: #fc874c;
-		}
-	}
-	.menu {
-		width: 1.6rem;
-		float: right;
-		margin-top: 5px;
-	}
-	.microphone {
-		float: left;
-	}
-	.searchInput {
-		direction: rtl;
-		float: none;
+  position: absolute;
+  z-index: 999;
+  padding: 10px;
+  overflow-x: hidden;
+  .svg_icon {
+    width: 2rem;
+    fill: #000;
+    cursor: pointer;
+    transition: all ease-in-out 0.2s;
+    &:hover {
+      animation: shake_bottom 0.8s both;
+      animation-iteration-count: infinite;
+      fill: #fc874c;
+    }
+  }
+  .menu {
+    width: 1.6rem;
+    float: right;
+    margin-top: 5px;
+  }
+  .microphone {
+    float: left;
+  }
+  .searchInput {
+    direction: rtl;
     border: none;
-    padding-top: 3px;
-		width: 70%;
-		max-width: 400px;
-		text-align: center;
-		display: inline-block;
-		margin: auto;
-	}
-	@media screen and (min-width: 992px) {
-		width: 80%;
-		top: 120px;
-		right: 10%;
-		left: 10%;
-	}
+    text-align: right;
+  }
+  .font_icon {
+    font-size: 1.2rem;
+    font-weight: lighter;
+    color: #616161;
+    margin-left: 6px;
+  }
+  // @media screen and (min-width: 992px) {
+  // 	width: 80%;
+  // 	top: 120px;
+  // 	right: 10%;
+  // 	left: 10%;
+  // }
+}
+.scroller_div {
+  background: #FAFAFA;
+  position: relative;
+  z-index: 1000;
+  width: 97%;
+  max-width: 97%;
+  margin: auto;
+  border-radius: 8px;
+  .scroller_line {
+    font-size: 1.5rem;
+    color: #BDBDBD;
+    z-index: 1010;
+    position: absolute;
+    right: 45%;
+    left: auto;
+    //top: -3px;
+    border-radius: 150px;
+  }
 }
 @media screen and (min-width: 1280px) {
-  .mapContainer{
+  .mapContainer {
     height: 62vh;
   }
 }

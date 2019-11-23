@@ -167,7 +167,7 @@ const MapComponent = props => {
   };
   return (
     <div id="map_id">
-      <Map closePopupOnClick={true} animate={true} center={markPosition.length > 1 ? markPosition : position} zoom={15} maxZoom={18} ref={mapRef} onLocationfound={handleLocationFound}>
+      <Map closePopupOnClick={true} animate={true} center={markPosition.length > 1 ? markPosition : position} zoom={17} maxZoom={18} ref={mapRef} onLocationfound={handleLocationFound}>
         <TileLayer attribution="Qarun" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {currentMarker()}
         <Marker position={position} icon={myIcon} draggable={false}>

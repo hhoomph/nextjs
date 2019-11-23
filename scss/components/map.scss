@@ -1,8 +1,10 @@
 #map_id {
-  height: 65vh;
+  //height: 65vh;
+  height: 100vh;
   position: relative;
   width: 100%;
   overflow: hidden;
+  z-index: 9;
 }
 #map_2 {
   height: 30vh;
@@ -17,6 +19,9 @@
 .leaflet-top {
   top: auto !important;
   bottom: 10px !important;
+}
+.leaflet-control-zoom{
+  display: none;
 }
 .leaflet-marker-icon {
   margin-left: -36px !important;

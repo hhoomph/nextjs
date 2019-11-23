@@ -73,7 +73,7 @@ const Nav = props => {
               <UserSvg className="svg_Icons" />
             </a>
           </Link>
-          <Link href="/map" passHref>
+          <Link href="/search" passHref>
             <a className="nav_Icons">
               <SearchSvg className="svg_Icons" transform="rotate(90)" />
             </a>

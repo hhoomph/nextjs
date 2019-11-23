@@ -2,7 +2,24 @@
 .map_user_suggestion {
   flex-flow: row;
   overflow: auto;
-  height: 25vh;
+  height: 125vh;
+  background: #FAFAFA;
+  //position: relative;
+  z-index: 999;
+  width: 97%;
+  max-width: 97%;
+  margin: auto;
+  border-radius: 8px;
+  top: auto;
+  position: absolute;
+  right: 1.5%;
+  transition: all ease-in-out 0.2s;
+  .user_div {
+    background: #fff;
+    height: auto;
+    max-height: 176px;
+    margin-left: 1%;
+  }
   .more {
     font-size: 2em;
     color: $topIcon_color;
@@ -22,7 +39,7 @@
     width: -webkit-max-content;
     width: max-content;
     max-width: 6rem;
-    padding: 2px;
+    padding: 1px;
     text-align: center;
     border-radius: 10rem;
     transition: all ease-in-out 0.2s;
@@ -34,7 +51,7 @@
       width: 4.5em;
       padding: 0;
       background: white;
-      padding: 2px;
+      padding: 1px;
       transition: all ease-in-out 0.2s;
       &:hover {
         background: $main_gradient;
@@ -44,8 +61,12 @@
   .user_name {
     font-size: 0.9rem;
     text-align: center;
-    margin-bottom: 0 !important;
-    min-height: 35px;
+    // margin-bottom: 0 !important;
+    // min-height: 35px;
+    text-align: center;
+    margin: 0!important;
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
   }
   .follow {
     color: #fff !important;
@@ -54,6 +75,20 @@
     padding-bottom: 4px;
     padding-top: 4px;
   }
+  .user_div.active {
+    .user_link {
+      margin-top: -4px;
+      padding: 2px;
+      img {
+        width: 5em !important;
+        padding: 0;
+      }
+    }
+  }
+}
+.map_user_suggestion.top {
+  transition: all ease-in-out 0.2s;
+  top: -180px;
 }
 @media screen and (max-width: 500px) {
   .map_user_suggestion {
