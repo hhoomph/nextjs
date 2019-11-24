@@ -2,7 +2,7 @@
 .map_user_suggestion {
   flex-flow: row;
   overflow: auto;
-  height: 125vh;
+  height: 40vh;
   background: #FAFAFA;
   //position: relative;
   z-index: 999;
@@ -11,9 +11,10 @@
   margin: auto;
   border-radius: 8px;
   top: auto;
-  position: absolute;
-  right: 1.5%;
-  transition: all ease-in-out 0.2s;
+  // position: absolute;
+  // right: 1.5%;
+  position: relative;
+  transition: all ease-in-out 0.1s;
   .user_div {
     background: #fff;
     height: auto;
@@ -28,6 +29,10 @@
     &:hover {
       color: $main_color;
     }
+  }
+  .user_link_img {
+    max-height: 5.5rem;
+    min-height: 5rem;
   }
   .user_link {
     background: $circleUser_gradient;
@@ -59,14 +64,20 @@
     }
   }
   .user_name {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 600;
     text-align: center;
     // margin-bottom: 0 !important;
     // min-height: 35px;
     text-align: center;
-    margin: 0!important;
-    margin-top: 5px !important;
-    margin-bottom: 5px !important;
+    margin: 0 !important;
+    margin-top: 4px !important;
+    margin-bottom: 1px !important;
+  }
+  .display_name {
+    font-size: 0.75rem;
+    margin: 0 !important;
+    margin-bottom: 4px !important;
   }
   .follow {
     color: #fff !important;
@@ -87,13 +98,13 @@
   }
 }
 .map_user_suggestion.top {
-  transition: all ease-in-out 0.2s;
+  //transition: all ease-in-out 0.2s;
   top: -180px;
 }
 @media screen and (max-width: 500px) {
-  .map_user_suggestion {
-    margin-bottom: 70px;
-  }
+  // .map_user_suggestion {
+  //   margin-bottom: 70px;
+  // }
 }
 @media screen and (max-width: 360px) {
   .map_user_suggestion .user_link img {

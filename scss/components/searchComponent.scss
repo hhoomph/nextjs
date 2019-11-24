@@ -1,0 +1,75 @@
+@import '../vars';
+.search_component {
+  top: 0;
+  border-bottom: 1px solid #E0E0E0;
+  ul.filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    li {
+      cursor: pointer;
+      font-size: 1.03rem;
+      color: #9E9E9E;
+      transition: all ease-in-out 0.2s;
+    }
+    li.active {
+      font-size: 1.1rem;
+      color: #212121;
+      border-bottom: 1px solid #616161;
+    }
+  }
+}
+.search_result {
+  ._txt {
+    font-size: 0.85rem;
+    padding-top: 8px;
+    .close {
+      cursor: pointer;
+      font-size: 0.9rem;
+      float: left;
+      margin-top: 4px;
+      color: #757575;
+      margin-left: 10px;
+    }
+  }
+  .product {
+    .link {
+      float: right;
+      cursor: pointer;
+      img {
+        width: auto;
+        height: auto;
+        max-width: 3rem;
+      }
+    }
+    .name {
+      display: inline-block;
+      margin-right: 1rem;
+      cursor: pointer;
+    }
+    .price {
+      display: block;
+      padding-right: 4rem;
+    }
+  }
+  .user {
+    .link {
+      float: right;
+      img {
+        width: auto;
+        height: auto;
+        max-width: 3rem;
+        border-radius: 10rem;
+      }
+    }
+    .name {
+      display: inline-block;
+      margin-right: 1rem;
+    }
+    .displayName {
+      display: block;
+      padding-right: 4rem;
+      font-size: 0.8rem;
+      color: #757575;
+    }
+  }
+}
