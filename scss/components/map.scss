@@ -20,7 +20,7 @@
   top: auto !important;
   bottom: 10px !important;
 }
-.leaflet-control-zoom{
+.leaflet-control-zoom {
   display: none;
 }
 .leaflet-marker-icon {
@@ -64,28 +64,30 @@
   display: none;
 }
 .current_location {
-  width: 3rem;
-  height: 3rem;
+  width: 2.6rem;
+  height: 2.6rem;
   border-radius: 100px;
   background: #fff;
   z-index: 1000;
   display: flex;
   position: absolute;
   top: auto;
-  bottom: 10px;
-  right: 10px;
+  //bottom: 10px;
+  bottom: 38vh;
+  right: 4px;
   left: auto;
   margin: auto;
   padding: 0;
   cursor: pointer;
   .svg_icon {
-    fill: #4caf50;
-    width: 1.9rem;
+    fill: #33691e;
+    width: 2rem;
     display: block;
     margin: auto;
     transition: all unset 0.3s;
-    &:hover {
-      fill: #0f7313;
+    &:hover,
+    &:active {
+      fill: #e65100;
     }
   }
 }
@@ -143,7 +145,7 @@
 }
 @media screen and (min-width: 1280px) {
   #map_id {
-    height: 62vh;
+    //height: 62vh;
   }
   #map_2 {
     height: 50vh;
@@ -415,7 +417,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 }
 /* general typography */
 .leaflet-container {
-  font: 12px/1.5 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 /* general toolbar styles */
 .leaflet-bar {
@@ -473,7 +475,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 /* zoom control */
 .leaflet-control-zoom-in,
 .leaflet-control-zoom-out {
-  font: bold 18px 'Lucida Console', Monaco, monospace;
+  font: bold 18px "Lucida Console", Monaco, monospace;
   text-indent: 1px;
 }
 .leaflet-touch .leaflet-control-zoom-in,
@@ -487,12 +489,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
   border-radius: 5px;
 }
 .leaflet-control-layers-toggle {
-  background-image: url('/static/img/layers.png');
+  background-image: url("/static/img/layers.png");
   width: 36px;
   height: 36px;
 }
 .leaflet-retina .leaflet-control-layers-toggle {
-  background-image: url('/static/img/layers-2x.png');
+  background-image: url("/static/img/layers-2x.png");
   background-size: 26px 26px;
 }
 .leaflet-touch .leaflet-control-layers-toggle {
@@ -664,7 +666,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .leaflet-oldie .leaflet-popup-tip {
   width: 24px;
   margin: 0 auto;
-  -ms-filter: 'progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)';
+  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
   filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
 }
 .leaflet-oldie .leaflet-popup-tip-container {
@@ -710,7 +712,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   pointer-events: none;
   border: 6px solid transparent;
   background: transparent;
-  content: '';
+  content: "";
 }
 /* Directions */
 .leaflet-tooltip-bottom {

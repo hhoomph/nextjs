@@ -12,11 +12,7 @@ const Header = props => {
           {/* <MenuSvg className="svg_icon menu" /> */}
           <input
             ref={searchInput}
-            // onChange={() => {
-            //   props.handleSearchChange(searchInput);
-            // }}
             onFocus={() => props.setView(2)}
-            value={props.searchValue}
             type="text"
             className="form-control searchInput"
             placeholder="دنبال چه هستید؟"

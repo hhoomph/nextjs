@@ -198,11 +198,21 @@
       color: #a9a9a9;
     }
     .rrs__option.rrs__option--next-selection {
-      background: #fbf6f1;
+      background: #fea73047;
       color: #fa6e62;
     }
     .rrs__option:hover {
       color: #ef6c00;
+    }
+    .rrs__option:active {
+      background: #fbe9e7;
+    }
+    .rrs__option {
+      margin: 0;
+      padding-right: 10px;
+      padding-left: 0;
+      padding-top: 5px;
+      padding-bottom: 10px;
     }
     @media screen and (max-width: 768px) {
       .rrs--options-visible .rrs__options {
