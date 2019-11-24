@@ -33,10 +33,14 @@
     text-align: right;
   }
   .font_icon {
+    cursor: pointer;
     font-size: 1.2rem;
     font-weight: lighter;
     color: #616161;
     margin-left: 6px;
+    &:hover,&:active{
+      color: #212121;
+    }
   }
   // @media screen and (min-width: 992px) {
   // 	width: 80%;

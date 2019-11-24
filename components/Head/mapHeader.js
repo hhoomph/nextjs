@@ -17,7 +17,7 @@ const Header = props => {
             className="form-control searchInput"
             placeholder="دنبال چه هستید؟"
           />
-          <FaSearch className="font_icon search_icon" />
+          <FaSearch className="font_icon search_icon" onClick={() => props.setView(2)} />
           {/* <MicroSvg className="svg_icon microphone" /> */}
         </div>
       </div>
