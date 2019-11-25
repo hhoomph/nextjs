@@ -24,9 +24,9 @@
   display: none;
 }
 .leaflet-marker-icon {
-  margin-left: -36px !important;
-  margin-top: -70px !important;
-  width: 5rem !important;
+  // margin-left: -28px !important;
+  // margin-top: -55px !important;
+  // width: 4rem !important;
   height: auto !important;
   border-radius: 100px;
   filter: invert(57%) sepia(90%) saturate(999%) hue-rotate(346deg) brightness(100%) contrast(100%);
@@ -35,9 +35,9 @@
   z-index: 999 !important;
 }
 .leaflet-marker-shadow {
-  margin-left: -20px !important;
-  margin-top: -66px !important;
-  width: 3rem !important;
+  // margin-left: -20px !important;
+  // margin-top: -66px !important;
+  // width: 3rem !important;
   height: auto !important;
 }
 .current_pos_marker {

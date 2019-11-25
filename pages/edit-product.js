@@ -1,13 +1,12 @@
 import React, { Fragment, useContext, useRef, useState, useEffect, memo } from 'react';
 import dynamic from 'next/dynamic';
 import Loading from '../components/Loader/Loading';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import Nav from '../components/Nav/Nav';
 import Auth from '../components/Auth/Auth';
 import fetchData from '../utils/fetchData';
-import { FaCheck, FaArrowLeft, FaArrowRight, FaTimes, FaPlus } from 'react-icons/fa';
+import { FaCheck, FaArrowLeft, FaArrowRight, FaTimes, FaEdit, FaPlus } from 'react-icons/fa';
 import { MdAddCircle, MdAddAPhoto } from 'react-icons/md';
-//import Select from "react-select";
 import { ToastContainer, toast } from 'react-toastify';
 import { numberSeparator, removeSeparator, forceNumeric } from '../utils/tools';
 import SubmitButton from '../components/Button/SubmitButton';
@@ -19,13 +18,12 @@ import '../scss/components/addProduct.scss';
 //import { setTimeout } from 'core-js';
 function Page(props) {
   const nextCtx = props.ctx;
+  const router = useRouter();
+  const { id } = router.query;
+  const productData = props.productData.data || [];
+  console.log(productData);
   const categories = props.result.data || [];
-  // const categoriesOptions = categories.map(category => {
-  //   return {
-  //     value: category.id,
-  //     label: category.titel
-  //   };
-  // });
+  const catId = categories.filter(c => c.titel == productData.category.replace(',', ''))[0].id;
   const categoriesOptions = categories.map(category => {
     return {
       value: category.id,
@@ -36,17 +34,21 @@ function Page(props) {
   });
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [discount, setDiscount] = useState('');
+  const [title, setTitle] = useState(productData.title || '');
+  const [description, setDescription] = useState(productData.description || '');
+  const [price, setPrice] = useState(numberSeparator(productData.lastPrice) || '');
+  const [discount, setDiscount] = useState(numberSeparator(productData.discount) || '');
   const [lat, setLat] = useState('');
   const [long, setLong] = useState('');
-  const [productId, setProductId] = useState(null);
-  const [categoryId, setCategoryId] = useState(null);
-  // const handleCategoryChange = selectedOption => {
-  //   setCategoryId(selectedOption);
-  // };
+  const [productId, setProductId] = useState(id);
+  const [categoryId, setCategoryId] = useState(
+    {
+      value: catId,
+      text: productData.category,
+      altered: true,
+      key: catId
+    } || null
+  );
   const handleCategorySelectChange = ({ text, value, altered }) => {
     setCategoryId({
       text,
@@ -145,18 +147,16 @@ function Page(props) {
           return;
         }
         blob.name = fileName;
-        //window.URL.revokeObjectURL(fileUrl);
-        //fileUrl = window.URL.createObjectURL(blob);
         resolve(blob);
       }, 'image/jpeg');
     });
   };
   // End Of Crop Image
-  const addProduct = async () => {
+  const editProduct = async () => {
     if (categoryId !== null && title != '') {
       setLoading(true);
       const result = await fetchData(
-        'User/U_Product/Add',
+        'User/U_Product/Edit',
         {
           method: 'POST',
           body: JSON.stringify({
@@ -166,40 +166,42 @@ function Page(props) {
             discount: parseInt(removeSeparator(discount), 10) >= 0 ? parseInt(removeSeparator(discount), 10) : 0,
             lat: null,
             long: null,
+            id: id,
             categoryId: categoryId ? categoryId.value : null,
-            hashtags: tags
-            //id: id
+            //hashtags: tags,
+            disabled: false
           })
         },
         nextCtx
       );
       if (result.isSuccess) {
-        setProductId(result.data.productId);
-        //toast.success('محصول شما با موفقیت ایجاد شد، لطفا تصویر محصول را انتخاب کنید.');
-        const suggestedPicturesResult = await fetchData('Common/C_Image/ProductSuggestedPictures', {
-          method: 'POST',
-          body: JSON.stringify({
-            categoryId: categoryId ? categoryId.value : null,
-            productTitle: title,
-            page: 1,
-            pageSize: 100
-          })
-        });
-        if (suggestedPicturesResult.isSuccess) {
-          const suggestedPictures = suggestedPicturesResult.data.map(picture => {
-            return {
-              id: picture.pictureId,
-              url: `https://api.qaroon.ir/${picture.picture}`,
-              thumbnail: `https://api.qaroon.ir/${picture.thumbNail}`,
-              active: false
-            };
-          });
-          if (suggestedPictures.length > 0) {
-            const all = uploadedImages.concat(suggestedPictures).sort((a, b) => a.id - b.id);
-            setUploadedImages(all);
-          }
-        }
-        setView(2);
+        setLoading(false);
+        // setProductId(result.data.productId);
+        // //toast.success('محصول شما با موفقیت ایجاد شد، لطفا تصویر محصول را انتخاب کنید.');
+        // const suggestedPicturesResult = await fetchData('Common/C_Image/ProductSuggestedPictures', {
+        //   method: 'POST',
+        //   body: JSON.stringify({
+        //     categoryId: categoryId ? categoryId.value : null,
+        //     productTitle: title,
+        //     page: 1,
+        //     pageSize: 100
+        //   })
+        // });
+        // if (suggestedPicturesResult.isSuccess) {
+        //   const suggestedPictures = suggestedPicturesResult.data.map(picture => {
+        //     return {
+        //       id: picture.pictureId,
+        //       url: `https://api.qaroon.ir/${picture.picture}`,
+        //       thumbnail: `https://api.qaroon.ir/${picture.thumbNail}`,
+        //       active: false
+        //     };
+        //   });
+        //   if (suggestedPictures.length > 0) {
+        //     const all = uploadedImages.concat(suggestedPictures).sort((a, b) => a.id - b.id);
+        //     setUploadedImages(all);
+        //   }
+        // }
+        // setView(2);
       } else if (result.message != undefined) {
         toast.warn(result.message);
       } else if (result.error != undefined) {
@@ -273,16 +275,12 @@ function Page(props) {
         onClick={() => toggleUploadedImages(index)}
       />
     ));
-  // useEffect(() => {
-  //   showUploadedImages();
-  // }, [uploadedImages]);
   const toggleUploadedImages = index => {
     const imgObject = uploadedImages.filter(image => uploadedImages.indexOf(image) == index)[0];
     imgObject.active = !imgObject.active;
     const otherImgObject = uploadedImages.filter(image => uploadedImages.indexOf(image) !== index);
     const all = otherImgObject.concat(imgObject).sort((a, b) => a.id - b.id);
     setUploadedImages(all);
-    //setUploadedImages([...otherImgObject, imgObject]);
   };
   const setProductImages = async () => {
     setLoading(true);
@@ -316,7 +314,6 @@ function Page(props) {
   }
   const scrollToFocused = e => {
     let offset = e.target.offsetTop;
-    //console.log('eTarg:', offset);
     initialOffset = document.documentElement.scrollTop;
     document.documentElement.scrollTop = offset - 10;
   };
@@ -334,9 +331,9 @@ function Page(props) {
           <div className="container mb-1 rtl add_product">
             <div className="row mb-3 p-2 header_link">
               <div className="col pt-2 text-center">
-                <a className="d-inline-block btn-main" onClick={() => addProduct()}>
-                  ادامه
-                  {loading ? <Loading className="font_icon" /> : <FaArrowLeft className="font_icon" />}
+                <a className="d-inline-block btn-main" onClick={() => editProduct()}>
+                  ویرایش
+                  {loading ? <Loading className="font_icon" /> : <FaEdit className="font_icon" />}
                 </a>
               </div>
             </div>
@@ -362,24 +359,6 @@ function Page(props) {
                     <label htmlFor="category" className="col-sm-2 col-form-label">
                       دسته بندی
                     </label>
-                    {/* <Select
-                      closeMenuOnSelect={true}
-                      isSearchable={true}
-                      instanceId={"id"}
-                      className="mt-1 mb-4 col-sm-10 p-0 react_select"
-                      value={categoryId}
-                      onChange={handleCategoryChange}
-                      options={categoriesOptions}
-                      placeholder="انتخاب کنید"
-                      theme={theme => ({
-                        ...theme,
-                        borderWidth: "thin",
-                        boxShadow: "0px 0px 2px 0px #FF5722 !important",
-                        colors: { ...theme.colors, primary25: "#ffd698", primary: "#ff9800" }
-                      })}
-                      onFocus={scrollToFocused}
-                      onBlur={scrollToFocusOut}
-                    /> */}
                     <RRS
                       id={categoryId !== null ? 'not_empty_select' : 'empty_select'}
                       noSelectionLabel={`انتخاب کنید`}
@@ -392,7 +371,7 @@ function Page(props) {
                       selectedValue={categoryId !== null ? categoryId.value : null}
                     />
                   </div>
-                  <div className="form-group row">
+                  {/* <div className="form-group row">
                     <label htmlFor="hashtags" className="col-sm-2 col-form-label">
                       هشتگ های مرتبط
                     </label>
@@ -415,12 +394,11 @@ function Page(props) {
                         ))}
                       </ul>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="form-group row">
                     <label htmlFor="email" className="col-sm-2 col-form-label">
                       توضیحات
                     </label>
-                    {/* <input type="text" id="description" className="form-control mt-1 mb-4  col-sm-10" placeholder="توضیحات" /> */}
                     <textarea
                       value={description}
                       onChange={e => setDescription(e.target.value)}
@@ -608,10 +586,8 @@ function Page(props) {
                     minHeight={800}
                   />
                 )}
-                {/* {croppedImageUrl && <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />} */}
               </Modal.Body>
               <Modal.Footer className="justify-content-center">
-                {/* <button onClick={() => setModalShow(false)}>بستن</button> */}
                 <button className="btn btn-success" onClick={() => uploadHandler()}>
                   بارگذاری{' '}
                 </button>
@@ -700,10 +676,8 @@ function Page(props) {
                     minHeight={800}
                   />
                 )}
-                {/* {croppedImageUrl && <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />} */}
               </Modal.Body>
               <Modal.Footer className="justify-content-center">
-                {/* <button onClick={() => setModalShow(false)}>بستن</button> */}
                 <button className="btn btn-success" onClick={() => uploadHandler()}>
                   بارگذاری{' '}
                 </button>
@@ -714,9 +688,6 @@ function Page(props) {
       );
       break;
     default:
-      // if (typeof window !== 'undefined') {
-      //   window.scroll(0, 0);
-      // }
       return (
         <>
           <Nav />
@@ -726,6 +697,14 @@ function Page(props) {
   }
 }
 Page.getInitialProps = async function(context) {
+  const { id } = context.query;
+  const productData = await fetchData(
+    `User/U_Product/ProductDetails?ProductId=${id}`,
+    {
+      method: 'GET'
+    },
+    context
+  );
   const result = await fetchData(
     'Common/C_Category/GetAllParentAsync',
     {
@@ -733,6 +712,6 @@ Page.getInitialProps = async function(context) {
     },
     context
   );
-  return { result };
+  return { result, productData };
 };
 export default Auth(Page);
