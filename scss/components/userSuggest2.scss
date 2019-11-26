@@ -1,9 +1,9 @@
-@import '../vars';
+@import "../vars";
 .map_user_suggestion {
   flex-flow: row;
   overflow: auto;
   height: 40vh;
-  background: #FAFAFA;
+  background: #fafafa;
   //position: relative;
   z-index: 999;
   width: 97%;
@@ -20,6 +20,7 @@
     height: auto;
     max-height: 176px;
     margin-left: 1%;
+    padding-top: 8px !important;
   }
   .more {
     font-size: 2em;
@@ -88,7 +89,7 @@
   }
   .user_div.active {
     .user_link {
-      margin-top: -4px;
+      margin-top: -2px;
       padding: 2px;
       img {
         width: 5em !important;

@@ -12,9 +12,10 @@ module.exports = withPlugins([withSass, withSize, withOffline], {
   poweredByHeader: false,
   // staticFolder: '/static',
   // distDir: 'build',
+  // transformManifest: manifest => ["/"].concat(manifest), // add the homepage to the cache
   // generateInDevMode: true,
   // workboxOpts: {
-  //   swDest: "static/service-worker.js",
+  //   swDest: 'static/service-worker.js',
   //   runtimeCaching: [
   //     {
   //       urlPattern: /^https?.*/,

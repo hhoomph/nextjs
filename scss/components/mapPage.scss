@@ -1,6 +1,6 @@
-@import '../vars';
+@import "../vars";
 .mapContainer {
-  height: 60vh;
+  height: 57vh;
 }
 .map_header {
   //position: absolute;
@@ -8,6 +8,7 @@
   z-index: 1001;
   padding: 10px;
   overflow-x: hidden;
+  border-bottom: 1px solid #F5F5F5;
   .svg_icon {
     width: 2rem;
     fill: #000;
@@ -38,7 +39,8 @@
     font-weight: lighter;
     color: #616161;
     margin-left: 6px;
-    &:hover,&:active{
+    &:hover,
+    &:active {
       color: #212121;
     }
   }
@@ -50,7 +52,7 @@
   // }
 }
 .scroller_div {
-  background: #FAFAFA;
+  background: #fafafa;
   position: relative;
   z-index: 1000;
   width: 97%;
@@ -59,14 +61,19 @@
   border-radius: 8px;
   .scroller_line {
     font-size: 1.5rem;
-    color: #BDBDBD;
+    color: #bdbdbd;
     z-index: 1010;
     position: absolute;
-    right: 45%;
+    right: 46.5%;
     left: auto;
     //top: -3px;
     border-radius: 150px;
   }
+}
+.categories_rows {
+  margin-top: -2vh;
+  position: relative;
+  z-index: 999;
 }
 @media screen and (min-width: 1280px) {
   .mapContainer {

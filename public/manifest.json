@@ -16,7 +16,7 @@
   "scope": "/",
   "start_url": "/",
   "background_color": "#FFFFFF",
-  "theme_color": "#f96d01",
+  "theme_color": "#FFFFFF",
   "version": "0.1",
   "manifest_version": "0.1",
   "orientation": "portrait",
