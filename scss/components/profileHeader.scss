@@ -1,4 +1,4 @@
-@import '../vars';
+@import "../vars";
 .profile_header {
   background-image: $main_gradient;
   clip-path: ellipse(80% 89% at 50% 10%);
@@ -112,6 +112,7 @@
     color: #f9854c;
     p {
       margin-bottom: 0.2rem;
+      cursor: pointer;
     }
     .inventory,
     .debt,

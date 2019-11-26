@@ -57,7 +57,7 @@ const Page = props => {
     const st = document.documentElement.scrollTop;
     const t = window.innerHeight - 75;
     const m = scrollButton.current.clientHeight;
-    console.log(st, t, m);
+    //console.log(st, t, m);
     // if (st >= lastScrollTop) {
     //   // downscroll code
     //   if (st > 22 && st < 450) {

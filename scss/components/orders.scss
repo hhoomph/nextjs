@@ -12,6 +12,17 @@
     a {
       cursor: pointer;
     }
+    .tab {
+      border-radius: 0.3rem;
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+      a {
+        padding: 0.3rem 0.3rem 0.5rem;
+      }
+    }
+    .tab.active {
+      background: #feaa2d;
+    }
   }
   .btn-main {
     color: #fff !important;

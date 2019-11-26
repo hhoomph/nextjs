@@ -1,12 +1,12 @@
-import React, { useState, useEffect, memo } from 'react';
-import Link from '../Link';
-import { FaShoppingBasket, FaRegUserCircle } from 'react-icons/fa';
-import { ReactComponent as MenuCircleSvg } from '../../public/static/svg/menu-circle.svg';
-import { ReactComponent as AddUserSvg } from '../../public/static/svg/add-user.svg';
-import { ReactComponent as PlusSvg } from '../../public/static/svg/plus.svg';
-import { Dropdown } from 'react-bootstrap';
-import '../../scss/components/profileHeader.scss';
-import Logout from '../Auth/Logout';
+import React, { useState, useEffect, memo } from "react";
+import Link from "../Link";
+import { FaShoppingBasket, FaRegUserCircle } from "react-icons/fa";
+import { ReactComponent as MenuCircleSvg } from "../../public/static/svg/menu-circle.svg";
+import { ReactComponent as AddUserSvg } from "../../public/static/svg/add-user.svg";
+import { ReactComponent as PlusSvg } from "../../public/static/svg/plus.svg";
+import { Dropdown } from "react-bootstrap";
+import "../../scss/components/profileHeader.scss";
+import Logout from "../Auth/Logout";
 const Header = props => {
   const {
     avatar,
@@ -27,8 +27,8 @@ const Header = props => {
   } = props.profileData;
   const avatarUrl = avatar !== undefined && avatar !== null ? `https://api.qaroon.ir/${avatar}` : null;
   const toggleMenu = () => {
-    const menuDiv = document.getElementById('profileMenu');
-    menuDiv.classList.toggle('hidden');
+    const menuDiv = document.getElementById("profileMenu");
+    menuDiv.classList.toggle("hidden");
   };
   const UserImage = () => {
     if (avatarUrl !== null) {
@@ -161,10 +161,12 @@ const Header = props => {
               <p>قرون</p>
               <p className="debt">{qerun ? `${qerun} ` : `0 `}</p>
             </div>
-            <div className="col-4 d-block text-center">
-              <p>سفارشات</p>
-              <p className="orders">{marketingAmount ? `${marketingAmount} ` : `0 `}</p>
-            </div>
+            <Link href="/orders" passHref>
+              <div className="col-4 d-block text-center">
+                <p>سفارشات</p>
+                <p className="orders">{marketingAmount ? `${marketingAmount} ` : `0 `}</p>
+              </div>
+            </Link>
           </div>
           <div className="col-12 pt-3">
             <h2 className="title">{displayName}</h2>

@@ -124,6 +124,23 @@
       height: 70%;
       fill: $bottomIcon_color;
     }
+    .badge {
+      position: absolute;
+      width: 6.5vw;
+      height: 6.5vw;
+      max-width: 2.5rem;
+      max-height: 2.5rem;
+      border-radius: 2rem;
+      font-size: 3.2vw;
+      font-weight: 100;
+      padding: 2px;
+      text-align: center;
+      line-height: 1.7;
+      top: 1vw;
+      left: 11vw;
+      color: #fff;
+      background-image: linear-gradient(90deg, #feaa2d, #fc884b 51%, #fa6966);
+    }
   }
 }
 .desktop_bottom {
