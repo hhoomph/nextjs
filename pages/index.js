@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import fetchData from "../utils/fetchData";
 import Nav from "../components/Nav/Nav";
 import Loading from "../components/Loader/Loading";
+import Auth from '../components/Auth/Auth';
 import IndexHeader from "../components/Head/IndexHeader";
 import { CartCountContext } from "../context/context";
 import { cartCountReduser } from "../context/reducer";
@@ -41,7 +42,7 @@ const ProductsRow = dynamic({
   loading: () => <Loading />,
   ssr: true
 });
-function App(props) {
+function Page(props) {
   let Following = props.Following.data || [];
   const noFriends = Following.length <= 0 ? true : false;
   const GetMarketAround = props.GetMarketAround.data || [];
@@ -167,7 +168,7 @@ function App(props) {
     </CartCountContext.Provider>
   );
 }
-App.getInitialProps = async function(context) {
+Page.getInitialProps = async function(context) {
   // Get Current User Info
   const Profile = await fetchData(
     "User/U_Account/Profile",
@@ -228,4 +229,4 @@ App.getInitialProps = async function(context) {
   );
   return { Following, GetMarketAround, FriendsMarket, cartData, Profile, allCategories };
 };
-export default App;
+export default Auth(Page);
