@@ -75,8 +75,8 @@ function Page(props) {
   const getUserFromMarketAround = () => {
     const userFromMarketAround = GetMarketAround.map(market => {
       const user = {
-        displayName: "",
-        id: Date.now(),
+        displayName: market.sellerDisplayName,
+        id: market.sellerId,
         isFollowed: false,
         phoneNumber: "",
         qerun: "",

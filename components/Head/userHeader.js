@@ -1,5 +1,6 @@
 import React, { useState, useEffect, memo } from 'react';
 import Link from '../Link';
+import Router from 'next/router';
 import fetchData from '../../utils/fetchData';
 import Loading from '../Loader/Loader';
 import SubmitButton from '../Button/SubmitButton';
@@ -105,11 +106,33 @@ const Header = props => {
           </div>
         </div>
         <div className="row stats rtl mt-2">
-          <div className="col-4 d-block text-center">
+          <div
+            className="col-4 d-block text-center"
+            onClick={() =>
+              Router.push(
+                {
+                  pathname: '/friends',
+                  query: { id: profileData.id }
+                },
+                `/friends/${profileData.userName}/${profileData.id}`
+              )
+            }
+          >
             <p>دوستان</p>
             <p className="friends">{profileData.friendsCount}</p>
           </div>
-          <div className="col-4 d-block text-center">
+          <div
+            className="col-4 d-block text-center"
+            onClick={() =>
+              Router.push(
+                {
+                  pathname: '/customers',
+                  query: { id: profileData.id }
+                },
+                `/customers/${profileData.userName}/${profileData.id}`
+              )
+            }
+          >
             <p>مشتریان</p>
             <p className="customers">{profileData.customerCount}</p>
           </div>

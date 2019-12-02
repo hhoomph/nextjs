@@ -86,6 +86,7 @@
     .customersTitle,
     .productsTitle {
       margin-bottom: 0.5rem;
+      cursor: pointer;
     }
     .friends,
     .customers,
@@ -96,6 +97,7 @@
       margin: auto;
       padding: 1px 10px 0;
       overflow: hidden;
+      cursor: pointer;
     }
   }
 }

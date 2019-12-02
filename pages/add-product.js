@@ -98,8 +98,8 @@ function Page(props) {
     unit: '%',
     width: 50,
     height: 50,
-    minWidth: 640,
-    minHeight: 800,
+    // minWidth: 640,
+    // minHeight: 800,
     x: 25,
     y: 25,
     aspect: 4 / 5

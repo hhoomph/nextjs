@@ -83,7 +83,7 @@ const Header = props => {
     handleSearch();
   }, [search, filters]);
   const showResult = searchResult.map(res => {
-    if (res.userId !== undefined) {
+    if (res.userId !== null) {
       const img = res.avatar !== null ? `https://api.qaroon.ir/${res.avatar}` : '/static/img/no-product-image.png';
       return <User key={res.userId} id={res.userId} image={img} name={res.displayName} userName={res.userName} price={``} />;
     } else {

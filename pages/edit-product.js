@@ -92,7 +92,29 @@ function Page(props) {
     draggable: true
   });
   let imgId = 0;
-  const [uploadedImages, setUploadedImages] = useState([]);
+  const suggestedPictures = props.suggestedPictures.data || [];
+  let all = [];
+  if (suggestedPictures.length > 0) {
+    const suggestedPics = suggestedPictures.map(picture => {
+      return {
+        id: picture.pictureId,
+        url: `https://api.qaroon.ir/${picture.picture}`,
+        thumbnail: `https://api.qaroon.ir/${picture.thumbNail}`,
+        active: false
+      };
+    });
+    all = suggestedPics.sort((a, b) => a.id - b.id);
+  }
+  const productPictures = productData.pictures.map((picture, index) => {
+    return {
+      id: index,
+      url: `https://api.qaroon.ir/${picture}`,
+      thumbnail: `https://api.qaroon.ir/${picture}`,
+      active: true
+    };
+  });
+  all = productPictures.sort((a, b) => a.id - b.id);
+  const [uploadedImages, setUploadedImages] = useState(all);
   // Add Crop Image
   const [modalShow, setModalShow] = useState(false);
   const [src, setSrc] = useState(null);
@@ -100,8 +122,6 @@ function Page(props) {
     unit: '%',
     width: 50,
     height: 50,
-    minWidth: 640,
-    minHeight: 800,
     x: 25,
     y: 25,
     aspect: 4 / 5
@@ -201,12 +221,13 @@ function Page(props) {
         //     setUploadedImages(all);
         //   }
         // }
-        // setView(2);
+        setView(2);
       } else if (result.message != undefined) {
         toast.warn(result.message);
       } else if (result.error != undefined) {
         toast.error(result.error);
       }
+      setView(2);
       setLoading(false);
     } else {
       if (title == '') {
@@ -298,8 +319,8 @@ function Page(props) {
     );
     if (result.isSuccess) {
       //setView(2);
-      toast.success('محصول شما با موفقیت ثبت شد.');
-      Router.push('/profile');
+      toast.success('محصول شما با موفقیت ویرایش شد.');
+      router.push('/profile');
     } else if (result.message != undefined) {
       toast.warn(result.message);
     } else if (result.error != undefined) {
@@ -332,7 +353,7 @@ function Page(props) {
             <div className="row mb-3 p-2 header_link">
               <div className="col pt-2 text-center">
                 <a className="d-inline-block btn-main" onClick={() => editProduct()}>
-                  ویرایش
+                  ادامه
                   {loading ? <Loading className="font_icon" /> : <FaEdit className="font_icon" />}
                 </a>
               </div>
@@ -496,8 +517,8 @@ function Page(props) {
                 </div>
                 <div className="row">
                   <div className="col pt-2 text-center">
-                    <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main">
-                      <FaCheck className="font_icon" />
+                    <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ویرایش محصول" className="d-inline-block btn-main">
+                      <FaEdit className="font_icon" />
                     </SubmitButton>
                   </div>
                 </div>
@@ -556,8 +577,8 @@ function Page(props) {
                 </div>
                 <div className="row">
                   <div className="col pt-2 text-center">
-                    <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main">
-                      <FaCheck className="font_icon" />
+                    <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ویرایش محصول" className="d-inline-block btn-main">
+                      <FaEdit className="font_icon" />
                     </SubmitButton>
                   </div>
                 </div>
@@ -646,8 +667,8 @@ function Page(props) {
                 </div>
                 <div className="row">
                   <div className="col pt-2 text-center">
-                    <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main">
-                      <FaCheck className="font_icon" />
+                    <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ویرایش محصول" className="d-inline-block btn-main">
+                      <FaEdit className="font_icon" />
                     </SubmitButton>
                   </div>
                 </div>
@@ -712,6 +733,21 @@ Page.getInitialProps = async function(context) {
     },
     context
   );
-  return { result, productData };
+  const categories = result.data || [];
+  const catId = categories.filter(c => c.titel == productData.data.category.replace(',', ''))[0].id;
+  const suggestedPictures = await fetchData(
+    'Common/C_Image/ProductSuggestedPictures',
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        categoryId: catId ? catId : null,
+        productTitle: productData ? productData.data.title : '',
+        page: 1,
+        pageSize: 100
+      })
+    },
+    context
+  );
+  return { result, productData, suggestedPictures };
 };
 export default Auth(Page);

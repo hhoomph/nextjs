@@ -55,7 +55,7 @@ const ProductsRow = props => {
     getProducts();
   }, [isFetching]);
   function handleScroll() {
-    if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isFetching)
+    if (window.innerHeight + document.documentElement.scrollTop + 100 < document.documentElement.offsetHeight || isFetching)
       return;
     // console.log(page)
     // setPage(page + 1);

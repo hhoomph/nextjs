@@ -55,7 +55,7 @@ const Page = props => {
   const scrollDiv = useRef();
   const scrollHandle = () => {
     const st = document.documentElement.scrollTop;
-    const t = window.innerHeight - 75;
+    const t = window.innerHeight - 80;
     const m = scrollButton.current.clientHeight;
     //console.log(st, t, m);
     // if (st >= lastScrollTop) {
