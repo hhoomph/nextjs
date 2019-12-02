@@ -1,9 +1,10 @@
-import React, { Fragment, useState, useContext, useRef, useEffect, memo } from 'react';
-import L from 'leaflet';
-import { Circle, LayerGroup, Map, TileLayer, Marker, Popup, Polyline, Tooltip } from 'react-leaflet';
-import { GeoSearchControl, OpenStreetMapProvider, EsriProvider } from 'leaflet-geosearch';
-import { ReactComponent as TargetSvg } from '../../public/static/svg/target.svg';
-import '../../scss/components/map.scss';
+import React, { Fragment, useState, useContext, useRef, useEffect, memo } from "react";
+import L from "leaflet";
+import { Circle, LayerGroup, Map, TileLayer, Marker, Popup, Polyline, Tooltip } from "react-leaflet";
+import { GeoSearchControl, OpenStreetMapProvider, EsriProvider } from "leaflet-geosearch";
+//import { ReactComponent as TargetSvg } from '../../public/static/svg/target.svg';
+import { ReactComponent as TargetSvg } from "../../public/static/svg/aim.svg";
+import "../../scss/components/map.scss";
 const esriProvider = new EsriProvider();
 const provider = new OpenStreetMapProvider();
 // search
@@ -31,30 +32,31 @@ export const convertLatlngToArray = position => {
   return [position.lat, position.lng];
 };
 const placeholderIcon = new L.Icon({
-  iconUrl: '/static/svg/placeholder-for-map.svg',
+  iconUrl: "/static/svg/placeholder-for-map.svg",
   shadowUrl: null,
-  className: 'current_pos_marker'
+  className: "current_pos_marker"
 });
 const myIcon = new L.Icon({
-  iconUrl: '/static/svg/location-pointer2.png',
+  iconUrl: "/static/svg/location-pointer2.png",
   iconRetinaUrl: null,
   iconSize: [70, 70],
+  className: "my_marker"
   //shadowUrl: "/static/img/profile.png"
 });
 const Icon = new L.Icon({
-  iconUrl: '/static/svg/location-pointer2.png',
+  iconUrl: "/static/svg/location-pointer2.png",
   iconRetinaUrl: null,
-  iconSize: [36, 36],
+  iconSize: [36, 36]
   //shadowUrl: "/static/img/user.png"
 });
 const MapComponent = props => {
   const [markPosition, setMarkPosition] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
-  const [currentLocationClass, setCurrentLocationClass] = useState('current_location');
+  const [currentLocationClass, setCurrentLocationClass] = useState("current_location");
   const markRef = useRef();
   const mapRef = useRef();
   useEffect(() => {
-    if (props.searchValue != '' && props.searchValue.length >= 2) {
+    if (props.searchValue != "" && props.searchValue.length >= 2) {
       provider.search({ query: props.searchValue }).then(function(result) {
         setSearchResult(result);
         //console.log(result);
@@ -127,25 +129,25 @@ const MapComponent = props => {
     /*
      * Get Current Location With Direct web Api
      */
-    setCurrentLocationClass('current_location spinner_location');
+    setCurrentLocationClass("current_location spinner_location");
     if (navigator.geolocation) {
       await navigator.geolocation.getCurrentPosition(showPosition, errorGetPosition, geoOptions);
     } else {
-      await console.log('Geolocation is not supported by this browser.');
-      setCurrentLocationClass('current_location');
+      await console.log("Geolocation is not supported by this browser.");
+      setCurrentLocationClass("current_location");
     }
   };
   const showPosition = position => {
     //updatePosition();
     setMarkPosition([position.coords.latitude, position.coords.longitude]);
-    setCurrentLocationClass('current_location');
+    setCurrentLocationClass("current_location");
     console.log(`More or less ${position.coords.accuracy} meters.`);
     // const map = mapRef.current.leafletElement;
     // L.marker([position.coords.latitude, position.coords.longitude], { icon: placeholderIcon }).addTo(map);
     // map.setView([position.coords.latitude, position.coords.longitude]);
   };
   const errorGetPosition = err => {
-    setCurrentLocationClass('current_location');
+    setCurrentLocationClass("current_location");
     console.warn(`Geolocation ERROR(${err.code}): ${err.message}`);
   };
   const handleLocationFound = e => {
@@ -168,13 +170,21 @@ const MapComponent = props => {
         >
           <Tooltip>مکان شما</Tooltip>
         </Marker>
-        <Circle center={markPosition} radius={1000} className="circle_radius" />
+        {/* <Circle center={markPosition} radius={1000} className="circle_radius" /> */}
       </>
     ) : null;
   };
   return (
     <div id="map_id">
-      <Map closePopupOnClick={true} animate={true} center={markPosition.length > 1 ? markPosition : position} zoom={17} maxZoom={18} ref={mapRef} onLocationfound={handleLocationFound}>
+      <Map
+        closePopupOnClick={true}
+        animate={true}
+        center={markPosition.length > 1 ? markPosition : position}
+        zoom={17}
+        maxZoom={18}
+        ref={mapRef}
+        onLocationfound={handleLocationFound}
+      >
         <TileLayer attribution="Qarun" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {currentMarker()}
         <Marker position={position} icon={myIcon} draggable={false}>

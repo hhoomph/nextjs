@@ -31,6 +31,9 @@
   border-radius: 100px;
   filter: invert(57%) sepia(90%) saturate(999%) hue-rotate(346deg) brightness(100%) contrast(100%);
 }
+.leaflet-marker-icon.my_marker{
+  filter: invert(33%) sepia(10%) saturate(999%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
 .leaflet-shadow-pane {
   z-index: 999 !important;
 }
@@ -73,21 +76,41 @@
   position: absolute;
   top: auto;
   //bottom: 10px;
-  bottom: 40vh;
-  right: 4px;
+  bottom: 44vh;
+  right: 6px;
   left: auto;
   margin: auto;
   padding: 0;
   cursor: pointer;
+  box-shadow: 0px 0px 1px 0px #868686;
   .svg_icon {
     fill: #33691e;
-    width: 2rem;
+    width: 1.4rem;
+    height: 1.4rem;
     display: block;
     margin: auto;
     transition: all unset 0.3s;
     &:hover,
     &:active {
       fill: #e65100;
+      path {
+        fill: #e65100;
+      }
+      g {
+        fill: #e65100;
+        path {
+          fill: #e65100;
+        }
+      }
+    }
+    path {
+      fill: #a5d6a7;
+    }
+    g {
+      fill: #33691e;
+      path {
+        fill: #33691e;
+      }
     }
   }
 }
