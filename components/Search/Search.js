@@ -57,7 +57,7 @@ const Header = props => {
     );
   });
   const handleSearch = async (s = search) => {
-    if (s.length > 1) {
+    if (s.length > 0) {
       const filterType = filters.filter(s => s.active === true)[0].filter;
       const result = await fetchData(
         'User/U_Search/GetShopsInMap',
@@ -74,20 +74,18 @@ const Header = props => {
       );
       if (result !== undefined && result.isSuccess) {
         setSearchResult(result.data);
-        console.log(result.data);
       }
-    } else {
     }
   };
   useEffect(() => {
     handleSearch();
   }, [search, filters]);
   const showResult = searchResult.map(res => {
+    const img = res.avatar !== null ? `https://api.qaroon.ir/${res.avatar}` : '/static/img/no-product-image.png';
     if (res.userId !== null) {
-      const img = res.avatar !== null ? `https://api.qaroon.ir/${res.avatar}` : '/static/img/no-product-image.png';
-      return <User key={res.userId} id={res.userId} image={img} name={res.displayName} userName={res.userName} price={``} />;
+      return <User key={res.userId + res.userName} id={res.userId} image={img} name={res.displayName} userName={res.userName} price={``} />;
     } else {
-      return <Product id={1} image={'/static/img/product5.jpg'} name={'کشمش پلویی نام محصول'} userName={''} price={numberSeparator(150000)} />;
+      return <Product key={res.id + res.displayName} id={res.id} image={img} name={res.displayName || ''} userName={res.userName} price={numberSeparator(0)} />;
     }
   });
   return (

@@ -34,7 +34,7 @@ app
       const queryParams = { id: req.params.id };
       app.render(req, res, actualPage, queryParams);
     });
-    server.get('/product/:id', (req, res) => {
+    server.get('/product/:id/:name', (req, res) => {
       const actualPage = '/product';
       const queryParams = { id: req.params.id };
       app.render(req, res, actualPage, queryParams);

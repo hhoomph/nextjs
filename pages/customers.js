@@ -17,7 +17,7 @@ function Page(props) {
   const [view, setView] = useState(1);
   const Router = useRouter();
   const { id } = Router.query;
-  const [following, setFollowing] = useState(props.Follower.data || []);
+  const [following, setFollowing] = useState(props.Follower.data !== null ? props.Follower.data : []);
   const [update, setUpdate] = useState(Date());
   const updateUsers = async () => {
     const Follower = await fetchData(
@@ -28,7 +28,11 @@ function Page(props) {
       props.ctx
     );
     if (Follower.isSuccess) {
-      setFollowing(Follower.data);
+      if (Follower.data != null) {
+        setFollowing(Follower.data);
+      } else {
+        setFollowing([]);
+      }
     }
   };
   useEffect(() => {
@@ -46,6 +50,7 @@ function Page(props) {
         });
   return (
     <>
+      <Nav />
       <div className="container friends_page">
         <div className="row p-2 cart_title">
           <div className="col text-center">
@@ -55,15 +60,8 @@ function Page(props) {
         </div>
       </div>
       <div className="container rtl pb-5 friends_page">
-        <div className="row pl-1 pr-1 users">
-          {/* <User id={1} image={'/static/img/user.png'} followed={true} name={'نام نمایشی'} userName={'user_name_UserName'} price={``} />
-          <User id={2} image={'/static/img/user.jpg'} followed={false} name={'نام نمایشی'} userName={'user_name_UserName'} price={``} />
-          <User id={3} image={'/static/img/user2.png'} followed={true} name={'نام نمایشی'} userName={'user_name_UserName'} price={``} />
-          <User id={4} image={'/static/img/user.png'} followed={true} name={'نام نمایشی'} userName={'user_name_UserName'} price={``} /> */}
-          {showUsers}
-        </div>
+        <div className="row pl-1 pr-1 users">{showUsers}</div>
       </div>
-      <Nav />
     </>
   );
 }

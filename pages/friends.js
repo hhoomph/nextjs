@@ -17,29 +17,37 @@ function Page(props) {
   const [view, setView] = useState(1);
   const Router = useRouter();
   const { id } = Router.query;
-  const [following, setFollowing] = useState(props.Following.data || []);
-  const [presented, setPresented] = useState(props.Presented.data || []);
+  const [following, setFollowing] = useState(props.Following.data !== null ? props.Following.data : []);
+  const [presented, setPresented] = useState(props.Presented.data !== null ? props.Presented.data : []);
   const [update, setUpdate] = useState(Date());
   const updateUsers = async () => {
-    const Following = await fetchData(
+    const FollowingRes = await fetchData(
       `User/U_Friends/OtherFollowing?userId=${id}`,
       {
         method: 'GET'
       },
       props.ctx
     );
-    if (Following.isSuccess) {
-      setFollowing(Following.data);
+    if (FollowingRes.isSuccess) {
+      if (FollowingRes.data != null) {
+        setFollowing(FollowingRes.data);
+      } else {
+        setFollowing([]);
+      }
     }
-    const Presented = await fetchData(
+    const PresentedRes = await fetchData(
       `User/U_Friends/OtherPresented?userId=${id}`,
       {
         method: 'GET'
       },
       props.ctx
     );
-    if (Presented.isSuccess) {
-      setPresented(Presented.data);
+    if (PresentedRes.isSuccess) {
+      if (PresentedRes.data != null) {
+        setPresented(PresentedRes.data);
+      } else {
+        setPresented([]);
+      }
     }
   };
   useEffect(() => {
@@ -57,6 +65,7 @@ function Page(props) {
         });
   return (
     <>
+      <Nav />
       <div className="container pb-0 map_header friends_page">
         <div className="row">
           <div className="col-12 p-0 pt-2">
@@ -71,16 +80,9 @@ function Page(props) {
           </div>
         </div>
       </div>
-      <div className="container rtl pb-5 friends_page">
-        <div className="row pl-1 pr-1 users">
-          {/* <User id={1} image={'/static/img/user.png'} followed={true} name={'نام نمایشی'} userName={'user_name_UserName'} price={``} />
-          <User id={2} image={'/static/img/user.jpg'} followed={false} name={'نام نمایشی'} userName={'user_name_UserName'} price={``} />
-          <User id={3} image={'/static/img/user2.png'} followed={true} name={'نام نمایشی'} userName={'user_name_UserName'} price={``} />
-          <User id={4} image={'/static/img/user.png'} followed={true} name={'نام نمایشی'} userName={'user_name_UserName'} price={``} /> */}
-          {showUsers}
-        </div>
+      <div className="container rtl pb-5 pt-5 friends_page">
+        <div className="row pl-1 pr-1 mt-4 users">{showUsers}</div>
       </div>
-      <Nav />
     </>
   );
 }

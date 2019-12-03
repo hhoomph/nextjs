@@ -6,7 +6,7 @@ import Loading from '../components/Loader/Loading';
 import Auth from '../components/Auth/Auth';
 import SubmitButton from '../components/Button/SubmitButton';
 import Link from '../components/Link';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { ToastContainer, toast } from 'react-toastify';
 import { FaPlus, FaRegComment, FaRegHeart, FaEllipsisV } from 'react-icons/fa';
 import { FiShare2 } from 'react-icons/fi';
@@ -25,7 +25,9 @@ import { setTimeout } from 'core-js';
 // });
 function Page(props) {
   const productData = props.result.data || [];
-  const productId = props.id;
+  const Router = useRouter();
+  const { productId } = Router.query;
+  //const productId = props.id;
   const [loading, setLoading] = useState(false);
   toast.configure({
     position: 'top-right',

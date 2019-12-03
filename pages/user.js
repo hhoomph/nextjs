@@ -19,14 +19,15 @@ function Page(props) {
   const [isFetching, setIsFetching] = useState(false);
   const productsData = props.userProducts.data !== undefined && props.userProducts.data.model !== undefined ? props.userProducts.data.model : [];
   const [userProducts, userProductsDispatch] = useReducer(userProductsReducer, productsData);
-  const userCategories = props.userCategories.data || [];
-  userCategories.concat({ id: 0, parentId: null, picture: null, thumbNail: null, titel: 'همه' }).sort((a, b) => a.id - b.id);
-  const [catActive, setCatActive] = useState(userCategories.length > 1 ? userCategories[0].id : null);
+  let userCategories = props.userCategories.data || [];
+  userCategories = [].concat(userCategories, { id: 0, parentId: null, picture: null, thumbNail: null, titel: 'همه' }).sort((a, b) => a.id - b.id);
+  const [catActive, setCatActive] = useState(userCategories.length > 0 ? userCategories[0].id : null);
   //console.log(profileData, props.userProducts, userCategories);
   const showProducts = userProducts.map(product => (
     <Product
       key={product.productId}
       id={product.productId}
+      name={product.title}
       profile={false}
       isDisable={product.isDisable}
       price={product.price}
@@ -147,7 +148,7 @@ Page.getInitialProps = async function(context) {
       method: 'POST',
       body: JSON.stringify({
         userId: id,
-        categoryId: 1,
+        categoryId: 0,
         page: 1,
         pageSize: 10
       })
@@ -155,21 +156,21 @@ Page.getInitialProps = async function(context) {
     context
   );
   // Get user's Categories
-  // const userCategories = await fetchData(
-  //   'User/U_Product/CategoiesHaveProduct',
-  //   {
-  //     method: 'GET'
-  //   },
-  //   context
-  // );
-  // Get All Categories
   const userCategories = await fetchData(
-    'Common/C_Category/GetAllParentAsync',
+    `User/U_Product/CategoiesHaveProduct?userId=${result.data.id}`,
     {
       method: 'GET'
     },
     context
   );
+  // Get All Categories
+  // const userCategories = await fetchData(
+  //   'Common/C_Category/GetAllParentAsync',
+  //   {
+  //     method: 'GET'
+  //   },
+  //   context
+  // );
   return { result, userProducts, userCategories };
 };
 export default Page;

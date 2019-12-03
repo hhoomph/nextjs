@@ -176,7 +176,14 @@ const Header = props => {
       <div className="container info">
         <div className="row rtl">
           <div className="col-12 d-flex top">
-            <div className="col-4 d-block text-center">
+            <div
+              className="col-4 d-block text-center"
+              onClick={() =>
+                Router.push({
+                  pathname: '/inventory'
+                })
+              }
+            >
               <p>موجودی</p>
               <p className="inventory">{`${walletCharge} ` || `0 `}</p>
             </div>

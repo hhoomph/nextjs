@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect, useContext, memo } from 'react';
 import Link from '../Link';
+import Router from 'next/router';
 import fetchData from '../../utils/fetchData';
 import { CartContext, CartCountContext } from '../../context/context';
 import { FaTimesCircle, FaPlusSquare, FaMinusSquare } from 'react-icons/fa';
@@ -88,7 +89,7 @@ const ProductRow = props => {
   return (
     <div className="col-12 p-0 rtl d-flex justify-content-start product_row">
       <div className="col-3 p-0  align-self-center">
-        <Link href={`/product/${productId}`} passHref>
+        <Link href={`/product/${productId}`} as={`/product/${productId}/${props.productName.trim().replace(/ /g, "-")}`} passHref>
           <img className="product_img" src={`https://api.qaroon.ir/${props.productImage}`} />
         </Link>
       </div>

@@ -28,14 +28,15 @@ function Page(props) {
   const [page, setPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
   const [userProducts, userProductsDispatch] = useReducer(userProductsReducer, productsData);
-  const userCategories = props.userCategories.data || [];
-  userCategories.concat({ id: 0, parentId: null, picture: null, thumbNail: null, titel: 'همه' }).sort((a, b) => a.id - b.id);
-  const [catActive, setCatActive] = useState(userCategories.length > 1 ? userCategories[0].id : null);
+  let userCategories = props.userCategories.data || [];
+  userCategories = [].concat(userCategories, { id: 0, parentId: null, picture: null, thumbNail: null, titel: 'همه' }).sort((a, b) => a.id - b.id);
+  const [catActive, setCatActive] = useState(userCategories.length > 0 ? userCategories[0].id : null);
   //console.log(profileData, props.userProducts, userCategories);
   const showProducts = userProducts.map(product => (
     <Product
       key={product.productId}
       id={product.productId}
+      name={product.title}
       profile={true}
       isDisable={product.isDisable}
       price={product.lastPrice}
@@ -223,7 +224,7 @@ Page.getInitialProps = async function(context) {
         method: 'POST',
         body: JSON.stringify({
           userId: result.data.id,
-          categoryId: 1,
+          categoryId: 0,
           page: 1,
           pageSize: 10
         })
@@ -245,7 +246,7 @@ Page.getInitialProps = async function(context) {
   //   context
   // );
   const userCategories = await fetchData(
-    'User/U_Product/CategoiesHaveProduct',
+    `User/U_Product/CategoiesHaveProduct?userId=${result.data.id}`,
     {
       method: 'GET'
     },

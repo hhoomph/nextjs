@@ -88,7 +88,7 @@ const ProductRow = props => {
   return (
     <div className="col-12 p-0 rtl d-flex justify-content-start product_row">
       <div className="col-3 p-0  align-self-center">
-        <Link href={`/product/${productId}`} passHref>
+        <Link href={`/product/${productId}`} as={`/product/${productId}/${props.productName.trim().replace(/ /g, "-")}`} passHref>
           <img className="product_img" src={`${props.productImage}`} />
         </Link>
       </div>

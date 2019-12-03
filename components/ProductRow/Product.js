@@ -43,7 +43,7 @@ const Product = props => {
   return (
     <div className={productClass()}>
       <div className="product_frame">
-        <Link href={`/product/${props.id}`} passHref>
+        <Link href={`/product/${props.id}`} as={`/product/${props.id}/${props.productName.trim().replace(/ /g, "-")}`} passHref>
           <a className="product_link">
             <img src={props.image} alt={props.productName} className="product_img" />
           </a>

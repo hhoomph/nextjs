@@ -260,6 +260,9 @@
           img.active {
             background: #ff9800;
           }
+          @media screen and (min-width: 992px) {
+            overflow: auto;
+          }
           @media (min-width: 576px) {
             img {
               width: 10rem;

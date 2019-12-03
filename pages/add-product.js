@@ -128,6 +128,7 @@ function Page(props) {
     if (imageRef !== null && c.width && c.height) {
       const _croppedImageUrl = await getCroppedImg(imageRef, c, 'newFile.jpg');
       setCroppedImageUrl(_croppedImageUrl);
+      fileInput.current.value  = '';
     }
   };
   const getCroppedImg = (image, c, fileName) => {
