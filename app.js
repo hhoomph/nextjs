@@ -24,26 +24,93 @@ app
       res.header('Access-Control-Allow-Credentials', 'true');
       next();
     });
-    server.get('/p/:id', (req, res) => {
-      const actualPage = '/post';
-      const queryParams = { id: req.params.id };
-      app.render(req, res, actualPage, queryParams);
+    server.get('/user/manifest.json', (req, res) => {
+      const parsedUrl = parse(req.url, true);
+      const { pathname } = parsedUrl;
+      const filePath = join(__dirname, 'public', pathname);
+      app.serveStatic(req, res, filePath);
+    });
+    server.get('/user/favicon.ico', (req, res) => {
+      const parsedUrl = parse(req.url, true);
+      const { pathname } = parsedUrl;
+      const filePath = join(__dirname, 'public', pathname);
+      app.serveStatic(req, res, filePath);
     });
     server.get('/user/:id', (req, res) => {
       const actualPage = '/user';
       const queryParams = { id: req.params.id };
       app.render(req, res, actualPage, queryParams);
     });
+    server.get('/product/manifest.json', (req, res) => {
+      const filePath = join(__dirname, 'public', '/manifest.json');
+      app.serveStatic(req, res, filePath);
+    });
+    server.get('/product/favicon.ico', (req, res) => {
+      const filePath = join(__dirname, 'public', '/favicon.ico');
+      app.serveStatic(req, res, filePath);
+    });
+    // server.get('/product/manifest.json', (req, res) => {
+    //   const parsedUrl = parse(req.url, true);
+    //   const { pathname } = parsedUrl;
+    //   const filePath = join(__dirname, 'public', pathname);
+    //   app.serveStatic(req, res, filePath);
+    // });
+    // server.get('/product/favicon.ico', (req, res) => {
+    //   const parsedUrl = parse(req.url, true);
+    //   const { pathname } = parsedUrl;
+    //   const filePath = join(__dirname, 'public', pathname);
+    //   app.serveStatic(req, res, filePath);
+    // });
     server.get('/product/:id/:name', (req, res) => {
       const actualPage = '/product';
       const queryParams = { id: req.params.id };
       app.render(req, res, actualPage, queryParams);
     });
+    server.get('/friends/manifest.json', (req, res) => {
+      const filePath = join(__dirname, 'public', '/manifest.json');
+      app.serveStatic(req, res, filePath);
+    });
+    server.get('/friends/favicon.ico', (req, res) => {
+      const filePath = join(__dirname, 'public', '/favicon.ico');
+      app.serveStatic(req, res, filePath);
+    });
+    // server.get('/friends/manifest.json', (req, res) => {
+    //   const parsedUrl = parse(req.url, true);
+    //   const { pathname } = parsedUrl;
+    //   const filePath = join(__dirname, 'public', pathname);
+    //   app.serveStatic(req, res, filePath);
+    // });
+    // server.get('/friends/favicon.ico', (req, res) => {
+    //   const parsedUrl = parse(req.url, true);
+    //   const { pathname } = parsedUrl;
+    //   const filePath = join(__dirname, 'public', pathname);
+    //   app.serveStatic(req, res, filePath);
+    // });
     server.get('/friends/:user/:id', (req, res) => {
       const actualPage = '/friends';
       const queryParams = { id: req.params.id };
       app.render(req, res, actualPage, queryParams);
     });
+    server.get('/customers/manifest.json', (req, res) => {
+      const filePath = join(__dirname, 'public', '/manifest.json');
+      app.serveStatic(req, res, filePath);
+    });
+    server.get('/customers/favicon.ico', (req, res) => {
+      const filePath = join(__dirname, 'public', '/favicon.ico');
+      app.serveStatic(req, res, filePath);
+    });
+    // server.get('/customers/manifest.json', (req, res) => {
+    //   const parsedUrl = parse(req.url, true);
+    //   const { pathname } = parsedUrl;
+    //   const filePath = join(__dirname, 'public', pathname);
+    //   app.serveStatic(req, res, filePath);
+    // });
+    // server.get('/customers/favicon.ico', (req, res) => {
+    //   const parsedUrl = parse(req.url, true);
+    //   const { pathname } = parsedUrl;
+    //   const filePath = join(__dirname, 'public', pathname);
+    //   app.serveStatic(req, res, filePath);
+    // });
     server.get('/customers/:user/:id', (req, res) => {
       const actualPage = '/customers';
       const queryParams = { id: req.params.id };

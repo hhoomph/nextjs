@@ -7,6 +7,7 @@ import Auth from '../components/Auth/Auth';
 import SubmitButton from '../components/Button/SubmitButton';
 import Link from '../components/Link';
 import { useRouter } from 'next/router';
+import Head from "next/head";
 import { ToastContainer, toast } from 'react-toastify';
 import { FaPlus, FaRegComment, FaRegHeart, FaEllipsisV } from 'react-icons/fa';
 import { FiShare2 } from 'react-icons/fi';
@@ -83,6 +84,8 @@ function Page(props) {
   const nextCtx = props.ctx;
   return (
     <>
+      <Head>{productData.title}</Head>
+      <title>{productData.title}</title>
       <Nav />
       <div className="product_page">
         <div className="container product_header">
@@ -142,7 +145,8 @@ function Page(props) {
               <p className="text-right product_name">{productData.title || ''}</p>
             </div>
             <div className="col-12 rtl">
-              <span className="price_title"> قیمت :</span> <span className="price">{numberSeparator(productData.lastPrice) || ''} تومان</span> <span className="price_old">{numberSeparator(productData.price) || ''} تومان</span>
+              <span className="price_title"> قیمت :</span> <span className="price">{numberSeparator(productData.lastPrice) || ''} تومان</span>{' '}
+              <span className="price_old">{numberSeparator(productData.price) || ''} تومان</span>
             </div>
             <div className="col-12 mt-1 text-center">
               <SubmitButton loading={loading} onClick={addToCart} text="افزودن به سبد خرید" className="d-inline-block btn-main">

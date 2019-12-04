@@ -15,17 +15,35 @@
   .btn-main {
     border-radius: 4px;
     min-width: 110px;
-    padding-right: 6px;
-    padding-left: inherit;
     .font_icon {
       margin-left: 6px;
     }
   }
   .charge {
-    background-image: linear-gradient(90deg, #8bc34a, #689f38 51%, #4caf50);
+    background-image: linear-gradient(90deg, #4CAF50, #2E7D32 51%, #4CAF50);
+    padding-right: 6px;
+    padding-left: inherit;
+    &:hover {
+      background-image: linear-gradient(90deg, #8bc34a, #689f38 51%, #4caf50);
+    }
   }
   .removal {
     background-image: linear-gradient(90deg, #ef5350, #b31e1e 51%, #c7441b);
+    padding-right: 6px;
+    padding-left: inherit;
+    &:hover {
+      background-image: linear-gradient(90deg, #FF7043, #FF5722 51%, #FF7043);
+    }
+  }
+  .sell {
+    background-image: linear-gradient(90deg, #4CAF50, #2E7D32 51%, #4CAF50);
+    &:hover {
+      background-image: linear-gradient(90deg, #8bc34a, #689f38 51%, #4caf50);
+    }
+  }
+  .spinner-border {
+    width: 30px;
+    height: 30px;
   }
   .info_rows {
     .amount {
@@ -46,6 +64,14 @@
   }
   ._title {
     font-size: 1.8rem;
+  }
+  .modal {
+    z-index: 99999;
+  }
+  .modal-title {
+    width: 100%;
+    text-align: center;
+    margin-right: -2%;
   }
   // not import
   ul.filters {
