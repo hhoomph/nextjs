@@ -1,13 +1,13 @@
-import React, { useState, useEffect, memo } from 'react';
-import Link from '../Link';
-import Router from 'next/router';
-import { FaShoppingBasket, FaRegUserCircle } from 'react-icons/fa';
-import { ReactComponent as MenuCircleSvg } from '../../public/static/svg/menu-circle.svg';
-import { ReactComponent as AddUserSvg } from '../../public/static/svg/add-user.svg';
-import { ReactComponent as PlusSvg } from '../../public/static/svg/plus.svg';
-import { Dropdown } from 'react-bootstrap';
-import '../../scss/components/profileHeader.scss';
-import Logout from '../Auth/Logout';
+import React, { useState, useEffect, memo } from "react";
+import Link from "../Link";
+import Router from "next/router";
+import { FaShoppingBasket, FaRegUserCircle } from "react-icons/fa";
+import { ReactComponent as MenuCircleSvg } from "../../public/static/svg/menu-circle.svg";
+import { ReactComponent as AddUserSvg } from "../../public/static/svg/add-user.svg";
+import { ReactComponent as PlusSvg } from "../../public/static/svg/plus.svg";
+import { Dropdown } from "react-bootstrap";
+import "../../scss/components/profileHeader.scss";
+import Logout from "../Auth/Logout";
 const Header = props => {
   const {
     avatar,
@@ -28,8 +28,8 @@ const Header = props => {
   } = props.profileData;
   const avatarUrl = avatar !== undefined && avatar !== null ? `https://api.qaroon.ir/${avatar}` : null;
   const toggleMenu = () => {
-    const menuDiv = document.getElementById('profileMenu');
-    menuDiv.classList.toggle('hidden');
+    const menuDiv = document.getElementById("profileMenu");
+    menuDiv.classList.toggle("hidden");
   };
   const UserImage = () => {
     if (avatarUrl !== null) {
@@ -142,7 +142,7 @@ const Header = props => {
             onClick={() =>
               Router.push(
                 {
-                  pathname: '/friends',
+                  pathname: "/friends",
                   query: { id: id }
                 },
                 `/friends/${userName}/${id}`
@@ -157,7 +157,7 @@ const Header = props => {
             onClick={() =>
               Router.push(
                 {
-                  pathname: '/customers',
+                  pathname: "/customers",
                   query: { id: id }
                 },
                 `/customers/${userName}/${id}`
@@ -167,7 +167,7 @@ const Header = props => {
             <p className="customersTitle">مشتریان</p>
             <p className="customers">{customerCount || 0}</p>
           </div>
-          <div className="col-4 d-block text-center">
+          <div className="col-4 d-block text-center" onClick={props.scrollToProducts}>
             <p className="productsTitle">محصولات</p>
             <p className="products">{productCount || 0}</p>
           </div>
@@ -180,14 +180,21 @@ const Header = props => {
               className="col-4 d-block text-center"
               onClick={() =>
                 Router.push({
-                  pathname: '/inventory'
+                  pathname: "/inventory"
                 })
               }
             >
               <p>موجودی</p>
               <p className="inventory">{`${walletCharge} ` || `0 `}</p>
             </div>
-            <div className="col-4 d-block text-center">
+            <div
+              className="col-4 d-block text-center"
+              onClick={() =>
+                Router.push({
+                  pathname: "/qerun"
+                })
+              }
+            >
               <p>قرون</p>
               <p className="debt">{qerun ? `${qerun} ` : `0 `}</p>
             </div>

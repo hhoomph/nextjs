@@ -19,9 +19,9 @@ const User = dynamic({
 });
 function Page(props) {
   const [loading, setLoading] = useState(false);
-  const Inventory = props.Inventory.data || [];
+  const Inventory = props.Inventory ? props.Inventory.data : [];
   const Transactions = Inventory.transactions || [];
-  const GetWithdrawal = props.GetWithdrawal.data || [];
+  const GetWithdrawal = props.GetWithdrawal ? props.GetWithdrawal.data : [];
   //console.log(Inventory, GetWithdrawal);
   const showTransactions = Transactions.map(t => {
     const type = t.type;
@@ -43,29 +43,29 @@ function Page(props) {
   return (
     <>
       <Head>
-        <title>موجودی</title>
+        <title>قرون</title>
       </Head>
       <Nav />
       <div className="container pt-3 inventory_page">
         <div className="row">
           <div className="col-12 text-center">
-            <p className="inventory_price rtl">{numberSeparator(Inventory.qerun)} تومان</p>
+            <p className="inventory_price rtl">{numberSeparator(0)} تومان</p>
           </div>
         </div>
         <div className="row p-2 cart_title">
           <div className="col text-center">
-            <h2 className="mr-2 ml-2 mt-1 page_title">موجودی حساب</h2>
+            <h2 className="mr-2 ml-2 mt-1 page_title">قرون</h2>
           </div>
         </div>
         <div className="row">
           <div className="col-12 d-block pb-2">
             <div className="col-6 text-center float-right">
-              <SubmitButton loading={loading} onClick={console.log("")} text="شارژ" className="d-inline-block btn-main charge">
+              <SubmitButton loading={loading} onClick={console.log("")} text="فروش" className="d-inline-block btn-main charge">
                 <FaPlus className="font_icon" />
               </SubmitButton>
             </div>
             <div className="col-6 text-center float-left">
-              <SubmitButton loading={loading} onClick={console.log("")} text="برداشت" className="d-inline-block btn-main removal">
+              <SubmitButton loading={loading} onClick={console.log("")} text="انتقال" className="d-inline-block btn-main removal">
                 <FaMinus className="font_icon" />
               </SubmitButton>
             </div>
@@ -73,7 +73,7 @@ function Page(props) {
         </div>
         <hr />
         <div className="row rtl info_rows">
-          {/* <div className="col-12 d-flex _sell">
+          <div className="col-12 d-flex _sell">
             <p className="amount">1,597,000</p>
             <p className="date">5/6/98</p>
             <FaCaretDown className="font_icon" />
@@ -82,7 +82,7 @@ function Page(props) {
             <p className="amount">2,435,000</p>
             <p className="date">12/06/1398</p>
             <FaCaretUp className="font_icon" />
-          </div> */}
+          </div>
           {showTransactions}
         </div>
       </div>
@@ -90,20 +90,20 @@ function Page(props) {
   );
 }
 Page.getInitialProps = async function(context) {
-  const Inventory = await fetchData(
-    `User/U_Financial/Inventory`,
-    {
-      method: "GET"
-    },
-    context
-  );
-  const GetWithdrawal = await fetchData(
-    `User/U_Financial/GetWithdrawal`,
-    {
-      method: "GET"
-    },
-    context
-  );
-  return { Inventory, GetWithdrawal };
+  // const Inventory = await fetchData(
+  //   `User/U_Financial/Inventory`,
+  //   {
+  //     method: "GET"
+  //   },
+  //   context
+  // );
+  // const GetWithdrawal = await fetchData(
+  //   `User/U_Financial/GetWithdrawal`,
+  //   {
+  //     method: "GET"
+  //   },
+  //   context
+  // );
+  // return { Inventory, GetWithdrawal };
 };
 export default Auth(Page);

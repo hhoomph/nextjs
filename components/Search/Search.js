@@ -85,7 +85,7 @@ const Header = props => {
     if (res.userId !== null) {
       return <User key={res.userId + res.userName} id={res.userId} image={img} name={res.displayName} userName={res.userName} price={``} />;
     } else {
-      return <Product key={res.id + res.displayName} id={res.id} image={img} name={res.displayName || ''} userName={res.userName} price={numberSeparator(0)} />;
+      return <Product key={res.id + res.displayName} id={res.id} image={img} name={res.displayName || ''} userName={res.userName} price={numberSeparator(res.lastPrice)} />;
     }
   });
   return (

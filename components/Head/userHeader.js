@@ -136,7 +136,7 @@ const Header = props => {
             <p>مشتریان</p>
             <p className="customers">{profileData.customerCount}</p>
           </div>
-          <div className="col-4 d-block text-center">
+          <div className="col-4 d-block text-center" onClick={props.scrollToProducts}>
             <p>محصولات</p>
             <p className="products">{profileData.productCount}</p>
           </div>

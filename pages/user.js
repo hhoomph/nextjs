@@ -1,14 +1,14 @@
-import React, { Fragment, useContext, useReducer, useState, useRef, useEffect } from 'react';
-import dynamic from 'next/dynamic';
-import Loading from '../components/Loader/Loading';
-import fetchData from '../utils/fetchData';
-import Nav from '../components/Nav/Nav';
-import UserHeader from '../components/Head/userHeader';
-import Product from '../components/Profile/product';
-import { UserProductsContext } from '../context/context';
-import { userProductsReducer } from '../context/reducer';
+import React, { Fragment, useContext, useReducer, useState, useRef, useEffect } from "react";
+import dynamic from "next/dynamic";
+import Loading from "../components/Loader/Loading";
+import fetchData from "../utils/fetchData";
+import Nav from "../components/Nav/Nav";
+import UserHeader from "../components/Head/userHeader";
+import Product from "../components/Profile/product";
+import { UserProductsContext } from "../context/context";
+import { userProductsReducer } from "../context/reducer";
 const Category = dynamic({
-  loader: () => import('../components/profile/Category'),
+  loader: () => import("../components/profile/Category"),
   loading: () => <Loading />,
   ssr: true
 });
@@ -20,7 +20,7 @@ function Page(props) {
   const productsData = props.userProducts.data !== undefined && props.userProducts.data.model !== undefined ? props.userProducts.data.model : [];
   const [userProducts, userProductsDispatch] = useReducer(userProductsReducer, productsData);
   let userCategories = props.userCategories.data || [];
-  userCategories = [].concat(userCategories, { id: 0, parentId: null, picture: null, thumbNail: null, titel: 'همه' }).sort((a, b) => a.id - b.id);
+  userCategories = [].concat(userCategories, { id: 0, parentId: null, picture: null, thumbNail: null, titel: "همه" }).sort((a, b) => a.id - b.id);
   const [catActive, setCatActive] = useState(userCategories.length > 0 ? userCategories[0].id : null);
   //console.log(profileData, props.userProducts, userCategories);
   const showProducts = userProducts.map(product => (
@@ -32,15 +32,15 @@ function Page(props) {
       isDisable={product.isDisable}
       price={product.price}
       oldPrice={product.lastPrice}
-      image={product.picture !== undefined && product.picture !== null ? `https://api.qaroon.ir/${product.picture}` : 'static/img/no-product-image.png'}
+      image={product.picture !== undefined && product.picture !== null ? `https://api.qaroon.ir/${product.picture}` : "static/img/no-product-image.png"}
     />
   ));
   const getUserProduct = async () => {
     setLoading(true);
     const result = await fetchData(
-      'User/U_Product/UserProduct',
+      "User/U_Product/UserProduct",
       {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({
           userId: profileData.id,
           categoryId: catActive,
@@ -51,7 +51,7 @@ function Page(props) {
       props.ctx
     );
     if (result.isSuccess) {
-      userProductsDispatch({ type: 'add', payload: result.data.model });
+      userProductsDispatch({ type: "add", payload: result.data.model });
       setTimeout(() => setIsFetching(false), 200);
       setPage(page + 1);
     } else if (result.message != undefined) {
@@ -64,9 +64,9 @@ function Page(props) {
   const getUserProductFromCat = async () => {
     setLoading(true);
     const result = await fetchData(
-      'User/U_Product/UserProduct',
+      "User/U_Product/UserProduct",
       {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({
           userId: profileData.id,
           categoryId: catActive,
@@ -77,8 +77,8 @@ function Page(props) {
       props.ctx
     );
     if (result !== undefined && result.isSuccess) {
-      userProductsDispatch({ type: 'refresh', payload: [] });
-      userProductsDispatch({ type: 'refresh', payload: result.data.model });
+      userProductsDispatch({ type: "refresh", payload: [] });
+      userProductsDispatch({ type: "refresh", payload: result.data.model });
       setPage(2);
     }
     setLoading(false);
@@ -90,9 +90,15 @@ function Page(props) {
       return;
     }
   }
+  const productRef = useRef();
+  const scrollToProducts = () => {
+    const productsDiv = productRef.current.clientHeight;
+    const t = window.innerHeight - productsDiv + 100;
+    window.scrollTo(0, t);
+  };
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   useEffect(() => {
     if (!isFetching) return;
@@ -104,7 +110,7 @@ function Page(props) {
   return (
     <UserProductsContext.Provider value={userProductsDispatch}>
       <Nav />
-      <UserHeader profileData={profileData} userOnline={true} />
+      <UserHeader profileData={profileData} userOnline={true} scrollToProducts={scrollToProducts} />
       <div className="container mb-1 cat_product_row">
         <div className="row">
           <div className="col">
@@ -115,15 +121,17 @@ function Page(props) {
         </div>
       </div>
       <div className="container mb-5 pb-3 pt-3">
-        <div className="row d-flex justify-content-start rtl profile_products">{showProducts}</div>
+        <div className="row d-flex justify-content-start rtl profile_products" ref={productRef}>
+          {showProducts}
+        </div>
         {loading && (
           <div
             style={{
-              display: 'block !important',
-              width: '100%',
-              height: '40px',
-              textAlign: 'center',
-              marginTop: '0.1rem'
+              display: "block !important",
+              width: "100%",
+              height: "40px",
+              textAlign: "center",
+              marginTop: "0.1rem"
             }}
           >
             <Loading />
@@ -138,14 +146,14 @@ Page.getInitialProps = async function(context) {
   const result = await fetchData(
     `User/U_Account/OtherUserProfile/${id}`,
     {
-      method: 'GET'
+      method: "GET"
     },
     context
   );
   const userProducts = await fetchData(
-    'User/U_Product/UserProduct',
+    "User/U_Product/UserProduct",
     {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({
         userId: id,
         categoryId: 0,
@@ -159,7 +167,7 @@ Page.getInitialProps = async function(context) {
   const userCategories = await fetchData(
     `User/U_Product/CategoiesHaveProduct?userId=${result.data.id}`,
     {
-      method: 'GET'
+      method: "GET"
     },
     context
   );
