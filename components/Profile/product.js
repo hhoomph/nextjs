@@ -1,49 +1,50 @@
-import React, { Fragment, useState, useEffect, useContext, memo } from 'react';
-import Link from '../Link';
-import fetchData from '../../utils/fetchData';
-import Router from 'next/router';
-import { UserProductsContext } from '../../context/context';
-import { FaShoppingBasket, FaTimesCircle } from 'react-icons/fa';
-import { ReactComponent as RemoveSvg } from '../../public/static/svg/remove-button.svg';
-import { ReactComponent as MenuCircleSvg } from '../../public/static/svg/menu-circle.svg';
-import { ReactComponent as DisableEye } from '../../public/static/svg/eye.svg';
-import { Dropdown } from 'react-bootstrap';
-import { numberSeparator, removeSeparator } from '../../utils/tools';
-import '../../scss/components/profileProduct.scss';
+import React, { Fragment, useState, useEffect, useContext, memo } from "react";
+import Link from "../Link";
+import fetchData from "../../utils/fetchData";
+import Router from "next/router";
+import { UserProductsContext } from "../../context/context";
+import { FaShoppingBasket, FaTimesCircle } from "react-icons/fa";
+import { IoMdMore } from "react-icons/io";
+import { ReactComponent as RemoveSvg } from "../../public/static/svg/remove-button.svg";
+import { ReactComponent as MenuCircleSvg } from "../../public/static/svg/menu-circle.svg";
+import { ReactComponent as DisableEye } from "../../public/static/svg/eye.svg";
+import { Dropdown } from "react-bootstrap";
+import { numberSeparator, removeSeparator } from "../../utils/tools";
+import "../../scss/components/profileProduct.scss";
 const Product = props => {
-  const disableClass = props.isDisable ? 'enable' : 'disable';
-  const disableText = props.isDisable ? 'فعال کردن' : 'غیر فعال کردن';
+  const disableClass = props.isDisable ? "enable" : "disable";
+  const disableText = props.isDisable ? "فعال کردن" : "غیر فعال کردن";
   const userProductsDispatch = useContext(UserProductsContext);
   const disableToggle = async () => {
     const result = await fetchData(
       `User/U_Product/EnableOrDisableProduct?ProductId=${props.id}`,
       {
-        method: 'GET'
+        method: "GET"
       },
       props.ctx
     );
     if (result.isSuccess) {
-      userProductsDispatch({ type: 'active', payload: props.id });
+      userProductsDispatch({ type: "active", payload: props.id });
     }
   };
   const deleteProduct = async () => {
     const result = await fetchData(
       `User/U_Product/Delete?ProductId=${props.id}`,
       {
-        method: 'GET'
+        method: "GET"
       },
       props.ctx
     );
     if (result.isSuccess) {
-      userProductsDispatch({ type: 'remove', payload: props.id });
+      userProductsDispatch({ type: "remove", payload: props.id });
     }
   };
   const addToCart = async () => {
     //setLoading(true);
     const result = await fetchData(
-      'User/U_Cart/Add',
+      "User/U_Cart/Add",
       {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({
           productId: props.id,
           count: 1
@@ -87,7 +88,7 @@ const Product = props => {
                     eventKey="1"
                     onClick={() =>
                       Router.push({
-                        pathname: '/edit-product',
+                        pathname: "/edit-product",
                         query: { id: props.id }
                       })
                     }

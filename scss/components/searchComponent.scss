@@ -2,6 +2,10 @@
 .search_component {
   top: 0;
   border-bottom: 1px solid #E0E0E0;
+  .page_title{
+    text-align: right;
+    font-weight: 600;
+  }
   ul.filters {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -102,4 +106,6 @@
       color: #d2d2d2;
     }
   }
+}
+.activity_page{
 }
