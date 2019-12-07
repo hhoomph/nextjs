@@ -29,8 +29,8 @@ const FirstUserSuggest = props => {
     <div className="container user_Suggestion first_user_suggest">
       <div className="row">
         <div className="col p-0 pt-1 text-center rtl">
-          <h2>به بازار قارون خوش آمدید!</h2>
-          <p className="intro_text">دوستانتان را دنبال کنید تا همیشه به محصولات آنها دسترسی داشته باشید</p>
+          {/* <h2>به بازار قارون خوش آمدید!</h2>
+          <p className="intro_text">دوستانتان را دنبال کنید تا همیشه به محصولات آنها دسترسی داشته باشید</p> */}
           <div className="d-flex justify-content-start pb-1 rtl over_flow">{renderUsers}</div>
         </div>
       </div>
