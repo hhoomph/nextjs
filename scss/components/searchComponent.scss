@@ -2,7 +2,7 @@
 .search_component {
   top: 0;
   border-bottom: 1px solid #E0E0E0;
-  .page_title{
+  .page_title {
     text-align: right;
     font-weight: 600;
   }
@@ -76,6 +76,12 @@
       color: #212121;
       cursor: pointer;
     }
+    .user_name {
+      display: inline-block;
+      margin-right: 1rem;
+      color: #212121;
+      cursor: pointer;
+    }
     .displayName {
       display: block;
       padding-right: 4rem;
@@ -107,5 +113,68 @@
     }
   }
 }
-.activity_page{
+.activity_page {
+  .user {
+    .link {
+      //width: 15%;
+    }
+    .product_image {
+      cursor: pointer;
+      float: right;
+      min-width: 80px;
+      text-align: center;
+      img {
+        width: auto;
+        height: auto;
+        max-width: 2.8rem;
+        border-radius: 0.1rem;
+        margin: auto;
+        display: block;
+      }
+    }
+    ._txt {
+      //width: 85%;
+      //float: left;
+      padding: 4px;
+      padding-right: 1.45rem;
+      padding-left: 0.85rem;
+      direction: ltr;
+    }
+    .content {
+      .user_name {
+        display: inline-block;
+        margin-right: 0;
+        color: #212121;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .message,
+      .time {
+        display: inline;
+        padding-right: 4px;
+      }
+      .time {
+        color: #757575;
+        font-size: 0.8rem;
+        clear: left;
+      }
+    }
+    .btn-main {
+      cursor: pointer;
+      width: 76px;
+      font-size: 0.77rem;
+      padding-left: 10px;
+      padding-right: 10px;
+      border-radius: 4px;
+    }
+    .unfollow {
+      color: #333;
+      background: #ffffff;
+      border: 1px solid #b4b4b4;
+      &:hover,
+      &:active {
+        background: #feaa2d;
+      }
+    }
+  }
 }

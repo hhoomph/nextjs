@@ -12,13 +12,8 @@ const Nav = dynamic({
   loading: () => <Loading />,
   ssr: true
 });
-const Product = dynamic({
-  loader: () => import("../components/Search/Product"),
-  loading: () => <Loading />,
-  ssr: true
-});
 const User = dynamic({
-  loader: () => import("../components/Search/User"),
+  loader: () => import("../components/Activity/User"),
   loading: () => <Loading />,
   ssr: true
 });
@@ -103,16 +98,16 @@ const Page = props => {
           </div>
         </div>
       </div>
-      <div className="container rtl search_result activity_page">
-        <div className="row pl-1 pr-1">
-          <Product id={1} image={"/static/img/product5.jpg"} name={"کشمش پلویی نام محصول"} userName={""} price={numberSeparator(150000)} />
-          <User id={2} image={"/static/img/user.jpg"} name={"نام نمایشی"} userName={"user_name_UserName"} price={``} />
-          <Product id={1} image={"/static/img/product5.jpg"} name={"کشمش پلویی نام محصول"} userName={""} price={numberSeparator(150000)} />
-          <User id={2} image={"/static/img/user.png"} name={"نام نمایشی"} userName={"user_name_UserName"} price={``} />
-          <Product id={1} image={"/static/img/product5.jpg"} name={"کشمش پلویی نام محصول"} userName={""} price={numberSeparator(150000)} />
-          <User id={2} image={"/static/img/user.png"} name={"نام نمایشی"} userName={"user_name_UserName"} price={``} />
-          <Product id={1} image={"/static/img/product5.jpg"} name={"کشمش پلویی نام محصول"} userName={""} price={numberSeparator(150000)} />
-          <User id={2} image={"/static/img/profile.png"} name={"نام نمایشی"} userName={"user_name_UserName"} price={``} />
+      <div className="container pb-5 rtl search_result activity_page">
+        <div className="row pl-1 pr-1 pb-5 mb-5">
+          <User id={1} type={'invite'} image={"/static/img/user.jpg"} followed={false} productImage={"/static/img/product5.jpg"} productId={'1'} message={'متن پیام متن پیام'} name={"نام نمایشی"} userName={"user_name_UserName"} time={`2 هفته`} />
+          <User id={2} type={'productLike'} image={"/static/img/user.png"} followed={true} productImage={"/static/img/product4.jpg"} message={'شما را دنبال میکند'} name={"نام نمایشی"} userName={"user_name_UserName"} time={`1 روز پیش`} />
+          <User id={3} type={'follow'} image={"/static/img/user.png"} followed={true} productImage={"/static/img/product6.jpg"} message={'متن پیام متن پیام'} name={"نام نمایشی"} userName={"user_name_UserName"} time={`50 دقیقه`} />
+          <User id={4} type={'productLike'} image={"/static/img/profile.png"} followed={true} productImage={"/static/img/product5.jpg"} message={'پست شما را پسندید'} name={"نام نمایشی"} userName={"user_name_UserName"} time={`5 دقیقه پیش`} />
+          <User id={5} type={'productLike'} image={"/static/img/user.jpg"} followed={false} productImage={"/static/img/product4.jpg"} message={'متن پیام متن پیام'} name={"نام نمایشی"} userName={"user_name_UserName"} time={`1 ماه`} />
+          <User id={6} type={'productLike'} image={"/static/img/user.png"} followed={true} productImage={"/static/img/product6.jpg"} message={'شمار را دنبال میکند'} name={"نام نمایشی"} userName={"user_name_UserName"} time={`یک هفته`} />
+          <User id={7} type={'comment'} image={"/static/img/user.png"} followed={false} productImage={"/static/img/product5.jpg"} message={'متن پیام متن پیام'} name={"نام نمایشی"} userName={"user_name_UserName"} time={`1 روز پیش`} />
+          <User id={8} type={'commentLike'} image={"/static/img/profile.png"} followed={true} productImage={"/static/img/product6.jpg"} message={'پاسخ نطرتان "گرونه" را داد: "قیمت خریدمه"'} name={"نام نمایشی"} userName={"user_name_UserName"} time={`یک هفته پیش`} />
         </div>
       </div>
     </>

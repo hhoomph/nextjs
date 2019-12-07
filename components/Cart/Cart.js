@@ -43,6 +43,8 @@ const Cart = props => {
         <ProductRow productName={'نام کالای چهار'} productImage={'/static/img/product.png'} productPrice={250000} productQuantity={4} /> */}
         {renderProductsRow}
       </div>
+      {/* // Call To Seller
+      <a href="tel:+1-303-499-7111">+1 (303) 499-7111</a> */}
     </div>
   );
 };
