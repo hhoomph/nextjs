@@ -22,7 +22,7 @@ const FirstUserSuggest = props => {
       displayName={user.displayName}
       alt={user.displayName}
       isFollowed={user.isFollowed}
-      image={`https://api.qaroon.ir/${user.userAvatar}`}
+      image={`https://api.qarun.ir/${user.userAvatar}`}
     />
   ));
   return (

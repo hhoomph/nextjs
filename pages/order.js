@@ -46,7 +46,7 @@ function Page(props) {
       sellerId={cart.sellerId}
       userId={cart.userId}
       cartData={cart}
-      sellerAvatar={`https://api.qaroon.ir/${cart.sellerAvatar}`}
+      sellerAvatar={`https://api.qarun.ir/${cart.sellerAvatar}`}
       sellerName={''}
       setLoading={setLoading}
       // shopingCartId={cart.id}

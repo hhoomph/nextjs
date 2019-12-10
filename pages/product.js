@@ -71,7 +71,7 @@ function Page(props) {
   };
   const showProductImages = productData.pictures.map((image, index) => (
     <Carousel.Item key={index}>
-      <img src={`https://api.qaroon.ir/${image}`} className="product_image" />
+      <img src={`https://api.qarun.ir/${image}`} className="product_image" />
     </Carousel.Item>
   ));
   console.log(productData);
@@ -100,7 +100,7 @@ function Page(props) {
               <Link href={`/user/${productData.sellerUserName}`} passHref>
                 <a>
                   <p className="user_name">{productData.sellerUserName || ''}</p>
-                  <img src={productData.sellerUserAvatar ? `https://api.qaroon.ir/${productData.sellerUserAvatar}` : `/static/img/user.png`} className="userImage" />
+                  <img src={productData.sellerUserAvatar ? `https://api.qarun.ir/${productData.sellerUserAvatar}` : `/static/img/user.png`} className="userImage" />
                 </a>
               </Link>
             </div>
@@ -118,7 +118,7 @@ function Page(props) {
                   </Carousel.Caption>
                 </Carousel.Item> */}
                 {/* <Carousel.Item>
-                  <img src={productData.picture ? 'https://api.qaroon.ir/' + productData.picture : '/static/img/no-product-image.png'} className="product_image" />
+                  <img src={productData.picture ? 'https://api.qarun.ir/' + productData.picture : '/static/img/no-product-image.png'} className="product_image" />
                 </Carousel.Item> */}
                 {showProductImages}
               </Carousel>

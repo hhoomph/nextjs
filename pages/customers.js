@@ -41,11 +41,11 @@ function Page(props) {
   const showUsers =
     view == 1
       ? following.map(res => {
-          const img = res.userAvatar !== null ? `https://api.qaroon.ir/${res.userAvatar}` : '/static/img/no-product-image.png';
+          const img = res.userAvatar !== null ? `https://api.qarun.ir/${res.userAvatar}` : '/static/img/no-product-image.png';
           return <User key={res.id} id={res.id} image={img} name={res.displayName} followed={res.isFollowed} userName={res.userName} setUpdate={setUpdate} />;
         })
       : presented.map(res => {
-          const img = res.userAvatar !== null ? `https://api.qaroon.ir/${res.userAvatar}` : '/static/img/no-product-image.png';
+          const img = res.userAvatar !== null ? `https://api.qarun.ir/${res.userAvatar}` : '/static/img/no-product-image.png';
           return <User key={res.id} id={res.id} image={img} name={res.displayName} followed={res.isFollowed} userName={res.userName} setUpdate={setUpdate} />;
         });
   return (

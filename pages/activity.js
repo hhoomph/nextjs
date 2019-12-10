@@ -81,7 +81,7 @@ const Page = props => {
   //   handleSearch();
   // }, [search, filters]);
   // const showResult = searchResult.map(res => {
-  //   const img = res.avatar !== null ? `https://api.qaroon.ir/${res.avatar}` : '/static/img/no-product-image.png';
+  //   const img = res.avatar !== null ? `https://api.qarun.ir/${res.avatar}` : '/static/img/no-product-image.png';
   //   if (res.userId !== null) {
   //     return <User key={res.userId + res.userName} id={res.userId} image={img} name={res.displayName} userName={res.userName} price={``} />;
   //   } else {

@@ -128,7 +128,7 @@ function Page(props) {
     if (imageRef !== null && c.width && c.height) {
       const _croppedImageUrl = await getCroppedImg(imageRef, c, 'newFile.jpg');
       setCroppedImageUrl(_croppedImageUrl);
-      fileInput.current.value  = '';
+      fileInput.current.value = '';
     }
   };
   const getCroppedImg = (image, c, fileName) => {
@@ -190,8 +190,8 @@ function Page(props) {
           const suggestedPictures = suggestedPicturesResult.data.map(picture => {
             return {
               id: picture.pictureId,
-              url: `https://api.qaroon.ir/${picture.picture}`,
-              thumbnail: `https://api.qaroon.ir/${picture.thumbNail}`,
+              url: `https://api.qarun.ir/${picture.picture}`,
+              thumbnail: `https://api.qarun.ir/${picture.thumbNail}`,
               active: false
             };
           });
@@ -249,8 +249,8 @@ function Page(props) {
       const all = uploadedImages
         .concat({
           id: result.data.pictureId,
-          url: `https://api.qaroon.ir/${result.data.value}`,
-          thumbnail: `https://api.qaroon.ir/${result.data.thumbNail}`,
+          url: `https://api.qarun.ir/${result.data.value}`,
+          thumbnail: `https://api.qarun.ir/${result.data.thumbNail}`,
           active: true
         })
         .sort((a, b) => a.id - b.id);
