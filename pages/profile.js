@@ -132,93 +132,94 @@ function Page(props) {
     getUserProductFromCat();
   }, [catActive]);
   switch (view) {
-    case 1:
-      if (typeof window !== "undefined") {
-        //window.scroll(0, 0);
-      }
-      return (
-        <UserProductsContext.Provider value={userProductsDispatch}>
-          <Nav />
-          <ProfileHeader profileData={profileData} setView={setView} scrollToProducts={scrollToProducts} />
-          <div className="container mb-1 cat_product_row">
-            <div className="row">
-              <div className="col">
-                <div className="row d-flex justify-content-start rtl pr-2 categories">
-                  <Category categories={userCategories} catActive={catActive} setCatActive={setCatActive} setPage={setPage} />
-                </div>
+  case 1:
+    if (typeof window !== "undefined") {
+      //window.scroll(0, 0);
+    }
+    return (
+      <UserProductsContext.Provider value={userProductsDispatch}>
+        <Nav />
+        <ProfileHeader profileData={profileData} setView={setView} scrollToProducts={scrollToProducts} />
+        <div className="container mb-1 cat_product_row">
+          <div className="row">
+            <div className="col">
+              <div className="row d-flex justify-content-start rtl pr-2 categories">
+                <Category categories={userCategories} catActive={catActive} setCatActive={setCatActive} setPage={setPage} />
               </div>
             </div>
           </div>
-          <div className="container mb-5 pb-3 pt-3">
-            <div className="row d-flex justify-content-start rtl profile_products" ref={productRef}>
-              {showProducts}
-            </div>
-            {loading && (
-              <div
-                style={{
-                  display: "block !important",
-                  width: "100%",
-                  height: "40px",
-                  textAlign: "center",
-                  marginTop: "0.1rem"
-                }}
-              >
-                <Loading />
-              </div>
-            )}
+        </div>
+        <div className="container mb-5 pb-3 pt-3">
+          <div className="row d-flex justify-content-start rtl profile_products" ref={productRef}>
+            {showProducts}
           </div>
-        </UserProductsContext.Provider>
-      );
-      break;
-    case 2:
-      return (
-        <>
-          <Nav />
-          <EditProfile setView={setView} profileData={profileData} />
-        </>
-      );
-      break;
-    default:
-      if (typeof window !== "undefined") {
-        window.scroll(0, 0);
-      }
-      return (
-        <UserProductsContext.Provider value={userProductsDispatch}>
-          <Nav />
-          <ProfileHeader setView={setView} profileData={profileData} scrollToProducts={scrollToProducts} />
-          <div className="container mb-1 cat_product_row">
-            <div className="row">
-              <div className="col">
-                <div className="row d-flex justify-content-start rtl pr-2 categories">
-                  <Category categories={userCategories} catActive={catActive} setCatActive={setCatActive} setPage={setPage} />
-                </div>
+          {loading && (
+            <div
+              style={{
+                display: "block !important",
+                width: "100%",
+                height: "40px",
+                textAlign: "center",
+                marginTop: "0.1rem"
+              }}
+            >
+              <Loading />
+            </div>
+          )}
+        </div>
+      </UserProductsContext.Provider>
+    );
+    break;
+  case 2:
+    return (
+      <>
+        <Nav />
+        <EditProfile setView={setView} profileData={profileData} />
+      </>
+    );
+    break;
+  default:
+    if (typeof window !== "undefined") {
+      window.scroll(0, 0);
+    }
+    return (
+      <UserProductsContext.Provider value={userProductsDispatch}>
+        <Nav />
+        <ProfileHeader setView={setView} profileData={profileData} scrollToProducts={scrollToProducts} />
+        <div className="container mb-1 cat_product_row">
+          <div className="row">
+            <div className="col">
+              <div className="row d-flex justify-content-start rtl pr-2 categories">
+                <Category categories={userCategories} catActive={catActive} setCatActive={setCatActive} setPage={setPage} />
               </div>
             </div>
           </div>
-          <div className="container mb-5 pb-3 pt-3">
-            <div className="row d-flex justify-content-start rtl profile_products" ref={productRef}>
-              {showProducts}
-            </div>
-            {loading && (
-              <div
-                style={{
-                  display: "block !important",
-                  width: "100%",
-                  height: "40px",
-                  textAlign: "center",
-                  marginTop: "0.1rem"
-                }}
-              >
-                <Loading />
-              </div>
-            )}
+        </div>
+        <div className="container mb-5 pb-3 pt-3">
+          <div className="row d-flex justify-content-start rtl profile_products" ref={productRef}>
+            {showProducts}
           </div>
-        </UserProductsContext.Provider>
-      );
-      break;
+          {loading && (
+            <div
+              style={{
+                display: "block !important",
+                width: "100%",
+                height: "40px",
+                textAlign: "center",
+                marginTop: "0.1rem"
+              }}
+            >
+              <Loading />
+            </div>
+          )}
+        </div>
+      </UserProductsContext.Provider>
+    );
+    break;
   }
 }
 Page.getInitialProps = async function(context) {
+  const req = context.req;
   const result = await fetchData(
     "User/U_Account/Profile",
     {
@@ -242,19 +243,6 @@ Page.getInitialProps = async function(context) {
       context
     );
   }
-  // const userProducts = await fetchData(
-  //   'User/U_Product/UserProduct',
-  //   {
-  //     method: 'POST',
-  //     body: JSON.stringify({
-  //       userId: result.data.id,
-  //       categoryId: 1,
-  //       page: 1,
-  //       pageSize: 10
-  //     })
-  //   },
-  //   context
-  // );
   const userCategories = await fetchData(
     `User/U_Product/CategoiesHaveProduct?userId=${result.data.id}`,
     {
@@ -262,6 +250,6 @@ Page.getInitialProps = async function(context) {
     },
     context
   );
-  return { result, userProducts, userCategories };
+  return { result, userProducts, userCategories, isServer: !!req, date: new Date() };
 };
 export default Auth(Page);

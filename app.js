@@ -1,52 +1,52 @@
-const fs = require('fs');
-const { join } = require('path');
-const { parse } = require('url');
-const express = require('express');
-const next = require('next');
-const cookieParser = require('cookie-parser');
+//const fs = require("fs");
+const { join } = require("path");
+const { parse } = require("url");
+const express = require("express");
+const next = require("next");
+const cookieParser = require("cookie-parser");
 const port = parseInt(process.env.PORT, 10) || 3000;
-const nodemailer = require('nodemailer');
-const SMTPConnection = require('nodemailer/lib/smtp-connection');
-const SMTPServer = require('smtp-server').SMTPServer;
-const dev = process.env.NODE_ENV !== 'production';
+//const nodemailer = require("nodemailer");
+//const SMTPConnection = require("nodemailer/lib/smtp-connection");
+//const SMTPServer = require("smtp-server").SMTPServer;
+const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev, xPoweredBy: false });
 const handle = app.getRequestHandler();
 app
   .prepare()
   .then(() => {
     const server = express();
-    server.disable('x-powered-by');
+    server.disable("x-powered-by");
     server.use(cookieParser());
     server.use((req, res, next) => {
-      res.header('Access-Control-Allow-Origin', '*');
-      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Authorization, Accept');
-      res.header('Access-Control-Allow-Credentials', 'true');
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Authorization, Accept");
+      res.header("Access-Control-Allow-Credentials", "true");
       next();
     });
-    server.get('/user/manifest.json', (req, res) => {
+    server.get("/user/manifest.json", (req, res) => {
       const parsedUrl = parse(req.url, true);
       const { pathname } = parsedUrl;
-      const filePath = join(__dirname, 'public', pathname);
+      const filePath = join(__dirname, "public", pathname);
       app.serveStatic(req, res, filePath);
     });
-    server.get('/user/favicon.ico', (req, res) => {
+    server.get("/user/favicon.ico", (req, res) => {
       const parsedUrl = parse(req.url, true);
       const { pathname } = parsedUrl;
-      const filePath = join(__dirname, 'public', pathname);
+      const filePath = join(__dirname, "public", pathname);
       app.serveStatic(req, res, filePath);
     });
-    server.get('/user/:id', (req, res) => {
-      const actualPage = '/user';
+    server.get("/user/:id", (req, res) => {
+      const actualPage = "/user";
       const queryParams = { id: req.params.id };
       app.render(req, res, actualPage, queryParams);
     });
-    server.get('/product/manifest.json', (req, res) => {
-      const filePath = join(__dirname, 'public', '/manifest.json');
+    server.get("/product/manifest.json", (req, res) => {
+      const filePath = join(__dirname, "public", "/manifest.json");
       app.serveStatic(req, res, filePath);
     });
-    server.get('/product/favicon.ico', (req, res) => {
-      const filePath = join(__dirname, 'public', '/favicon.ico');
+    server.get("/product/favicon.ico", (req, res) => {
+      const filePath = join(__dirname, "public", "/favicon.ico");
       app.serveStatic(req, res, filePath);
     });
     // server.get('/product/manifest.json', (req, res) => {
@@ -61,17 +61,17 @@ app
     //   const filePath = join(__dirname, 'public', pathname);
     //   app.serveStatic(req, res, filePath);
     // });
-    server.get('/product/:id/:name', (req, res) => {
-      const actualPage = '/product';
+    server.get("/product/:id/:name", (req, res) => {
+      const actualPage = "/product";
       const queryParams = { id: req.params.id };
       app.render(req, res, actualPage, queryParams);
     });
-    server.get('/friends/manifest.json', (req, res) => {
-      const filePath = join(__dirname, 'public', '/manifest.json');
+    server.get("/friends/manifest.json", (req, res) => {
+      const filePath = join(__dirname, "public", "/manifest.json");
       app.serveStatic(req, res, filePath);
     });
-    server.get('/friends/favicon.ico', (req, res) => {
-      const filePath = join(__dirname, 'public', '/favicon.ico');
+    server.get("/friends/favicon.ico", (req, res) => {
+      const filePath = join(__dirname, "public", "/favicon.ico");
       app.serveStatic(req, res, filePath);
     });
     // server.get('/friends/manifest.json', (req, res) => {
@@ -86,17 +86,17 @@ app
     //   const filePath = join(__dirname, 'public', pathname);
     //   app.serveStatic(req, res, filePath);
     // });
-    server.get('/friends/:user/:id', (req, res) => {
-      const actualPage = '/friends';
+    server.get("/friends/:user/:id", (req, res) => {
+      const actualPage = "/friends";
       const queryParams = { id: req.params.id };
       app.render(req, res, actualPage, queryParams);
     });
-    server.get('/customers/manifest.json', (req, res) => {
-      const filePath = join(__dirname, 'public', '/manifest.json');
+    server.get("/customers/manifest.json", (req, res) => {
+      const filePath = join(__dirname, "public", "/manifest.json");
       app.serveStatic(req, res, filePath);
     });
-    server.get('/customers/favicon.ico', (req, res) => {
-      const filePath = join(__dirname, 'public', '/favicon.ico');
+    server.get("/customers/favicon.ico", (req, res) => {
+      const filePath = join(__dirname, "public", "/favicon.ico");
       app.serveStatic(req, res, filePath);
     });
     // server.get('/customers/manifest.json', (req, res) => {
@@ -111,18 +111,18 @@ app
     //   const filePath = join(__dirname, 'public', pathname);
     //   app.serveStatic(req, res, filePath);
     // });
-    server.get('/customers/:user/:id', (req, res) => {
-      const actualPage = '/customers';
+    server.get("/customers/:user/:id", (req, res) => {
+      const actualPage = "/customers";
       const queryParams = { id: req.params.id };
       app.render(req, res, actualPage, queryParams);
     });
-    server.get('/service-worker.js', (req, res) => {
+    server.get("/service-worker.js", (req, res) => {
       const parsedUrl = parse(req.url, true);
       const { pathname } = parsedUrl;
-      const filePath = join(__dirname, '.next', pathname);
+      const filePath = join(__dirname, ".next", pathname);
       app.serveStatic(req, res, filePath);
     });
-    server.get('*', (req, res) => {
+    server.get("*", (req, res) => {
       return handle(req, res);
     });
     server.listen(port, err => {
