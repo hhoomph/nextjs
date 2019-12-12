@@ -100,10 +100,7 @@ function Page(props) {
               <Link href={`/user/${productData.sellerUserName}`} passHref>
                 <a>
                   <p className="user_name">{productData.sellerUserName || ""}</p>
-                  <img
-                    src={productData.sellerUserAvatar ? `https://api.qarun.ir/${productData.sellerUserAvatar}` : "/static/img/user.png"}
-                    className="userImage"
-                  />
+                  <img src={productData.sellerUserAvatar ? `https://api.qarun.ir/${productData.sellerUserAvatar}` : "/static/img/user.png"} className="userImage" />
                 </a>
               </Link>
             </div>
@@ -132,7 +129,15 @@ function Page(props) {
         <div className="container pt-2 product_details">
           <div className="row">
             <div className="col-6 text-left _top_icons">
-              <div className="comment_counter">
+              <div
+                className="comment_counter"
+                onClick={() =>
+                  Router.push({
+                    pathname: "/comment",
+                    query: { id: productId }
+                  })
+                }
+              >
                 <div className="comment_count">{productData.commentCount || "0"}</div>
                 {/* <CommentSvg className="svg_icon" /> */}
                 <FaRegComment className="font_icon" />

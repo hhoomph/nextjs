@@ -229,7 +229,7 @@ Page.getInitialProps = async function(context) {
   );
   let userProducts = [];
   let userCategories = [];
-  if (result.data !== undefined && result.data.id !== undefined) {
+  if (result !== undefined && result.data !== undefined && result.data.id !== undefined) {
     userProducts = await fetchData(
       "User/U_Product/UserProduct",
       {

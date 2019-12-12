@@ -14,17 +14,10 @@ const FirstUser = dynamic({
 const FirstUserSuggest = props => {
   const users = props.users;
   const res = useContext(AppContext);
-  const renderUsers = users.map(user => (
-    <FirstUser
-      key={user.id}
-      id={user.id}
-      userName={user.userName}
-      displayName={user.displayName}
-      alt={user.displayName}
-      isFollowed={user.isFollowed}
-      image={`https://api.qarun.ir/${user.userAvatar}`}
-    />
-  ));
+  const renderUsers = users.map(user => {
+    const img = user.userAvatar !== null ? `https://api.qarun.ir/${user.userAvatar}` : "/static/img/no-userimage.svg";
+    return <FirstUser key={user.id} id={user.id} userName={user.userName} displayName={user.displayName} alt={user.displayName} isFollowed={user.isFollowed} image={img} />;
+  });
   return (
     <div className="container user_Suggestion first_user_suggest">
       <div className="row">

@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useRef, memo } from 'react';
-import Link from '../Link';
-import fetchData from '../../utils/fetchData';
-import Loading from '../Loader/Loader';
-import SubmitButton from '../Button/SubmitButton';
-import { FaTimes } from 'react-icons/fa';
+import React, { useState, useEffect, useRef, memo } from "react";
+import Link from "../Link";
+import fetchData from "../../utils/fetchData";
+import Loading from "../Loader/Loader";
+import SubmitButton from "../Button/SubmitButton";
+import { FaTimes } from "react-icons/fa";
 const User = props => {
   const [loading, setLoading] = useState(false);
-  const { type, image, followed, productImage, message, name, userName, time } = props;
+  const { type, image, productImage, message, name, userName, time } = props;
+  const [followed, setFollowed] = useState(props.followed || false);
   const followToggle = async () => {
     setLoading(true);
     const result = await fetchData(
       `User/U_Friends/Follow?userId=${props.id}`,
       {
-        method: 'GET'
+        method: "GET"
       },
       props.ctx
     );
@@ -27,7 +28,7 @@ const User = props => {
     const result = await fetchData(
       `User/U_Friends/UnFollow?userId=${props.id}`,
       {
-        method: 'GET'
+        method: "GET"
       },
       props.ctx
     );
@@ -50,7 +51,7 @@ const User = props => {
         <div className="col-10 _txt">
           <div className="row">
             <div className="col-4 m-auto pl-0">
-              {type === 'productLike' ? (
+              {type === "productLike" ? (
                 <Link href={`/user/${userName}`} passHref>
                   <a className="product_image">
                     <img src={productImage} />

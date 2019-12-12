@@ -1,24 +1,24 @@
-import React, { Fragment, useState, useContext, useRef, useEffect, memo } from 'react';
-import dynamic from 'next/dynamic';
-import Loading from '../components/Loader/Loader';
-import fetch from 'isomorphic-unfetch';
-import axios from 'axios';
-import nextCookie from 'next-cookies';
-import cookie from 'js-cookie';
-import '../scss/components/login.scss';
-import { secondsToMs, forceNumeric } from '../utils/tools';
-import useInterval from '../components/useInterval';
-import SubmitButton from '../components/Button/SubmitButton';
-import Nav from '../components/Nav/Nav';
-import LoginHeader from '../components/Head/loginHeader';
-import { ToastContainer, toast } from 'react-toastify';
-import getHost from '../utils/get-host';
-import Router from 'next/router';
+import React, { Fragment, useState, useContext, useRef, useEffect, memo } from "react";
+import dynamic from "next/dynamic";
+import Loading from "../components/Loader/Loader";
+import fetch from "isomorphic-unfetch";
+import axios from "axios";
+import nextCookie from "next-cookies";
+import cookie from "js-cookie";
+import "../scss/components/login.scss";
+import { secondsToMs, forceNumeric } from "../utils/tools";
+import useInterval from "../components/useInterval";
+import SubmitButton from "../components/Button/SubmitButton";
+import Nav from "../components/Nav/Nav";
+import LoginHeader from "../components/Head/loginHeader";
+import { ToastContainer, toast } from "react-toastify";
+import getHost from "../utils/get-host";
+import Router from "next/router";
 const EMAIL_RX = /[A-Z0-9a-z._%+-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,64}/;
 const Mobile_RX = /(\+98|0|98|0098)?([ ]|-|[()]){0,2}9[0-9]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/;
 const Page = props => {
   toast.configure({
-    position: 'top-right',
+    position: "top-right",
     autoClose: 5000,
     hideProgressBar: false,
     closeOnClick: true,
@@ -27,9 +27,9 @@ const Page = props => {
   });
   const View = () => {
     const [step, setStep] = useState(1);
-    const [userName, setUserName] = useState('');
-    const [reagent, setReagent] = useState('');
-    const [code, setCode] = useState('');
+    const [userName, setUserName] = useState("");
+    const [reagent, setReagent] = useState("");
+    const [code, setCode] = useState("");
     const [timer, setTimer] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const handleSubmitStep1 = async () => {
@@ -39,19 +39,19 @@ const Page = props => {
           setIsLoading(true);
           const apiUrl = `${getHost()}Common/C_Account/RegisterOrLogin`;
           const response = await fetch(apiUrl, {
-            method: 'POST',
+            method: "POST",
             headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': '*'
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*"
             },
             body: JSON.stringify({ phoneNumber_Or_Email: userName, marketerCode: reagent }),
-            credentials: 'include'
+            credentials: "include"
           });
           if (response != undefined && response.ok) {
             const result = await response.json();
             if (result.isSuccess) {
-              toast.success(`کد فعال سازی با موفقیت برای شما ارسال شد.`);
+              toast.success("کد فعال سازی با موفقیت برای شما ارسال شد.");
               setStep(2);
               setTimer(60);
             } else {
@@ -59,14 +59,14 @@ const Page = props => {
             }
             setIsLoading(false);
           } else {
-            toast.error(`متاسفانه خطایی رخ داده است. لطفا دوباره امتحان کنید.`);
+            toast.error("متاسفانه خطایی رخ داده است. لطفا دوباره امتحان کنید.");
             setIsLoading(false);
           }
         } else {
-          toast.warn('لطفا شماره موبایل یا ایمیل خود را به درستی وارد کنید.');
+          toast.warn("لطفا شماره موبایل یا ایمیل خود را به درستی وارد کنید.");
         }
       } else {
-        toast.warn('لطفا شماره موبایل یا ایمیل خود را وارد کنید.');
+        toast.warn("لطفا شماره موبایل یا ایمیل خود را وارد کنید.");
       }
     };
     useInterval(() => {
@@ -97,34 +97,34 @@ const Page = props => {
         setIsLoading(true);
         const apiUrl = `${getHost()}Common/C_Account/Token`;
         const response = await fetch(apiUrl, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
           },
           body: JSON.stringify({ phoneNumber_Or_Email: userName, code: code }),
-          credentials: 'include'
+          credentials: "include"
         });
         if (response != undefined && response.ok) {
           const result = await response.json();
           if (result.isSuccess) {
             const accessToken = result.data.accessToken;
             const refreshToken = result.data.refreshToken;
-            cookie.set('accessToken', accessToken, { expires: 30 });
-            cookie.set('refreshToken', refreshToken, { expires: 30 });
+            cookie.set("accessToken", accessToken, { expires: 30 });
+            cookie.set("refreshToken", refreshToken, { expires: 30 });
             //toast.success(`ورود شما با موفقیت انجام شد.`);
-            Router.push('/profile');
+            Router.push("/profile");
           } else {
             toast.warn(result.message);
           }
           setIsLoading(false);
         } else {
-          toast.error(`متاسفانه خطایی رخ داده است. لطفا دوباره امتحان کنید.`);
+          toast.error("متاسفانه خطایی رخ داده است. لطفا دوباره امتحان کنید.");
           setIsLoading(false);
         }
       } else {
-        toast.warn('لطفا کد ارسال شده به موبایل یا ایمیل خود را وارد کنید.');
+        toast.warn("لطفا کد ارسال شده به موبایل یا ایمیل خود را وارد کنید.");
       }
     };
     if (step == 1) {
@@ -145,7 +145,7 @@ const Page = props => {
                   className="form-control mt-1 mb-3"
                   placeholder=" موبایل &nbsp; | &nbsp; ایمیل "
                   onKeyPress={e => {
-                    if (e.key === 'Enter') {
+                    if (e.key === "Enter") {
                       e.preventDefault();
                       handleSubmitStep1();
                     }
@@ -186,7 +186,7 @@ const Page = props => {
                   className="form-control mt-1 mb-4"
                   placeholder=" کد ارسالی "
                   onKeyPress={e => {
-                    if (e.key === 'Enter') {
+                    if (e.key === "Enter") {
                       e.preventDefault();
                       handleSubmitStep2();
                     }

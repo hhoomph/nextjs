@@ -17,8 +17,8 @@ function Page(props) {
   const [view, setView] = useState(1);
   const Router = useRouter();
   const { id } = Router.query;
-  const [following, setFollowing] = useState(props.Following.data !== undefined ? props.Following.data : []);
-  const [presented, setPresented] = useState(props.Presented.data !== undefined ? props.Presented.data : []);
+  const [following, setFollowing] = useState(props.Following.data !== undefined && props.Following.data !== null ? props.Following.data : []);
+  const [presented, setPresented] = useState(props.Presented.data !== undefined && props.Following.data !== null ? props.Presented.data : []);
   const [update, setUpdate] = useState(Date());
   const updateUsers = async () => {
     const FollowingRes = await fetchData(
