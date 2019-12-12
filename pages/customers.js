@@ -1,15 +1,15 @@
-import React, { Fragment, useContext, useReducer, useRef, useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
-import Loading from '../components/Loader/Loading';
-import { useRouter } from 'next/router';
-import Nav from '../components/Nav/Nav';
-import ProfileHeader from '../components/Head/profileHeader';
-import Product from '../components/Profile/product';
-import Auth from '../components/Auth/Auth';
-import fetchData from '../utils/fetchData';
-import '../scss/components/friends.scss';
+import React, { Fragment, useContext, useReducer, useRef, useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+import Loading from "../components/Loader/Loading";
+import { useRouter } from "next/router";
+import Nav from "../components/Nav/Nav";
+import ProfileHeader from "../components/Head/profileHeader";
+import Product from "../components/Profile/product";
+import Auth from "../components/Auth/Auth";
+import fetchData from "../utils/fetchData";
+import "../scss/components/friends.scss";
 const User = dynamic({
-  loader: () => import('../components/Friend/User'),
+  loader: () => import("../components/Friend/User"),
   loading: () => <Loading />,
   ssr: true
 });
@@ -17,13 +17,13 @@ function Page(props) {
   const [view, setView] = useState(1);
   const Router = useRouter();
   const { id } = Router.query;
-  const [following, setFollowing] = useState(props.Follower.data !== null ? props.Follower.data : []);
+  const [following, setFollowing] = useState(props.Follower.data !== undefined ? props.Follower.data : []);
   const [update, setUpdate] = useState(Date());
   const updateUsers = async () => {
     const Follower = await fetchData(
       `User/U_Friends/OtherFollower?userId=${id}`,
       {
-        method: 'GET'
+        method: "GET"
       },
       props.ctx
     );
@@ -38,16 +38,10 @@ function Page(props) {
   useEffect(() => {
     updateUsers();
   }, [update]);
-  const showUsers =
-    view == 1
-      ? following.map(res => {
-          const img = res.userAvatar !== null ? `https://api.qarun.ir/${res.userAvatar}` : '/static/img/no-product-image.png';
-          return <User key={res.id} id={res.id} image={img} name={res.displayName} followed={res.isFollowed} userName={res.userName} setUpdate={setUpdate} />;
-        })
-      : presented.map(res => {
-          const img = res.userAvatar !== null ? `https://api.qarun.ir/${res.userAvatar}` : '/static/img/no-product-image.png';
-          return <User key={res.id} id={res.id} image={img} name={res.displayName} followed={res.isFollowed} userName={res.userName} setUpdate={setUpdate} />;
-        });
+  const showUsers = following.map(res => {
+    const img = res.userAvatar !== null ? `https://api.qarun.ir/${res.userAvatar}` : "/static/img/no-product-image.png";
+    return <User key={res.id} id={res.id} image={img} name={res.displayName} followed={res.isFollowed} userName={res.userName} setUpdate={setUpdate} />;
+  });
   return (
     <>
       <Nav />
@@ -70,7 +64,7 @@ Page.getInitialProps = async function(context) {
   const Follower = await fetchData(
     `User/U_Friends/OtherFollower?userId=${id}`,
     {
-      method: 'GET'
+      method: "GET"
     },
     context
   );

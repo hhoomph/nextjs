@@ -1,33 +1,34 @@
-import React, { Fragment, useContext, useReducer, useRef, useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
-import Loading from '../components/Loader/Loading';
-import { useRouter } from 'next/router';
-import Head from 'next/head';
-import Nav from '../components/Nav/Nav';
-import ProfileHeader from '../components/Head/profileHeader';
-import Product from '../components/Profile/product';
-import Auth from '../components/Auth/Auth';
-import fetchData from '../utils/fetchData';
-import SubmitButton from '../components/Button/SubmitButton';
-import { numberSeparator, removeSeparator, forceNumeric } from '../utils/tools';
-import { FaArrowLeft, FaArrowRight, FaMinus, FaPlus, FaCaretDown, FaCaretUp, FaExchangeAlt, FaMoneyBill } from 'react-icons/fa';
-import Modal from 'react-bootstrap/Modal';
-import { ToastContainer, toast } from 'react-toastify';
-import '../scss/components/inventory.scss';
+import React, { Fragment, useContext, useReducer, useRef, useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+import Loading from "../components/Loader/Loading";
+import { useRouter } from "next/router";
+import Head from "next/head";
+import Nav from "../components/Nav/Nav";
+import ProfileHeader from "../components/Head/profileHeader";
+import Product from "../components/Profile/product";
+import Auth from "../components/Auth/Auth";
+import fetchData from "../utils/fetchData";
+import SubmitButton from "../components/Button/SubmitButton";
+import { numberSeparator, removeSeparator, forceNumeric } from "../utils/tools";
+import { FaArrowLeft, FaArrowRight, FaMinus, FaPlus, FaCaretDown, FaCaretUp, FaExchangeAlt, FaMoneyBill } from "react-icons/fa";
+import Modal from "react-bootstrap/Modal";
+import { ToastContainer, toast } from "react-toastify";
+import "../scss/components/inventory.scss";
 const User = dynamic({
-  loader: () => import('../components/Friend/User'),
+  loader: () => import("../components/Friend/User"),
   loading: () => <Loading />,
   ssr: true
 });
 function Page(props) {
   const [loading, setLoading] = useState(false);
   const [modalShow, setModalShow] = useState(false);
-  const [sellQerun, setSellQerun] = useState('');
+  const [sellQerun, setSellQerun] = useState("");
   const Inventory = props.Inventory ? props.Inventory.data : [];
+  const [qerun, setQerun] = useState(Inventory.qerun || 0);
   const Transactions = Inventory.transactions || [];
   const GetWithdrawal = props.GetWithdrawal ? props.GetWithdrawal.data : [];
   toast.configure({
-    position: 'top-right',
+    position: "top-right",
     autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
@@ -37,14 +38,14 @@ function Page(props) {
   const showTransactions = Transactions.map(t => {
     const type = t.type;
     const icon = () => {
-      if (type == 'Sell' || type == 'ByAdmin ') {
+      if (type == "Sell" || type == "ByAdmin ") {
         return <FaCaretUp className="font_icon" />;
       } else {
         return <FaCaretDown className="font_icon" />;
       }
     };
     return (
-      <div className={`col-12 d-flex ${type}`}>
+      <div className={`col-12 d-flex ${type}`} key={t.date + t.amount}>
         <p className="amount">{numberSeparator(t.amount)}</p>
         <p className="date">{t.dateP}</p>
         {icon}
@@ -52,12 +53,12 @@ function Page(props) {
     );
   });
   const sellQerunToQarun = async () => {
-    if (sellQerun !== '' && sellQerun > 0) {
+    if (sellQerun !== "" && sellQerun > 0) {
       setLoading(true);
       const result = await fetchData(
-        'User/U_Financial/SaleQerun',
+        "User/U_Financial/SaleQerun",
         {
-          method: 'POST',
+          method: "POST",
           body: JSON.stringify({
             qerun: sellQerun
           })
@@ -67,7 +68,7 @@ function Page(props) {
       setModalShow(false);
       if (result.isSuccess) {
         setModalShow(false);
-        toast.success('با موفقیت انجام شد.');
+        toast.success("با موفقیت انجام شد.");
       } else if (result.message != undefined) {
         toast.warn(result.message);
       } else if (result.error != undefined) {
@@ -75,7 +76,7 @@ function Page(props) {
       }
       setLoading(false);
     } else {
-      toast.warn('لطفا مقدار قرون را مشخص کنید');
+      toast.warn("لطفا مقدار قرون را مشخص کنید");
     }
   };
   return (
@@ -87,6 +88,7 @@ function Page(props) {
       <div className="container pt-3 inventory_page">
         <div className="row">
           <div className="col-12 text-center">
+            <p className="inventory_price rtl">{numberSeparator(qerun)}</p>
             <p className="inventory_price rtl">{numberSeparator(0)} تومان</p>
           </div>
         </div>
@@ -96,12 +98,12 @@ function Page(props) {
           </div>
         </div>
         <div className="row">
-          <div className="col-12 d-block pb-2" style={{ position: 'relative', zIndex: '1' }}>
+          <div className="col-12 d-block pb-2" style={{ position: "relative", zIndex: "1" }}>
             <div className="col-6 text-center float-right">
               <SubmitButton loading={loading} onClick={() => setModalShow(true)} text="فروش" className="d-inline-block btn-main sell"></SubmitButton>
             </div>
             <div className="col-6 text-center float-left">
-              <SubmitButton loading={loading} onClick={console.log('')} text="انتقال" className="d-inline-block btn-main"></SubmitButton>
+              <SubmitButton loading={loading} onClick={console.log("")} text="انتقال" className="d-inline-block btn-main"></SubmitButton>
             </div>
           </div>
         </div>
@@ -140,20 +142,20 @@ function Page(props) {
   );
 }
 Page.getInitialProps = async function(context) {
-  // const Inventory = await fetchData(
-  //   `User/U_Financial/Inventory`,
-  //   {
-  //     method: "GET"
-  //   },
-  //   context
-  // );
-  // const GetWithdrawal = await fetchData(
-  //   `User/U_Financial/GetWithdrawal`,
-  //   {
-  //     method: "GET"
-  //   },
-  //   context
-  // );
-  // return { Inventory, GetWithdrawal };
+  const Inventory = await fetchData(
+    "User/U_Financial/Inventory",
+    {
+      method: "GET"
+    },
+    context
+  );
+  const GetWithdrawal = await fetchData(
+    "User/U_Financial/GetWithdrawal",
+    {
+      method: "GET"
+    },
+    context
+  );
+  return { Inventory, GetWithdrawal };
 };
 export default Auth(Page);

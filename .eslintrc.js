@@ -24,10 +24,11 @@ module.exports = {
   plugins: ["react"],
   rules: {
     indent: [2, 2],
-    "linebreak-style": ["error", "windows"],
+    "linebreak-style": ["warn", "windows"],
     "no-unused-vars": 0,
-    quotes: ["error", "double"],
-    semi: ["error", "always"],
+    "no-unreachable": 1,
+    quotes: ["warn", "double"],
+    semi: ["warn", "always"],
     "react/react-in-jsx-scope": "off",
     "react/prop-types": 0,
     "react/prefer-stateless-function": 0,
@@ -36,6 +37,7 @@ module.exports = {
     "jsx-a11y/href-no-hash": 0,
     "jsx-a11y/anchor-is-valid": 0,
     "no-underscore-dangle": 0,
-    "react/no-find-dom-node": 0
+    "react/no-find-dom-node": 0,
+    "react/display-name": [0, { ignoreTranspilerName: true }]
   }
 };

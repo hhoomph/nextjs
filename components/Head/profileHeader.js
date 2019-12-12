@@ -35,7 +35,7 @@ const Header = props => {
     if (avatarUrl !== null) {
       return <img src={avatarUrl} alt="user image" className="rounded-circle" />;
     } else {
-      return <img src={`/static/svg/user-circle.svg`} alt="user image" className="rounded-circle" />;
+      return <img src={"/static/img/no-userimage.svg"} alt="user image" className="rounded-circle" />;
     }
   };
   return (
@@ -46,43 +46,8 @@ const Header = props => {
             <a className="nav_Icons active">
               <AddUserSvg className="svg_Icons" />
             </a>
-            {/* <Dropdown drop="left" className="dropDownMenu">
-              <Dropdown.Toggle>
-                <a className="nav_Icons active">
-                  <AddUserSvg className="svg_Icons" />
-                </a>
-              </Dropdown.Toggle>
-              <Dropdown.Menu className="rtl">
-                <Dropdown.Item eventKey="1">منو یک</Dropdown.Item>
-                <Dropdown.Item eventKey="2" active>من دو</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item eventKey="4">خروج</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown> */}
           </div>
           <div className="col-6 pr-4 d-flex justify-content-end">
-            {/* <a
-              className="nav_Icons"
-              onClick={() => {
-                toggleMenu();
-              }}
-            >
-              <MenuCircleSvg className="svg_Icons" />
-            </a>
-            <div className="d-flex col p-3 rtl justify-content-start position-absolute flex-column profile_menu hidden" id="profileMenu">
-              <ul className="nav flex-column">
-                <a className="nav-link">دوستان</a>
-                <a className="nav-link">دنبال شده ها</a>
-                <a
-                  className="nav-link"
-                  onClick={() => {
-                    Logout();
-                  }}
-                >
-                  خروج
-                </a>
-              </ul>
-            </div> */}
             <Dropdown drop="left" className="dropDownMenu">
               <Dropdown.Toggle>
                 <a className="nav_Icons">
@@ -185,7 +150,7 @@ const Header = props => {
               }
             >
               <p>موجودی</p>
-              <p className="inventory">{`${walletCharge} ` || `0 `}</p>
+              <p className="inventory">{walletCharge ? `${walletCharge} ` : "0 "}</p>
             </div>
             <div
               className="col-4 d-block text-center"
@@ -196,18 +161,18 @@ const Header = props => {
               }
             >
               <p>قرون</p>
-              <p className="debt">{qerun ? `${qerun} ` : `0 `}</p>
+              <p className="debt">{qerun ? `${qerun} ` : "0 "}</p>
             </div>
             <Link href="/orders" passHref>
               <div className="col-4 d-block text-center">
                 <p>سفارشات</p>
-                <p className="orders">{marketingAmount ? `${marketingAmount} ` : `0 `}</p>
+                <p className="orders">{marketingAmount ? `${marketingAmount} ` : "0 "}</p>
               </div>
             </Link>
           </div>
           <div className="col-12 pt-3">
             <h2 className="title">{displayName}</h2>
-            <p className="bio">{biography ? `${biography}` : ` `}</p>
+            <p className="bio">{biography ? `${biography}` : " "}</p>
             {/* <Link href="/profileEdit" passHref>
               <a className="btn btn-main">ویرایش</a>
             </Link> */}

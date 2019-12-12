@@ -22,7 +22,7 @@ const EditProfile = dynamic({
 function Page(props) {
   const [view, setView] = useState(1);
   const resultData = props.result.data || [];
-  const productsData = props.userProducts.data.model || [];
+  const productsData = props.userProducts.data !== undefined ? props.userProducts.data.model : [];
   const [profileData, setProfileData] = useState(resultData);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -228,7 +228,8 @@ Page.getInitialProps = async function(context) {
     context
   );
   let userProducts = [];
-  if (result !== undefined) {
+  let userCategories = [];
+  if (result.data !== undefined && result.data.id !== undefined) {
     userProducts = await fetchData(
       "User/U_Product/UserProduct",
       {
@@ -242,14 +243,14 @@ Page.getInitialProps = async function(context) {
       },
       context
     );
+    userCategories = await fetchData(
+      `User/U_Product/CategoiesHaveProduct?userId=${result.data.id}`,
+      {
+        method: "GET"
+      },
+      context
+    );
   }
-  const userCategories = await fetchData(
-    `User/U_Product/CategoiesHaveProduct?userId=${result.data.id}`,
-    {
-      method: "GET"
-    },
-    context
-  );
   return { result, userProducts, userCategories, isServer: !!req, date: new Date() };
 };
 export default Auth(Page);

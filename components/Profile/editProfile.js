@@ -3,7 +3,7 @@ import Link from '../Link';
 import dynamic from 'next/dynamic';
 import Loading from '../Loader/Loader';
 import { FaCheck, FaTimes } from 'react-icons/fa';
-import { ReactComponent as UserImageSvg } from '../../public/static/img/user-circle.svg';
+import { ReactComponent as UserImageSvg } from '../../public/static/img/no-userimage.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import fetchData from '../../utils/fetchData';
 import Router from 'next/router';

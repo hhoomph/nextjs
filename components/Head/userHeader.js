@@ -1,22 +1,22 @@
-import React, { useState, useEffect, memo } from 'react';
-import Link from '../Link';
-import Router from 'next/router';
-import fetchData from '../../utils/fetchData';
-import Loading from '../Loader/Loader';
-import SubmitButton from '../Button/SubmitButton';
-import { FaShoppingBasket, FaRegUserCircle } from 'react-icons/fa';
-import { ReactComponent as SendSvg } from '../../public/static/svg/send.svg';
-import { ReactComponent as AddUserSvg } from '../../public/static/svg/add-user.svg';
-import { ReactComponent as DistanceSvg } from '../../public/static/svg/distance.svg';
-import { ToastContainer, toast } from 'react-toastify';
-import '../../scss/components/profileHeader.scss';
+import React, { useState, useEffect, memo } from "react";
+import Link from "../Link";
+import Router from "next/router";
+import fetchData from "../../utils/fetchData";
+import Loading from "../Loader/Loader";
+import SubmitButton from "../Button/SubmitButton";
+import { FaShoppingBasket, FaRegUserCircle } from "react-icons/fa";
+import { ReactComponent as SendSvg } from "../../public/static/svg/send.svg";
+import { ReactComponent as AddUserSvg } from "../../public/static/svg/add-user.svg";
+import { ReactComponent as DistanceSvg } from "../../public/static/svg/distance.svg";
+import { ToastContainer, toast } from "react-toastify";
+import "../../scss/components/profileHeader.scss";
 const Header = props => {
   const nextCtx = props.ctx;
   const profileData = props.profileData;
   const [loading, setLoading] = useState(false);
   const [followed, setFollowed] = useState(profileData.followed);
   toast.configure({
-    position: 'top-right',
+    position: "top-right",
     autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
@@ -27,7 +27,7 @@ const Header = props => {
     if (profileData.avatar && profileData.avatar != null) {
       return <img src={`https://api.qarun.ir/${profileData.avatar}`} alt="user image" className="rounded-circle" />;
     } else {
-      return <img src={`/static/svg/user-circle.svg`} alt="user image" className="rounded-circle" />;
+      return <img src={"/static/img/no-userimage.svg"} alt="user image" className="rounded-circle" />;
     }
   };
   const UserStatus = () => {
@@ -42,7 +42,7 @@ const Header = props => {
     const result = await fetchData(
       `User/U_Friends/Follow?userId=${profileData.id}`,
       {
-        method: 'GET'
+        method: "GET"
       },
       nextCtx
     );
@@ -60,7 +60,7 @@ const Header = props => {
     const result = await fetchData(
       `User/U_Friends/UnFollow?userId=${profileData.id}`,
       {
-        method: 'GET'
+        method: "GET"
       },
       nextCtx
     );
@@ -111,7 +111,7 @@ const Header = props => {
             onClick={() =>
               Router.push(
                 {
-                  pathname: '/friends',
+                  pathname: "/friends",
                   query: { id: profileData.id }
                 },
                 `/friends/${profileData.userName}/${profileData.id}`
@@ -126,7 +126,7 @@ const Header = props => {
             onClick={() =>
               Router.push(
                 {
-                  pathname: '/customers',
+                  pathname: "/customers",
                   query: { id: profileData.id }
                 },
                 `/customers/${profileData.userName}/${profileData.id}`
@@ -151,19 +151,6 @@ const Header = props => {
               ) : (
                 <SubmitButton loading={loading} onClick={() => followToggle()} text="دنبال کردن" className="btn btn-main follow" />
               )}
-              {/* <SubmitButton
-                loading={loading}
-                onClick={() => {
-                  console.log(followed)
-                  if (followed) {
-                    unFollowToggle();
-                  } else {
-                    followToggle();
-                  }
-                }}
-                text={followed ? 'لغو دنبال' : 'دنبال کردن'}
-                className="btn btn-main follow"
-              /> */}
             </div>
             <div className="col-6 d-block distance">
               <DistanceSvg className="svg_Icons" />
@@ -173,7 +160,7 @@ const Header = props => {
           <div className="col-12 pt-3">
             <h2 className="title">{profileData.displayName}</h2>
             <p className="bio">{profileData.biography}</p>
-            <img className="logo_img" src={`/static/img/logo_opacity.png`} />
+            <img className="logo_img" src={"/static/img/logo_opacity.png"} />
           </div>
         </div>
       </div>
