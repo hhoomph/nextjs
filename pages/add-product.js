@@ -1,21 +1,21 @@
-import React, { Fragment, useContext, useRef, useState, useEffect, memo } from 'react';
-import dynamic from 'next/dynamic';
-import Loading from '../components/Loader/Loading';
-import Router from 'next/router';
-import Nav from '../components/Nav/Nav';
-import Auth from '../components/Auth/Auth';
-import fetchData from '../utils/fetchData';
-import { FaCheck, FaArrowLeft, FaArrowRight, FaTimes, FaPlus } from 'react-icons/fa';
-import { MdAddCircle, MdAddAPhoto } from 'react-icons/md';
+import React, { Fragment, useContext, useRef, useState, useEffect, memo } from "react";
+import dynamic from "next/dynamic";
+import Loading from "../components/Loader/Loading";
+import Router from "next/router";
+import Nav from "../components/Nav/Nav";
+import Auth from "../components/Auth/Auth";
+import fetchData from "../utils/fetchData";
+import { FaCheck, FaArrowLeft, FaArrowRight, FaTimes, FaPlus } from "react-icons/fa";
+import { MdAddCircle, MdAddAPhoto } from "react-icons/md";
 //import Select from "react-select";
-import { ToastContainer, toast } from 'react-toastify';
-import { numberSeparator, removeSeparator, forceNumeric } from '../utils/tools';
-import SubmitButton from '../components/Button/SubmitButton';
-import ReactCrop from 'react-image-crop';
-import Modal from 'react-bootstrap/Modal';
-import RRS from 'react-responsive-select';
-import 'react-image-crop/lib/ReactCrop.scss';
-import '../scss/components/addProduct.scss';
+import { ToastContainer, toast } from "react-toastify";
+import { numberSeparator, removeSeparator, forceNumeric } from "../utils/tools";
+import SubmitButton from "../components/Button/SubmitButton";
+import ReactCrop from "react-image-crop";
+import Modal from "react-bootstrap/Modal";
+import RRS from "react-responsive-select";
+import "react-image-crop/lib/ReactCrop.scss";
+import "../scss/components/addProduct.scss";
 //import { setTimeout } from 'core-js';
 function Page(props) {
   const nextCtx = props.ctx;
@@ -36,12 +36,12 @@ function Page(props) {
   });
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [discount, setDiscount] = useState('');
-  const [lat, setLat] = useState('');
-  const [long, setLong] = useState('');
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [discount, setDiscount] = useState("");
+  const [lat, setLat] = useState("");
+  const [long, setLong] = useState("");
   const [productId, setProductId] = useState(null);
   const [categoryId, setCategoryId] = useState(null);
   // const handleCategoryChange = selectedOption => {
@@ -67,14 +67,14 @@ function Page(props) {
     if (!key) {
       key = String.fromCharCode(event.which || event.code);
     }
-    if ((key === 'Enter' || key === 'Spacebar' || key === 'Space' || key === ' ') && event.target.value.trim() !== '' && event.target.value.trim() !== ' ') {
+    if ((key === "Enter" || key === "Spacebar" || key === "Space" || key === " ") && event.target.value.trim() !== "" && event.target.value.trim() !== " ") {
       let reg = /^#.*/g;
       let val = event.target.value.trim();
       if (!reg.test(val)) {
-        val = '#' + val;
+        val = "#" + val;
       }
       setTags([...tags, val]);
-      event.target.value = '';
+      event.target.value = "";
     }
   };
   const removeTags = index => {
@@ -82,7 +82,7 @@ function Page(props) {
   };
   const [view, setView] = useState(1);
   toast.configure({
-    position: 'top-right',
+    position: "top-right",
     autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
@@ -95,7 +95,7 @@ function Page(props) {
   const [modalShow, setModalShow] = useState(false);
   const [src, setSrc] = useState(null);
   const [crop, setCrop] = useState({
-    unit: '%',
+    unit: "%",
     width: 50,
     height: 50,
     // minWidth: 640,
@@ -110,7 +110,7 @@ function Page(props) {
   const onSelectFile = e => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
-      reader.addEventListener('load', () => setSrc(reader.result));
+      reader.addEventListener("load", () => setSrc(reader.result));
       reader.readAsDataURL(e.target.files[0]);
       setModalShow(true);
     }
@@ -126,40 +126,40 @@ function Page(props) {
   };
   const makeClientCrop = async c => {
     if (imageRef !== null && c.width && c.height) {
-      const _croppedImageUrl = await getCroppedImg(imageRef, c, 'newFile.jpg');
+      const _croppedImageUrl = await getCroppedImg(imageRef, c, "newFile.jpg");
       setCroppedImageUrl(_croppedImageUrl);
-      fileInput.current.value = '';
+      fileInput.current.value = "";
     }
   };
   const getCroppedImg = (image, c, fileName) => {
-    const canvas = document.createElement('canvas');
+    const canvas = document.createElement("canvas");
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
     canvas.width = 640;
     canvas.height = 800;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     ctx.drawImage(image, c.x * scaleX, c.y * scaleY, c.width * scaleX, c.height * scaleY, 0, 0, 640, 800);
     return new Promise((resolve, reject) => {
       canvas.toBlob(blob => {
         if (!blob) {
-          console.error('Canvas is empty');
+          console.error("Canvas is empty");
           return;
         }
         blob.name = fileName;
         //window.URL.revokeObjectURL(fileUrl);
         //fileUrl = window.URL.createObjectURL(blob);
         resolve(blob);
-      }, 'image/jpeg');
+      }, "image/jpeg");
     });
   };
   // End Of Crop Image
   const addProduct = async () => {
-    if (categoryId !== null && title != '') {
+    if (categoryId !== null && title != "") {
       setLoading(true);
       const result = await fetchData(
-        'User/U_Product/Add',
+        "User/U_Product/Add",
         {
-          method: 'POST',
+          method: "POST",
           body: JSON.stringify({
             title: title,
             description: description,
@@ -177,8 +177,8 @@ function Page(props) {
       if (result.isSuccess) {
         setProductId(result.data.productId);
         //toast.success('محصول شما با موفقیت ایجاد شد، لطفا تصویر محصول را انتخاب کنید.');
-        const suggestedPicturesResult = await fetchData('Common/C_Image/ProductSuggestedPictures', {
-          method: 'POST',
+        const suggestedPicturesResult = await fetchData("Common/C_Image/ProductSuggestedPictures", {
+          method: "POST",
           body: JSON.stringify({
             categoryId: categoryId ? categoryId.value : null,
             productTitle: title,
@@ -208,10 +208,10 @@ function Page(props) {
       }
       setLoading(false);
     } else {
-      if (title == '') {
-        toast.warn('لطفا نام محصول را وارد کنید.');
+      if (title == "") {
+        toast.warn("لطفا نام محصول را وارد کنید.");
       } else if (categoryId == null) {
-        toast.warn('لطفا دسته بندی محصول خود را مشخص کنید.');
+        toast.warn("لطفا دسته بندی محصول خود را مشخص کنید.");
       }
     }
   };
@@ -221,25 +221,25 @@ function Page(props) {
     setModalShow(false);
     const errs = [];
     // const file = e.target.files[0];
-    const file = new File([croppedImageUrl], 'newFile.jpg', { type: 'image/jpeg', lastModified: Date.now() });
+    const file = new File([croppedImageUrl], "newFile.jpg", { type: "image/jpeg", lastModified: Date.now() });
     const formData = new FormData();
-    const types = ['image/png', 'image/jpeg', 'image/gif'];
+    const types = ["image/png", "image/jpeg", "image/gif"];
     if (types.every(type => file.type !== type)) {
       errs.push(`فرمت '${file.type}' پشتیبانی نمی شود.`);
     }
     if (file.size > 1550000) {
       errs.push(`حجم فایل '${file.name}' بیشتر از حد مجاز است، لطفا فایل کم حجم تری انتخاب کنید.`);
     }
-    formData.append(`File`, file);
-    formData.append(`ProductId`, productId);
+    formData.append("File", file);
+    formData.append("ProductId", productId);
     if (errs.length) {
       return errs.forEach(err => toast.warn(err));
     }
     setUploading(true);
     const result = await fetchData(
-      'User/U_Product/UploadProductImageFromGalery',
+      "User/U_Product/UploadProductImageFromGalery",
       {
-        method: 'POST',
+        method: "POST",
         body: formData
       },
       nextCtx,
@@ -267,7 +267,7 @@ function Page(props) {
     uploadedImages.map((image, index) => (
       <img
         src={image.thumbnail}
-        className={image.active ? 'active' : ''}
+        className={image.active ? "active" : ""}
         key={image.id}
         id={image.id}
         title="برای انتخاب یا عدم انتخاب بر روی عکس کلیک کنید"
@@ -289,9 +289,9 @@ function Page(props) {
     setLoading(true);
     const selectedImages = uploadedImages.filter(image => image.active !== false).map(img => img.id);
     const result = await fetchData(
-      'User/U_Product/UploadProductImageFromSuggested',
+      "User/U_Product/UploadProductImageFromSuggested",
       {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({
           pictureIds: selectedImages,
           productid: productId
@@ -301,8 +301,8 @@ function Page(props) {
     );
     if (result.isSuccess) {
       //setView(2);
-      toast.success('محصول شما با موفقیت ثبت شد.');
-      Router.push('/profile');
+      toast.success("محصول شما با موفقیت ثبت شد.");
+      Router.push("/profile");
     } else if (result.message != undefined) {
       toast.warn(result.message);
     } else if (result.error != undefined) {
@@ -312,7 +312,7 @@ function Page(props) {
   };
   // Change Scroll on Input Focus
   let initialOffset;
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     initialOffset = document.documentElement.scrollTop;
   }
   const scrollToFocused = e => {
@@ -325,45 +325,45 @@ function Page(props) {
     //document.documentElement.scrollTop = initialOffset;
   };
   switch (view) {
-    case 1:
-      // if (typeof window !== 'undefined') {
-      //   window.scroll(0, 0);
-      // }
-      return (
-        <>
-          <Nav />
-          <div className="container mb-1 rtl add_product">
-            <div className="row mb-3 p-2 header_link">
-              <div className="col pt-2 text-center">
-                <a className="d-inline-block btn-main" onClick={() => addProduct()}>
+  case 1:
+    // if (typeof window !== 'undefined') {
+    //   window.scroll(0, 0);
+    // }
+    return (
+      <>
+        <Nav />
+        <div className="container mb-1 rtl add_product">
+          <div className="row mb-3 p-2 header_link">
+            <div className="col pt-2 text-center">
+              <a className="d-inline-block btn-main" onClick={() => addProduct()}>
                   ادامه
-                  {loading ? <Loading className="font_icon" /> : <FaArrowLeft className="font_icon" />}
-                </a>
-              </div>
+                {loading ? <Loading className="font_icon" /> : <FaArrowLeft className="font_icon" />}
+              </a>
             </div>
-            <div className="row mt-3 mb-5 add_product_form">
-              <div className="col">
-                <form className="productForm">
-                  <div className="form-group row">
-                    <label htmlFor="name" className="col-sm-2 col-form-label">
+          </div>
+          <div className="row mt-3 mb-5 add_product_form">
+            <div className="col">
+              <form className="productForm">
+                <div className="form-group row">
+                  <label htmlFor="name" className="col-sm-2 col-form-label">
                       نام محصول
-                    </label>
-                    <input
-                      value={title}
-                      onChange={e => setTitle(e.target.value)}
-                      type="text"
-                      id="name"
-                      className="form-control mt-1 mb-4 col-sm-10"
-                      placeholder="نام محصول"
-                      onFocus={scrollToFocused}
-                      onBlur={scrollToFocusOut}
-                    />
-                  </div>
-                  <div className="form-group row">
-                    <label htmlFor="category" className="col-sm-2 col-form-label">
+                  </label>
+                  <input
+                    value={title}
+                    onChange={e => setTitle(e.target.value)}
+                    type="text"
+                    id="name"
+                    className="form-control mt-1 mb-4 col-sm-10"
+                    placeholder="نام محصول"
+                    onFocus={scrollToFocused}
+                    onBlur={scrollToFocusOut}
+                  />
+                </div>
+                <div className="form-group row">
+                  <label htmlFor="category" className="col-sm-2 col-form-label">
                       دسته بندی
-                    </label>
-                    {/* <Select
+                  </label>
+                  {/* <Select
                       closeMenuOnSelect={true}
                       isSearchable={true}
                       instanceId={"id"}
@@ -381,356 +381,356 @@ function Page(props) {
                       onFocus={scrollToFocused}
                       onBlur={scrollToFocusOut}
                     /> */}
-                    <RRS
-                      id={categoryId !== null ? 'not_empty_select' : 'empty_select'}
-                      noSelectionLabel={`انتخاب کنید`}
-                      name="category"
-                      options={categoriesOptions}
-                      caretIcon={<SelectCaretIcon />}
-                      onChange={handleCategorySelectChange}
-                      caretIcon={<SelectCaretIcon key="c1" />}
-                      //prefix="دسته بندی : "
-                      selectedValue={categoryId !== null ? categoryId.value : null}
-                    />
-                  </div>
-                  <div className="form-group row">
-                    <label htmlFor="hashtags" className="col-sm-2 col-form-label">
+                  <RRS
+                    id={categoryId !== null ? "not_empty_select" : "empty_select"}
+                    noSelectionLabel={"انتخاب کنید"}
+                    name="category"
+                    options={categoriesOptions}
+                    caretIcon={<SelectCaretIcon />}
+                    onChange={handleCategorySelectChange}
+                    caretIcon={<SelectCaretIcon key="c1" />}
+                    //prefix="دسته بندی : "
+                    selectedValue={categoryId !== null ? categoryId.value : null}
+                  />
+                </div>
+                <div className="form-group row">
+                  <label htmlFor="hashtags" className="col-sm-2 col-form-label">
                       هشتگ های مرتبط
-                    </label>
-                    <input
-                      onKeyUp={event => addTags(event)}
-                      type="text"
-                      id="hashtags"
-                      className="form-control mt-1 mb-4 col-sm-10"
-                      placeholder="برای اضافه شدن کلید فاصله یا اینتر را فشار دهید"
-                      onFocus={scrollToFocused}
-                      onBlur={scrollToFocusOut}
-                    />
-                    <div className="tags-input col-sm-10 offset-sm-2">
-                      <ul>
-                        {tags.map((tag, index) => (
-                          <li key={index}>
-                            <span>{tag}</span>
-                            <FaTimes onClick={() => removeTags(index)} className="close_icon" />
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                  </label>
+                  <input
+                    onKeyUp={event => addTags(event)}
+                    type="text"
+                    id="hashtags"
+                    className="form-control mt-1 mb-4 col-sm-10"
+                    placeholder="برای اضافه شدن کلید فاصله یا اینتر را فشار دهید"
+                    onFocus={scrollToFocused}
+                    onBlur={scrollToFocusOut}
+                  />
+                  <div className="tags-input col-sm-10 offset-sm-2">
+                    <ul>
+                      {tags.map((tag, index) => (
+                        <li key={index}>
+                          <span>{tag}</span>
+                          <FaTimes onClick={() => removeTags(index)} className="close_icon" />
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <div className="form-group row">
-                    <label htmlFor="email" className="col-sm-2 col-form-label">
+                </div>
+                <div className="form-group row">
+                  <label htmlFor="email" className="col-sm-2 col-form-label">
                       توضیحات
-                    </label>
-                    {/* <input type="text" id="description" className="form-control mt-1 mb-4  col-sm-10" placeholder="توضیحات" /> */}
-                    <textarea
-                      value={description}
-                      onChange={e => setDescription(e.target.value)}
-                      id="description"
-                      className="form-control mt-1 mb-4  col-sm-10"
-                      placeholder="توضیحات"
-                      onFocus={scrollToFocused}
-                      onBlur={scrollToFocusOut}
-                    />
-                  </div>
-                  <div className="form-group row">
-                    <label htmlFor="price" className="col-sm-2 col-form-label">
+                  </label>
+                  {/* <input type="text" id="description" className="form-control mt-1 mb-4  col-sm-10" placeholder="توضیحات" /> */}
+                  <textarea
+                    value={description}
+                    onChange={e => setDescription(e.target.value)}
+                    id="description"
+                    className="form-control mt-1 mb-4  col-sm-10"
+                    placeholder="توضیحات"
+                    onFocus={scrollToFocused}
+                    onBlur={scrollToFocusOut}
+                  />
+                </div>
+                <div className="form-group row">
+                  <label htmlFor="price" className="col-sm-2 col-form-label">
                       قیمت
-                    </label>
-                    <input
-                      value={price}
-                      onChange={e => {
-                        setPrice(numberSeparator(forceNumeric(e.target.value)));
-                      }}
-                      type="text"
-                      id="price"
-                      className="form-control mt-1 mb-4  col-sm-10"
-                      placeholder="تومان"
-                      onFocus={scrollToFocused}
-                      onBlur={scrollToFocusOut}
-                    />
-                  </div>
-                  <div className="form-group row">
-                    <label htmlFor="discount" className="col-sm-2 col-form-label">
+                  </label>
+                  <input
+                    value={price}
+                    onChange={e => {
+                      setPrice(numberSeparator(forceNumeric(e.target.value)));
+                    }}
+                    type="text"
+                    id="price"
+                    className="form-control mt-1 mb-4  col-sm-10"
+                    placeholder="تومان"
+                    onFocus={scrollToFocused}
+                    onBlur={scrollToFocusOut}
+                  />
+                </div>
+                <div className="form-group row">
+                  <label htmlFor="discount" className="col-sm-2 col-form-label">
                       تخفیف
-                    </label>
-                    <input
-                      value={discount}
-                      onChange={e => setDiscount(numberSeparator(forceNumeric(e.target.value)))}
-                      type="text"
-                      id="discount"
-                      className="form-control mt-1 mb-4  col-sm-10"
-                      placeholder="تومان"
-                      onFocus={scrollToFocused}
-                      onBlur={scrollToFocusOut}
-                    />
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </>
-      );
-      break;
-    case 2:
-      return (
-        <>
-          <Nav />
-          <div className="container mb-1 rtl add_product">
-            <div className="row mb-3 p-2 header_link image_tabs">
-              <div className="col-4 pt-2 text-center border-left active" onClick={() => setView(2)}>
-                <a className="d-inline-block tab_link">پیشنهادی</a>
-              </div>
-              <div
-                className="col-4 pt-2 text-center  border-left"
-                onClick={() => {
-                  setView(3);
-                  setTimeout(() => {
-                    fileInput.current.click();
-                  }, 200);
-                }}
-              >
-                <a className="d-inline-block tab_link">گالری</a>
-                <MdAddCircle className="font_icon" style={{ fontSize: '1.2rem', color: '#757575' }} />
-              </div>
-              <div
-                className="col-4 pt-2 text-center"
-                onClick={() => {
-                  setView(4);
-                  setTimeout(() => {
-                    fileInput.current.click();
-                  }, 200);
-                }}
-              >
-                <a className="d-inline-block tab_link">دوربین</a>
-                <MdAddAPhoto className="font_icon" style={{ fontSize: '1.2rem', color: '#757575' }} />
-              </div>
-            </div>
-            <div className="row mt-0 mb-5 add_image">
-              <div className="col">
-                <div className="row">
-                  <div className="col pt-3">
-                    <h5 className="text-center">تصاویر پیشنهادی</h5>
-                  </div>
-                </div>
-                <div className="row add_product_image">
-                  <div className="col-md-10 d-flex pictures">
-                    <div className="images_row">{showUploadedImages()}</div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col pt-2 text-center">
-                    <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main">
-                      <FaCheck className="font_icon" />
-                    </SubmitButton>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-      );
-      break;
-    case 3:
-      return (
-        <>
-          <Nav />
-          <div className="container mb-1 rtl add_product">
-            <div className="row mb-3 p-2 header_link image_tabs">
-              <div className="col-4 pt-2 text-center border-left" onClick={() => setView(2)}>
-                <a className="d-inline-block tab_link">پیشنهادی</a>
-              </div>
-              <div
-                className="col-4 pt-2 text-center  border-left active"
-                onClick={() => {
-                  setView(3);
-                  setTimeout(() => {
-                    fileInput.current.click();
-                  }, 200);
-                }}
-              >
-                <a className="d-inline-block tab_link">گالری</a>
-                <MdAddCircle className="font_icon" style={{ fontSize: '1.2rem', color: '#757575' }} />
-              </div>
-              <div
-                className="col-4 pt-2 text-center"
-                onClick={() => {
-                  setView(4);
-                  setTimeout(() => {
-                    fileInput.current.click();
-                  }, 200);
-                }}
-              >
-                <a className="d-inline-block tab_link">دوربین</a>
-                <MdAddAPhoto className="font_icon" style={{ fontSize: '1.2rem', color: '#757575' }} />
-              </div>
-            </div>
-            <div className="row mt-0 mb-5 add_image">
-              <div className="col">
-                <div className="row">
-                  <div className="col">
-                    <h5 className="text-center">تصاویر انتخاب شده</h5>
-                  </div>
-                </div>
-                <div className="row add_product_image">
-                  <input type="file" accept="image/*" onChange={onSelectFile} ref={fileInput} hidden={true} />
-                  <div className="col-md-10 d-flex pictures">
-                    <div className="images_row">{showUploadedImages()}</div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col pt-2 text-center">
-                    <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main">
-                      <FaCheck className="font_icon" />
-                    </SubmitButton>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <Modal onHide={() => setModalShow(false)} show={modalShow} size="xl" aria-labelledby="contained-modal-title-vcenter" centered scrollable>
-              <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">بارگذاری تصویر</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                {src && (
-                  <ReactCrop
-                    src={src}
-                    crop={crop}
-                    locked={false}
-                    onImageLoaded={e => {
-                      onImageLoaded(e);
-                    }}
-                    onComplete={e => {
-                      onCropComplete(e);
-                    }}
-                    onChange={e => {
-                      onCropChange(e);
-                    }}
-                    minWidth={640}
-                    minHeight={800}
+                  </label>
+                  <input
+                    value={discount}
+                    onChange={e => setDiscount(numberSeparator(forceNumeric(e.target.value)))}
+                    type="text"
+                    id="discount"
+                    className="form-control mt-1 mb-4  col-sm-10"
+                    placeholder="تومان"
+                    onFocus={scrollToFocused}
+                    onBlur={scrollToFocusOut}
                   />
-                )}
-                {/* {croppedImageUrl && <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />} */}
-              </Modal.Body>
-              <Modal.Footer className="justify-content-center">
-                {/* <button onClick={() => setModalShow(false)}>بستن</button> */}
-                <button className="btn btn-success" onClick={() => uploadHandler()}>
-                  بارگذاری{' '}
-                </button>
-              </Modal.Footer>
-            </Modal>
-          </div>
-        </>
-      );
-      break;
-    case 4:
-      return (
-        <>
-          <Nav />
-          <div className="container mb-1 rtl add_product">
-            <div className="row mb-3 p-2 header_link image_tabs">
-              <div className="col-4 pt-2 text-center border-left" onClick={() => setView(2)}>
-                <a className="d-inline-block tab_link">پیشنهادی</a>
-              </div>
-              <div
-                className="col-4 pt-2 text-center  border-left"
-                onClick={() => {
-                  setView(3);
-                  setTimeout(() => {
-                    fileInput.current.click();
-                  }, 200);
-                }}
-              >
-                <a className="d-inline-block tab_link">گالری</a>
-                <MdAddCircle className="font_icon" style={{ fontSize: '1.2rem', color: '#757575' }} />
-              </div>
-              <div
-                className="col-4 pt-2 text-center active"
-                onClick={() => {
-                  setView(4);
-                  setTimeout(() => {
-                    fileInput.current.click();
-                  }, 200);
-                }}
-              >
-                <a className="d-inline-block tab_link">دوربین</a>
-                <MdAddAPhoto className="font_icon" style={{ fontSize: '1.2rem', color: '#757575' }} />
-              </div>
+                </div>
+              </form>
             </div>
-            <div className="row mt-3 mb-5 add_image">
-              <div className="col">
-                <div className="row">
-                  <div className="col">
-                    <h5 className="text-center">تصاویر انتخاب شده</h5>
-                  </div>
+          </div>
+        </div>
+      </>
+    );
+    break;
+  case 2:
+    return (
+      <>
+        <Nav />
+        <div className="container mb-1 rtl add_product">
+          <div className="row mb-3 p-2 header_link image_tabs">
+            <div className="col-4 pt-2 text-center border-left active" onClick={() => setView(2)}>
+              <a className="d-inline-block tab_link">پیشنهادی</a>
+            </div>
+            <div
+              className="col-4 pt-2 text-center  border-left"
+              onClick={() => {
+                setView(3);
+                setTimeout(() => {
+                  fileInput.current.click();
+                }, 200);
+              }}
+            >
+              <a className="d-inline-block tab_link">گالری</a>
+              <MdAddCircle className="font_icon" style={{ fontSize: "1.2rem", color: "#757575" }} />
+            </div>
+            <div
+              className="col-4 pt-2 text-center"
+              onClick={() => {
+                setView(4);
+                setTimeout(() => {
+                  fileInput.current.click();
+                }, 200);
+              }}
+            >
+              <a className="d-inline-block tab_link">دوربین</a>
+              <MdAddAPhoto className="font_icon" style={{ fontSize: "1.2rem", color: "#757575" }} />
+            </div>
+          </div>
+          <div className="row mt-0 mb-5 add_image">
+            <div className="col">
+              <div className="row">
+                <div className="col pt-3">
+                  <h5 className="text-center">تصاویر پیشنهادی</h5>
                 </div>
-                <div className="row add_product_image">
-                  <input type="file" accept="image/*" capture onChange={onSelectFile} ref={fileInput} hidden={true} />
-                  <div className="col-md-10 d-flex pictures">
-                    <div className="images_row">{showUploadedImages()}</div>
-                  </div>
+              </div>
+              <div className="row add_product_image">
+                <div className="col-md-10 d-flex pictures">
+                  <div className="images_row">{showUploadedImages()}</div>
                 </div>
-                <div className="row">
-                  <div className="col pt-2 text-center">
-                    <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main">
-                      <FaCheck className="font_icon" />
-                    </SubmitButton>
-                  </div>
+              </div>
+              <div className="row">
+                <div className="col pt-2 text-center">
+                  <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main">
+                    <FaCheck className="font_icon" />
+                  </SubmitButton>
                 </div>
               </div>
             </div>
-            <Modal onHide={() => setModalShow(false)} show={modalShow} size="xl" aria-labelledby="contained-modal-title-vcenter" centered scrollable>
-              <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">بارگذاری تصویر</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                {src && (
-                  <ReactCrop
-                    src={src}
-                    crop={crop}
-                    locked={false}
-                    onImageLoaded={e => {
-                      onImageLoaded(e);
-                    }}
-                    onComplete={e => {
-                      onCropComplete(e);
-                    }}
-                    onChange={e => {
-                      onCropChange(e);
-                    }}
-                    minWidth={640}
-                    minHeight={800}
-                  />
-                )}
-                {/* {croppedImageUrl && <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />} */}
-              </Modal.Body>
-              <Modal.Footer className="justify-content-center">
-                {/* <button onClick={() => setModalShow(false)}>بستن</button> */}
-                <button className="btn btn-success" onClick={() => uploadHandler()}>
-                  بارگذاری{' '}
-                </button>
-              </Modal.Footer>
-            </Modal>
           </div>
-        </>
-      );
-      break;
-    default:
-      // if (typeof window !== 'undefined') {
-      //   window.scroll(0, 0);
-      // }
-      return (
-        <>
-          <Nav />
-        </>
-      );
-      break;
+        </div>
+      </>
+    );
+    break;
+  case 3:
+    return (
+      <>
+        <Nav />
+        <div className="container mb-1 rtl add_product">
+          <div className="row mb-3 p-2 header_link image_tabs">
+            <div className="col-4 pt-2 text-center border-left" onClick={() => setView(2)}>
+              <a className="d-inline-block tab_link">پیشنهادی</a>
+            </div>
+            <div
+              className="col-4 pt-2 text-center  border-left active"
+              onClick={() => {
+                setView(3);
+                setTimeout(() => {
+                  fileInput.current.click();
+                }, 200);
+              }}
+            >
+              <a className="d-inline-block tab_link">گالری</a>
+              <MdAddCircle className="font_icon" style={{ fontSize: "1.2rem", color: "#757575" }} />
+            </div>
+            <div
+              className="col-4 pt-2 text-center"
+              onClick={() => {
+                setView(4);
+                setTimeout(() => {
+                  fileInput.current.click();
+                }, 200);
+              }}
+            >
+              <a className="d-inline-block tab_link">دوربین</a>
+              <MdAddAPhoto className="font_icon" style={{ fontSize: "1.2rem", color: "#757575" }} />
+            </div>
+          </div>
+          <div className="row mt-0 mb-5 add_image">
+            <div className="col">
+              <div className="row">
+                <div className="col">
+                  <h5 className="text-center">تصاویر انتخاب شده</h5>
+                </div>
+              </div>
+              <div className="row add_product_image">
+                <input type="file" accept="image/*" onChange={onSelectFile} ref={fileInput} hidden={true} />
+                <div className="col-md-10 d-flex pictures">
+                  <div className="images_row">{showUploadedImages()}</div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col pt-2 text-center">
+                  <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main">
+                    <FaCheck className="font_icon" />
+                  </SubmitButton>
+                </div>
+              </div>
+            </div>
+          </div>
+          <Modal onHide={() => setModalShow(false)} show={modalShow} size="xl" aria-labelledby="contained-modal-title-vcenter" centered scrollable>
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">بارگذاری تصویر</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {src && (
+                <ReactCrop
+                  src={src}
+                  crop={crop}
+                  locked={false}
+                  onImageLoaded={e => {
+                    onImageLoaded(e);
+                  }}
+                  onComplete={e => {
+                    onCropComplete(e);
+                  }}
+                  onChange={e => {
+                    onCropChange(e);
+                  }}
+                  minWidth={640}
+                  minHeight={800}
+                />
+              )}
+              {/* {croppedImageUrl && <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />} */}
+            </Modal.Body>
+            <Modal.Footer className="justify-content-center">
+              {/* <button onClick={() => setModalShow(false)}>بستن</button> */}
+              <button className="btn btn-success" onClick={() => uploadHandler()}>
+                  بارگذاری{" "}
+              </button>
+            </Modal.Footer>
+          </Modal>
+        </div>
+      </>
+    );
+    break;
+  case 4:
+    return (
+      <>
+        <Nav />
+        <div className="container mb-1 rtl add_product">
+          <div className="row mb-3 p-2 header_link image_tabs">
+            <div className="col-4 pt-2 text-center border-left" onClick={() => setView(2)}>
+              <a className="d-inline-block tab_link">پیشنهادی</a>
+            </div>
+            <div
+              className="col-4 pt-2 text-center  border-left"
+              onClick={() => {
+                setView(3);
+                setTimeout(() => {
+                  fileInput.current.click();
+                }, 200);
+              }}
+            >
+              <a className="d-inline-block tab_link">گالری</a>
+              <MdAddCircle className="font_icon" style={{ fontSize: "1.2rem", color: "#757575" }} />
+            </div>
+            <div
+              className="col-4 pt-2 text-center active"
+              onClick={() => {
+                setView(4);
+                setTimeout(() => {
+                  fileInput.current.click();
+                }, 200);
+              }}
+            >
+              <a className="d-inline-block tab_link">دوربین</a>
+              <MdAddAPhoto className="font_icon" style={{ fontSize: "1.2rem", color: "#757575" }} />
+            </div>
+          </div>
+          <div className="row mt-3 mb-5 add_image">
+            <div className="col">
+              <div className="row">
+                <div className="col">
+                  <h5 className="text-center">تصاویر انتخاب شده</h5>
+                </div>
+              </div>
+              <div className="row add_product_image">
+                <input type="file" accept="image/*" capture onChange={onSelectFile} ref={fileInput} hidden={true} />
+                <div className="col-md-10 d-flex pictures">
+                  <div className="images_row">{showUploadedImages()}</div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col pt-2 text-center">
+                  <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main">
+                    <FaCheck className="font_icon" />
+                  </SubmitButton>
+                </div>
+              </div>
+            </div>
+          </div>
+          <Modal onHide={() => setModalShow(false)} show={modalShow} size="xl" aria-labelledby="contained-modal-title-vcenter" centered scrollable>
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">بارگذاری تصویر</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {src && (
+                <ReactCrop
+                  src={src}
+                  crop={crop}
+                  locked={false}
+                  onImageLoaded={e => {
+                    onImageLoaded(e);
+                  }}
+                  onComplete={e => {
+                    onCropComplete(e);
+                  }}
+                  onChange={e => {
+                    onCropChange(e);
+                  }}
+                  minWidth={640}
+                  minHeight={800}
+                />
+              )}
+              {/* {croppedImageUrl && <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />} */}
+            </Modal.Body>
+            <Modal.Footer className="justify-content-center">
+              {/* <button onClick={() => setModalShow(false)}>بستن</button> */}
+              <button className="btn btn-success" onClick={() => uploadHandler()}>
+                  بارگذاری{" "}
+              </button>
+            </Modal.Footer>
+          </Modal>
+        </div>
+      </>
+    );
+    break;
+  default:
+    // if (typeof window !== 'undefined') {
+    //   window.scroll(0, 0);
+    // }
+    return (
+      <>
+        <Nav />
+      </>
+    );
+    break;
   }
 }
 Page.getInitialProps = async function(context) {
   const result = await fetchData(
-    'Common/C_Category/GetAllParentAsync',
+    "Common/C_Category/GetAllParentAsync",
     {
-      method: 'GET'
+      method: "GET"
     },
     context
   );

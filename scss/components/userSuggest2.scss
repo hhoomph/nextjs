@@ -37,6 +37,7 @@
     min-height: 5rem;
   }
   .user_link {
+    cursor: pointer;
     background: $circleUser_gradient;
     display: block;
     margin: auto;
@@ -80,13 +81,25 @@
     font-size: 0.75rem;
     margin: 0 !important;
     margin-bottom: 4px !important;
+    min-height: 18px;
   }
-  .follow {
+  .follow,
+  .unfollow {
     color: #fff !important;
     font-size: 1rem;
     padding: 9%;
     padding-bottom: 4px;
     padding-top: 4px;
+    cursor: pointer;
+  }
+  .unfollow {
+    color: #333 !important;
+    background: #fff;
+    border: 1px solid #929292;
+    opacity: .8;
+    &:hover {
+      opacity: 1;
+    }
   }
   .user_div.active {
     .user_link {
@@ -115,7 +128,8 @@
   .map_user_suggestion .user_name {
     font-size: 0.8rem !important;
   }
-  .map_user_suggestion .follow {
+  .map_user_suggestion .follow,
+  .map_user_suggestion .unfollow {
     font-size: 70% !important;
   }
 }

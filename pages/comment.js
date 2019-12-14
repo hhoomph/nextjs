@@ -20,7 +20,7 @@ const User = dynamic({
 });
 const Page = props => {
   const Router = useRouter();
-  //const { id } = Router.query;
+  const productId = Router.query.id;
   return (
     <>
       <Nav />
@@ -128,7 +128,7 @@ const Page = props => {
   );
 };
 Page.getInitialProps = async function(context) {
-  // const { id } = context.query;
+  const { id } = context.query;
   // const Following = await fetchData(
   //   `User/U_Friends/OtherFollowing?userId=${id}`,
   //   {

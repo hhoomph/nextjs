@@ -27,8 +27,8 @@ import { setTimeout } from "core-js";
 function Page(props) {
   const productData = props.result.data || [];
   const Router = useRouter();
-  const { productId } = Router.query;
-  //const productId = props.id;
+  //const { productId } = Router.query;
+  const productId = Router.query.id;
   const [loading, setLoading] = useState(false);
   toast.configure({
     position: "top-right",
@@ -74,7 +74,7 @@ function Page(props) {
       <img src={`https://api.qarun.ir/${image.value}`} className="product_image" />
     </Carousel.Item>
   ));
-  console.log(productData);
+  //console.log(productData);
   // Determine Server Or Browser env
   if (typeof window !== "undefined" && window.document !== undefined) {
     //console.log('browser');

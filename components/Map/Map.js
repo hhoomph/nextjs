@@ -4,6 +4,7 @@ import { Circle, LayerGroup, Map, TileLayer, Marker, Popup, Polyline, Tooltip } 
 import { GeoSearchControl, OpenStreetMapProvider, EsriProvider } from "leaflet-geosearch";
 //import { ReactComponent as TargetSvg } from '../../public/static/svg/target.svg';
 import { ReactComponent as TargetSvg } from "../../public/static/svg/aim.svg";
+import Router from "next/router";
 import "../../scss/components/map.scss";
 const esriProvider = new EsriProvider();
 const provider = new OpenStreetMapProvider();
@@ -19,8 +20,8 @@ const provider = new OpenStreetMapProvider();
  * @return {number} return distance in meter
  */
 export const getDistance = (position1, position2) => {
-  latlng1 = new L.latLng(position1);
-  latlng2 = new L.latLng(position2);
+  const latlng1 = new L.latLng(position1);
+  const latlng2 = new L.latLng(position2);
   return latlng1.distanceTo(latlng2);
 };
 /**
@@ -55,6 +56,8 @@ const MapComponent = props => {
   const [currentLocationClass, setCurrentLocationClass] = useState("current_location");
   const markRef = useRef();
   const mapRef = useRef();
+  const activeUser = props.activeUser || { id: 0, lat: 34.635059, long: 50.880823 };
+  const users = props.users || [];
   useEffect(() => {
     if (props.searchValue != "" && props.searchValue.length >= 2) {
       provider.search({ query: props.searchValue }).then(function(result) {
@@ -104,9 +107,9 @@ const MapComponent = props => {
       //console.log(latlng.distanceTo(position));
     }
   };
-  const position = [34.635059, 50.880823];
-  const position1 = [34.635255, 50.876762];
-  const position2 = [34.6327669608, 50.88060376];
+  // const position = [34.635059, 50.880823];
+  // const position1 = [34.635255, 50.876762];
+  // const position2 = [34.6327669608, 50.88060376];
   // geolocation Options
   const geoOptions = {
     enableHighAccuracy: true,
@@ -174,32 +177,68 @@ const MapComponent = props => {
       </>
     ) : null;
   };
+  // Calculating Map radius from center to borders
+  const handleMapChange = () => {
+    const map = mapRef.current.leafletElement;
+    const mapBoundSouthWest = map.getBounds().getSouthWest();
+    const mapDistance = mapBoundSouthWest.distanceTo(map.getCenter()) / 1000;
+    props.setMapRadius(mapDistance);
+    //const mapCenter = map.getCenter();
+    //const zoom = map.getZoom();
+    //const bounds = map.getBounds();
+    //const mapBoundNorthEast = map.getBounds().getNorthEast();
+  };
+  const showUsers = users.map(user => {
+    const userImg = user.userAvatar !== null ? `https://api.qarun.ir/${user.userAvatar}` : "/static/img/no-userimage.svg";
+    if (user.id === activeUser.id) {
+      return (
+        <Marker position={[user.lat, user.long]} icon={myIcon} draggable={false} key={user.id}>
+          <Popup
+            onClick={() =>
+              Router.push({
+                pathname: `/user/${user.userName}`
+              })
+            }
+          >
+            {user.userName} <br /> {user.displayName}
+          </Popup>
+        </Marker>
+      );
+    } else {
+      return (
+        <Marker
+          key={user.id}
+          position={[user.lat, user.long]}
+          icon={Icon}
+          draggable={false}
+          onClick={() =>
+            Router.push({
+              pathname: `/user/${user.userName}`
+            })
+          }
+        >
+          <Popup>
+            {user.userName} <br /> {user.displayName}
+          </Popup>
+        </Marker>
+      );
+    }
+  });
   return (
     <div id="map_id">
       <Map
         closePopupOnClick={true}
         animate={true}
-        center={markPosition.length > 1 ? markPosition : position}
-        zoom={17}
+        center={activeUser !== undefined && activeUser.lat !== undefined ? [activeUser.lat, activeUser.long] : props.center}
+        zoom={15}
         maxZoom={18}
         ref={mapRef}
         onLocationfound={handleLocationFound}
+        onViewportChanged={handleMapChange}
       >
         <TileLayer attribution="Qarun" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {currentMarker()}
-        <Marker position={position} icon={myIcon} draggable={false}>
-          <Popup>
-            مجتمع ناشران <br /> شرکت سپهران
-          </Popup>
-          <Tooltip>سپهران</Tooltip>
-        </Marker>
-        <Marker position={position1} icon={Icon} draggable={false}>
-          <Popup>نام کاربر 1</Popup>
-        </Marker>
-        <Marker position={position2} icon={Icon} draggable={false}>
-          <Popup>نام کاربر 2</Popup>
-          <Tooltip>مکان شما</Tooltip>
-        </Marker>
+        {showUsers}
         <div className={currentLocationClass} onClick={() => getLocation()} title="نمایش مکان شما">
           <TargetSvg className="svg_icon" />
         </div>

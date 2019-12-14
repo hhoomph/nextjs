@@ -1,12 +1,12 @@
-import React, { Fragment, useState, useContext, useRef, useEffect, memo } from 'react';
-import L from 'leaflet';
-import fetch from 'isomorphic-unfetch';
-import { Circle, LayerGroup, Map, TileLayer, Marker, Popup, Polyline, Tooltip } from 'react-leaflet';
-import { GeoSearchControl, OpenStreetMapProvider, EsriProvider } from 'leaflet-geosearch';
-import { ReactComponent as TargetSvg } from '../../public/static/svg/target.svg';
-import { FaSearch } from 'react-icons/fa';
-import '../../scss/components/map.scss';
-import { setTimeout } from 'core-js';
+import React, { Fragment, useState, useContext, useRef, useEffect, memo } from "react";
+import L from "leaflet";
+import fetch from "isomorphic-unfetch";
+import { Circle, LayerGroup, Map, TileLayer, Marker, Popup, Polyline, Tooltip } from "react-leaflet";
+import { GeoSearchControl, OpenStreetMapProvider, EsriProvider } from "leaflet-geosearch";
+import { ReactComponent as TargetSvg } from "../../public/static/svg/target.svg";
+import { FaSearch } from "react-icons/fa";
+import "../../scss/components/map.scss";
+import { setTimeout } from "core-js";
 const esriProvider = new EsriProvider();
 const provider = new OpenStreetMapProvider();
 /**
@@ -16,8 +16,8 @@ const provider = new OpenStreetMapProvider();
  * @return {number} return distance in meter
  */
 export const getDistance = (position1, position2) => {
-  latlng1 = new L.latLng(position1);
-  latlng2 = new L.latLng(position2);
+  const latlng1 = new L.latLng(position1);
+  const latlng2 = new L.latLng(position2);
   return latlng1.distanceTo(latlng2);
 };
 /**
@@ -29,25 +29,26 @@ export const convertLatlngToArray = position => {
   return [position.lat, position.lng];
 };
 const placeholderIcon = new L.Icon({
-  iconUrl: '/static/svg/placeholder-for-map.svg',
+  iconUrl: "/static/svg/placeholder-for-map.svg",
   shadowUrl: null,
-  className: 'current_pos_marker'
+  className: "current_pos_marker"
 });
 const MapComponent = props => {
   //const [markPosition, setMarkPosition] = useState(props.laLong);
   const { markPosition, setMarkPosition, draggable, setCity, setState } = props;
   const [searchResult, setSearchResult] = useState([]);
-  const [loadingGetLocation, setLoadingGetLocation] = useState('');
-  const [searchValue, setSearchValue] = useState('');
+  const [loadingGetLocation, setLoadingGetLocation] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const [mapZoom, setMapZoom] = useState(13);
   const markRef = useRef();
   const mapRef = useRef();
   const handleSearch = () => {
-    if (searchValue != '' && searchValue.length >= 2) {
+    if (searchValue != "" && searchValue.length >= 2) {
       provider.search({ query: searchValue }).then(function(result) {
         setSearchResult(result);
       });
     } else {
-      setSearchResult('');
+      setSearchResult("");
     }
   };
   useEffect(() => {
@@ -73,6 +74,9 @@ const MapComponent = props => {
   };
   const updatePosition = async () => {
     const marker = markRef.current;
+    const map = mapRef.current.leafletElement;
+    const zoom = map.getZoom();
+    setMapZoom(zoom);
     if (marker != null) {
       let latlng = marker.leafletElement.getLatLng();
       setMarkPosition(convertLatlngToArray(latlng));
@@ -80,14 +84,14 @@ const MapComponent = props => {
       const res = await fetch(
         `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${convertLatlngToArray(latlng)[0]}&lon=${convertLatlngToArray(latlng)[1]}&zoom=10&addressdetails=1&extratags=1`,
         {
-          method: 'GET'
+          method: "GET"
           //credentials: 'include'
         }
       );
       if (res != undefined && res.ok) {
         const result = await res.json();
         setCity(result.name);
-        setState(result.address.state.replace('استان ', ''));
+        setState(result.address.state.replace("استان ", ""));
       } else {
         // network error
       }
@@ -103,16 +107,16 @@ const MapComponent = props => {
     /*
      * Get Current Location With Direct web Api
      */
-    setLoadingGetLocation('spinner_location');
+    setLoadingGetLocation("spinner_location");
     if (navigator.geolocation) {
       await navigator.geolocation.getCurrentPosition(showPosition, errorGetPosition, geoOptions);
     } else {
-      await console.log('Geolocation is not supported by this browser.');
-      setLoadingGetLocation('');
+      await console.log("Geolocation is not supported by this browser.");
+      setLoadingGetLocation("");
     }
   };
   const showPosition = position => {
-    setLoadingGetLocation('');
+    setLoadingGetLocation("");
     setMarkPosition([position.coords.latitude, position.coords.longitude]);
   };
   const errorGetPosition = err => {
@@ -151,7 +155,7 @@ const MapComponent = props => {
               placeholder="کجا هستید؟"
               onBlur={() => {
                 setTimeout(() => {
-                  setSearchValue('');
+                  setSearchValue("");
                 }, 250);
               }}
             />
@@ -160,7 +164,7 @@ const MapComponent = props => {
         </div>
       )}
       <div id="map_2" hidden={props.hidden}>
-        <Map closePopupOnClick={true} animate={true} center={markPosition} zoom={13} maxZoom={18} ref={mapRef} dragging={draggable}>
+        <Map closePopupOnClick={true} animate={true} center={markPosition} zoom={mapZoom} maxZoom={18} ref={mapRef} dragging={draggable}>
           <TileLayer attribution="Qarun" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           {currentMarker()}
           {draggable && (

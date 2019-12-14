@@ -1,6 +1,6 @@
 #map_id {
   //height: 65vh;
-  height: 100vh;
+  height: 60vh;
   position: relative;
   width: 100%;
   overflow: hidden;
@@ -33,6 +33,7 @@
 }
 .leaflet-marker-icon.my_marker{
   filter: invert(33%) sepia(10%) saturate(999%) hue-rotate(0deg) brightness(100%) contrast(100%);
+  z-index: 9991 !important;
 }
 .leaflet-shadow-pane {
   z-index: 999 !important;

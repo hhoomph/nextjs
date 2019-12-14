@@ -6,7 +6,7 @@ const User = props => {
   const userClass = width > 992 ? "col-1" : width > 400 ? "col-2" : "col-3";
   return props.self ? (
     <div className="userClass self_user">
-      <Link href={`/activity`} passHref>
+      <Link href={"/profile"} passHref>
         <a className="user_link">
           <img src={props.image} alt={props.alt} className="rounded-circle img-thumbnail" />
         </a>
