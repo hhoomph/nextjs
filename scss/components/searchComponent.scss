@@ -18,7 +18,16 @@
     li.active {
       font-size: 1.1rem;
       color: #212121;
-      border-bottom: 1px solid #616161;
+      border-bottom: 1px solid #9E9E9E;
+    }
+  }
+  .back_icon {
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in;
+    float: right;
+    &:hover {
+      color: #5e5e5e;
     }
   }
 }
@@ -158,6 +167,7 @@
         color: #757575;
         font-size: 0.8rem;
         clear: left;
+        display: block;
       }
     }
     .btn-main {

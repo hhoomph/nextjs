@@ -32,30 +32,38 @@
   }
   .image_tabs {
     div {
-      border-radius: 0.3rem;
+      border-radius: 0;
       transition: all ease-in-out 0.2s;
       cursor: pointer;
       // background-color: #fff;
       // background: #fff;
       // background-size: 400% 400%;
       &:hover {
-        background: $primary_gradient;
-        background-size: 400% 400%;
-        animation: Gradient 5s both ease;
-        animation-iteration-count: infinite;
+        // background: $primary_gradient;
+        // background-size: 400% 400%;
+        // animation: Gradient 5s both ease;
+        // animation-iteration-count: infinite;
         .tab_link {
-          color: #fff;
+          color: #000;
         }
+      }
+      .font_icon{
+        color: #757575;
+        font-size: 1rem;
       }
     }
     div.active {
-      background: #feaa2d;
+      //background: #feaa2d;
+      border-bottom: 1px solid #000;
+      .font_icon{
+        color: #000 !important;
+      }
     }
     .tab_link {
       padding: 0.3rem;
       padding-bottom: 0.5rem;
       &:hover {
-        color: #e4e4e4 !important;
+        color: #000 !important;
       }
     }
   }

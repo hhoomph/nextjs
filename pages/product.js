@@ -122,7 +122,7 @@ function Page(props) {
                 </Carousel.Item> */}
                 {showProductImages}
               </Carousel>
-              <div className="discount_div">%{discountPercent()}</div>
+              {discountPercent() > 0 && <div className="discount_div">%{discountPercent()}</div>}
             </div>
           </div>
         </div>

@@ -2,6 +2,8 @@ import React, { Fragment, useContext, useReducer, useState, useRef, useEffect } 
 import dynamic from "next/dynamic";
 import Loading from "../components/Loader/Loading";
 import fetchData from "../utils/fetchData";
+import Auth from "../components/Auth/Auth";
+import { useRouter } from "next/router";
 import Nav from "../components/Nav/Nav";
 import UserHeader from "../components/Head/userHeader";
 import Product from "../components/Profile/product";
@@ -13,7 +15,9 @@ const Category = dynamic({
   ssr: true
 });
 function Page(props) {
-  const profileData = props.result.data || [];
+  const Router = useRouter();
+  const username = Router.query.id || props.result.data.userName;
+  const [profileData, setProfileData] = useState(props.result.data || []);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
@@ -32,9 +36,21 @@ function Page(props) {
       isDisable={product.isDisable}
       price={product.price}
       oldPrice={product.lastPrice}
-      image={product.picture !== undefined && product.picture !== null ? `https://api.qarun.ir/${product.picture}` : "static/img/no-product-image.png"}
+      image={product.picture !== undefined && product.picture !== null ? `https://api.qarun.ir/${product.picture}` : "/static/img/no-product-image.png"}
     />
   ));
+  const getProfileData = async () => {
+    const result = await fetchData(
+      `User/U_Account/OtherUserProfile/${username}`,
+      {
+        method: "GET"
+      },
+      props.ctx
+    );
+    if (result.isSuccess) {
+      setProfileData(result.data);
+    }
+  };
   const getUserProduct = async () => {
     setLoading(true);
     const result = await fetchData(
@@ -50,10 +66,12 @@ function Page(props) {
       },
       props.ctx
     );
-    if (result.isSuccess) {
+    if (result !== undefined && result.isSuccess) {
       userProductsDispatch({ type: "add", payload: result.data.model });
-      setTimeout(() => setIsFetching(false), 200);
       setPage(page + 1);
+      if (result.data.model.length >= 6) {
+        setTimeout(() => setIsFetching(false), 200);
+      }
     } else if (result.message != undefined) {
       setTimeout(() => setIsFetching(false), 200);
     } else if (result.error != undefined) {
@@ -79,16 +97,20 @@ function Page(props) {
     if (result !== undefined && result.isSuccess) {
       userProductsDispatch({ type: "refresh", payload: [] });
       userProductsDispatch({ type: "refresh", payload: result.data.model });
-      setPage(2);
+      setPage(page + 1);
+      if (result.data.model.length >= 6) {
+        setTimeout(() => setIsFetching(false), 200);
+      }
+    } else if (result.message != undefined) {
+      setTimeout(() => setIsFetching(false), 200);
+    } else if (result.error != undefined) {
+      setTimeout(() => setIsFetching(false), 200);
     }
     setLoading(false);
   };
   function handleScroll() {
-    if (window.pageYOffset + 350 > window.innerHeight && !isFetching) {
-      setIsFetching(true);
-    } else {
-      return;
-    }
+    if (window.innerHeight + document.documentElement.scrollTop + 100 < document.documentElement.offsetHeight || isFetching) return;
+    setIsFetching(true);
   }
   const productRef = useRef();
   const scrollToProducts = () => {
@@ -142,35 +164,40 @@ function Page(props) {
   );
 }
 Page.getInitialProps = async function(context) {
-  const { id } = context.query;
+  const username = context.query.id;
   const result = await fetchData(
-    `User/U_Account/OtherUserProfile/${id}`,
+    `User/U_Account/OtherUserProfile/${username}`,
     {
       method: "GET"
     },
     context
   );
-  const userProducts = await fetchData(
-    "User/U_Product/UserProduct",
-    {
-      method: "POST",
-      body: JSON.stringify({
-        userId: id,
-        categoryId: 0,
-        page: 1,
-        pageSize: 10
-      })
-    },
-    context
-  );
-  // Get user's Categories
-  const userCategories = await fetchData(
-    `User/U_Product/CategoiesHaveProduct?userId=${id}`,
-    {
-      method: "GET"
-    },
-    context
-  );
+  let userProducts = [];
+  let userCategories = [];
+  if (result !== undefined && result.data !== undefined && result.data.id !== undefined) {
+    // Get user's Products
+    userProducts = await fetchData(
+      "User/U_Product/UserProduct",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          userId: result.data.id,
+          categoryId: 0,
+          page: 1,
+          pageSize: 6
+        })
+      },
+      context
+    );
+    // Get user's Categories
+    userCategories = await fetchData(
+      `User/U_Product/CategoiesHaveProduct?userId=${result.data.id}`,
+      {
+        method: "GET"
+      },
+      context
+    );
+  }
   return { result, userProducts, userCategories };
 };
-export default Page;
+export default Auth(Page);

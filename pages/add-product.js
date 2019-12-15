@@ -34,14 +34,15 @@ function Page(props) {
       key: category.id
     };
   });
+  const profileData = props.profileData.data || [];
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [discount, setDiscount] = useState("");
-  const [lat, setLat] = useState("");
-  const [long, setLong] = useState("");
+  const [lat, setLat] = useState(profileData.lat || 0);
+  const [long, setLong] = useState(profileData.long || 0);
   const [productId, setProductId] = useState(null);
   const [categoryId, setCategoryId] = useState(null);
   // const handleCategoryChange = selectedOption => {
@@ -63,7 +64,7 @@ function Page(props) {
   );
   const [tags, setTags] = useState([]);
   const addTags = event => {
-    let key = event.key || event.keyCode;
+    let key = event.key || event.value;
     if (!key) {
       key = String.fromCharCode(event.which || event.code);
     }
@@ -73,8 +74,13 @@ function Page(props) {
       if (!reg.test(val)) {
         val = "#" + val;
       }
-      setTags([...tags, val]);
-      event.target.value = "";
+      if (!tags.includes(val)) {
+        setTags([...tags, val]);
+        event.target.value = "";
+      } else {
+        // Duplicate value - empty input
+        event.target.value = "";
+      }
     }
   };
   const removeTags = index => {
@@ -165,8 +171,8 @@ function Page(props) {
             description: description,
             price: parseInt(removeSeparator(price), 10) >= 0 ? parseInt(removeSeparator(price), 10) : 0,
             discount: parseInt(removeSeparator(discount), 10) >= 0 ? parseInt(removeSeparator(discount), 10) : 0,
-            lat: null,
-            long: null,
+            lat: lat,
+            long: long,
             categoryId: categoryId ? categoryId.value : null,
             hashtags: tags
             //id: id
@@ -386,7 +392,6 @@ function Page(props) {
                     noSelectionLabel={"انتخاب کنید"}
                     name="category"
                     options={categoriesOptions}
-                    caretIcon={<SelectCaretIcon />}
                     onChange={handleCategorySelectChange}
                     caretIcon={<SelectCaretIcon key="c1" />}
                     //prefix="دسته بندی : "
@@ -398,7 +403,8 @@ function Page(props) {
                       هشتگ های مرتبط
                   </label>
                   <input
-                    onKeyUp={event => addTags(event)}
+                    onKeyPress={event => addTags(event)}
+                    onChange={event => addTags(event)}
                     type="text"
                     id="hashtags"
                     className="form-control mt-1 mb-4 col-sm-10"
@@ -477,11 +483,11 @@ function Page(props) {
         <Nav />
         <div className="container mb-1 rtl add_product">
           <div className="row mb-3 p-2 header_link image_tabs">
-            <div className="col-4 pt-2 text-center border-left active" onClick={() => setView(2)}>
+            <div className="col-4 pt-2 text-center active" onClick={() => setView(2)}>
               <a className="d-inline-block tab_link">پیشنهادی</a>
             </div>
             <div
-              className="col-4 pt-2 text-center  border-left"
+              className="col-4 pt-2 text-center"
               onClick={() => {
                 setView(3);
                 setTimeout(() => {
@@ -490,7 +496,7 @@ function Page(props) {
               }}
             >
               <a className="d-inline-block tab_link">گالری</a>
-              <MdAddCircle className="font_icon" style={{ fontSize: "1.2rem", color: "#757575" }} />
+              <MdAddCircle className="font_icon" />
             </div>
             <div
               className="col-4 pt-2 text-center"
@@ -502,7 +508,7 @@ function Page(props) {
               }}
             >
               <a className="d-inline-block tab_link">دوربین</a>
-              <MdAddAPhoto className="font_icon" style={{ fontSize: "1.2rem", color: "#757575" }} />
+              <MdAddAPhoto className="font_icon" />
             </div>
           </div>
           <div className="row mt-0 mb-5 add_image">
@@ -536,11 +542,11 @@ function Page(props) {
         <Nav />
         <div className="container mb-1 rtl add_product">
           <div className="row mb-3 p-2 header_link image_tabs">
-            <div className="col-4 pt-2 text-center border-left" onClick={() => setView(2)}>
+            <div className="col-4 pt-2 text-center" onClick={() => setView(2)}>
               <a className="d-inline-block tab_link">پیشنهادی</a>
             </div>
             <div
-              className="col-4 pt-2 text-center  border-left active"
+              className="col-4 pt-2 text-center active"
               onClick={() => {
                 setView(3);
                 setTimeout(() => {
@@ -549,7 +555,7 @@ function Page(props) {
               }}
             >
               <a className="d-inline-block tab_link">گالری</a>
-              <MdAddCircle className="font_icon" style={{ fontSize: "1.2rem", color: "#757575" }} />
+              <MdAddCircle className="font_icon" />
             </div>
             <div
               className="col-4 pt-2 text-center"
@@ -561,13 +567,13 @@ function Page(props) {
               }}
             >
               <a className="d-inline-block tab_link">دوربین</a>
-              <MdAddAPhoto className="font_icon" style={{ fontSize: "1.2rem", color: "#757575" }} />
+              <MdAddAPhoto className="font_icon" />
             </div>
           </div>
           <div className="row mt-0 mb-5 add_image">
             <div className="col">
               <div className="row">
-                <div className="col">
+                <div className="col pt-3">
                   <h5 className="text-center">تصاویر انتخاب شده</h5>
                 </div>
               </div>
@@ -628,11 +634,11 @@ function Page(props) {
         <Nav />
         <div className="container mb-1 rtl add_product">
           <div className="row mb-3 p-2 header_link image_tabs">
-            <div className="col-4 pt-2 text-center border-left" onClick={() => setView(2)}>
+            <div className="col-4 pt-2 text-center" onClick={() => setView(2)}>
               <a className="d-inline-block tab_link">پیشنهادی</a>
             </div>
             <div
-              className="col-4 pt-2 text-center  border-left"
+              className="col-4 pt-2 text-center"
               onClick={() => {
                 setView(3);
                 setTimeout(() => {
@@ -641,7 +647,7 @@ function Page(props) {
               }}
             >
               <a className="d-inline-block tab_link">گالری</a>
-              <MdAddCircle className="font_icon" style={{ fontSize: "1.2rem", color: "#757575" }} />
+              <MdAddCircle className="font_icon" />
             </div>
             <div
               className="col-4 pt-2 text-center active"
@@ -653,7 +659,7 @@ function Page(props) {
               }}
             >
               <a className="d-inline-block tab_link">دوربین</a>
-              <MdAddAPhoto className="font_icon" style={{ fontSize: "1.2rem", color: "#757575" }} />
+              <MdAddAPhoto className="font_icon" />
             </div>
           </div>
           <div className="row mt-3 mb-5 add_image">
@@ -734,6 +740,14 @@ Page.getInitialProps = async function(context) {
     },
     context
   );
-  return { result };
+  // Get Profile Data For product lat & long
+  const profileData = await fetchData(
+    "User/U_Account/Profile",
+    {
+      method: "GET"
+    },
+    context
+  );
+  return { result, profileData };
 };
 export default Auth(Page);

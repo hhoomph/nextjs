@@ -47,7 +47,7 @@
     width: -webkit-max-content;
     width: max-content;
     max-width: 6rem;
-    padding: 1px;
+    padding: 0px;
     text-align: center;
     border-radius: 10rem;
     transition: all ease-in-out 0.2s;
@@ -59,7 +59,7 @@
       width: 4.5em;
       padding: 0;
       background: white;
-      padding: 1px;
+      padding: 0px;
       transition: all ease-in-out 0.2s;
       &:hover {
         background: $main_gradient;
@@ -104,6 +104,7 @@
     }
   }
   .user_div.active {
+    transition: all ease-in-out 0.3s;
     .user_link {
       margin-top: -2px;
       padding: 2px;

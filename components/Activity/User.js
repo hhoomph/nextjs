@@ -7,7 +7,7 @@ import { FaTimes } from "react-icons/fa";
 const User = props => {
   const [loading, setLoading] = useState(false);
   const { type, image, productImage, message, name, userName, time } = props;
-  const [followed, setFollowed] = useState(props.followed || false);
+  const [followed, setFollowed] = useState(props.isFollowed || false);
   const followToggle = async () => {
     setLoading(true);
     const result = await fetchData(
@@ -19,7 +19,6 @@ const User = props => {
     );
     if (result.isSuccess) {
       setFollowed(!followed);
-      props.setUpdate(Date());
     }
     setLoading(false);
   };
@@ -34,7 +33,6 @@ const User = props => {
     );
     if (result.isSuccess) {
       setFollowed(!followed);
-      props.setUpdate(Date());
     }
     setLoading(false);
   };
@@ -51,8 +49,8 @@ const User = props => {
         <div className="col-10 _txt">
           <div className="row">
             <div className="col-4 m-auto pl-0">
-              {type === "productLike" ? (
-                <Link href={`/user/${userName}`} passHref>
+              {type === "LikeProduct" || type === "LikeComment" || type === "CommentOnComment" || type === "CommentOnProduct" || type === "PostSave" ? (
+                <Link href={`/product/${props.productId}`} passHref>
                   <a className="product_image">
                     <img src={productImage} />
                   </a>

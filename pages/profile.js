@@ -41,7 +41,7 @@ function Page(props) {
       isDisable={product.isDisable}
       price={product.lastPrice}
       oldPrice={product.price}
-      image={product.picture !== undefined && product.picture !== null ? `https://api.qarun.ir/${product.picture}` : "static/img/no-product-image.png"}
+      image={product.picture !== undefined && product.picture !== null ? `https://api.qarun.ir/${product.picture}` : "/static/img/no-product-image.png"}
     />
   ));
   const getProfileData = async () => {
@@ -71,10 +71,12 @@ function Page(props) {
       },
       props.ctx
     );
-    if (result.isSuccess) {
+    if (result !== undefined && result.isSuccess) {
       userProductsDispatch({ type: "add", payload: result.data.model });
-      setTimeout(() => setIsFetching(false), 200);
       setPage(page + 1);
+      if (result.data.model.length >= 6) {
+        setTimeout(() => setIsFetching(false), 200);
+      }
     } else if (result.message != undefined) {
       setTimeout(() => setIsFetching(false), 200);
     } else if (result.error != undefined) {
@@ -100,16 +102,20 @@ function Page(props) {
     if (result.isSuccess) {
       userProductsDispatch({ type: "refresh", payload: [] });
       userProductsDispatch({ type: "refresh", payload: result.data.model });
-      setPage(2);
+      setPage(page + 1);
+      if (result.data.model.length >= 6) {
+        setTimeout(() => setIsFetching(false), 200);
+      }
+    } else if (result.message != undefined) {
+      setTimeout(() => setIsFetching(false), 200);
+    } else if (result.error != undefined) {
+      setTimeout(() => setIsFetching(false), 200);
     }
     setLoading(false);
   };
   function handleScroll() {
-    if (window.pageYOffset + 350 > window.innerHeight && !isFetching) {
-      setIsFetching(true);
-    } else {
-      return;
-    }
+    if (window.innerHeight + document.documentElement.scrollTop + 100 < document.documentElement.offsetHeight || isFetching) return;
+    setIsFetching(true);
   }
   const productRef = useRef();
   const scrollToProducts = () => {
@@ -238,7 +244,7 @@ Page.getInitialProps = async function(context) {
           userId: result.data.id,
           categoryId: 0,
           page: 1,
-          pageSize: 10
+          pageSize: 6
         })
       },
       context
