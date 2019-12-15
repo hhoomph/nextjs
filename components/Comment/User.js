@@ -3,7 +3,7 @@ import Link from "../Link";
 import fetchData from "../../utils/fetchData";
 import Loading from "../Loader/Loader";
 import SubmitButton from "../Button/SubmitButton";
-import { FaTimes, FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaTimes, FaHeart, FaRegHeart, FaReply } from "react-icons/fa";
 const User = props => {
   const [loading, setLoading] = useState(false);
   const { image, productImage, message, name, userName, time } = props;
@@ -51,21 +51,25 @@ const User = props => {
         <div className="col-10 _txt">
           <div className="row m-auto p-0 justify-content-end">
             <div className="col-2 pl-0 text-center heart">
-              <FaRegHeart className="font_icon" />
+              <FaHeart className="font_icon red" />
             </div>
             <div className="col-10 p-0 rtl content">
               <Link href={`/user/${userName}`} passHref>
                 <a className="user_name">{userName}</a>
               </Link>
               <div className="message">{message}</div>
-              <div className="reply_btn ml-2">پاسخ</div>
+              <div className="reply_btn ml-2">
+                پاسخ
+                {/* <FaReply className="font_icon" /> */}
+              </div>
               <div className="time ml-2">{time}</div>
-              <div className="show_replies">+ نمایش پاسخ ها </div>
+              <div className="show_replies"> + نمایش پاسخ ها </div>
+              <div className="show_replies"> - پنهان کردن پاسخ ها </div>
             </div>
           </div>
         </div>
         {/* Comment Childs */}
-        <div className="col-11 d-flex justify-content-center m-auto p-0 user comment_child">
+        <div className="col-11 d-flex justify-content-center m-auto p-1 user comment_child">
           <div className="col-2">
             <Link href={`/user/${userName}`} passHref>
               <a className="link">
@@ -89,7 +93,7 @@ const User = props => {
             </div>
           </div>
         </div>
-        <div className="col-11 d-flex justify-content-center m-auto p-0 user comment_child">
+        <div className="col-11 d-flex justify-content-center m-auto p-1 user comment_child">
           <div className="col-2">
             <Link href={`/user/${userName}`} passHref>
               <a className="link">
@@ -100,7 +104,7 @@ const User = props => {
           <div className="col-10 _txt">
             <div className="row m-auto p-0 justify-content-end">
               <div className="col-2 pl-0 text-center heart">
-                <FaRegHeart className="font_icon" />
+                <FaHeart className="font_icon red" />
               </div>
               <div className="col-10 p-0 rtl content">
                 <Link href={`/user/${userName}`} passHref>
@@ -113,7 +117,7 @@ const User = props => {
             </div>
           </div>
         </div>
-        <div className="col-11 d-flex justify-content-center m-auto p-0 user comment_child">
+        <div className="col-11 d-flex justify-content-center m-auto p-1 user comment_child">
           <div className="col-2">
             <Link href={`/user/${userName}`} passHref>
               <a className="link">

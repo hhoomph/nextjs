@@ -37,7 +37,7 @@
     min-height: 5rem;
   }
   .user_link {
-    cursor: pointer;
+    //cursor: pointer;
     background: $circleUser_gradient;
     display: block;
     margin: auto;
@@ -76,12 +76,14 @@
     margin: 0 !important;
     margin-top: 4px !important;
     margin-bottom: 1px !important;
+    cursor: pointer;
   }
   .display_name {
     font-size: 0.75rem;
     margin: 0 !important;
     margin-bottom: 4px !important;
     min-height: 18px;
+    cursor: pointer;
   }
   .follow,
   .unfollow {

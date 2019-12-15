@@ -2,12 +2,23 @@
 .comment_head {
   top: 0;
   border-bottom: 1px solid #E0E0E0;
+  overflow: hidden;
   .page_title {
     text-align: right;
     font-weight: 600;
   }
+  .back_icon {
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in;
+    float: right;
+    &:hover {
+      color: #5e5e5e;
+    }
+  }
 }
 .comment_page {
+  overflow: hidden;
   ._txt {
     font-size: 0.85rem;
     padding-top: 8px;
@@ -29,6 +40,10 @@
         height: auto;
         max-width: 3rem;
         border-radius: 10rem;
+        transition: all 0.2s ease-in;
+        &:hover {
+          border: 1px solid #EF6C00;
+        }
       }
     }
     .name {
@@ -104,6 +119,10 @@
           color: #333;
         }
       }
+      .red {
+        color: #E57373;
+        fill: #f44336;
+      }
     }
     .content {
       .user_name {
@@ -131,18 +150,20 @@
         cursor: pointer;
         display: inline-block;
         transition: all 0.2s ease-in;
-        &:hover, &:active{
+        &:hover,
+        &:active {
           color: #000;
           transition: all 0.1s ease-in;
         }
       }
       .show_replies {
         color: #8c8c8c;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         cursor: pointer;
         font-weight: normal;
         transition: all 0.1s ease-in;
-        &:hover, &:active{
+        &:hover,
+        &:active {
           color: #333;
           font-weight: bold;
         }
@@ -166,5 +187,40 @@
       }
     }
   }
-  .comment_child {}
+  .comment_child {
+    ._txt {
+      font-size: .82rem;
+    }
+    .link {
+      img {
+        max-width: 2.5rem;
+      }
+    }
+    .heart .font_icon {
+      font-size: 1.3rem;
+    }
+    .content .reply_btn {
+      font-size: 0.85rem;
+    }
+    .content .time {
+      font-size: .78rem;
+    }
+    .content {
+      font-size: 0.78rem;
+    }
+  }
+  .input_text {
+    z-index: 1099;
+    background: #fff;
+    box-shadow: 0px 1px 2px 0px #7b7b7b;
+    input, textarea {
+      border: none;
+      font-size: 0.85rem;
+      height: 32px;
+    }
+  }
+  .send_comment {
+    padding: 3px 12px;
+    font-size: .8rem;
+  }
 }

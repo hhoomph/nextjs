@@ -44,14 +44,16 @@ const UserSuggest = props => {
   return (
     <div className={userClass + (props.active ? " active" : "")} onClick={props.onClick} onTouchStartCapture={props.onTouchStartCapture}>
       <div className="user_link_img">
-        <Link href={`/user/${props.userName}`} passHref>
-          <a className="user_link">
-            <img src={props.image} alt={props.displayName} className="rounded-circle img-thumbnail" />
-          </a>
-        </Link>
+        <a className="user_link">
+          <img src={props.image} alt={props.displayName} className="rounded-circle img-thumbnail" />
+        </a>
       </div>
-      <p className="user_name m-2">{props.userName}</p>
-      <p className="display_name m-2">{props.displayName}</p>
+      <Link href={`/user/${props.userName}`} passHref>
+        <p className="user_name m-2">{props.userName}</p>
+      </Link>
+      <Link href={`/user/${props.userName}`} passHref>
+        <p className="display_name m-2">{props.displayName}</p>
+      </Link>
       {followed ? (
         <SubmitButton loading={loading} onClick={() => unFollowToggle()} text="لغو دنبال" className="btn btn-main mb-2 unfollow" />
       ) : (
