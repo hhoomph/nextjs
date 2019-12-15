@@ -113,7 +113,7 @@ const MapComponent = props => {
   // geolocation Options
   const geoOptions = {
     enableHighAccuracy: true,
-    maximumAge: 30000,
+    maximumAge: 5 * 60 * 1000,
     timeout: 10000
   };
   const getLocation = async () => {
@@ -145,9 +145,9 @@ const MapComponent = props => {
     setMarkPosition([position.coords.latitude, position.coords.longitude]);
     setCurrentLocationClass("current_location");
     console.log(`More or less ${position.coords.accuracy} meters.`);
-    // const map = mapRef.current.leafletElement;
-    // L.marker([position.coords.latitude, position.coords.longitude], { icon: placeholderIcon }).addTo(map);
-    // map.setView([position.coords.latitude, position.coords.longitude]);
+    const map = mapRef.current.leafletElement;
+    L.marker([position.coords.latitude, position.coords.longitude], { icon: placeholderIcon }).addTo(map);
+    map.setView([position.coords.latitude, position.coords.longitude]);
   };
   const errorGetPosition = err => {
     setCurrentLocationClass("current_location");

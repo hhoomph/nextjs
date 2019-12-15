@@ -118,7 +118,6 @@ const Page = props => {
     }
   }, [props.date]);
   const selectUser = id => {
-    console.log("object");
     const data = people.map(user => {
       if (user.id === id) {
         setActiveUser(user);
