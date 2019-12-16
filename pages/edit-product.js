@@ -99,17 +99,17 @@ function Page(props) {
   let imgId = 0;
   const suggestedPictures = props.suggestedPictures.data || [];
   let all = [];
-  if (suggestedPictures.length > 0) {
-    const suggestedPics = suggestedPictures.map(picture => {
-      return {
-        id: picture.pictureId,
-        url: `https://api.qarun.ir/${picture.picture}`,
-        thumbnail: `https://api.qarun.ir/${picture.thumbNail}`,
-        active: false
-      };
-    });
-    all = suggestedPics.sort((a, b) => a.id - b.id);
-  }
+  // if (suggestedPictures.length > 0) {
+  //   const suggestedPics = suggestedPictures.map(picture => {
+  //     return {
+  //       id: picture.pictureId,
+  //       url: `https://api.qarun.ir/${picture.picture}`,
+  //       thumbnail: `https://api.qarun.ir/${picture.thumbNail}`,
+  //       active: false
+  //     };
+  //   });
+  //   all = suggestedPics.sort((a, b) => a.id - b.id);
+  // }
   const productPictures = productData.pictures.map(picture => {
     return {
       id: picture.id,
@@ -202,13 +202,13 @@ function Page(props) {
       );
       if (result.isSuccess) {
         setLoading(false);
-        setView(2);
+        setView(3);
       } else if (result.message != undefined) {
         toast.warn(result.message);
       } else if (result.error != undefined) {
         toast.error(result.error);
       }
-      setView(2);
+      //setView(2);
       setLoading(false);
     } else {
       if (title == "") {
@@ -514,11 +514,11 @@ function Page(props) {
         <Nav />
         <div className="container mb-1 rtl add_product">
           <div className="row mb-3 p-2 header_link image_tabs">
-            <div className="col-4 pt-2 text-center" onClick={() => setView(2)}>
+            {/* <div className="col-4 pt-2 text-center" onClick={() => setView(2)}>
               <a className="d-inline-block tab_link">پیشنهادی</a>
-            </div>
+            </div> */}
             <div
-              className="col-4 pt-2 text-center  active"
+              className="col-6 pt-2 text-center  active"
               onClick={() => {
                 setView(3);
                 setTimeout(() => {
@@ -530,7 +530,7 @@ function Page(props) {
               <MdAddCircle className="font_icon" />
             </div>
             <div
-              className="col-4 pt-2 text-center"
+              className="col-6 pt-2 text-center"
               onClick={() => {
                 setView(4);
                 setTimeout(() => {
@@ -604,11 +604,11 @@ function Page(props) {
         <Nav />
         <div className="container mb-1 rtl add_product">
           <div className="row mb-3 p-2 header_link image_tabs">
-            <div className="col-4 pt-2 text-center" onClick={() => setView(2)}>
+            {/* <div className="col-4 pt-2 text-center" onClick={() => setView(2)}>
               <a className="d-inline-block tab_link">پیشنهادی</a>
-            </div>
+            </div> */}
             <div
-              className="col-4 pt-2 text-center "
+              className="col-6 pt-2 text-center "
               onClick={() => {
                 setView(3);
                 setTimeout(() => {
@@ -620,7 +620,7 @@ function Page(props) {
               <MdAddCircle className="font_icon" />
             </div>
             <div
-              className="col-4 pt-2 text-center active"
+              className="col-6 pt-2 text-center active"
               onClick={() => {
                 setView(4);
                 setTimeout(() => {
