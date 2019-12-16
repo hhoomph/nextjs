@@ -12,8 +12,9 @@ module.exports = withPlugins([withSass, withSize, withOffline], {
   poweredByHeader: false,
   // staticFolder: '/static',
   // distDir: 'build',
-  transformManifest: manifest => ["/"].concat(manifest), // add the homepage to the cache
+  // Start of next-offline config for service worker:
   // generateInDevMode: true,
+  //transformManifest: manifest => ["/"].concat(manifest), // add the homepage to the cache
   // workboxOpts: {
   //   swDest: "static/service-worker.js"
   // },
@@ -27,6 +28,51 @@ module.exports = withPlugins([withSass, withSize, withOffline], {
   //     ];
   //   }
   // },
+  workboxOpts: {
+    swDest: "static/service-worker.js",
+    // runtimeCaching: [
+    //   {
+    //     urlPattern: /^https?.*/,
+    //     handler: "NetworkFirst",
+    //     options: {
+    //       cacheName: "offlineCache",
+    //       expiration: {
+    //         maxEntries: 50,
+    //         maxAgeSeconds: 1 * 60 * 60,
+    //         purgeOnQuotaError: true
+    //       }
+    //     }
+    //   }
+    // ]
+    runtimeCaching: [
+      {
+        urlPattern: /^https?.*/,
+        handler: "NetworkFirst",
+        options: {
+          cacheName: "https-calls",
+          networkTimeoutSeconds: 15,
+          expiration: {
+            maxEntries: 100,
+            maxAgeSeconds: 1 * 60 * 60 // 1 hour
+          },
+          cacheableResponse: {
+            statuses: [0, 200]
+          }
+        }
+      }
+    ]
+  },
+  experimental: {
+    async rewrites() {
+      return [
+        {
+          source: "/service-worker.js",
+          destination: "/_next/static/service-worker.js"
+        }
+      ];
+    }
+  },
+  // End Of next-offline config
   webpack(config, options) {
     config.module.rules.push(
       {
