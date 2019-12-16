@@ -202,13 +202,13 @@ const Page = props => {
     }
   };
   return (
-    <>
-      <Nav />
+    <dvi className="login_page">
+      {/* <Nav /> */}
       <LoginHeader />
       <div className="container mb-1 rtl login">
         <View />
       </div>
-    </>
+    </dvi>
   );
 };
 Page.getInitialProps = async function(context) {

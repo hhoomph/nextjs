@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import fetchData from "../utils/fetchData";
 import Nav from "../components/Nav/Nav";
 import Loading from "../components/Loader/Loading";
-import Auth from '../components/Auth/Auth';
+import Auth from "../components/Auth/Auth";
 import IndexHeader from "../components/Head/IndexHeader";
 import { CartCountContext } from "../context/context";
 import { cartCountReduser } from "../context/reducer";
@@ -48,6 +48,8 @@ function Page(props) {
   const GetMarketAround = props.GetMarketAround.data || [];
   const FriendsMarket = props.FriendsMarket.data || [];
   const Profile = props.Profile.data || null;
+  const lat = Profile.lat !== undefined && Profile.lat !== null ? Profile.lat : 0;
+  const long = Profile.long !== undefined && Profile.long !== null ? Profile.long : 0;
   const allCategories = props.allCategories.data || [];
   const cartData = props.cartData.data || [];
   const getCartCount = cartData
@@ -72,29 +74,33 @@ function Page(props) {
     Following = [selfUser, ...Following];
   }
   const [suggestionUsers, setSuggestionUsers] = useState([]);
-  const getUserFromMarketAround = () => {
-    const userFromMarketAround = GetMarketAround.map(market => {
-      const user = {
-        displayName: market.sellerDisplayName,
-        id: market.sellerId,
-        isFollowed: false,
-        phoneNumber: "",
-        qerun: "",
-        userAvatar: market.sellerAvatar,
-        userName: market.sellerUserName
-      };
-      return user;
-    });
-    // Remove duplicate Users in array with id
-    const userResult = [];
-    const map = new Map();
-    for (const item of userFromMarketAround) {
-      if (!map.has(item.userName)) {
-        map.set(item.userName, true); // set any value to Map
-        userResult.push(item);
+  const getUserFromClosestPeople = async () => {
+    const getClosestPeople = await fetchData(
+      "User/U_Friends/ClosestPeople",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          lat: lat,
+          long: long,
+          page: 1,
+          pageSize: 10
+        })
+      },
+      props.ctx
+    );
+    if (getClosestPeople !== undefined && getClosestPeople.isSuccess) {
+      const allUsers = suggestionUsers.concat(getClosestPeople.data.model);
+      // Remove duplicate Users in array with id
+      const res = [];
+      const map = new Map();
+      for (const item of allUsers) {
+        if (!map.has(item.userName)) {
+          map.set(item.userName, true); // set any value to Map
+          res.push(item);
+        }
       }
+      setSuggestionUsers(res);
     }
-    setSuggestionUsers(userResult);
   };
   const getSuggestionUsers = async () => {
     const getUserFollowers = await fetchData(
@@ -120,8 +126,8 @@ function Page(props) {
   };
   useEffect(() => {
     if (noFriends) {
-      //getUserFromMarketAround();
-      getSuggestionUsers();
+      getUserFromClosestPeople();
+      //getSuggestionUsers();
     }
   }, []);
   // Determine Server Or Browser env
@@ -146,9 +152,7 @@ function Page(props) {
   } else if (process) {
     //console.log('node');
   }
-  const showFirstCatProductsRow = allCategories.map(cat => (
-    <FirstCatProductsRow key={cat.id} id={cat.id} title={cat.titel} />
-  ));
+  const showFirstCatProductsRow = allCategories.map(cat => <FirstCatProductsRow key={cat.id} id={cat.id} title={cat.titel} />);
   return (
     <CartCountContext.Provider value={cartCountDispatch}>
       <IndexHeader cartCount={cartCount} />

@@ -15,7 +15,11 @@ function Page(props) {
   const nextCtx = props.ctx;
   const [view, setView] = useState(1);
   const [loading, setLoading] = useState(false);
-  const _address = props.Res.data !== null && props.Res.data.address.length > 0 ? props.Res.data.address : "";
+  const _addresses =
+    props.Res !== undefined && props.Res.data !== undefined && props.Res.data !== null && props.Res.data.address !== undefined && props.Res.data.address !== null && props.Res.data.address.length > 0
+      ? props.Res.data.address
+      : [];
+  const _address = _addresses.length > 0 ? _addresses[_addresses.length - 1] : "";
   const _phone = props.Res.data !== null && props.Res.data.phoneNumber ? props.Res.data.phoneNumber : "";
   const [address, setAddress] = useState(_address);
   const [phoneNumber, setPhoneNumber] = useState(_phone);
@@ -183,7 +187,8 @@ function Page(props) {
                         </label>
                         <p className="payment_info">
                             پرداخت نقدی به فروشنده در محل
-                          <span>این نوع پرداخت معاف از ضمانت بازگشت وجه می باشد</span>
+                          {/* <div>این نوع پرداخت معاف از ضمانت بازگشت وجه می باشد</div> */}
+                          <div>مسولیت این پرداخت به عهده کاربر می باشد.</div>
                         </p>
                       </div>
                     </div>

@@ -42,9 +42,15 @@
     .userImage {
       width: auto;
       height: auto;
-      max-width: 12vw;
-      padding: 3px;
+      max-width: 13vw;
+      max-height: 13vw;
+      padding: 1px;
+      margin: auto;
+      margin-right: 0;
       border-radius: 10rem;
+    }
+    .badge{
+      font-size: 0.68rem;
     }
   }
   .products_rows {
