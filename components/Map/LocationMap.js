@@ -3,7 +3,7 @@ import L from "leaflet";
 import fetch from "isomorphic-unfetch";
 import { Circle, LayerGroup, Map, TileLayer, Marker, Popup, Polyline, Tooltip } from "react-leaflet";
 import { GeoSearchControl, OpenStreetMapProvider, EsriProvider } from "leaflet-geosearch";
-import { ReactComponent as TargetSvg } from "../../public/static/svg/target.svg";
+import { ReactComponent as TargetSvg } from "../../public/static/svg/aim.svg";
 import { FaSearch } from "react-icons/fa";
 import "../../scss/components/map.scss";
 import { setTimeout } from "core-js";
@@ -80,6 +80,7 @@ const MapComponent = props => {
     if (marker != null) {
       let latlng = marker.leafletElement.getLatLng();
       setMarkPosition(convertLatlngToArray(latlng));
+      map.setView(convertLatlngToArray(latlng));
       // Get City Name From Lat & Long (https://nominatim.openstreetmap.org)
       const res = await fetch(
         `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${convertLatlngToArray(latlng)[0]}&lon=${convertLatlngToArray(latlng)[1]}&zoom=10&addressdetails=1&extratags=1`,
@@ -88,10 +89,14 @@ const MapComponent = props => {
           //credentials: 'include'
         }
       );
-      if (res != undefined && res.ok) {
+      if (res !== undefined && res.ok) {
         const result = await res.json();
-        setCity(result.name);
-        setState(result.address.state.replace("استان ", ""));
+        if (result !== undefined && result.name !== undefined) {
+          setCity(result.name);
+        }
+        if (result !== undefined && result.address !== undefined && result.address.state !== undefined) {
+          setState(result.address.state.replace("استان ", ""));
+        }
       } else {
         // network error
       }
@@ -118,6 +123,7 @@ const MapComponent = props => {
   const showPosition = position => {
     setLoadingGetLocation("");
     setMarkPosition([position.coords.latitude, position.coords.longitude]);
+    updatePosition();
   };
   const errorGetPosition = err => {
     console.warn(`Geolocation ERROR(${err.code}): ${err.message}`);
@@ -142,6 +148,10 @@ const MapComponent = props => {
       </>
     ) : null;
   };
+  useEffect(() => {
+    if (!draggable) return;
+    getLocation();
+  }, [draggable]);
   return (
     <>
       {draggable && (
@@ -164,8 +174,17 @@ const MapComponent = props => {
         </div>
       )}
       <div id="map_2" hidden={props.hidden}>
-        <Map closePopupOnClick={true} animate={true} center={markPosition} zoom={mapZoom} maxZoom={18} ref={mapRef} dragging={draggable}>
-          <TileLayer attribution="Qarun" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <Map
+          closePopupOnClick={true}
+          animate={true}
+          center={markPosition}
+          zoom={mapZoom}
+          maxZoom={18}
+          ref={mapRef}
+          dragging={draggable}
+          //whenReady={() => getLocation()}
+        >
+          <TileLayer attribution="Qarun" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" maxNativeZoom={19} minZoom={0} maxZoom={22} />
           {currentMarker()}
           {draggable && (
             <div className="current_location" onClick={() => getLocation()} title="نمایش مکان شما">

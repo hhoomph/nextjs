@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useRef, memo } from 'react';
-import Link from '../Link';
-import dynamic from 'next/dynamic';
-import Loading from '../Loader/Loader';
-import { FaCheck, FaTimes } from 'react-icons/fa';
-import { ReactComponent as UserImageSvg } from '../../public/static/img/no-userimage.svg';
-import { ToastContainer, toast } from 'react-toastify';
-import fetchData from '../../utils/fetchData';
-import Router from 'next/router';
-import ReactCrop from 'react-image-crop';
-import Modal from 'react-bootstrap/Modal';
-import 'react-image-crop/lib/ReactCrop.scss';
-import '../../scss/components/profileEdit.scss';
+import React, { useState, useEffect, useRef, memo } from "react";
+import Link from "../Link";
+import dynamic from "next/dynamic";
+import Loading from "../Loader/Loader";
+import { FaCheck, FaTimes } from "react-icons/fa";
+import { ReactComponent as UserImageSvg } from "../../public/static/img/no-userimage.svg";
+import { ToastContainer, toast } from "react-toastify";
+import fetchData from "../../utils/fetchData";
+import Router from "next/router";
+import ReactCrop from "react-image-crop";
+import Modal from "react-bootstrap/Modal";
+import "react-image-crop/lib/ReactCrop.scss";
+import "../../scss/components/profileEdit.scss";
 const LocationMap = dynamic({
-  loader: () => import('../Map/LocationMap.js'),
+  loader: () => import("../Map/LocationMap.js"),
   loading: () => <Loading />,
   ssr: false
 });
@@ -23,19 +23,20 @@ const EditProfile = props => {
   // const user = (profileData.userName = profileData.phoneNumber) ? '' : profileData.userName || '';
   // const [username, setUsername] = useState(user);
   const [username, setUsername] = useState(profileData.userName);
-  const [name, setName] = useState(profileData.displayName || '');
-  const [biography, setBiography] = useState(profileData.biography || '');
-  const [email, setEmail] = useState(profileData.email || '');
-  const [phoneNumber, setPhoneNumber] = useState(profileData.phoneNumber || '');
-  const [iban, setIban] = useState(profileData.iban || '');
+  const [name, setName] = useState(profileData.displayName || "");
+  const [biography, setBiography] = useState(profileData.biography || "");
+  const [email, setEmail] = useState(profileData.email || "");
+  const [phoneNumber, setPhoneNumber] = useState(profileData.phoneNumber || "");
+  const [iban, setIban] = useState(profileData.iban || "");
   const [lat, setLat] = useState(profileData.lat || 0);
   const [long, setLong] = useState(profileData.long || 0);
   const [markPosition, setMarkPosition] = useState([profileData.lat || 0, profileData.long || 0]);
   const [city, setCity] = useState(null);
   const [state, setState] = useState(null);
   const [draggable, setDraggable] = useState(false);
-  const _addresses = profileData.addresses !== undefined ? profileData.addresses[0] : '';
-  const [addresses, setAddresses] = useState(_addresses);
+  const _addresses = profileData.addresses !== undefined && profileData.addresses.length > 0 ? profileData.addresses : [];
+  const _address = _addresses.length > 0 ? _addresses[_addresses.length - 1] : "";
+  const [addresses, setAddresses] = useState(_address);
   const avatarUrl = profileData.avatar !== undefined && profileData.avatar !== null ? `https://api.qarun.ir/${profileData.avatar}` : null;
   const [avatar, setAvatar] = useState(avatarUrl);
   const [loading, setLoading] = useState(false);
@@ -45,7 +46,7 @@ const EditProfile = props => {
   const [modalShow, setModalShow] = useState(false);
   const [src, setSrc] = useState(null);
   const [crop, setCrop] = useState({
-    unit: '%',
+    unit: "%",
     width: 50,
     height: 50,
     minWidth: 600,
@@ -60,7 +61,7 @@ const EditProfile = props => {
   const onSelectFile = e => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
-      reader.addEventListener('load', () => setSrc(reader.result));
+      reader.addEventListener("load", () => setSrc(reader.result));
       reader.readAsDataURL(e.target.files[0]);
       setModalShow(true);
     }
@@ -76,23 +77,23 @@ const EditProfile = props => {
   };
   const makeClientCrop = async c => {
     if (imageRef !== null && c.width && c.height) {
-      const _croppedImageUrl = await getCroppedImg(imageRef, c, 'newFile.jpg');
+      const _croppedImageUrl = await getCroppedImg(imageRef, c, "newFile.jpg");
       setCroppedImageUrl(_croppedImageUrl);
     }
   };
   const getCroppedImg = (image, c, fileName) => {
-    const canvas = document.createElement('canvas');
+    const canvas = document.createElement("canvas");
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
     canvas.width = 600;
     canvas.height = 600;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     ctx.drawImage(image, c.x * scaleX, c.y * scaleY, c.width * scaleX, c.height * scaleY, 0, 0, 600, 600);
     return new Promise((resolve, reject) => {
       canvas.toBlob(
         blob => {
           if (!blob) {
-            console.error('Canvas is empty');
+            console.error("Canvas is empty");
             return;
           }
           blob.name = fileName;
@@ -100,14 +101,14 @@ const EditProfile = props => {
           //fileUrl = window.URL.createObjectURL(blob);
           resolve(blob);
         },
-        'image/jpeg',
+        "image/jpeg",
         1
       );
     });
   };
   // End Of Crop Image
   toast.configure({
-    position: 'top-right',
+    position: "top-right",
     autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
@@ -119,13 +120,13 @@ const EditProfile = props => {
     setModalShow(false);
     const errs = [];
     //const file = e.target.files[0];
-    const file = new File([croppedImageUrl], 'newFile.jpg', { type: 'image/jpeg', lastModified: Date.now() });
+    const file = new File([croppedImageUrl], "newFile.jpg", { type: "image/jpeg", lastModified: Date.now() });
     //const file = setCroppedImageUrl;
     //file.type = 'image/jpeg';
     //file.name = 'newFile.jpg';
     //console.log(file)
     const formData = new FormData();
-    const types = ['image/png', 'image/jpeg', 'image/gif'];
+    const types = ["image/png", "image/jpeg", "image/gif"];
     // const files = Array.from(e.target.files);
     // if (files.length > 3) {
     //   return toast.warn('تنها امکان آپلود 3 فایل همزمان وجود دارد.');
@@ -145,15 +146,15 @@ const EditProfile = props => {
     if (file.size > 1050000) {
       errs.push(`حجم فایل '${file.name}' بیشتر از حد مجاز است، لطفا فایل کم حجم تری انتخاب کنید.`);
     }
-    formData.append(`file`, file);
+    formData.append("file", file);
     if (errs.length) {
       return errs.forEach(err => toast.warn(err));
     }
     setUploading(true);
     const result = await fetchData(
-      'User/U_Account/UploadUserAvatar',
+      "User/U_Account/UploadUserAvatar",
       {
-        method: 'POST',
+        method: "POST",
         body: formData
       },
       nextCtx,
@@ -172,9 +173,9 @@ const EditProfile = props => {
   const updateHandler = async () => {
     setLoading(true);
     const result = await fetchData(
-      'User/U_Account/Profile',
+      "User/U_Account/Profile",
       {
-        method: 'PUT',
+        method: "PUT",
         body: JSON.stringify({
           displayName: name,
           biography: biography,
@@ -276,7 +277,7 @@ const EditProfile = props => {
         <Modal.Footer className="justify-content-center">
           {/* <button onClick={() => setModalShow(false)}>بستن</button> */}
           <button className="btn btn-success" onClick={() => uploadHandler()}>
-            بارگذاری{' '}
+            بارگذاری{" "}
           </button>
         </Modal.Footer>
       </Modal>
