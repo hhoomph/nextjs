@@ -234,7 +234,7 @@ const Page = props => {
   }
   useEffect(() => {
     peopleDiv.current.addEventListener("scroll", handleXScroll);
-    return () => peopleDiv.current.removeEventListener("scroll", handleXScroll);
+    //return () => peopleDiv.current.removeEventListener("scroll", handleXScroll);
   }, []);
   useEffect(() => {
     getClosestPeople();
