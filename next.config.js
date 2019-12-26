@@ -14,7 +14,7 @@ module.exports = withPlugins([withSass, withSize, withOffline], {
   // distDir: 'build',
   // Start of next-offline config for service worker:
   // generateInDevMode: true,
-  //transformManifest: manifest => ["/"].concat(manifest), // add the homepage to the cache
+  // transformManifest: manifest => ["/"].concat(manifest), // add the homepage to the cache
   // workboxOpts: {
   //   swDest: "static/service-worker.js"
   // },

@@ -119,7 +119,7 @@ app
     server.get("/service-worker.js", (req, res) => {
       const parsedUrl = parse(req.url, true);
       const { pathname } = parsedUrl;
-      const filePath = join(__dirname, ".next", pathname);
+      const filePath = join(__dirname, ".next/static", pathname);
       app.serveStatic(req, res, filePath);
     });
     server.get("*", (req, res) => {
