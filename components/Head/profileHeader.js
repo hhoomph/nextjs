@@ -1,11 +1,12 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect, useRef, memo } from "react";
 import Link from "../Link";
 import Router from "next/router";
-import { FaShoppingBasket, FaRegUserCircle } from "react-icons/fa";
+import { FaShoppingBasket, FaRegUserCircle, FaShareAlt, FaRegCopy } from "react-icons/fa";
 import { ReactComponent as MenuCircleSvg } from "../../public/static/svg/menu-circle.svg";
 import { ReactComponent as AddUserSvg } from "../../public/static/svg/add-user.svg";
 import { ReactComponent as PlusSvg } from "../../public/static/svg/plus.svg";
-import { Dropdown } from "react-bootstrap";
+import { Dropdown, Modal } from "react-bootstrap";
+import SubmitButton from "../Button/SubmitButton";
 import "../../scss/components/profileHeader.scss";
 import Logout from "../Auth/Logout";
 const Header = props => {
@@ -27,6 +28,9 @@ const Header = props => {
     walletCharge
   } = props.profileData;
   const avatarUrl = avatar !== undefined && avatar !== null ? `https://api.qarun.ir/${avatar}` : null;
+  const [loading, setLoading] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
+  const textCopy = useRef();
   const toggleMenu = () => {
     const menuDiv = document.getElementById("profileMenu");
     menuDiv.classList.toggle("hidden");
@@ -38,15 +42,53 @@ const Header = props => {
       return <img src={"/static/img/no-userimage.svg"} alt="user image" className="rounded-circle" />;
     }
   };
+  const shareLink = async () => {
+    setLoading(true);
+    const shareData = {
+      title: "دعوت به قارون",
+      text: "با دعوت دوستان خود به قارون در سود خرید و فروش آن ها سهیم باشید.",
+      url: `https://qarun.ir/login?user=${userName}`
+    };
+    try {
+      await navigator.share(shareData);
+      setLoading(false);
+    } catch (e) {
+      //console.log("Share Error : ", e);
+      copyText();
+      setLoading(false);
+    }
+  };
+  const copyText = () => {
+    const txt = textCopy.current;
+    txt.select();
+    txt.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+  };
   return (
     <>
       <div className="container profile_header">
         <div className="row">
           <div className="col-6 pl-4 d-flex">
-            <a className="nav_Icons active">
+            <a className="nav_Icons active" onClick={() => setModalShow(true)}>
               <AddUserSvg className="svg_Icons" />
             </a>
           </div>
+          <Modal onHide={() => setModalShow(false)} show={modalShow} size="xl" scrollable className="share_modal">
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">لینک دعوت</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="col-12 p-0 rtl d-flex justify-content-between align-items-center">
+                <textarea value={`با دعوت دوستان خود به قارون در سود خرید و فروش آن ها سهیم باشید. https://qarun.ir/login?user=${userName}`} readOnly className="share_text" ref={textCopy} />
+                <FaRegCopy className="font_icon copy_icon" onClick={copyText} title="کپی کردن" />
+              </div>
+            </Modal.Body>
+            <Modal.Footer className="justify-content-center">
+              <SubmitButton loading={loading} onClick={shareLink} text="اشتراک گذاری" className="d-inline-block btn-main rtl">
+                <FaShareAlt className="font_icon" />
+              </SubmitButton>
+            </Modal.Footer>
+          </Modal>
           <div className="col-6 pr-4 d-flex justify-content-end">
             <Dropdown drop="left" className="dropDownMenu">
               <Dropdown.Toggle>

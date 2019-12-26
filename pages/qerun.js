@@ -88,22 +88,17 @@ function Page(props) {
       <div className="container pt-3 inventory_page">
         <div className="row">
           <div className="col-12 text-center">
-            <p className="inventory_price rtl">{numberSeparator(qerun)}</p>
-            <p className="inventory_price rtl">{numberSeparator(0)} تومان</p>
+            <p className="inventory_price rtl">{numberSeparator(qerun)} قرون</p>
+            <p className="inventory_price inventory_price_toman rtl pt-2">{numberSeparator(0)} تومان</p>
           </div>
         </div>
-        <div className="row p-2 cart_title">
-          <div className="col text-center">
-            <h2 className="mr-2 ml-2 mt-1 page_title">قرون</h2>
-          </div>
-        </div>
-        <div className="row">
+        <div className="row mt-3">
           <div className="col-12 d-block pb-2" style={{ position: "relative", zIndex: "1" }}>
             <div className="col-6 text-center float-right">
               <SubmitButton loading={loading} onClick={() => setModalShow(true)} text="فروش" className="d-inline-block btn-main sell"></SubmitButton>
             </div>
             <div className="col-6 text-center float-left">
-              <SubmitButton loading={loading} onClick={console.log("")} text="انتقال" className="d-inline-block btn-main"></SubmitButton>
+              <SubmitButton loading={loading} onClick={console.log("")} text="انتقال" className="d-inline-block btn-main transfer"></SubmitButton>
             </div>
           </div>
         </div>

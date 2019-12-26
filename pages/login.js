@@ -28,7 +28,7 @@ const Page = props => {
   const View = () => {
     const [step, setStep] = useState(1);
     const [userName, setUserName] = useState("");
-    const [reagent, setReagent] = useState("");
+    const [reagent, setReagent] = useState(props.user || "");
     const [code, setCode] = useState("");
     const [timer, setTimer] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
@@ -211,7 +211,8 @@ const Page = props => {
     </dvi>
   );
 };
-Page.getInitialProps = async function(context) {
+Page.getInitialProps = async function (context) {
+  const { user } = context.query;
   // const apiBaseUrl = `https://www.pooshako.com/api/`;
   // const url = `${apiBaseUrl}Common/Location/GetProvinces`;
   // const response = await fetch(url, {
@@ -223,6 +224,6 @@ Page.getInitialProps = async function(context) {
   //   //body: JSON.stringify(image)
   // });
   // const result = await response.json();
-  // return { result };
+  return { user };
 };
 export default Page;

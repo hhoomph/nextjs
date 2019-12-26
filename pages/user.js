@@ -34,8 +34,8 @@ function Page(props) {
       name={product.title}
       profile={false}
       isDisable={product.isDisable}
-      price={product.price}
-      oldPrice={product.lastPrice}
+      price={product.lastPrice}
+      oldPrice={product.price}
       image={product.picture !== undefined && product.picture !== null ? `https://api.qarun.ir/${product.picture}` : "/static/img/no-product-image.png"}
     />
   ));

@@ -12,6 +12,10 @@
     color: #424242;
     text-align: center;
   }
+  .inventory_price_toman {
+    font-size: 1.5rem;
+    color: #bdbdbd;
+  }
   .btn-main {
     border-radius: 4px;
     min-width: 110px;
@@ -40,6 +44,11 @@
     &:hover {
       background-image: linear-gradient(90deg, #8bc34a, #689f38 51%, #4caf50);
     }
+  }
+  .transfer {
+    background: #fff;
+    color: #000;
+    border: 1px solid #a7a7a7;
   }
   .spinner-border {
     width: 30px;

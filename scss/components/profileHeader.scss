@@ -1,6 +1,7 @@
 @import "../vars";
+@import "../../node_modules/react-responsive-select/dist/ReactResponsiveSelect";
 .profile_header {
-  background-image: $main_gradient;
+  //background-image: $main_gradient;
   clip-path: ellipse(80% 89% at 50% 10%);
   position: relative;
   z-index: 1;
@@ -23,11 +24,15 @@
     }
     .svg_Icons {
       width: 1.65rem;
-      fill: #ffffff;
+      fill: #323232;
       cursor: pointer;
       &:hover {
-        fill: #313131;
+        fill: #000;
       }
+    }
+    .more_menu {
+      width: auto;
+      font-size: 2.3rem;
     }
   }
   .userInfo {
@@ -42,7 +47,7 @@
     height: auto;
     display: block;
     border-radius: 10rem;
-    background: #fca686;
+    //background: #d6d6d6;
     padding: 3px;
     img {
       width: 6rem;
@@ -66,21 +71,30 @@
       width: 1.1rem;
       height: 1.1rem;
       border-radius: 2rem;
+      background: #fff;
+      span {
+        border-radius: 2rem;
+        width: 1rem;
+        height: 1rem;
+        display: block;
+        margin: auto;
+        margin-top: 1px;
+      }
     }
-    .online {
+    .online span {
       background: #00ff00;
     }
-    .offline {
+    .offline span {
       background: #ff0000;
     }
   }
   .user_name {
     font-size: 1.2rem;
-    color: #fff;
+    //color: #fff;
   }
   .stats {
     font-size: 1rem;
-    color: #fff;
+    //color: #fff;
     p,
     .friendsTitle,
     .customersTitle,
@@ -110,8 +124,8 @@
   padding: 0.4rem;
   box-shadow: 0px 6px 23px 3px #bbb;
   .top {
-    font-size: 1.2rem;
-    color: #f9854c;
+    font-size: 1.1rem;
+    //color: #f9854c;
     p {
       margin-bottom: 0.2rem;
       cursor: pointer;
@@ -119,7 +133,7 @@
     .inventory,
     .debt,
     .orders {
-      background: #fee5bd;
+      //background: #fee5bd;
       border-radius: 15px;
       min-width: max-content;
       margin: auto;
@@ -131,11 +145,11 @@
       margin: auto;
       margin-right: -6px;
       float: right;
-      color: #fff;
+      //color: #fff;
       min-width: 150px;
       border-radius: 10px;
       &:hover {
-        color: #fff;
+        color: #464646;
       }
     }
     .unfollow {
@@ -156,7 +170,7 @@
       }
     }
     .distance {
-      color: #ffa422;
+      //color: #ffa422;
       p {
         font-size: 0.8rem;
         float: left;
@@ -164,7 +178,7 @@
       }
       .svg_Icons {
         width: 2.1rem;
-        fill: #ffa422;
+        fill: #242424;
         position: absolute;
         left: 0;
         top: -30px;
@@ -215,4 +229,103 @@
   visibility: hidden !important;
   opacity: 0;
   //display: none !important;
+}
+.more_menu_dropdown {
+  .dropdown-toggle:after {
+    content: none !important;
+  }
+  .dropdown-menu {
+    background: #fff;
+    left: -10px !important;
+    transition: all ease-in-out 0.3s !important;
+  }
+  .dropdown-item.active,
+  .dropdown-item:active {
+    color: #ff5722;
+    text-decoration: none;
+    background: none;
+  }
+}
+.share_modal {
+  .modal-header {
+    .modal-title {
+      display: block;
+      margin: auto;
+    }
+    .close {
+      padding: 0;
+      margin: 0;
+    }
+  }
+  .share_text {
+    width: 90%;
+    font-size: 0.95rem;
+    text-align: justify;
+    padding: 10px;
+    padding-bottom: 60px;
+    border: 1px solid #f4f4f4;
+    border-radius: 10px;
+    resize: none;
+  }
+  .copy_icon {
+    font-size: 1.4rem;
+    cursor: pointer;
+  }
+}
+.report_modal {
+  // react-responsive-select/
+  .rrs__button {
+    min-width: 45vw;
+    color: #555;
+    position: relative;
+    cursor: pointer;
+    line-height: 40px;
+    text-align: center;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    background: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px 0.2px rgba(0, 0, 0, 0.2);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    margin-bottom: 10px;
+    @media screen and (min-width: 768px) {
+      min-width: 15vw;
+    }
+  }
+  span[aria-label="انتخاب کنید"] {
+    color: #a9a9a9;
+  }
+  .rrs__option.rrs__option--next-selection {
+    background: #fea73047;
+    color: #fa6e62;
+  }
+  .rrs__option:hover {
+    color: #ef6c00;
+  }
+  .rrs__option:active {
+    background: #fbe9e7;
+  }
+  .rrs__option {
+    margin: 0;
+    padding-right: 10px;
+    padding-left: 0;
+    padding-top: 5px;
+    padding-bottom: 10px;
+  }
+  @media screen and (max-width: 768px) {
+    .rrs--options-visible .rrs__options {
+      max-height: none;
+      position: fixed;
+      font-size: 1rem;
+      width: auto;
+      left: 1rem;
+      right: 1rem;
+      top: 12%;
+      bottom: 4rem;
+      border: 0;
+      border-radius: 4px;
+    }
+  }
 }
