@@ -49,13 +49,13 @@
       margin-right: 0;
       border-radius: 10rem;
     }
-    .badge{
+    .badge {
       font-size: 0.68rem;
     }
   }
   .products_rows {
     border: 1px solid #dcdcdc;
-    box-shadow: 0px 0px 2px 0px #d8d8d8;
+    //box-shadow: 0px 0px 2px 0px #d8d8d8;
     margin-bottom: 2.5%;
     .product_row {
       padding-top: 1.2%;
@@ -147,6 +147,71 @@
           animation: ping 0.8s both;
           animation-iteration-count: infinite;
         }
+      }
+    }
+  }
+  .contact_row {
+    border: 1px solid #dcdcdc;
+    box-shadow: 0 0 2px 0 #d8d8d8;
+    margin-top: -2%;
+    margin-bottom: 2.5%;
+    padding: 4px;
+    border-top: none;
+    .delivered {
+      background: $button_color;
+      cursor: pointer;
+      color: #fff;
+      border-radius: 15px;
+      border: none;
+      height: 40px;
+      width: 110px !important;
+      max-width: 110px !important;
+      align-self: center;
+      padding-right: 10px !important;
+      padding-left: 10px !important;
+      align-self: center;
+      &:hover, &:active {
+        background-image: none;
+        background: #01b91a;
+        animation: shadow_drop 0.8s both;
+        animation-iteration-count: infinite;
+      }
+    }
+    .cancel {
+      cursor: pointer;
+      color: #757575;
+      background: #E0E0E0;
+      border-radius: 15px;
+      border: none;
+      height: 40px;
+      width: 110px !important;
+      max-width: 110px !important;
+      align-self: center;
+      padding-right: 10px !important;
+      padding-left: 10px !important;
+      align-self: center;
+      &:hover, &:active {
+        background-image: none;
+        background: #b6b6b6;
+        animation: shadow_drop 0.8s both;
+        animation-iteration-count: infinite;
+      }
+    }
+    .tell_call {
+      font-size: 32px;
+      color: #ffffff;
+      width: 46px;
+      height: 46px;
+      background: #2196f3;
+      border-radius: 5rem;
+      text-align: center;
+      line-height: normal;
+      justify-self: center;
+      justify-content: center;
+      display: flex;
+      .font_icon {
+        display: block;
+        margin: auto;
       }
     }
   }

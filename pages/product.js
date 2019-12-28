@@ -51,12 +51,12 @@ function Page(props) {
       },
       props.ctx
     );
-    if (result.isSuccess) {
+    if (result !== undefined && result.isSuccess !== undefined && result.isSuccess) {
       //toast.success('محصول شما با موفقیت به سبد خرید اضافه شد.');
       Router.push("/cart");
-    } else if (result.message != undefined) {
+    } else if (result !== undefined && result.message !== undefined) {
       toast.warn(result.message);
-    } else if (result.error != undefined) {
+    } else if (result !== undefined && result.error !== undefined) {
       toast.error(result.error);
     }
     setLoading(false);
@@ -196,4 +196,5 @@ Page.getInitialProps = async function(context) {
   );
   return { result, id };
 };
-export default Auth(Page);
+//export default Auth(Page);
+export default Page;

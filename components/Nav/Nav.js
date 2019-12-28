@@ -67,6 +67,9 @@ const Nav = props => {
       {/* Bottom Navbar in Desktop Mode */}
       <nav className="d-none d-lg-flex fixed-bottom top_nav navbar navbar-expand navbar-white desktop_bottom">
         <div className="col-12 d-flex justify-content-center">
+          <Link href="/help" passHref>
+            <a className="nav-link">راهنمای ثبت سفارش</a>
+          </Link>
           <Link href="/terms" passHref>
             <a className="nav-link">شرایط و قوانین</a>
           </Link>

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, memo } from "react";
 import Link from "../Link";
 import Router from "next/router";
 import { FaShoppingBasket, FaRegUserCircle, FaShareAlt, FaRegCopy } from "react-icons/fa";
+import { IoMdMenu } from "react-icons/io";
+import { TiThMenuOutline } from "react-icons/ti";
 import { ReactComponent as MenuCircleSvg } from "../../public/static/svg/menu-circle.svg";
 import { ReactComponent as AddUserSvg } from "../../public/static/svg/add-user.svg";
 import { ReactComponent as PlusSvg } from "../../public/static/svg/plus.svg";
@@ -25,11 +27,13 @@ const Header = props => {
     productCount,
     qerun,
     userName,
-    walletCharge
+    walletCharge,
+    deliveredOrderCount
   } = props.profileData;
   const avatarUrl = avatar !== undefined && avatar !== null ? `https://api.qarun.ir/${avatar}` : null;
   const [loading, setLoading] = useState(false);
   const [modalShow, setModalShow] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const textCopy = useRef();
   const toggleMenu = () => {
     const menuDiv = document.getElementById("profileMenu");
@@ -208,7 +212,7 @@ const Header = props => {
             <Link href="/orders" passHref>
               <div className="col-4 d-block text-center">
                 <p>سفارشات</p>
-                <p className="orders">{marketingAmount ? `${marketingAmount} ` : "0 "}</p>
+                <p className="orders">{deliveredOrderCount ? `${deliveredOrderCount} ` : "0 "}</p>
               </div>
             </Link>
           </div>

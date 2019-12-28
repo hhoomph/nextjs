@@ -1,9 +1,9 @@
-import React, { Fragment, useContext, useRef, useEffect } from 'react';
-import dynamic from 'next/dynamic';
-import Loading from '../components/Loader/Loading';
-import fetchData from '../utils/fetchData';
-import Nav from '../components/Nav/Nav';
-import '../scss/components/aboutPage.scss';
+import React, { Fragment, useContext, useRef, useEffect } from "react";
+import dynamic from "next/dynamic";
+import Loading from "../components/Loader/Loading";
+import fetchData from "../utils/fetchData";
+import Nav from "../components/Nav/Nav";
+import "../scss/components/aboutPage.scss";
 function Page(props) {
   return (
     <>

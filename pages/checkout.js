@@ -40,28 +40,29 @@ function Page(props) {
   const stepTwo = async () => {
     if (address.length > 0) {
       if (phoneNumber !== "") {
-        setLoading(true);
-        const Res = await fetchData(
-          "User/U_Order/AddS2",
-          {
-            method: "POST",
-            body: JSON.stringify({
-              phoneNumber: phoneNumber,
-              address: address,
-              description: description
-            })
-          },
-          nextCtx
-        );
-        if (Res !== undefined && Res.isSuccess) {
-          setOrderId(Res.data.orderId);
-          setView(2);
-        } else if (Res !== undefined && Res.message != undefined) {
-          toast.warn(Res.message);
-        } else if (Res !== undefined && Res.error != undefined) {
-          toast.error(Res.error);
-        }
-        setLoading(false);
+        // setLoading(true);
+        // const Res = await fetchData(
+        //   "User/U_Order/AddS2",
+        //   {
+        //     method: "POST",
+        //     body: JSON.stringify({
+        //       phoneNumber: phoneNumber,
+        //       address: address,
+        //       description: description
+        //     })
+        //   },
+        //   nextCtx
+        // );
+        // if (Res !== undefined && Res.isSuccess) {
+        //   setOrderId(Res.data.orderId);
+        //   setView(2);
+        // } else if (Res !== undefined && Res.message != undefined) {
+        //   toast.warn(Res.message);
+        // } else if (Res !== undefined && Res.error != undefined) {
+        //   toast.error(Res.error);
+        // }
+        // setLoading(false);
+        setView(2);
       } else {
         toast.warn("لطفا تلفن همراه را وارد نمایید.");
       }
@@ -76,7 +77,10 @@ function Page(props) {
       {
         method: "POST",
         body: JSON.stringify({
-          orderId: orderId,
+          //orderId: orderId,   -> Send Old Order Id for repayment order (if customer canceled an order)
+          phoneNumber: phoneNumber,
+          address: address,
+          description: description,
           orderPaymentType: paymentMethod
         })
       },
@@ -85,6 +89,7 @@ function Page(props) {
     if (Res !== undefined && Res.isSuccess) {
       // setOrderId(Res.data.orderId);
       // setView(2);
+      Router.push("/cart");
     } else if (Res !== undefined && Res.message != undefined) {
       toast.warn(Res.message);
     } else if (Res !== undefined && Res.error != undefined) {

@@ -48,8 +48,9 @@ function Page(props) {
   const GetMarketAround = props.GetMarketAround.data || [];
   const FriendsMarket = props.FriendsMarket.data || [];
   const Profile = props.Profile.data || null;
-  const lat = Profile.lat !== undefined && Profile.lat !== null ? Profile.lat : 0;
-  const long = Profile.long !== undefined && Profile.long !== null ? Profile.long : 0;
+  const isLogin = Profile !== null ? true : false;
+  const lat = Profile !== null && Profile.lat !== undefined && Profile.lat !== null ? Profile.lat : 0;
+  const long = Profile !== null && Profile.long !== undefined && Profile.long !== null ? Profile.long : 0;
   const allCategories = props.allCategories.data || [];
   const cartData = props.cartData.data || [];
   const getCartCount = cartData
@@ -125,7 +126,7 @@ function Page(props) {
     }
   };
   useEffect(() => {
-    if (noFriends) {
+    if (noFriends && Profile !== null) {
       getUserFromClosestPeople();
       //getSuggestionUsers();
     }
@@ -152,22 +153,24 @@ function Page(props) {
   } else if (process) {
     //console.log('node');
   }
-  const showFirstCatProductsRow = allCategories.map(cat => <FirstCatProductsRow key={cat.id} id={cat.id} title={cat.titel} />);
+  const showFirstCatProductsRow = allCategories.map(cat => <FirstCatProductsRow key={cat.id} id={cat.id} title={cat.titel} isLogin={isLogin} />);
   return (
     <CartCountContext.Provider value={cartCountDispatch}>
       <IndexHeader cartCount={cartCount} />
       <Nav cartCount={cartCount} />
-      {noFriends ? (
+      {noFriends && Profile !== null ? (
         <>
           <FirstUserSuggest users={suggestionUsers} />
           <CatProductsRow products={GetMarketAround} />
           {showFirstCatProductsRow}
         </>
-      ) : (
+      ) : Profile !== null ? (
         <>
           <UserSuggest users={Following} /> <CatProductsRow products={GetMarketAround} />
           <ProductsRow products={FriendsMarket} />
         </>
+      ) : (
+        showFirstCatProductsRow
       )}
     </CartCountContext.Provider>
   );
@@ -233,4 +236,5 @@ Page.getInitialProps = async function(context) {
   );
   return { Following, GetMarketAround, FriendsMarket, cartData, Profile, allCategories };
 };
-export default Auth(Page);
+//export default Auth(Page);
+export default Page;

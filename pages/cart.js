@@ -42,96 +42,10 @@ function Page(props) {
     pauseOnHover: true,
     draggable: true
   });
-  //console.log(cartData);
-  // const renderCart = cartData.map(cart => {
-  //   switch (view) {
-  //     case 1:
-  //       return (
-  //         <Cart
-  //           key={cart.sellerId}
-  //           sellerId={cart.sellerId}
-  //           userId={cart.userId}
-  //           cartData={cart.cartDetailsSelectDtos}
-  //           sellerAvatar={`https://api.qarun.ir/${cart.sellerAvatar}`}
-  //           sellerName={""}
-  //           setLoading={setLoading}
-  //           type={view}
-  //         />
-  //       );
-  //       break;
-  //     case 2:
-  //       return (
-  //         <Cart
-  //           key={cart.orderId}
-  //           sellerId={cart.sellerId}
-  //           userId={cart.customerId}
-  //           cartData={cart.products}
-  //           sellerAvatar={`https://api.qarun.ir/${cart.sellerAvatar}`}
-  //           sellerName={cart.sellerDisplayName}
-  //           setLoading={setLoading}
-  //           type={view}
-  //           orderId={cart.orderId}
-  //           orderStatus={cart.orderStatus}
-  //           reason4DisapprovedDelivery={cart.reason4DisapprovedDelivery}
-  //           sendDate={cart.sendDate}
-  //           totalPrice={cart.totalPrice}
-  //           totalDiscount={cart.totalDiscount}
-  //           totalLastPrice={cart.totalLastPrice}
-  //           id={cart.id}
-  //           customerId={cart.customerId}
-  //           pOrderStatus={cart.pOrderStatus}
-  //           orderPaymentType={cart.orderPaymentType}
-  //           pOrderPaymentType={cart.pOrderPaymentType}
-  //           pReason4DisapprovedDelivery={cart.pReason4DisapprovedDelivery}
-  //           pSendDate={cart.pSendDate}
-  //           sellerUserName={cart.sellerUserName}
-  //           sellerPhoneNumber={cart.sellerPhoneNumber}
-  //           incomAmount={cart.incomAmount}
-  //         />
-  //       );
-  //       break;
-  //     case 3:
-  //       return (
-  //         <Cart
-  //           key={cart.orderId}
-  //           orderChildsId={cart.orderChildsId}
-  //           description={cart.description}
-  //           paySucceeded={cart.paySucceeded}
-  //           id={cart.id}
-  //           customerId={cart.customerId}
-  //           totalPrice={cart.sumTotalPrice}
-  //           totalDiscount={cart.sumTotalDiscount}
-  //           totalLastPrice={cart.sumTotalLastPrice}
-  //           lastUpdate={cart.lastUpdate}
-  //           orderPaymentType={cart.orderPaymentType}
-  //           pOrderPaymentType={cart.pOrderPaymentType}
-  //           paymentDate={cart.paymentDate}
-  //           setLoading={setLoading}
-  //           type={view}
-  //         />
-  //       );
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  //   // return (
-  //   //   <Cart
-  //   //     key={cart.sellerId}
-  //   //     sellerId={cart.sellerId}
-  //   //     userId={cart.userId}
-  //   //     cartData={cart}
-  //   //     sellerAvatar={`https://api.qarun.ir/${cart.sellerAvatar}`}
-  //   //     sellerName={""}
-  //   //     setLoading={setLoading}
-  //   //     type={type}
-  //   //     // shopingCartId={cart.id}
-  //   //   />
-  //   // );
-  // });
   const renderCart = cartData.map(cart => {
     const sellerImg = cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
     return (
-      <Cart key={cart.sellerId} sellerId={cart.sellerId} customerId={cart.userId} cartData={cart.cartDetailsSelectDtos} sellerAvatar={sellerImg} sellerName={""} setLoading={setLoading} type={view} />
+      <Cart key={cart.sellerId} sellerId={cart.sellerId} sellerName={cart.sellerDisplayName} sellerUserName={cart.sellerUserName} customerId={cart.userId} cartData={cart.cartDetailsSelectDtos} sellerAvatar={sellerImg} setLoading={setLoading} type={view} />
     );
   });
   const renderOpenCart = openCartData.map(cart => {
@@ -166,24 +80,33 @@ function Page(props) {
     );
   });
   const renderHistoryCart = historyCartData.map(cart => {
-    //const sellerImg = cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
+    const sellerImg = cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
     return (
       <Cart
-        key={cart.orderId}
-        orderChildsId={cart.orderChildsId}
-        description={cart.description}
-        paySucceeded={cart.paySucceeded}
-        id={cart.id}
-        customerId={cart.customerId}
-        totalPrice={cart.sumTotalPrice}
-        totalDiscount={cart.sumTotalDiscount}
-        totalLastPrice={cart.sumTotalLastPrice}
-        lastUpdate={cart.lastUpdate}
-        orderPaymentType={cart.orderPaymentType}
-        pOrderPaymentType={cart.pOrderPaymentType}
-        paymentDate={cart.paymentDate}
+        key={cart.orderId + cart.id}
+        userId={cart.customerId}
+        cartData={cart.products}
+        sellerAvatar={sellerImg}
+        sellerName={cart.sellerDisplayName}
         setLoading={setLoading}
         type={view}
+        orderId={cart.orderId}
+        orderStatus={cart.orderStatus}
+        reason4DisapprovedDelivery={cart.reason4DisapprovedDelivery}
+        sendDate={cart.sendDate}
+        totalPrice={cart.totalPrice}
+        totalDiscount={cart.totalDiscount}
+        totalLastPrice={cart.totalLastPrice}
+        id={cart.id}
+        customerId={cart.customerId}
+        pOrderStatus={cart.pOrderStatus}
+        orderPaymentType={cart.orderPaymentType}
+        pOrderPaymentType={cart.pOrderPaymentType}
+        pReason4DisapprovedDelivery={cart.pReason4DisapprovedDelivery}
+        pSendDate={cart.pSendDate}
+        sellerUserName={cart.sellerUserName}
+        sellerPhoneNumber={cart.sellerPhoneNumber}
+        incomAmount={cart.incomAmount}
       />
     );
   });
@@ -262,50 +185,10 @@ function Page(props) {
     } else if (view === 3) {
       // Get Deliveried orders
       const getCartDataRes1 = await fetchData(
-        "User/U_Order/CustomerOrderChildren",
+        "User/U_Order/CustomerHistory",
         {
           method: "POST",
           body: JSON.stringify({
-            orderStatus: 4,
-            page: 1,
-            pageSize: 10
-          })
-        },
-        props.ctx
-      );
-      // Get CanceledByCustomer Orders
-      const getCartDataRes2 = await fetchData(
-        "User/U_Order/CustomerOrderChildren",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            orderStatus: 5,
-            page: 1,
-            pageSize: 10
-          })
-        },
-        props.ctx
-      );
-      // Get CanceledBySeller Orders
-      const getCartDataRes3 = await fetchData(
-        "User/U_Order/CustomerOrderChildren",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            orderStatus: 6,
-            page: 1,
-            pageSize: 10
-          })
-        },
-        props.ctx
-      );
-      // Get Returned Orders
-      const getCartDataRes4 = await fetchData(
-        "User/U_Order/CustomerOrderChildren",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            orderStatus: 8,
             page: 1,
             pageSize: 10
           })
@@ -314,18 +197,6 @@ function Page(props) {
       );
       if (getCartDataRes1 !== undefined && getCartDataRes1.isSuccess) {
         let cData = historyCartData.concat(getCartDataRes1.data);
-        setHistoryCartData(cData);
-      }
-      if (getCartDataRes2 !== undefined && getCartDataRes2.isSuccess) {
-        let cData = historyCartData.concat(getCartDataRes2.data);
-        setHistoryCartData(cData);
-      }
-      if (getCartDataRes3 !== undefined && getCartDataRes3.isSuccess) {
-        let cData = historyCartData.concat(getCartDataRes3.data);
-        setHistoryCartData(cData);
-      }
-      if (getCartDataRes4 !== undefined && getCartDataRes4.isSuccess) {
-        let cData = historyCartData.concat(getCartDataRes4.data);
         setHistoryCartData(cData);
       }
     }
@@ -360,9 +231,9 @@ function Page(props) {
                 <li className={`nav-item ${view == 2 ? "active" : ""}`} onClick={() => setView(2)}>
                   <a className="nav-link">جاری</a>
                 </li>
-                {/* <li className={`nav-item ${view == 3 ? "active" : ""}`} onClick={() => setView(3)}>
+                <li className={`nav-item ${view == 3 ? "active" : ""}`} onClick={() => setView(3)}>
                   <a className="nav-link">سوابق</a>
-                </li> */}
+                </li>
               </ul>
             </div>
           </div>

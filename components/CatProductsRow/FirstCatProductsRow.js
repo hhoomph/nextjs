@@ -14,21 +14,39 @@ const FirstCatProductsRow = props => {
   const [loading, setLoading] = useState(false);
   const [hide, setHide] = useState(false);
   const [more, setMore] = useState(false);
+  const isLogin = props.isLogin;
   const getCategoryProducts = async () => {
     setLoading(true);
-    const GetMarketAroundInCategory = await fetchData(
-      "User/U_Product/GetMarketAroundWithCategory",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          filters: "New",
-          categoryId: props.id,
-          page: 1,
-          pageSize: 10
-        })
-      },
-      props.ctx
-    );
+    let GetMarketAroundInCategory;
+    if (isLogin) {
+      GetMarketAroundInCategory = await fetchData(
+        "User/U_Product/GetMarketAroundWithCategory",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            filters: "New",
+            categoryId: props.id,
+            page: 1,
+            pageSize: 10
+          })
+        },
+        props.ctx
+      );
+    } else {
+      GetMarketAroundInCategory = await fetchData(
+        "User/U_Product/Home",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            filters: "New",
+            categoryId: props.id,
+            page: 1,
+            pageSize: 10
+          })
+        },
+        props.ctx
+      );
+    }
     if (GetMarketAroundInCategory !== undefined && GetMarketAroundInCategory.isSuccess) {
       setProducts(GetMarketAroundInCategory.data);
       if (GetMarketAroundInCategory.data.length <= 0) {
