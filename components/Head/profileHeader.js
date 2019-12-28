@@ -9,6 +9,7 @@ import { ReactComponent as AddUserSvg } from "../../public/static/svg/add-user.s
 import { ReactComponent as PlusSvg } from "../../public/static/svg/plus.svg";
 import { Dropdown, Modal } from "react-bootstrap";
 import SubmitButton from "../Button/SubmitButton";
+import SideBar from "../SideBar/SideBar";
 import "../../scss/components/profileHeader.scss";
 import Logout from "../Auth/Logout";
 const Header = props => {
@@ -34,6 +35,9 @@ const Header = props => {
   const [loading, setLoading] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const toggleSideBar = () => {
+    setIsOpen(!isOpen);
+  };
   const textCopy = useRef();
   const toggleMenu = () => {
     const menuDiv = document.getElementById("profileMenu");
@@ -70,9 +74,10 @@ const Header = props => {
   };
   return (
     <>
+      <SideBar toggle={toggleSideBar} isOpen={isOpen} setIsOpen={setIsOpen} userName={userName} setView={props.setView} />
       <div className="container profile_header">
         <div className="row">
-          <div className="col-6 pl-4 d-flex">
+          <div className="col-2 pl-4 d-flex">
             <a className="nav_Icons active" onClick={() => setModalShow(true)}>
               <AddUserSvg className="svg_Icons" />
             </a>
@@ -83,7 +88,12 @@ const Header = props => {
             </Modal.Header>
             <Modal.Body>
               <div className="col-12 p-0 rtl d-flex justify-content-between align-items-center">
-                <textarea value={`با دعوت دوستان خود به قارون در سود خرید و فروش آن ها سهیم باشید. https://qarun.ir/login?user=${userName}`} readOnly className="share_text" ref={textCopy} />
+                <textarea
+                  value={`با دعوت دوستان خود به قارون در سود خرید و فروش آن ها سهیم باشید. https://qarun.ir/login?user=${userName}`}
+                  readOnly
+                  className="share_text"
+                  ref={textCopy}
+                />
                 <FaRegCopy className="font_icon copy_icon" onClick={copyText} title="کپی کردن" />
               </div>
             </Modal.Body>
@@ -93,8 +103,12 @@ const Header = props => {
               </SubmitButton>
             </Modal.Footer>
           </Modal>
-          <div className="col-6 pr-4 d-flex justify-content-end">
-            <Dropdown drop="left" className="dropDownMenu">
+          <div className="col-10 pr-4 d-flex justify-content-end">
+            <a className={`nav_Icons ${isOpen ? "is_open_toggle" : "toggle"}`} onClick={toggleSideBar}>
+              <IoMdMenu className="font_icon sidebar_toggle" />
+            </a>
+            {/* <SideBar toggle={toggleSideBar} isOpen={isOpen} /> */}
+            {/* <Dropdown drop="left" className="dropDownMenu">
               <Dropdown.Toggle>
                 <a className="nav_Icons">
                   <MenuCircleSvg className="svg_Icons" />
@@ -105,14 +119,6 @@ const Header = props => {
                   دوستان
                 </Dropdown.Item>
                 <Dropdown.Item eventKey="2">دنبال شده ها</Dropdown.Item>
-                {/* <Dropdown.Item
-                  eventKey="5"
-                  onClick={() => {
-                    props.setView(1);
-                  }}
-                >
-                  پروفایل
-                </Dropdown.Item> */}
                 <Dropdown.Item
                   eventKey="3"
                   onClick={() => {
@@ -131,7 +137,7 @@ const Header = props => {
                   خروج
                 </Dropdown.Item>
               </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown> */}
           </div>
         </div>
         <div className="row">

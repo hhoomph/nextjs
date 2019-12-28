@@ -11,20 +11,20 @@
   padding-bottom: 5rem;
   // Icons
   .nav_Icons {
-    color: #ffffff;
+    color: #424242;
     font-size: 2em;
     transition: all 0.2s;
     position: relative;
     z-index: 2;
     &:hover {
-      color: $main_color;
+      color: #000;
     }
     &.active {
-      color: $main_color;
+      color: #000;
     }
     .svg_Icons {
       width: 1.65rem;
-      fill: #323232;
+      fill: #424242;
       cursor: pointer;
       &:hover {
         fill: #000;
@@ -34,6 +34,16 @@
       width: auto;
       font-size: 2.3rem;
     }
+  }
+  .toggle {
+    transition: all 0.5s;
+    animation: jello_diagonal2 0.6s;
+  }
+  .is_open_toggle {
+    transition: all 0.5s;
+    margin-right: 61vw;
+    animation: jello_diagonal1 0.6s backwards;
+    //animation-iteration-count: infinite;
   }
   .userInfo {
     margin-top: -30px;

@@ -1,55 +1,81 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faBriefcase, faPaperPlane, faQuestion, faImage, faCopy, faTimes } from "@fortawesome/free-solid-svg-icons";
-import SubMenu from "./SubMenu";
+import React, { useState, useEffect, useRef, memo } from "react";
 import { Nav, Button } from "react-bootstrap";
 import classNames from "classnames";
-class SideBar extends React.Component {
-  render() {
-    return (
-      <div className={classNames("sidebar", { "is-open": this.props.isOpen })}>
-        <div className="sidebar-header">
-          <Button variant="link" onClick={this.props.toggle} style={{ color: "#fff" }} className="mt-4">
-            <FontAwesomeIcon icon={faTimes} pull="right" size="xs" />
-          </Button>
-          <h3>react-bootstrap sidebar</h3>
-        </div>
-        <Nav className="flex-column pt-2">
-          <p className="ml-3">Heading</p>
-          <Nav.Item className="active">
-            <Nav.Link href="/">
-              <FontAwesomeIcon icon={faHome} className="mr-2" />
-              Home
-            </Nav.Link>
-          </Nav.Item>
-          <SubMenu title="Pages" icon={faCopy} items={["Link", "Link2", "Active"]} />
-          <Nav.Item>
-            <Nav.Link href="/">
-              <FontAwesomeIcon icon={faBriefcase} className="mr-2" />
-              About
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link href="/">
-              <FontAwesomeIcon icon={faImage} className="mr-2" />
-              Portfolio
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link href="/">
-              <FontAwesomeIcon icon={faQuestion} className="mr-2" />
-              FAQ
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link href="/">
-              <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />
-              Contact
-            </Nav.Link>
-          </Nav.Item>
-        </Nav>
+import Logout from "../Auth/Logout";
+import Link from "../Link";
+import "../../scss/components/sideBar.scss";
+const SideBar = props => {
+  const node = useRef();
+  const handleClickOutside = e => {
+    setTimeout(() => {
+      if (node.current.contains(e.target)) {
+        return;
+      }
+      // outside click
+      props.setIsOpen(false);
+    }, 200);
+  };
+  useEffect(() => {
+    if (props.isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [props.isOpen]);
+  return (
+    <div className={classNames("sidebar rtl", { "is-open": props.isOpen })} ref={node}>
+      <div className="sidebar-header p-2">
+        <h5>{props.userName}</h5>
       </div>
-    );
-  }
-}
-export default SideBar;
+      <div className="flex-column pt-2">
+        <div className="nav-item">
+          <Link href="/favorite" passHref>
+            <a className="nav-link">علاقه مندی ها</a>
+          </Link>
+        </div>
+        <div className="nav-item">
+          <Link href="/limit" passHref>
+            <a className="nav-link">محدودیت فروش</a>
+          </Link>
+        </div>
+        <div className="nav-item">
+          <Link href="/terms" passHref>
+            <a className="nav-link">شرایط و قوانین</a>
+          </Link>
+        </div>
+        <div className="nav-item">
+          <Link href="/privacy" passHref>
+            <a className="nav-link">حریم خصوصی</a>
+          </Link>
+        </div>
+        <div className="nav-item">
+          <Link href="/support" passHref>
+            <a className="nav-link">پشتیبانی</a>
+          </Link>
+        </div>
+        <div className="nav-item">
+          <Link href="/about-us" passHref>
+            <a className="nav-link">درباره ما</a>
+          </Link>
+        </div>
+        <div
+          className="nav-item"
+          onClick={() => {
+            Logout();
+          }}
+        >
+          <a className="nav-link">خروج</a>
+        </div>
+      </div>
+      <div className="sidebar-footer p-2">
+        <div className="nav-item">
+          <a className="nav-link">ویرایش نمایه</a>
+        </div>
+      </div>
+    </div>
+  );
+};
+export default memo(SideBar);
