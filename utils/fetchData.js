@@ -52,7 +52,7 @@ export default async (path, opts = {}, context, isFile = false) => {
       data = await res.json();
       if (data.StatusCode == 6) {
         // We need to log out here
-        return Logout();
+        //return Logout();
       }
     }
   } catch (error2) {
