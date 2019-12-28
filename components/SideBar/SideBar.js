@@ -71,7 +71,12 @@ const SideBar = props => {
         </div>
       </div>
       <div className="sidebar-footer p-2">
-        <div className="nav-item">
+        <div
+          className="nav-item"
+          onClick={() => {
+            props.setView(2);
+          }}
+        >
           <a className="nav-link">ویرایش نمایه</a>
         </div>
       </div>
