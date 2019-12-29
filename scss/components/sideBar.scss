@@ -44,6 +44,9 @@
     background: #fff;
     color: #000000;
     border-top: 1px solid #e6e6e6;
+    position: fixed;
+    bottom: 56px;
+    width: 66vw;
     .nav-link {
       color: #000;
       &:hover,

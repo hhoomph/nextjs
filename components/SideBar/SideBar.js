@@ -8,11 +8,13 @@ const SideBar = props => {
   const node = useRef();
   const handleClickOutside = e => {
     setTimeout(() => {
-      if (node.current.contains(e.target)) {
-        return;
+      if (node.current !== undefined && node.current !== null) {
+        if (node.current.contains(e.target)) {
+          return;
+        }
+        // outside click
+        props.setIsOpen(false);
       }
-      // outside click
-      props.setIsOpen(false);
     }, 200);
   };
   useEffect(() => {
