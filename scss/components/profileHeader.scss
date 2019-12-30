@@ -1,5 +1,10 @@
 @import "../vars";
 @import "../../node_modules/react-responsive-select/dist/ReactResponsiveSelect";
+.profile_container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
 .profile_header {
   //background-image: $main_gradient;
   clip-path: ellipse(80% 89% at 50% 10%);
@@ -36,14 +41,15 @@
     }
   }
   .toggle {
+    cursor: pointer;
     transition: all 0.5s;
     animation: jello_diagonal2 0.6s;
   }
   .is_open_toggle {
+    cursor: pointer;
     transition: all 0.5s;
     margin-right: 61vw;
     animation: jello_diagonal1 0.6s backwards;
-    //animation-iteration-count: infinite;
   }
   .userInfo {
     margin-top: -30px;

@@ -144,34 +144,36 @@ function Page(props) {
     }
     return (
       <UserProductsContext.Provider value={userProductsDispatch}>
-        <Nav />
-        <ProfileHeader profileData={profileData} setView={setView} scrollToProducts={scrollToProducts} />
-        <div className="container mb-1 cat_product_row">
-          <div className="row">
-            <div className="col">
-              <div className="row d-flex justify-content-start rtl pr-2 categories">
-                <Category categories={userCategories} catActive={catActive} setCatActive={setCatActive} setPage={setPage} />
+        <div className="profile_container">
+          <Nav />
+          <ProfileHeader profileData={profileData} setView={setView} scrollToProducts={scrollToProducts} />
+          <div className="container mb-1 cat_product_row">
+            <div className="row">
+              <div className="col">
+                <div className="row d-flex justify-content-start rtl pr-2 categories">
+                  <Category categories={userCategories} catActive={catActive} setCatActive={setCatActive} setPage={setPage} />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="container mb-5 pb-3 pt-3">
-          <div className="row d-flex justify-content-start rtl profile_products" ref={productRef}>
-            {showProducts}
-          </div>
-          {loading && (
-            <div
-              style={{
-                display: "block !important",
-                width: "100%",
-                height: "40px",
-                textAlign: "center",
-                marginTop: "0.1rem"
-              }}
-            >
-              <Loading />
+          <div className="container mb-5 pb-3 pt-3">
+            <div className="row d-flex justify-content-start rtl profile_products" ref={productRef}>
+              {showProducts}
             </div>
-          )}
+            {loading && (
+              <div
+                style={{
+                  display: "block !important",
+                  width: "100%",
+                  height: "40px",
+                  textAlign: "center",
+                  marginTop: "0.1rem"
+                }}
+              >
+                <Loading />
+              </div>
+            )}
+          </div>
         </div>
       </UserProductsContext.Provider>
     );
