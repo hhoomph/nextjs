@@ -47,7 +47,8 @@
         top: 2px;
         border-radius: 50px;
         text-align: center;
-        width: 1.8rem;
+        // width: 1.8rem;
+        width: 0;
         height: 1.8rem;
         display: flex;
         justify-content: center;
@@ -115,21 +116,37 @@
         &:hover {
           border-radius: 150px;
           animation: shadow_drop 0.8s both;
-          animation-iteration-count: infinite;
+          // animation-iteration-count: infinite;
         }
+      }
+      .product_menu_button {
+        //position: relative;
+        z-index: 90;
+        float: right;
+        margin-top: -25px;
         .dropDownMenu {
+          .dropdown-toggle{
+            position: relative;
+            z-index: 99;
+          }
           .nav_Icons {
-            background: rgba(239, 108, 0, 0.24);
-            border-radius: 10rem;
+            font-size: 1.3rem;
+            color: #616161;
+            &:hover,
+            &:active {
+              color: #000000;
+            }
             .svg_icon {
-              width: 1.65rem;
-              fill: #fff;
-              border-radius: 10rem;
               cursor: pointer;
+              transition: all .2s ease-in-out;
               &:hover,
               &:focus {
-                background: rgba(239, 108, 0, 1);
-                border-radius: 10rem;
+                transition: all .2s ease-in-out;
+                width: 1.5rem;
+                height: 1.5rem;
+                background: #fff;
+                border-radius: 5rem;
+                padding: 1px;
               }
             }
           }
@@ -139,6 +156,7 @@
             top: 40px;
             right: -135px;
             margin-right: 0;
+            margin-top: -95px;
             left: auto !important;
             border-radius: 10px;
             visibility: visible;

@@ -74,14 +74,14 @@ function Page(props) {
                 <a className="nav-link">دنبال شده ها</a>
               </li>
               <li className={`nav-item ${view == 2 ? "active" : ""}`} onClick={() => setView(2)}>
-                <a className="nav-link">معرفی شده ها</a>
+                <a className="nav-link">دعوت شده ها</a>
               </li>
             </ul>
           </div>
         </div>
       </div>
-      <div className="container rtl pb-5 pt-5 friends_page">
-        <div className="row pl-1 pr-1 mt-4 users">{showUsers}</div>
+      <div className="container rtl pb-5 pt-1 friends_page">
+        <div className="row pl-1 pr-1 mt-2 pt-3 users">{showUsers}</div>
       </div>
     </>
   );

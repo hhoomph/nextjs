@@ -9,8 +9,8 @@ const Category = props => {
         className={props.catActive == cat.id ? "nav-link active" : "nav-link"}
         id={cat.id}
         onClick={() => {
-          props.setCatActive(cat.id);
           props.setPage(1);
+          props.setCatActive(cat.id);
         }}
       >
         {cat.titel}

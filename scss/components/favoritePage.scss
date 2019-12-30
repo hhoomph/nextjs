@@ -1,0 +1,24 @@
+@import '../vars';
+.favorite_title {
+  top: 0;
+  border-bottom: 1px solid #E0E0E0;
+  .cart_title .page_title {
+    display: inline-block;
+    color: #212121;
+  }
+  .font_icon {
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: #424242;
+    &:hover,
+    &:active {
+      color: #000;
+    }
+  }
+}
+.favorite_page {
+  .profile_products {
+    flex-flow: wrap;
+    overflow: auto;
+  }
+}

@@ -13,17 +13,9 @@ import { FaPlus, FaRegComment, FaRegHeart, FaEllipsisV } from "react-icons/fa";
 import { FiShare2 } from "react-icons/fi";
 import { ReactComponent as MenuDotsSvg } from "../public/static/svg/menu-dots.svg";
 import { numberSeparator, removeSeparator, forceNumeric } from "../utils/tools";
-// import { ReactComponent as ShareSvg } from '../public/static/svg/share.svg';
-// import { ReactComponent as CommentSvg } from '../public/static/svg/comment.svg';
-// import { ReactComponent as HeartSvg } from '../public/static/svg/heart-red.svg';
 import Carousel from "react-bootstrap/Carousel";
 import "../scss/components/productPage.scss";
 import { setTimeout } from "core-js";
-// const UserSuggest = dynamic({
-//   loader: () => import('../components/UserSuggest/UserSuggest'),
-//   loading: () => <Loading />,
-//   ssr: false
-// });
 function Page(props) {
   const productData = props.result.data || [];
   const Router = useRouter();
@@ -74,6 +66,36 @@ function Page(props) {
       <img src={`https://api.qarun.ir/${image.value}`} className="product_image" />
     </Carousel.Item>
   ));
+  const [isFavorite, setIsFavorite] = useState(false);
+  const toggleFavorite = async () => {
+    setLoading(true);
+    const Result = await fetchData(
+      `User/U_Favorite/SaveOrUnSave?productId=${productId}`,
+      {
+        method: "GET"
+      },
+      props.ctx
+    );
+    if (Result !== undefined && Result.isSuccess) {
+      setIsFavorite(!isFavorite);
+    }
+    setLoading(false);
+  };
+  const shareLink = async () => {
+    setLoading(true);
+    const shareData = {
+      title: `${productData.title}`,
+      text: `${productData.title}`,
+      url: `https://qarun.ir/product/${productId}/${productData.title.trim().replace(/ /g, "-")}`
+    };
+    try {
+      await navigator.share(shareData);
+      setLoading(false);
+    } catch (e) {
+      //console.log("Share Error : ", e);
+      setLoading(false);
+    }
+  };
   //console.log(productData);
   // Determine Server Or Browser env
   if (typeof window !== "undefined" && window.document !== undefined) {
@@ -129,6 +151,11 @@ function Page(props) {
         <div className="container pt-2 product_details">
           <div className="row">
             <div className="col-6 text-left _top_icons">
+              {/* <ShareSvg className="svg_icon ml-2" /> */}
+              <FiShare2 className="font_icon" onClick={shareLink} />
+            </div>
+            <div className="col-6 text-right _top_icons">
+              {/* <HeartSvg className="svg_icon" /> */}
               <div
                 className="comment_counter"
                 onClick={() =>
@@ -142,12 +169,7 @@ function Page(props) {
                 {/* <CommentSvg className="svg_icon" /> */}
                 <FaRegComment className="font_icon" />
               </div>
-              {/* <ShareSvg className="svg_icon ml-2" /> */}
-              <FiShare2 className="font_icon" />
-            </div>
-            <div className="col-6 text-right _top_icons">
-              {/* <HeartSvg className="svg_icon" /> */}
-              <FaRegHeart className="font_icon" style={{ color: "#333333" }} />
+              <FaRegHeart className={`font_icon ${isFavorite ? "red" : ""}`} onClick={toggleFavorite} />
             </div>
             <div className="col-12 mt-1">
               <p className="text-right product_name">{productData.title || ""}</p>
