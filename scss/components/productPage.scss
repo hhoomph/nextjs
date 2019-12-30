@@ -44,6 +44,8 @@
       height: auto;
       max-height: 800px;
       margin: auto;
+      margin-top: -50px;
+      margin-bottom:-50px;
       display: block;
     }
     .carousel-indicators {
@@ -74,6 +76,7 @@
     }
   }
   .product_details {
+    z-index: 9;
     ._top_icons {
       .comment_counter {
         display: inline-block;
@@ -99,7 +102,16 @@
       .font_icon {
         cursor: pointer;
         font-size: 2rem;
-        color: #333333;
+        color: #424242;
+        transition: all 0.2s;
+        &:hover, &:active{
+          transition: all 0.2s;
+          color: #000;
+          font-size: 2.1rem;
+        }
+      }
+      .font_icon.red {
+        color: #c62828;
       }
       svg {
         width: 8vw;

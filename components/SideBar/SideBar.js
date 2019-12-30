@@ -38,10 +38,8 @@ const SideBar = props => {
             <a className="nav-link">علاقه مندی ها</a>
           </Link>
         </div>
-        <div className="nav-item">
-          <Link href="/limit" passHref>
-            <a className="nav-link">محدودیت فروش</a>
-          </Link>
+        <div className="nav-item" onClick={() => props.setLimitModalShow(true)}>
+          <a className="nav-link">محدودیت فروش</a>
         </div>
         <div className="nav-item">
           <Link href="/terms" passHref>

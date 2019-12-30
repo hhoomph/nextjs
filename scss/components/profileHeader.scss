@@ -11,9 +11,10 @@
   position: relative;
   z-index: 1;
   padding-top: 1rem;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   padding-bottom: 5rem;
+  background: #f1f1f1;
   // Icons
   .nav_Icons {
     color: #424242;
@@ -48,7 +49,7 @@
   .is_open_toggle {
     cursor: pointer;
     transition: all 0.5s;
-    margin-right: 61vw;
+    margin-right: 63vw;
     animation: jello_diagonal1 0.6s backwards;
   }
   .userInfo {
@@ -262,33 +263,66 @@
     background: none;
   }
 }
+.report_modal,
 .share_modal {
   .modal-header {
     .modal-title {
       display: block;
       margin: auto;
+      font-size: 1.3rem;
     }
     .close {
       padding: 0;
       margin: 0;
     }
   }
+  .modal-body{
+    font-size: 0.95rem;
+  }
+  .invite_info{
+    text-align: justify;
+    margin-bottom: 1%;
+  }
+  .more_btn{
+    color: #474747;
+    display: block;
+    border: 1px solid #d1d1d1;
+    width: 78px;
+    text-align: center;
+    border-radius: 4px;
+    transition: all 0.2s;
+    margin:auto;
+    margin-bottom: 10px;
+    &:hover, &:active{
+      transition: all 0.2s;
+      color: #000;
+      border: 1px solid #adadad;
+      text-decoration: none;
+    }
+  }
   .share_text {
     width: 90%;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     text-align: justify;
     padding: 10px;
     padding-bottom: 60px;
     border: 1px solid #f4f4f4;
     border-radius: 10px;
     resize: none;
+    color: #5d5d5d;
   }
   .copy_icon {
     font-size: 1.4rem;
+    color: #5d5d5d;
+    transition: all 0.2s;
     cursor: pointer;
+    &:hover, &:active{
+      transition: all 0.2s;
+      color: #000;
+      border: 1px solid #adadad;
+      text-decoration: none;
+    }
   }
-}
-.report_modal {
   // react-responsive-select/
   .rrs__button {
     min-width: 45vw;

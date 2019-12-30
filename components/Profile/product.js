@@ -4,7 +4,7 @@ import fetchData from "../../utils/fetchData";
 import Router from "next/router";
 import { UserProductsContext } from "../../context/context";
 import { FaShoppingBasket, FaTimesCircle } from "react-icons/fa";
-import { IoMdMore } from "react-icons/io";
+import { MdMoreVert } from "react-icons/md";
 import { ReactComponent as RemoveSvg } from "../../public/static/svg/remove-button.svg";
 import { ReactComponent as MenuCircleSvg } from "../../public/static/svg/menu-circle.svg";
 import { ReactComponent as DisableEye } from "../../public/static/svg/eye.svg";
@@ -70,17 +70,24 @@ const Product = props => {
             <img src={props.image} alt={props.productName} className="product_img" />
           </a>
         </Link>
+        {props.favorite && (
+          <Link href={`/user/${props.sellerUserName}`} passHref>
+            <a className="product_user">
+              <img src={props.sellerAvatar} alt={props.sellerUserName} className="product_img" />
+            </a>
+          </Link>
+        )}
         {props.profile ? (
           <>
             <div className={`product_basket ${disableClass}`} id={props.id} onClick={disableToggle}>
               <p>سبد خرید</p>
               <DisableEye className="svg_Icons" />
             </div>
-            <div className="product_user">
+            <div className="product_menu_button">
               <Dropdown drop="left" className="dropDownMenu">
                 <Dropdown.Toggle>
                   <a className="nav_Icons">
-                    <MenuCircleSvg className="svg_icon" />
+                    <MdMoreVert className="svg_icon" />
                   </a>
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="rtl product_menu">

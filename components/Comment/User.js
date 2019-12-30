@@ -6,35 +6,41 @@ import SubmitButton from "../Button/SubmitButton";
 import { FaTimes, FaHeart, FaRegHeart, FaReply } from "react-icons/fa";
 const User = props => {
   const [loading, setLoading] = useState(false);
-  const { image, productImage, message, name, userName, time } = props;
-  const [followed, setFollowed] = useState(props.followed || false);
-  const followToggle = async () => {
+  const [page, setPage] = useState(1);
+  const [childsComments, setChildsComments] = useState([]);
+  const { commentId, userId, image, message, name, userName, time } = props;
+  const [liked, setLiked] = useState(props.liked || false);
+  const getChildComments = async (id = null) => {
     setLoading(true);
     const result = await fetchData(
-      `User/U_Friends/Follow?userId=${props.id}`,
+      "User/U_Comment/GetCommentChildren",
       {
-        method: "GET"
+        method: "POST",
+        body: JSON.stringify({
+          parentId: commentId,
+          page: page,
+          pageSize: 10
+        })
       },
       props.ctx
     );
-    if (result.isSuccess) {
-      setFollowed(!followed);
-      props.setUpdate(Date());
+    if (result !== undefined && result.isSuccess) {
+      setChildsComments(result.data);
+      setPage(page + 1);
     }
     setLoading(false);
   };
-  const unFollowToggle = async () => {
+  const likeToggle = async () => {
     setLoading(true);
     const result = await fetchData(
-      `User/U_Friends/UnFollow?userId=${props.id}`,
+      `User/U_Comment/LikeOrUnLikeComment?commentId=${commentId}`,
       {
         method: "GET"
       },
       props.ctx
     );
     if (result.isSuccess) {
-      setFollowed(!followed);
-      props.setUpdate(Date());
+      setLiked(!liked);
     }
     setLoading(false);
   };

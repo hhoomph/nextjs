@@ -3,13 +3,15 @@ import Link from "../Link";
 import Router from "next/router";
 import { FaShoppingBasket, FaRegUserCircle, FaShareAlt, FaRegCopy } from "react-icons/fa";
 import { IoMdMenu } from "react-icons/io";
-import { TiThMenuOutline } from "react-icons/ti";
+import { TiTickOutline } from "react-icons/ti";
 import { ReactComponent as MenuCircleSvg } from "../../public/static/svg/menu-circle.svg";
 import { ReactComponent as AddUserSvg } from "../../public/static/svg/add-user.svg";
 import { ReactComponent as PlusSvg } from "../../public/static/svg/plus.svg";
 import { Dropdown, Modal } from "react-bootstrap";
 import SubmitButton from "../Button/SubmitButton";
 import SideBar from "../SideBar/SideBar";
+import RRS from "react-responsive-select";
+import { ToastContainer, toast } from "react-toastify";
 import "../../scss/components/profileHeader.scss";
 import Logout from "../Auth/Logout";
 const Header = props => {
@@ -38,6 +40,14 @@ const Header = props => {
   const toggleSideBar = () => {
     setIsOpen(!isOpen);
   };
+  toast.configure({
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true
+  });
   const textCopy = useRef();
   const toggleMenu = () => {
     const menuDiv = document.getElementById("profileMenu");
@@ -54,7 +64,7 @@ const Header = props => {
     setLoading(true);
     const shareData = {
       title: "دعوت به قارون",
-      text: "با دعوت دوستان خود به قارون در سود خرید و فروش آن ها سهیم باشید.",
+      text: "خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون",
       url: `https://qarun.ir/login?user=${userName}`
     };
     try {
@@ -72,9 +82,89 @@ const Header = props => {
     txt.setSelectionRange(0, 99999);
     document.execCommand("copy");
   };
+  const [limitModalShow, setLimitModalShow] = useState(false);
+  const [limitValue, setLimitValue] = useState(null);
+  const limitOptions = [
+    {
+      value: 1,
+      text: "بدون محدودیت",
+      altered: false,
+      key: 1
+    },
+    {
+      value: 2,
+      text: "حداقل 10،000 تومان",
+      altered: false,
+      key: 2
+    },
+    {
+      value: 3,
+      text: "حداقل 20،000 تومان",
+      altered: false,
+      key: 3
+    },
+    {
+      value: 4,
+      text: "حداقل 30،000 تومان",
+      altered: false,
+      key: 4
+    },
+    {
+      value: 5,
+      text: "حداقل 50،000 تومان",
+      altered: false,
+      key: 5
+    },
+    {
+      value: 6,
+      text: "حداقل 100،000 تومان",
+      altered: false,
+      key: 6
+    }
+  ];
+  const handleLimitSelectChange = ({ text, value, altered }) => {
+    setLimitValue({
+      text,
+      value,
+      altered
+    });
+  };
+  const SelectCaretIcon = () => (
+    <svg className="caret-icon" x="0px" y="0px" width="11.848px" height="6.338px" viewBox="351.584 2118.292 11.848 6.338">
+      <g>
+        <path d="M363.311,2118.414c-0.164-0.163-0.429-0.163-0.592,0l-5.205,5.216l-5.215-5.216c-0.163-0.163-0.429-0.163-0.592,0s-0.163,0.429,0,0.592l5.501,5.501c0.082,0.082,0.184,0.123,0.296,0.123c0.103,0,0.215-0.041,0.296-0.123l5.501-5.501C363.474,2118.843,363.474,2118.577,363.311,2118.414L363.311,2118.414z" />
+      </g>
+    </svg>
+  );
+  const changeLimit = async () => {
+    if (limitValue !== null && limitValue.value !== undefined) {
+      // setLoading(true);
+      // const result = await fetchData(
+      //   `User/U_Friends/UnFollow?userId=${id}`,
+      //   {
+      //     method: "POST",
+      //     body: JSON.stringify({
+      //       limit: limitValue ? limitValue.value : 0
+      //     })
+      //   },
+      //   props.ctx
+      // );
+      // if (result.isSuccess) {
+      //   setLimitModalShow(false);
+      // } else if (result.message != undefined) {
+      //   //toast.warn(result.message);
+      // } else if (result.error != undefined) {
+      //   //toast.error(result.error);
+      // }
+      //setLoading(false);
+      setLimitModalShow(false);
+    } else {
+      toast.warn("لطفا یک گزینه محدودیت فروش را انتخاب کنید.");
+    }
+  };
   return (
     <>
-      <SideBar toggle={toggleSideBar} isOpen={isOpen} setIsOpen={setIsOpen} userName={userName} setView={props.setView} />
+      <SideBar toggle={toggleSideBar} isOpen={isOpen} setIsOpen={setIsOpen} userName={userName} setView={props.setView} setLimitModalShow={setLimitModalShow} />
       <div className="container profile_header">
         <div className="row">
           <div className="col-2 pl-4 d-flex">
@@ -82,24 +172,53 @@ const Header = props => {
               <AddUserSvg className="svg_Icons" />
             </a>
           </div>
+          {/* Invite Modal */}
           <Modal onHide={() => setModalShow(false)} show={modalShow} size="xl" scrollable className="share_modal">
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">لینک دعوت</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+              <div className="col-12 rtl">
+                <p className="invite_info">با دعوت و اضافه کردن دوستان خود به بازار قارون از یک درصد مبلغ خرید ها و فروش های آنها پاداش دریافت کنید.</p>
+                <Link href="/terms" passHref>
+                  <a className="more_btn">بیشتر</a>
+                </Link>
+              </div>
               <div className="col-12 p-0 rtl d-flex justify-content-between align-items-center">
-                <textarea
-                  value={`با دعوت دوستان خود به قارون در سود خرید و فروش آن ها سهیم باشید. https://qarun.ir/login?user=${userName}`}
-                  readOnly
-                  className="share_text"
-                  ref={textCopy}
-                />
+                <textarea value={`خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون.`+"\n"+`https://qarun.ir/login?user=${userName}`} readOnly className="share_text" ref={textCopy} />
                 <FaRegCopy className="font_icon copy_icon" onClick={copyText} title="کپی کردن" />
               </div>
             </Modal.Body>
             <Modal.Footer className="justify-content-center">
               <SubmitButton loading={loading} onClick={shareLink} text="اشتراک گذاری" className="d-inline-block btn-main rtl">
                 <FaShareAlt className="font_icon" />
+              </SubmitButton>
+            </Modal.Footer>
+          </Modal>
+          {/* Sell Limit Modal */}
+          <Modal onHide={() => setLimitModalShow(false)} show={limitModalShow} size="xl" scrollable className="share_modal">
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">تعیین محدودیت فروش</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="col-12 p-0 rtl d-flex">
+                <label className="col-5 col-form-label text-right pr-0 pl-0">محدودیت فروش :</label>
+                <div className="col-7 pr-0 pl-1">
+                  <RRS
+                    id={limitValue !== null ? "not_empty_select" : "empty_select"}
+                    noSelectionLabel={"انتخاب کنید"}
+                    name="category"
+                    options={limitOptions}
+                    onChange={handleLimitSelectChange}
+                    caretIcon={<SelectCaretIcon key="c1" />}
+                    selectedValue={limitValue !== null ? limitValue.value : null}
+                  />
+                </div>
+              </div>
+            </Modal.Body>
+            <Modal.Footer className="justify-content-center">
+              <SubmitButton loading={loading} onClick={changeLimit} text="ثبت محدودیت" className="d-inline-block btn-main">
+                <TiTickOutline className="font_icon" />
               </SubmitButton>
             </Modal.Footer>
           </Modal>
