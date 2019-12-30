@@ -2,6 +2,7 @@
 @import "../../node_modules/react-responsive-select/dist/ReactResponsiveSelect";
 .profile_container {
   width: 100%;
+  min-height: 100vh;
   overflow: hidden;
   position: relative;
 }
@@ -195,6 +196,7 @@
       .svg_Icons {
         width: 2.1rem;
         fill: #242424;
+        mix-blend-mode: luminosity;
         position: absolute;
         left: 0;
         top: -30px;

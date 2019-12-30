@@ -24,6 +24,17 @@ export const cartCountReduser = (state, action) => {
     return state;
   }
 };
+export const removeDuplicate = (arr, field = "id") => {
+  let result = [];
+  let map = new Map();
+  for (let item of arr) {
+    if (!map.has(item.field)) {
+      map.set(item.field, true); // set any value to Map
+      result.push(item);
+    }
+  }
+  return result;
+};
 export const userProductsReducer = (state, action) => {
   switch (action.type) {
   case "refresh":
