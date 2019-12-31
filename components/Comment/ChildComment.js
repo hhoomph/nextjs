@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef, memo } from "react";
 import Link from "../Link";
 import fetchData from "../../utils/fetchData";
-import Loading from "../Loader/Loader";
+import Loading from "../Loader/Loading";
 import SubmitButton from "../Button/SubmitButton";
 import { FaTimes, FaHeart, FaRegHeart, FaReply } from "react-icons/fa";
 const ChildComment = props => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [childsComments, setChildsComments] = useState([]);
-  const { commentId, userId, image, message, name, userName, time } = props;
+  const { commentId, userId, image, message, name, userName, time, productId, replyCount } = props;
   const [liked, setLiked] = useState(props.liked || false);
   const getChildComments = async (id = null) => {
     setLoading(true);
@@ -45,109 +45,28 @@ const ChildComment = props => {
     setLoading(false);
   };
   return (
-    <div className="col-12 mt-2 p-0 user">
-      <div className="row">
-        <div className="col-2">
-          <Link href={`/user/${userName}`} passHref>
-            <a className="link">
-              <img src={image} />
-            </a>
-          </Link>
-        </div>
-        <div className="col-10 _txt">
-          <div className="row m-auto p-0 justify-content-end">
-            <div className="col-2 pl-0 text-center heart">
-              <FaHeart className="font_icon red" />
-            </div>
-            <div className="col-10 p-0 rtl content">
-              <Link href={`/user/${userName}`} passHref>
-                <a className="user_name">{userName}</a>
-              </Link>
-              <div className="message">{message}</div>
-              <div className="reply_btn ml-2">
-                پاسخ
-                {/* <FaReply className="font_icon" /> */}
-              </div>
-              <div className="time ml-2">{time}</div>
-              <div className="show_replies"> + نمایش پاسخ ها </div>
-              <div className="show_replies"> - پنهان کردن پاسخ ها </div>
-            </div>
+    <div className="col-11 d-flex justify-content-center m-auto p-1 user comment_child">
+      <div className="col-2">
+        <Link href={`/user/${userName}`} passHref>
+          <a className="link">
+            <img src={image} />
+          </a>
+        </Link>
+      </div>
+      <div className="col-10 _txt">
+        <div className="row m-auto p-0 justify-content-end">
+          <div className="col-2 pl-0 text-center heart">
+            <FaHeart className="font_icon red" />
           </div>
-        </div>
-        {/* Comment Childs */}
-        <div className="col-11 d-flex justify-content-center m-auto p-1 user comment_child">
-          <div className="col-2">
+          <div className="col-10 p-0 rtl content">
             <Link href={`/user/${userName}`} passHref>
-              <a className="link">
-                <img src={image} />
-              </a>
+              <a className="user_name">{userName}</a>
             </Link>
-          </div>
-          <div className="col-10 _txt">
-            <div className="row m-auto p-0 justify-content-end">
-              <div className="col-2 pl-0 text-center heart">
-                <FaRegHeart className="font_icon" />
-              </div>
-              <div className="col-10 p-0 rtl content">
-                <Link href={`/user/${userName}`} passHref>
-                  <a className="user_name">{userName}</a>
-                </Link>
-                <div className="message">{message}</div>
-                <div className="reply_btn ml-2">پاسخ</div>
-                <div className="time ml-2">{time}</div>
-              </div>
-            </div>
+            <div className="message">{message}</div>
+            <div className="reply_btn ml-2">پاسخ</div>
+            <div className="time ml-2">{time}</div>
           </div>
         </div>
-        <div className="col-11 d-flex justify-content-center m-auto p-1 user comment_child">
-          <div className="col-2">
-            <Link href={`/user/${userName}`} passHref>
-              <a className="link">
-                <img src={image} />
-              </a>
-            </Link>
-          </div>
-          <div className="col-10 _txt">
-            <div className="row m-auto p-0 justify-content-end">
-              <div className="col-2 pl-0 text-center heart">
-                <FaHeart className="font_icon red" />
-              </div>
-              <div className="col-10 p-0 rtl content">
-                <Link href={`/user/${userName}`} passHref>
-                  <a className="user_name">{userName}</a>
-                </Link>
-                <div className="message">{message}</div>
-                <div className="reply_btn ml-2">پاسخ</div>
-                <div className="time ml-2">{time}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="col-11 d-flex justify-content-center m-auto p-1 user comment_child">
-          <div className="col-2">
-            <Link href={`/user/${userName}`} passHref>
-              <a className="link">
-                <img src={image} />
-              </a>
-            </Link>
-          </div>
-          <div className="col-10 _txt">
-            <div className="row m-auto p-0 justify-content-end">
-              <div className="col-2 pl-0 text-center heart">
-                <FaRegHeart className="font_icon" />
-              </div>
-              <div className="col-10 p-0 rtl content">
-                <Link href={`/user/${userName}`} passHref>
-                  <a className="user_name">{userName}</a>
-                </Link>
-                <div className="message">{message}</div>
-                <div className="reply_btn ml-2">پاسخ</div>
-                <div className="time ml-2">{time}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* End Of Childs */}
       </div>
     </div>
   );

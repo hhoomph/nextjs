@@ -6,7 +6,7 @@ import Auth from "../components/Auth/Auth";
 import { useRouter } from "next/router";
 import fetchData from "../utils/fetchData";
 import SubmitButton from "../components/Button/SubmitButton";
-import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import { FaArrowRight, FaArrowLeft, FaTimes } from "react-icons/fa";
 import { numberSeparator, removeSeparator } from "../utils/tools";
 import { ToastContainer, toast } from "react-toastify";
 import "../scss/components/commentPage.scss";
@@ -24,12 +24,20 @@ const Page = props => {
   const Router = useRouter();
   const productId = Router.query.id;
   const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
   const firstComments = props.Comments.data || [];
+  console.log(firstComments);
   const [comments, setComments] = useState(firstComments);
   const [message, setMessage] = useState("");
   const [page, setPage] = useState(2);
   const [isFetching, setIsFetching] = useState(false);
+  const [parentId, setParentId] = useState(null);
+  const [createOrReply, setCreateOrReply] = useState(0);
+  const [replyUserName, setReplyUserName] = useState(null);
   const textRef = useRef();
+  const focusOnTextArea = () => {
+    textRef.current.focus();
+  };
   toast.configure({
     position: "top-right",
     autoClose: 4000,
@@ -38,9 +46,80 @@ const Page = props => {
     pauseOnHover: true,
     draggable: true
   });
-  console.log(firstComments);
+  const showComments = comments.map(com => (
+    <User
+      key={com.commentId}
+      commentId={com.commentId}
+      userId={com.userId}
+      image={com.userAvatar !== undefined && com.userAvatar !== null ? `https://api.qarun.ir/${com.userAvatar}` : "/static/img/no-userimage.png"}
+      liked={com.liked}
+      productImage={"/static/img/product5.jpg"}
+      productId={productId}
+      message={com.content}
+      name={com.senderDisplayName}
+      userName={com.senderUserName}
+      time={com.insertDateP}
+      replyCount={com.replyCount}
+      setParentId={setParentId}
+      setCreateOrReply={setCreateOrReply}
+      setReplyUserName={setReplyUserName}
+      replyMessage={message}
+      setMessage={setMessage}
+      focusOnTextArea={focusOnTextArea}
+    />
+  ));
+  const sendComment = async () => {
+    if (message.trim() !== "") {
+      if (createOrReply === 0) {
+        setLoading(true);
+        const result = await fetchData(
+          "User/U_Comment/AddComment",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              productId: productId,
+              message: message
+            })
+          },
+          props.ctx
+        );
+        if (result !== undefined && result.isSuccess) {
+          setMessage("");
+        } else if (result !== undefined && result.message != undefined) {
+          toast.warn(result.message);
+        } else if (result !== undefined && result.error != undefined) {
+          toast.error(result.error);
+        }
+        setLoading(false);
+      } else if (createOrReply === 1 && parentId !== null) {
+        setLoading(true);
+        const result = await fetchData(
+          "User/U_Comment/ReplyComment",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              parentId: parentId,
+              message: message
+            })
+          },
+          props.ctx
+        );
+        if (result !== undefined && result.isSuccess) {
+          setMessage("");
+          setCreateOrReply(0);
+        } else if (result !== undefined && result.message != undefined) {
+          toast.warn(result.message);
+        } else if (result !== undefined && result.error != undefined) {
+          toast.error(result.error);
+        }
+        setLoading(false);
+      }
+    } else {
+      toast.warn("لطفا نظر خود را بنویسید.");
+    }
+  };
   const getComments = async () => {
-    setLoading(true);
+    setLoading2(true);
     const result = await fetchData(
       "User/U_Comment/GetComments",
       {
@@ -54,47 +133,32 @@ const Page = props => {
       props.ctx
     );
     if (result !== undefined && result.isSuccess) {
-      setComments(result.data);
+      setComments(comments.concat(result.data));
       setPage(page + 1);
-      if (result.data.model.length >= 10) {
+      if (result.data.length >= 10) {
         setTimeout(() => setIsFetching(false), 200);
       }
-    } else if (result.message != undefined) {
+    } else if (result !== undefined && result.message != undefined) {
       setTimeout(() => setIsFetching(false), 200);
-    } else if (result.error != undefined) {
+    } else if (result !== undefined && result.error != undefined) {
       setTimeout(() => setIsFetching(false), 200);
     }
-    setLoading(false);
+    setLoading2(false);
   };
-  const sendComment = async () => {
-    if (message.trim() !== "") {
-      setLoading(true);
-      const result = await fetchData(
-        "User/U_Comment/AddComment",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            productId: productId,
-            message: message
-          })
-        },
-        props.ctx
-      );
-      if (result !== undefined && result.isSuccess) {
-        setMessage("");
-        console.log(result);
-      } else if (result !== undefined && result.message != undefined) {
-        toast.warn(result.message);
-      } else if (result !== undefined && result.error != undefined) {
-        toast.error(result.error);
-      }
-      setLoading(false);
-    } else {
-      toast.warn("لطفا نظر خود را بنویسید.");
-    }
+  const handleScroll = () => {
+    if (window.innerHeight + document.documentElement.scrollTop + 60 < document.documentElement.offsetHeight || isFetching) return;
+    setIsFetching(true);
   };
   useEffect(() => {
-    textRef.current.focus();
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  useEffect(() => {
+    if (!isFetching) return;
+    getComments();
+  }, [isFetching]);
+  useEffect(() => {
+    focusOnTextArea();
   }, []);
   return (
     <>
@@ -111,7 +175,7 @@ const Page = props => {
       </div>
       <div className="container pb-5 rtl comment_page">
         <div className="row pl-1 pr-1 pb-5 mb-5">
-          <User
+          {/* <User
             id={1}
             type={"invite"}
             image={"/static/img/user.jpg"}
@@ -122,89 +186,23 @@ const Page = props => {
             name={"نام نمایشی"}
             userName={"user_name_UserName"}
             time={"2 هفته"}
-          />
-          <User
-            id={2}
-            type={"productLike"}
-            image={"/static/img/user.png"}
-            followed={true}
-            productImage={"/static/img/product4.jpg"}
-            message={"شما را دنبال میکند"}
-            name={"نام نمایشی"}
-            userName={"user_name_UserName"}
-            time={"1 روز پیش"}
-          />
-          <User
-            id={3}
-            type={"follow"}
-            image={"/static/img/user.png"}
-            followed={true}
-            productImage={"/static/img/product6.jpg"}
-            message={"متن پیام متن پیام"}
-            name={"نام نمایشی"}
-            userName={"user_name_UserName"}
-            time={"50 دقیقه"}
-          />
-          <User
-            id={4}
-            type={"productLike"}
-            image={"/static/img/profile.png"}
-            followed={true}
-            productImage={"/static/img/product5.jpg"}
-            message={"پست شما را پسندید"}
-            name={"نام نمایشی"}
-            userName={"user_name_UserName"}
-            time={"5 دقیقه پیش"}
-          />
-          <User
-            id={5}
-            type={"productLike"}
-            image={"/static/img/user.jpg"}
-            followed={false}
-            productImage={"/static/img/product4.jpg"}
-            message={"متن پیام متن پیام"}
-            name={"نام نمایشی"}
-            userName={"user_name_UserName"}
-            time={"1 ماه"}
-          />
-          <User
-            id={6}
-            type={"productLike"}
-            image={"/static/img/user.png"}
-            followed={true}
-            productImage={"/static/img/product6.jpg"}
-            message={"شمار را دنبال میکند"}
-            name={"نام نمایشی"}
-            userName={"user_name_UserName"}
-            time={"یک هفته"}
-          />
-          <User
-            id={7}
-            type={"comment"}
-            image={"/static/img/user.png"}
-            followed={false}
-            productImage={"/static/img/product5.jpg"}
-            message={"متن پیام متن پیام"}
-            name={"نام نمایشی"}
-            userName={"user_name_UserName"}
-            time={"1 روز پیش"}
-          />
-          <User
-            id={8}
-            type={"commentLike"}
-            image={"/static/img/profile.png"}
-            followed={true}
-            productImage={"/static/img/product6.jpg"}
-            message={"پاسخ نطرتان \"گرونه\" را داد: \"قیمت خریدمه\""}
-            name={"نام نمایشی"}
-            userName={"user_name_UserName"}
-            time={"یک هفته پیش"}
-          />
-          {loading && (
+          /> */}
+          {showComments}
+          {loading2 && (
             <div className="col-12 mt-2 p-0 user">
               <Loading />
             </div>
           )}
+        </div>
+        <div className="row reply_to_notify" hidden={createOrReply === 0}>
+          <FaTimes
+            className="font_icon"
+            onClick={() => {
+              setCreateOrReply(0);
+              setMessage("");
+            }}
+          />
+          <p> پاسخ دادن به نظر @{replyUserName}</p>
         </div>
         <div className="row fixed-bottom input_text">
           <div className="col-12">

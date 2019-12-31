@@ -42,15 +42,17 @@
     .userImage {
       width: auto;
       height: auto;
-      max-width: 13vw;
-      max-height: 13vw;
-      padding: 1px;
+      max-width: 13vw !important;
+      max-height: 13vw !important;
+      padding: 1px !important;
+      display: inline-block !important;
       margin: auto;
       margin-right: 0;
       border-radius: 10rem;
     }
     .badge {
       font-size: 0.68rem;
+      float: none !important;
     }
   }
   .products_rows {
@@ -99,6 +101,8 @@
           cursor: pointer;
           font-size: 1.4rem;
           color: #43A047;
+          position: relative;
+          z-index: 9;
           // border: 1px solid #dedede;
           // border-radius: 2px;
           // padding: 0;
@@ -137,7 +141,8 @@
         padding-top: 2px;
         border: 1px solid #dadada;
         border-radius: 3px;
-        cursor: pointer;
+        position: relative;
+        z-index: 9;
         &:hover {
           background: #adadad;
           color: #fff;
@@ -149,6 +154,9 @@
         }
       }
     }
+  }
+  .contact_row[hidden] {
+    display: none !important;
   }
   .contact_row {
     border: 1px solid #dcdcdc;
@@ -170,7 +178,8 @@
       padding-right: 10px !important;
       padding-left: 10px !important;
       align-self: center;
-      &:hover, &:active {
+      &:hover,
+      &:active {
         background-image: none;
         background: #01b91a;
         animation: shadow_drop 0.8s both;
@@ -190,11 +199,33 @@
       padding-right: 10px !important;
       padding-left: 10px !important;
       align-self: center;
-      &:hover, &:active {
+      &:hover,
+      &:active {
         background-image: none;
         background: #b6b6b6;
         animation: shadow_drop 0.8s both;
         animation-iteration-count: infinite;
+      }
+    }
+    .payment {
+      background: $button_color;
+      cursor: pointer;
+      color: #fff;
+      border-radius: 15px;
+      border: none;
+      height: 36px;
+      width: 100px !important;
+      max-width: 100px !important;
+      align-self: center;
+      padding-right: 10px !important;
+      padding-left: 10px !important;
+      align-self: center;
+      transition: all 0.15s ease-in-out;
+      &:hover,
+      &:active {
+        //background-image: none;
+        background: #009e15;
+        animation: shadow_drop 0.8s both;
       }
     }
     .tell_call {
@@ -209,6 +240,12 @@
       justify-self: center;
       justify-content: center;
       display: flex;
+      transition: all 0.06s ease;
+      &:hover,
+      &:active {
+        background-image: linear-gradient(to left, #7CB342, #2E7D32);
+        font-size: 34px;
+      }
       .font_icon {
         display: block;
         margin: auto;

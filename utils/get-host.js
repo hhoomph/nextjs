@@ -11,11 +11,11 @@ function getHost(req, debug = false) {
   // const apiHost = process.browser ? `${protocol}://${window.location.host}/api/` : `${protocol}://${req.headers.host}/api/`;
   // check host for https://nextjs.hhoomph.now.sh domain that not support .env file to get apiUrl
   const host = process.browser ? window.location.host : process.cwd();
-  if (host.startsWith('nextjs.hhoomph')) {
-    return `https://api.qarun.ir/api/`;
+  if (host.startsWith("nextjs.hhoomph")) {
+    return "https://api.qarun.ir/api/";
   }
   if (process.env == undefined) {
-    return `https://api.qarun.ir/api/`;
+    return "https://api.qarun.ir/api/";
   }
   // return apiHost;
   if (debug == true) {

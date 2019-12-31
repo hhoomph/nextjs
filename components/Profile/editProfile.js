@@ -189,7 +189,7 @@ const EditProfile = props => {
           id: id,
           userName: username,
           email: email,
-          orderLimitationId: 1
+          orderLimitationId: profileData.orderLimitationId
         })
       },
       nextCtx
