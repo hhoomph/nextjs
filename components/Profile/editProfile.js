@@ -301,7 +301,8 @@ const EditProfile = props => {
             </div>
             <div className="form-group">
               <label htmlFor="biography">بیوگرافی</label>
-              <input type="text" value={biography} onChange={e => setBiography(e.target.value)} id="biography" className="form-control mt-1 mb-4" placeholder="بیوگرافی" />
+              {/* <input type="text" value={biography} onChange={e => setBiography(e.target.value)} id="biography" className="form-control mt-1 mb-4" placeholder="بیوگرافی" /> */}
+              <textarea value={biography} onChange={e => setBiography(e.target.value)} id="biography" className="form-control mt-1 mb-4" placeholder="بیوگرافی" />
             </div>
             <h5 className="mt-4 mb-4 pt-2">اطلاعات خصوصی</h5>
             <div className="form-group">

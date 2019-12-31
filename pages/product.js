@@ -128,7 +128,7 @@ function Page(props) {
             </div>
           </div>
         </div>
-        <div className="container product_images">
+        <div className="container p-0 product_images">
           <div className="row">
             <div className="col-12">
               <Carousel fade={true} indicators={true} interval={6000} keyboard={true} pauseOnHover={true} slide={true} wrap={true} touch={true}>
@@ -176,7 +176,7 @@ function Page(props) {
             </div>
             <div className="col-12 rtl">
               <span className="price_title"> قیمت :</span> <span className="price">{numberSeparator(productData.lastPrice) || ""} تومان</span>{" "}
-              <span className="price_old">{numberSeparator(productData.price) || ""} تومان</span>
+              <span className="price_old">{productData.price !== productData.lastPrice ? numberSeparator(productData.price) + " تومان " : ""} </span>
             </div>
             <div className="col-12 mt-1 text-center">
               <SubmitButton loading={loading} onClick={addToCart} text="افزودن به سبد خرید" className="d-inline-block btn-main">

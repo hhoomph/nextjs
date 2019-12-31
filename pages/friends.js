@@ -81,7 +81,7 @@ function Page(props) {
         </div>
       </div>
       <div className="container rtl pb-5 pt-1 friends_page">
-        <div className="row pl-1 pr-1 mt-2 pt-3 users">{showUsers}</div>
+        <div className="row pl-1 pr-1 mt-3 pt-5 users">{showUsers}</div>
       </div>
     </>
   );

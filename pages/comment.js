@@ -8,6 +8,7 @@ import fetchData from "../utils/fetchData";
 import SubmitButton from "../components/Button/SubmitButton";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { numberSeparator, removeSeparator } from "../utils/tools";
+import { ToastContainer, toast } from "react-toastify";
 import "../scss/components/commentPage.scss";
 const Nav = dynamic({
   loader: () => import("../components/Nav/Nav"),
@@ -29,6 +30,14 @@ const Page = props => {
   const [page, setPage] = useState(2);
   const [isFetching, setIsFetching] = useState(false);
   const textRef = useRef();
+  toast.configure({
+    position: "top-right",
+    autoClose: 4000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true
+  });
   console.log(firstComments);
   const getComments = async () => {
     setLoading(true);
@@ -58,7 +67,7 @@ const Page = props => {
     setLoading(false);
   };
   const sendComment = async () => {
-    if (message !== "") {
+    if (message.trim() !== "") {
       setLoading(true);
       const result = await fetchData(
         "User/U_Comment/AddComment",
@@ -72,9 +81,16 @@ const Page = props => {
         props.ctx
       );
       if (result !== undefined && result.isSuccess) {
+        setMessage("");
         console.log(result);
+      } else if (result !== undefined && result.message != undefined) {
+        toast.warn(result.message);
+      } else if (result !== undefined && result.error != undefined) {
+        toast.error(result.error);
       }
       setLoading(false);
+    } else {
+      toast.warn("لطفا نظر خود را بنویسید.");
     }
   };
   useEffect(() => {

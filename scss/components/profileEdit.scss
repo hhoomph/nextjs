@@ -68,6 +68,8 @@
       outline: none !important;
       outline-style: none !important;
       color: #444444;
+      height: calc(1.5em + .75rem + 2px);
+      resize: none;
       &:focus {
         color: #000 !important;
         border-color: #000;

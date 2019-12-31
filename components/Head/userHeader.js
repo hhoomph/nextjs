@@ -277,7 +277,7 @@ const Header = props => {
           <div className="col-12 pt-3">
             <h2 className="title">{profileData.displayName}</h2>
             <p className="bio">{profileData.biography}</p>
-            <img className="logo_img" src={"/static/img/logo_opacity.png"} />
+            {/* <img className="logo_img" src={"/static/img/logo_opacity.png"} /> */}
           </div>
         </div>
       </div>
