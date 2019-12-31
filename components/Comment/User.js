@@ -64,26 +64,30 @@ const User = props => {
     props.setCreateOrReply(1);
     props.focusOnTextArea();
   };
-  const getChildComments = async (id = null) => {
-    setLoading(true);
-    const result = await fetchData(
-      "User/U_Comment/GetCommentChildren",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          parentId: commentId,
-          page: page,
-          pageSize: 10
-        })
-      },
-      props.ctx
-    );
-    if (result !== undefined && result.isSuccess) {
-      setChildsComments(childsComments.concat(result.data));
-      setReplyCount(replyCount - result.data.length);
-      setPage(page + 1);
+  const getChildComments = async () => {
+    if (showChild) {
+      setLoading(true);
+      const result = await fetchData(
+        "User/U_Comment/GetCommentChildren",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            parentId: commentId,
+            page: page,
+            pageSize: 10
+          })
+        },
+        props.ctx
+      );
+      if (result !== undefined && result.isSuccess) {
+        setChildsComments(childsComments.concat(result.data));
+        setReplyCount(replyCount - result.data.length);
+        setPage(page + 1);
+      }
+      setLoading(false);
+    } else {
+      setShowChild(true);
     }
-    setLoading(false);
   };
   return (
     <div className="col-12 mt-2 p-0 user">
@@ -98,7 +102,13 @@ const User = props => {
         <div className="col-10 _txt">
           <div className="row m-auto p-0 justify-content-end">
             <div className="col-2 pl-0 text-center heart">
-              {loading ? <Loading /> : liked ? <FaHeart className="font_icon red" onClick={likeToggle} /> : <FaRegHeart className="font_icon" onClick={likeToggle} />}
+              {loading ? (
+                <Loading />
+              ) : liked ? (
+                <FaHeart className="font_icon red" onClick={likeToggle} />
+              ) : (
+                <FaRegHeart className="font_icon" onClick={likeToggle} />
+              )}
             </div>
             <div className="col-10 p-0 rtl content">
               <Link href={`/user/${userName}`} passHref>
@@ -110,12 +120,16 @@ const User = props => {
                 {/* <FaReply className="font_icon" /> */}
               </div>
               <div className="time ml-2">{time}</div>
-              {replyCount > 0 && (
+              {(replyCount > 0 || !showChild) && (
                 <div className="show_replies" onClick={getChildComments}>
                   + نمایش پاسخ ها ({replyCount})
                 </div>
               )}
-              {childsComments.length > 0 && replyCount <= 0 && <div className="show_replies"> - پنهان کردن پاسخ ها </div>}
+              {childsComments.length > 0 && replyCount <= 0 && showChild && (
+                <div className="show_replies" onClick={() => setShowChild(false)}>
+                  - پنهان کردن پاسخ ها
+                </div>
+              )}
             </div>
           </div>
         </div>
