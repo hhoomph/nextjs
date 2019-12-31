@@ -27,6 +27,7 @@ function Page(props) {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
+  const sellLimit = (props.sellLimit !== undefined && props.sellLimit.data !== undefined && props.sellLimit.data !== null) ? props.sellLimit.data : [];
   const [userProducts, userProductsDispatch] = useReducer(userProductsReducer, productsData);
   let userCategories = props.userCategories.data || [];
   userCategories = [].concat(userCategories, { id: 0, parentId: null, picture: null, thumbNail: null, titel: "همه" }).sort((a, b) => a.id - b.id);
@@ -146,7 +147,7 @@ function Page(props) {
       <UserProductsContext.Provider value={userProductsDispatch}>
         <div className="profile_container">
           <Nav />
-          <ProfileHeader profileData={profileData} setView={setView} scrollToProducts={scrollToProducts} />
+          <ProfileHeader profileData={profileData} setView={setView} scrollToProducts={scrollToProducts} sellLimit={sellLimit} />
           <div className="container mb-1 cat_product_row">
             <div className="row">
               <div className="col">
@@ -193,7 +194,7 @@ function Page(props) {
     return (
       <UserProductsContext.Provider value={userProductsDispatch}>
         <Nav />
-        <ProfileHeader setView={setView} profileData={profileData} scrollToProducts={scrollToProducts} />
+        <ProfileHeader setView={setView} profileData={profileData} scrollToProducts={scrollToProducts} sellLimit={sellLimit} />
         <div className="container mb-1 cat_product_row">
           <div className="row">
             <div className="col">
@@ -259,6 +260,13 @@ Page.getInitialProps = async function(context) {
       context
     );
   }
-  return { result, userProducts, userCategories, isServer: !!req, date: new Date() };
+  const sellLimit = await fetchData(
+    "Common/C_Info/GetOrderLimitation",
+    {
+      method: "GET"
+    },
+    context
+  );
+  return { result, userProducts, userCategories, isServer: !!req, sellLimit, date: new Date() };
 };
 export default Auth(Page);

@@ -13,6 +13,8 @@ import "../scss/components/checkout.scss";
 //import { setTimeout } from 'core-js';
 function Page(props) {
   const nextCtx = props.ctx;
+  const _orderId = props.id || null;
+  console.log(_orderId);
   const [view, setView] = useState(1);
   const [loading, setLoading] = useState(false);
   const _addresses =
@@ -219,6 +221,7 @@ function Page(props) {
   }
 }
 Page.getInitialProps = async function(context) {
+  const { id } = context.query;
   const Res = await fetchData(
     "User/U_Order/AddS1",
     {
@@ -226,6 +229,6 @@ Page.getInitialProps = async function(context) {
     },
     context
   );
-  return { Res };
+  return { Res, id };
 };
 export default Auth(Page);

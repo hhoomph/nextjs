@@ -36,7 +36,7 @@ export default async (path, opts = {}, context, isFile = false) => {
       return Logout();
     }
     if (res.status === 500) {
-      return { error: `متاسفانه خطایی رخ داده است. لطفا دوباره امتحان کنید.` };
+      return { error: "متاسفانه خطایی رخ داده است. لطفا دوباره امتحان کنید." };
     }
     if (opts.throwOnHTTPError && (res.status < 200 || res.status >= 300)) {
       if (res.headers.get("Content-Type") === "application/json") {

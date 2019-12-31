@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, memo } from "react";
 import Link from "../Link";
 import Router from "next/router";
+import fetchData from "../../utils/fetchData";
 import { FaShoppingBasket, FaRegUserCircle, FaShareAlt, FaRegCopy } from "react-icons/fa";
 import { IoMdMenu } from "react-icons/io";
 import { TiTickOutline } from "react-icons/ti";
@@ -14,6 +15,7 @@ import RRS from "react-responsive-select";
 import { ToastContainer, toast } from "react-toastify";
 import "../../scss/components/profileHeader.scss";
 import Logout from "../Auth/Logout";
+import { numberSeparator, removeSeparator, forceNumeric } from "../../utils/tools";
 const Header = props => {
   const {
     avatar,
@@ -83,45 +85,25 @@ const Header = props => {
     document.execCommand("copy");
   };
   const [limitModalShow, setLimitModalShow] = useState(false);
-  const [limitValue, setLimitValue] = useState(null);
-  const limitOptions = [
-    {
-      value: 1,
-      text: "بدون محدودیت",
-      altered: false,
-      key: 1
-    },
-    {
-      value: 2,
-      text: "حداقل 10،000 تومان",
-      altered: false,
-      key: 2
-    },
-    {
-      value: 3,
-      text: "حداقل 20،000 تومان",
-      altered: false,
-      key: 3
-    },
-    {
-      value: 4,
-      text: "حداقل 30،000 تومان",
-      altered: false,
-      key: 4
-    },
-    {
-      value: 5,
-      text: "حداقل 50،000 تومان",
-      altered: false,
-      key: 5
-    },
-    {
-      value: 6,
-      text: "حداقل 100،000 تومان",
-      altered: false,
-      key: 6
+  const sellLimit = props.sellLimit;
+  let defaultLimit = null;
+  const limitOptions = sellLimit.map(limit => {
+    if (limit.id === props.profileData.orderLimitationId) {
+      defaultLimit = {
+        value: limit.id,
+        text: limit.value === 0 ? "بدون محدودیت" : `${numberSeparator(limit.value)} تومان `,
+        altered: true,
+        key: limit.id
+      };
     }
-  ];
+    return {
+      value: limit.id,
+      text: limit.value === 0 ? "بدون محدودیت" : `${numberSeparator(limit.value)} تومان `,
+      altered: false,
+      key: limit.id
+    };
+  });
+  const [limitValue, setLimitValue] = useState(defaultLimit);
   const handleLimitSelectChange = ({ text, value, altered }) => {
     setLimitValue({
       text,
@@ -138,26 +120,22 @@ const Header = props => {
   );
   const changeLimit = async () => {
     if (limitValue !== null && limitValue.value !== undefined) {
-      // setLoading(true);
-      // const result = await fetchData(
-      //   `User/U_Friends/UnFollow?userId=${id}`,
-      //   {
-      //     method: "POST",
-      //     body: JSON.stringify({
-      //       limit: limitValue ? limitValue.value : 0
-      //     })
-      //   },
-      //   props.ctx
-      // );
-      // if (result.isSuccess) {
-      //   setLimitModalShow(false);
-      // } else if (result.message != undefined) {
-      //   //toast.warn(result.message);
-      // } else if (result.error != undefined) {
-      //   //toast.error(result.error);
-      // }
-      //setLoading(false);
-      setLimitModalShow(false);
+      setLoading(true);
+      const result = await fetchData(
+        `User/U_Product/EditOrderLimitation?limitationId=${limitValue.value}`,
+        {
+          method: "GET"
+        },
+        props.ctx
+      );
+      if (result !== undefined && result.isSuccess) {
+        setLimitModalShow(false);
+      } else if (result !== undefined && result.message != undefined) {
+        toast.warn(result.message);
+      } else if (result !== undefined && result.error != undefined) {
+        toast.error(result.error);
+      }
+      setLoading(false);
     } else {
       toast.warn("لطفا یک گزینه محدودیت فروش را انتخاب کنید.");
     }
@@ -185,7 +163,7 @@ const Header = props => {
                 </Link>
               </div>
               <div className="col-12 p-0 rtl d-flex justify-content-between align-items-center">
-                <textarea value={`خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون.`+"\n"+`https://qarun.ir/login?user=${userName}`} readOnly className="share_text" ref={textCopy} />
+                <textarea value={"خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." + "\n" + `https://qarun.ir/login?user=${userName}`} readOnly className="share_text" ref={textCopy} />
                 <FaRegCopy className="font_icon copy_icon" onClick={copyText} title="کپی کردن" />
               </div>
             </Modal.Body>

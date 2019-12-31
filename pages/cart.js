@@ -76,6 +76,7 @@ function Page(props) {
         sellerUserName={cart.sellerUserName}
         sellerPhoneNumber={cart.sellerPhoneNumber}
         incomAmount={cart.incomAmount}
+        setOpenCartData={setOpenCartData}
       />
     );
   });

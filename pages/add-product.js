@@ -62,6 +62,7 @@ function Page(props) {
       </g>
     </svg>
   );
+  const hashtagRef = useRef();
   const [tags, setTags] = useState([]);
   const addTags = event => {
     let key = event.key || event.value;
@@ -80,6 +81,23 @@ function Page(props) {
       } else {
         // Duplicate value - empty input
         event.target.value = "";
+      }
+    }
+  };
+  const addTags2 = event => {
+    const lastChar = event.charAt(event.length - 1);
+    if (lastChar === " " && event.trim() !== "" && event.trim() !== " ") {
+      let reg = /^#.*/g;
+      let val = event.trim();
+      if (!reg.test(val)) {
+        val = "#" + val;
+      }
+      if (!tags.includes(val)) {
+        setTags([...tags, val]);
+        hashtagRef.current.value = "";
+      } else {
+        // Duplicate value - empty input
+        hashtagRef.current.value = "";
       }
     }
   };
@@ -403,14 +421,15 @@ function Page(props) {
                       هشتگ های مرتبط
                   </label>
                   <input
-                    onKeyPress={event => addTags(event)}
-                    onChange={event => addTags(event)}
+                    // onKeyPress={event => addTags(event)}
+                    onChange={e => addTags2(e.target.value)}
                     type="text"
                     id="hashtags"
                     className="form-control mt-1 mb-4 col-sm-10"
-                    placeholder="برای اضافه شدن کلید فاصله یا اینتر را فشار دهید"
+                    placeholder="برای اضافه شدن کلید فاصله را فشار دهید"
                     onFocus={scrollToFocused}
                     onBlur={scrollToFocusOut}
+                    ref={hashtagRef}
                   />
                   <div className="tags-input col-sm-10 offset-sm-2">
                     <ul>
