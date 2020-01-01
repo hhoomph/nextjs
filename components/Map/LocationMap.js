@@ -83,7 +83,9 @@ const MapComponent = props => {
       map.setView(convertLatlngToArray(latlng));
       // Get City Name From Lat & Long (https://nominatim.openstreetmap.org)
       const res = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${convertLatlngToArray(latlng)[0]}&lon=${convertLatlngToArray(latlng)[1]}&zoom=10&addressdetails=1&extratags=1`,
+        `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${convertLatlngToArray(latlng)[0]}&lon=${
+          convertLatlngToArray(latlng)[1]
+        }&zoom=10&addressdetails=1&extratags=1`,
         {
           method: "GET"
           //credentials: 'include'

@@ -165,7 +165,12 @@ const Header = props => {
                 </Link>
               </div>
               <div className="col-12 p-0 rtl d-flex justify-content-between align-items-center">
-                <textarea value={"خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." + "\n" + `https://qarun.ir/login?user=${userName}`} readOnly className="share_text" ref={textCopy} />
+                <textarea
+                  value={"خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." + "\n" + `https://qarun.ir/login?user=${userName}`}
+                  readOnly
+                  className="share_text"
+                  ref={textCopy}
+                />
                 <FaRegCopy className="font_icon copy_icon" onClick={copyText} title="کپی کردن" />
               </div>
             </Modal.Body>

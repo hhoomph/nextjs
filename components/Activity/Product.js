@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef, memo } from 'react';
-import Link from '../Link';
-import { FaTimes } from 'react-icons/fa';
+import React, { useState, useEffect, useRef, memo } from "react";
+import Link from "../Link";
+import { FaTimes } from "react-icons/fa";
 const Product = props => {
   const [hide, setHide] = useState(false);
   return (

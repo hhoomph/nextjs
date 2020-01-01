@@ -233,7 +233,14 @@ const Page = props => {
         <div className="row fixed-bottom input_text">
           <div className="col-12">
             <div className="row p-3">
-              <textarea type="text" className="form-control col-9" placeholder="متن نظر" ref={textRef} value={message} onChange={e => setMessage(e.target.value)} />
+              <textarea
+                type="text"
+                className="form-control col-9"
+                placeholder="متن نظر"
+                ref={textRef}
+                value={message}
+                onChange={e => setMessage(e.target.value)}
+              />
               <div className="col-2 align-self-center">
                 <SubmitButton loading={loading} onClick={sendComment} text="ارسال" className="btn btn-main send_comment" />
               </div>

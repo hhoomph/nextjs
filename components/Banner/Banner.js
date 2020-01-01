@@ -1,5 +1,5 @@
-import React, { Fragment, useState, useEffect, memo } from 'react';
-import Link from '../Link';
+import React, { Fragment, useState, useEffect, memo } from "react";
+import Link from "../Link";
 const Banner = props => {
   return (
     <div className="col-12 col-lg-6 banner">

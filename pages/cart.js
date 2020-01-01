@@ -43,13 +43,25 @@ function Page(props) {
     draggable: true
   });
   const renderCart = cartData.map(cart => {
-    const sellerImg = cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
+    const sellerImg =
+      cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
     return (
-      <Cart key={cart.sellerId} sellerId={cart.sellerId} sellerName={cart.sellerDisplayName} sellerUserName={cart.sellerUserName} customerId={cart.userId} cartData={cart.cartDetailsSelectDtos} sellerAvatar={sellerImg} setLoading={setLoading} type={view} />
+      <Cart
+        key={cart.sellerId}
+        sellerId={cart.sellerId}
+        sellerName={cart.sellerDisplayName}
+        sellerUserName={cart.sellerUserName}
+        customerId={cart.userId}
+        cartData={cart.cartDetailsSelectDtos}
+        sellerAvatar={sellerImg}
+        setLoading={setLoading}
+        type={view}
+      />
     );
   });
   const renderOpenCart = openCartData.map(cart => {
-    const sellerImg = cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
+    const sellerImg =
+      cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
     return (
       <Cart
         key={cart.orderId + cart.id}
@@ -81,7 +93,8 @@ function Page(props) {
     );
   });
   const renderHistoryCart = historyCartData.map(cart => {
-    const sellerImg = cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
+    const sellerImg =
+      cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
     return (
       <Cart
         key={cart.orderId + cart.id}

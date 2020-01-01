@@ -1,5 +1,5 @@
-import React from 'react';
-import '../scss/error.scss';
+import React from "react";
+import "../scss/error.scss";
 class Error extends React.Component {
   static getInitialProps({ res, err }) {
     const statusCode = res ? res.statusCode : err ? err.statusCode : null;

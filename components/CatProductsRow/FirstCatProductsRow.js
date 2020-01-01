@@ -71,9 +71,7 @@ const FirstCatProductsRow = props => {
     } else {
       const productsElements = products.map(product => {
         const productThumbNail =
-          product.pictures[0] != undefined
-            ? `https://api.qarun.ir/${product.pictures[0].thumbNail}`
-            : "/static/img/no-product-image.png";
+          product.pictures[0] != undefined ? `https://api.qarun.ir/${product.pictures[0].thumbNail}` : "/static/img/no-product-image.png";
         return (
           <Product
             key={product.id}

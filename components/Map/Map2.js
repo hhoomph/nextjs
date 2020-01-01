@@ -1,10 +1,10 @@
-import React, { Fragment, useState, useContext, useRef, useEffect, memo } from 'react';
-import L from 'leaflet';
-import { Circle, LayerGroup, Map, TileLayer, Marker, Popup, Polyline, Polygon, Rectangle, Tooltip, LayersControl } from 'react-leaflet';
-import { GeoSearchControl, OpenStreetMapProvider, EsriProvider } from 'leaflet-geosearch';
-import { ReactComponent as TargetSvg } from '../../public/static/svg/target.svg';
-import '../../scss/components/map.scss';
-import { setTimeout } from 'timers';
+import React, { Fragment, useState, useContext, useRef, useEffect, memo } from "react";
+import L from "leaflet";
+import { Circle, LayerGroup, Map, TileLayer, Marker, Popup, Polyline, Polygon, Rectangle, Tooltip, LayersControl } from "react-leaflet";
+import { GeoSearchControl, OpenStreetMapProvider, EsriProvider } from "leaflet-geosearch";
+import { ReactComponent as TargetSvg } from "../../public/static/svg/target.svg";
+import "../../scss/components/map.scss";
+import { setTimeout } from "timers";
 const esriProvider = new EsriProvider();
 const provider = new OpenStreetMapProvider();
 /**
@@ -14,8 +14,8 @@ const provider = new OpenStreetMapProvider();
  * @return {number} return distance in meter
  */
 export const getDistance = (position1, position2) => {
-  latlng1 = new L.latLng(position1);
-  latlng2 = new L.latLng(position2);
+  const latlng1 = new L.latLng(position1);
+  const latlng2 = new L.latLng(position2);
   return latlng1.distanceTo(latlng2);
 };
 /**
@@ -27,19 +27,19 @@ export const convertLatlngToArray = position => {
   return [position.lat, position.lng];
 };
 const placeholderIcon = new L.Icon({
-  iconUrl: '/static/svg/placeholder-for-map.svg',
+  iconUrl: "/static/svg/placeholder-for-map.svg",
   shadowUrl: null,
-  className: 'current_pos_marker'
+  className: "current_pos_marker"
 });
 const myIcon = new L.Icon({
-  iconUrl: '/static/svg/location-pointer2.png',
+  iconUrl: "/static/svg/location-pointer2.png",
   iconRetinaUrl: null,
-  shadowUrl: '/static/img/profile.png'
+  shadowUrl: "/static/img/profile.png"
 });
 const Icon = new L.Icon({
-  iconUrl: '/static/svg/location-pointer2.png',
+  iconUrl: "/static/svg/location-pointer2.png",
   iconRetinaUrl: null,
-  shadowUrl: '/static/img/user.png'
+  shadowUrl: "/static/img/user.png"
 });
 const MapComponent = props => {
   const [markPosition, setMarkPosition] = useState([]);
@@ -84,7 +84,7 @@ const MapComponent = props => {
     if (navigator.geolocation) {
       await navigator.geolocation.getCurrentPosition(showPosition, errorGetPosition, geoOptions);
     } else {
-      await console.log('Geolocation is not supported by this browser.');
+      await console.log("Geolocation is not supported by this browser.");
     }
   };
   const showPosition = position => {
@@ -120,7 +120,7 @@ const MapComponent = props => {
       retainZoomLevel: false,
       animateZoom: true,
       autoClose: false,
-      searchLabel: 'آدرس مورد نظر را وارد کنید',
+      searchLabel: "آدرس مورد نظر را وارد کنید",
       keepResult: true
     }).addTo(map);
   };

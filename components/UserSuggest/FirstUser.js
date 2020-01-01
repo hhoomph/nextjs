@@ -54,21 +54,11 @@ const FirstUser = props => {
           <p className="user_name">{props.userName}</p>
           <p className="user_display_name">{props.displayName}</p>
         </div>
-        <div className={`user_follow`}>
+        <div className={"user_follow"}>
           {followed ? (
-            <SubmitButton
-              loading={loading}
-              onClick={() => unFollowToggle()}
-              text="لغو دنبال"
-              className="btn btn-main unfollow"
-            />
+            <SubmitButton loading={loading} onClick={() => unFollowToggle()} text="لغو دنبال" className="btn btn-main unfollow" />
           ) : (
-            <SubmitButton
-              loading={loading}
-              onClick={() => followToggle()}
-              text="دنبال کردن"
-              className="btn btn-main follow"
-            />
+            <SubmitButton loading={loading} onClick={() => followToggle()} text="دنبال کردن" className="btn btn-main follow" />
           )}
         </div>
       </div>

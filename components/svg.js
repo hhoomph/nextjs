@@ -1,5 +1,5 @@
-import React from 'react';
-import { ReactComponent as SvgImage } from '../public/static/img/logo.svg';
+import React from "react";
+import { ReactComponent as SvgImage } from "../public/static/img/logo.svg";
 export default props => {
   //const url = props.url ? props.url : './../logo.svg';
   //return <div>{url}</div>;

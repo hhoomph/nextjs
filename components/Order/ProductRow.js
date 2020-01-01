@@ -1,10 +1,10 @@
-import React, { Fragment, useState, useEffect, useContext, memo } from 'react';
-import Link from '../Link';
-import fetchData from '../../utils/fetchData';
-import { CartContext, CartCountContext } from '../../context/context';
-import { FaTimesCircle, FaPlusSquare, FaMinusSquare } from 'react-icons/fa';
-import { numberSeparator, removeSeparator } from '../../utils/tools';
-import '../../scss/components/cart.scss';
+import React, { Fragment, useState, useEffect, useContext, memo } from "react";
+import Link from "../Link";
+import fetchData from "../../utils/fetchData";
+import { CartContext, CartCountContext } from "../../context/context";
+import { FaTimesCircle, FaPlusSquare, FaMinusSquare } from "react-icons/fa";
+import { numberSeparator, removeSeparator } from "../../utils/tools";
+import "../../scss/components/cart.scss";
 const ProductRow = props => {
   const nextCtx = props.ctx;
   const { shopingCartId, productId, setLoading } = props;
@@ -17,25 +17,25 @@ const ProductRow = props => {
   const getCartData = async () => {
     setLoading(true);
     const getCartDataRes = await fetchData(
-      'User/U_Cart/GetAll',
+      "User/U_Cart/GetAll",
       {
-        method: 'GET'
+        method: "GET"
       },
       props.ctx
     );
     if (getCartDataRes !== undefined && getCartDataRes.isSuccess) {
       let cData = getCartDataRes.data || [];
-      cartDispatch({ type: 'refresh', payload: [] });
-      cartDispatch({ type: 'refresh', payload: cData });
+      cartDispatch({ type: "refresh", payload: [] });
+      cartDispatch({ type: "refresh", payload: cData });
     }
     setLoading(false);
   };
   const addProductQuantity = async () => {
     setLoading(true);
     const result = await fetchData(
-      'User/U_Cart/Add',
+      "User/U_Cart/Add",
       {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({
           productId: productId,
           count: 1
@@ -45,16 +45,16 @@ const ProductRow = props => {
     );
     if (result.isSuccess) {
       getCartData();
-      cartCountDispatch({ type: 'add' });
+      cartCountDispatch({ type: "add" });
     }
     setLoading(false);
   };
   const reduceProductQuantity = async () => {
     setLoading(true);
     const result = await fetchData(
-      'User/U_Cart/Reduce',
+      "User/U_Cart/Reduce",
       {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({
           shopingCartId: shopingCartId
         })
@@ -63,16 +63,16 @@ const ProductRow = props => {
     );
     if (result.isSuccess) {
       getCartData();
-      cartCountDispatch({ type: 'remove' });
+      cartCountDispatch({ type: "remove" });
     }
     setLoading(false);
   };
   const deleteProduct = async productQuantity => {
     setLoading(true);
     const result = await fetchData(
-      'User/U_Cart/Delete',
+      "User/U_Cart/Delete",
       {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({
           shopingCartId: shopingCartId
         })
@@ -81,7 +81,7 @@ const ProductRow = props => {
     );
     if (result.isSuccess) {
       getCartData();
-      cartCountDispatch({ type: 'delete', payload: productQuantity });
+      cartCountDispatch({ type: "delete", payload: productQuantity });
     }
     setLoading(false);
   };

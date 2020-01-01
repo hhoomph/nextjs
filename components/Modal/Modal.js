@@ -1,5 +1,5 @@
-import React, { useContext, useRef, useState, useEffect, memo } from 'react';
-import { Modal } from 'react-bootstrap';
+import React, { useContext, useRef, useState, useEffect, memo } from "react";
+import { Modal } from "react-bootstrap";
 const ModalComponent = props => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);

@@ -1,9 +1,9 @@
-import React, { useState, useEffect, memo } from 'react';
-import Link from '../Link';
-import { FaShoppingBasket, FaRegUserCircle } from 'react-icons/fa';
-import { ReactComponent as SendSvg } from '../../public/static/svg/send.svg';
-import '../../scss/components/indexHeader.scss';
-const IndexHeader = (props) => {
+import React, { useState, useEffect, memo } from "react";
+import Link from "../Link";
+import { FaShoppingBasket, FaRegUserCircle } from "react-icons/fa";
+import { ReactComponent as SendSvg } from "../../public/static/svg/send.svg";
+import "../../scss/components/indexHeader.scss";
+const IndexHeader = props => {
   return (
     <div className="container d-lg-none mt-1 index_header">
       <div className="row d-flex d-lg-none">

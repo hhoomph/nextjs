@@ -30,7 +30,9 @@ function Page(props) {
       profile={false}
       favorite={true}
       sellerUserName={product.sellerUserName}
-      sellerAvatar={product.sellerAvatar !== undefined && product.sellerAvatar !== null ? `https://api.qarun.ir/${product.sellerAvatar}` : "/static/img/no-userimage.png"}
+      sellerAvatar={
+        product.sellerAvatar !== undefined && product.sellerAvatar !== null ? `https://api.qarun.ir/${product.sellerAvatar}` : "/static/img/no-userimage.png"
+      }
       isDisable={product.isDisable}
       price={product.lastPrice}
       oldPrice={product.price}

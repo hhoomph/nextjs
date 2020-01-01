@@ -118,10 +118,54 @@ function Page(props) {
           </div>
         </div>
         <div className="container cart_page">
-          <Order showProduct={false} key={1} sellerId={1} quantity={22} userId={1} cartData={[]} sellerAvatar={`static/img/user.jpg`} sellerName={"نام کاربر"} displayName={'نام نمایشی'} setLoading={setLoading} />
-          <Order showProduct={false} key={2} sellerId={2} quantity={2} userId={2}  cartData={[]} sellerAvatar={`static/img/user.png`} sellerName={"user_name"} displayName={'نام نمایشی'} setLoading={setLoading} />
-          <Order showProduct={false} key={3} sellerId={3} quantity={12} userId={3} cartData={[]} sellerAvatar={`static/img/user.jpg`} sellerName={"نام کاربر"} displayName={'نام نمایشی'} setLoading={setLoading} />
-          <Order showProduct={false} key={4} sellerId={4} quantity={5} userId={4} cartData={[]} sellerAvatar={`static/img/profile.png`} sellerName={"نام کاربر"} displayName={'نام نمایشی'} setLoading={setLoading} />
+          <Order
+            showProduct={false}
+            key={1}
+            sellerId={1}
+            quantity={22}
+            userId={1}
+            cartData={[]}
+            sellerAvatar={"static/img/user.jpg"}
+            sellerName={"نام کاربر"}
+            displayName={"نام نمایشی"}
+            setLoading={setLoading}
+          />
+          <Order
+            showProduct={false}
+            key={2}
+            sellerId={2}
+            quantity={2}
+            userId={2}
+            cartData={[]}
+            sellerAvatar={"static/img/user.png"}
+            sellerName={"user_name"}
+            displayName={"نام نمایشی"}
+            setLoading={setLoading}
+          />
+          <Order
+            showProduct={false}
+            key={3}
+            sellerId={3}
+            quantity={12}
+            userId={3}
+            cartData={[]}
+            sellerAvatar={"static/img/user.jpg"}
+            sellerName={"نام کاربر"}
+            displayName={"نام نمایشی"}
+            setLoading={setLoading}
+          />
+          <Order
+            showProduct={false}
+            key={4}
+            sellerId={4}
+            quantity={5}
+            userId={4}
+            cartData={[]}
+            sellerAvatar={"static/img/profile.png"}
+            sellerName={"نام کاربر"}
+            displayName={"نام نمایشی"}
+            setLoading={setLoading}
+          />
           {/* <div className="row mt-0 mb-3 pt-3 pb-5 cart_amount_detail">
             <div className="col-12 d-block rtl">
               <span className="total">مبلغ کل : </span>

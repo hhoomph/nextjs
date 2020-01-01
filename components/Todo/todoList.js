@@ -1,5 +1,5 @@
-import React from 'react';
-import TodoItem from './todoItem';
+import React from "react";
+import TodoItem from "./todoItem";
 export default ({ items }) => {
   if (items != null && items.length >= 1) {
     return items.map(item => <TodoItem key={item.id} {...item} />);

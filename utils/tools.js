@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable no-misleading-character-class */
 // Convert Form Array To json
 export const objectifyForm = formArray => {
   //serialize data function
@@ -21,7 +23,7 @@ export const numberSeparator = (num, sep) => {
     separator = typeof sep === "undefined" ? "," : sep;
   return number.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1" + separator);
 };
-// Remove comma seprator From digit number
+// Remove comma separator From digit number
 export const removeSeparator = (num, sep) => {
   let separator = typeof sep === "undefined" ? "," : sep;
   var re = new RegExp(separator, "g");
@@ -125,6 +127,6 @@ export const getDistance = (lat1, lon1, lat2, lon2) => {
 };
 // Email Validation Regex
 export const EMAIL_RX = /[A-Z0-9a-z._%+-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,64}/;
-// Moible Validation Regex
+// Mobile Validation Regex
 export const Mobile_RX = /(\+98|0|98|0098)?([ ]|-|[()]){0,2}9[0-9]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/;
 export default numberSeparator;

@@ -1,9 +1,9 @@
-import React, { Fragment, useState, useEffect, memo } from 'react';
-import { useRouter } from 'next/router';
-import Link from '../Link';
-import '../../scss/components/CategoryMenu.scss';
-import Category from './Category';
-import { ReactComponent as LeftSvg } from '../../public/static/svg/left-arrow.svg';
+import React, { Fragment, useState, useEffect, memo } from "react";
+import { useRouter } from "next/router";
+import Link from "../Link";
+import "../../scss/components/CategoryMenu.scss";
+import Category from "./Category";
+import { ReactComponent as LeftSvg } from "../../public/static/svg/left-arrow.svg";
 const CategoryMenu = props => {
   const categories = props.categories || [];
   const router = useRouter();
@@ -14,13 +14,13 @@ const CategoryMenu = props => {
         <div className="col-6 text-left">
           <Link href="/" passHref>
             <a className="qarun_title">
-            {/* قارون */}
-            <img src="/static/img/text-logo.png" width="80" height="auto" className="d-inline-block align-top" alt="" />
+              {/* قارون */}
+              <img src="/static/img/text-logo.png" width="80" height="auto" className="d-inline-block align-top" alt="" />
             </a>
           </Link>
         </div>
         <div className="col-6 text-right">
-          <a onClick={() => router.back()} style={{ cursor: 'pointer' }}>
+          <a onClick={() => router.back()} style={{ cursor: "pointer" }}>
             <LeftSvg className="svg_icon" />
           </a>
         </div>

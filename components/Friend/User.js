@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef, memo } from 'react';
-import Link from '../Link';
-import fetchData from '../../utils/fetchData';
-import Loading from '../Loader/Loader';
-import SubmitButton from '../Button/SubmitButton';
+import React, { useState, useEffect, useRef, memo } from "react";
+import Link from "../Link";
+import fetchData from "../../utils/fetchData";
+import Loading from "../Loader/Loader";
+import SubmitButton from "../Button/SubmitButton";
 const User = props => {
   const [loading, setLoading] = useState(false);
   const [followed, setFollowed] = useState(props.followed);
@@ -12,7 +12,7 @@ const User = props => {
     const result = await fetchData(
       `User/U_Friends/Follow?userId=${props.id}`,
       {
-        method: 'GET'
+        method: "GET"
       },
       props.ctx
     );
@@ -27,7 +27,7 @@ const User = props => {
     const result = await fetchData(
       `User/U_Friends/UnFollow?userId=${props.id}`,
       {
-        method: 'GET'
+        method: "GET"
       },
       props.ctx
     );

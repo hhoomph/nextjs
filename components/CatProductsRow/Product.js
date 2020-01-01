@@ -1,19 +1,19 @@
-import React, { Fragment, useState, useEffect, useContext, memo } from 'react';
-import Link from '../Link';
-import fetchData from '../../utils/fetchData';
-import Router from 'next/router';
-import { FaShoppingBasket } from 'react-icons/fa';
-import WindowsWidth from '../WindowsWidth';
-import { numberSeparator, removeSeparator } from '../../utils/tools';
-import { CartCountContext } from '../../context/context';
+import React, { Fragment, useState, useEffect, useContext, memo } from "react";
+import Link from "../Link";
+import fetchData from "../../utils/fetchData";
+import Router from "next/router";
+import { FaShoppingBasket } from "react-icons/fa";
+import WindowsWidth from "../WindowsWidth";
+import { numberSeparator, removeSeparator } from "../../utils/tools";
+import { CartCountContext } from "../../context/context";
 const Product = props => {
   const cartCountDispatch = useContext(CartCountContext);
   const addToCart = async () => {
     //setLoading(true);
     const result = await fetchData(
-      'User/U_Cart/Add',
+      "User/U_Cart/Add",
       {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({
           productId: props.id,
           count: 1
@@ -21,9 +21,9 @@ const Product = props => {
       },
       props.ctx
     );
-    if (result !== undefined && result.isSuccess !== undefined &&  result.isSuccess) {
+    if (result !== undefined && result.isSuccess !== undefined && result.isSuccess) {
       //toast.success('محصول شما با موفقیت به سبد خرید اضافه شد.');
-      cartCountDispatch({ type: 'add' });
+      cartCountDispatch({ type: "add" });
     } else if (result !== undefined && result.message != undefined) {
       //toast.warn(result.message);
     } else if (result !== undefined && result.error != undefined) {

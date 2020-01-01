@@ -18,7 +18,12 @@ function Page(props) {
   const [view, setView] = useState(1);
   const [loading, setLoading] = useState(false);
   const _addresses =
-    props.Res !== undefined && props.Res.data !== undefined && props.Res.data !== null && props.Res.data.address !== undefined && props.Res.data.address !== null && props.Res.data.address.length > 0
+    props.Res !== undefined &&
+    props.Res.data !== undefined &&
+    props.Res.data !== null &&
+    props.Res.data.address !== undefined &&
+    props.Res.data.address !== null &&
+    props.Res.data.address.length > 0
       ? props.Res.data.address
       : [];
   const _address = _addresses.length > 0 ? _addresses[_addresses.length - 1] : "";
@@ -124,19 +129,38 @@ function Page(props) {
                     <label htmlFor="email" className="col-form-label">
                         آدرس
                     </label>
-                    <textarea value={address} onChange={e => setAddress(e.target.value)} id="address" className="form-control mt-1 mb-4  col-sm-12" placeholder="آدرس" />
+                    <textarea
+                      value={address}
+                      onChange={e => setAddress(e.target.value)}
+                      id="address"
+                      className="form-control mt-1 mb-4  col-sm-12"
+                      placeholder="آدرس"
+                    />
                   </div>
                   <div className="form-group row">
                     <label htmlFor="name" className="col-form-label">
                         تلفن
                     </label>
-                    <input value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} type="text" id="phoneNumber" className="form-control mt-1 mb-4 col-sm-12" placeholder="تلفن" />
+                    <input
+                      value={phoneNumber}
+                      onChange={e => setPhoneNumber(e.target.value)}
+                      type="text"
+                      id="phoneNumber"
+                      className="form-control mt-1 mb-4 col-sm-12"
+                      placeholder="تلفن"
+                    />
                   </div>
                   <div className="form-group row">
                     <label htmlFor="email" className="col-form-label">
                         توضیحات تکمیلی
                     </label>
-                    <textarea value={description} onChange={e => setDescription(e.target.value)} id="description" className="form-control mt-1 mb-4  col-sm-12" placeholder="توضیحات تکمیلی" />
+                    <textarea
+                      value={description}
+                      onChange={e => setDescription(e.target.value)}
+                      id="description"
+                      className="form-control mt-1 mb-4  col-sm-12"
+                      placeholder="توضیحات تکمیلی"
+                    />
                   </div>
                 </form>
               </div>
@@ -166,7 +190,13 @@ function Page(props) {
                   <div className="form-group row">
                     <div className="col-12">
                       <div className="custom-control custom-radio">
-                        <input type="radio" onChange={e => setPaymentMethod(e.target.value)} checked={paymentMethod == 1} className="custom-control-input" value={1} />
+                        <input
+                          type="radio"
+                          onChange={e => setPaymentMethod(e.target.value)}
+                          checked={paymentMethod == 1}
+                          className="custom-control-input"
+                          value={1}
+                        />
                         <label className="custom-control-label" onClick={e => setPaymentMethod(1)}>
                             آنی
                         </label>
@@ -177,7 +207,13 @@ function Page(props) {
                   <div className="form-group row">
                     <div className="col-12">
                       <div className="custom-control custom-radio">
-                        <input type="radio" className="custom-control-input" onChange={e => setPaymentMethod(e.target.value)} checked={paymentMethod == 2} value={2} />
+                        <input
+                          type="radio"
+                          className="custom-control-input"
+                          onChange={e => setPaymentMethod(e.target.value)}
+                          checked={paymentMethod == 2}
+                          value={2}
+                        />
                         <label className="custom-control-label" onClick={e => setPaymentMethod(2)}>
                             کسر از موجودی
                         </label>
@@ -188,14 +224,20 @@ function Page(props) {
                   <div className="form-group row">
                     <div className="col-12">
                       <div className="custom-control custom-radio">
-                        <input type="radio" className="custom-control-input" onChange={e => setPaymentMethod(e.target.value)} checked={paymentMethod == 3} value={3} />
+                        <input
+                          type="radio"
+                          className="custom-control-input"
+                          onChange={e => setPaymentMethod(e.target.value)}
+                          checked={paymentMethod == 3}
+                          value={3}
+                        />
                         <label className="custom-control-label" onClick={e => setPaymentMethod(3)}>
                             نقدی
                         </label>
                         <p className="payment_info">
                             پرداخت نقدی به فروشنده در محل
                           {/* <div>این نوع پرداخت معاف از ضمانت بازگشت وجه می باشد</div> */}
-                          <div>مسولیت این پرداخت به عهده کاربر می باشد.</div>
+                          <div>مسئولیت این پرداخت به عهده کاربر می باشد.</div>
                         </p>
                       </div>
                     </div>

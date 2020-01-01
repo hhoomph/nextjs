@@ -211,7 +211,7 @@ const Page = props => {
     </div>
   );
 };
-Page.getInitialProps = async function (context) {
+Page.getInitialProps = async function(context) {
   const { user } = context.query;
   // const apiBaseUrl = `https://www.pooshako.com/api/`;
   // const url = `${apiBaseUrl}Common/Location/GetProvinces`;

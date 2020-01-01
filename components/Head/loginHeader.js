@@ -1,6 +1,6 @@
-import React, { useState, useEffect, memo } from 'react';
-import Link from '../Link';
-import { ReactComponent as PlusSvg } from '../../public/static/svg/plus.svg';
+import React, { useState, useEffect, memo } from "react";
+import Link from "../Link";
+import { ReactComponent as PlusSvg } from "../../public/static/svg/plus.svg";
 const Header = props => {
   return (
     <div className="container login_header">

@@ -188,7 +188,10 @@ function Page(props) {
               <Link href={`/user/${productData.sellerUserName}`} passHref>
                 <a>
                   <p className="user_name">{productData.sellerUserName || ""}</p>
-                  <img src={productData.sellerUserAvatar ? `https://api.qarun.ir/${productData.sellerUserAvatar}` : "/static/img/user.png"} className="userImage" />
+                  <img
+                    src={productData.sellerUserAvatar ? `https://api.qarun.ir/${productData.sellerUserAvatar}` : "/static/img/user.png"}
+                    className="userImage"
+                  />
                 </a>
               </Link>
             </div>

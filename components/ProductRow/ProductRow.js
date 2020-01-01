@@ -55,8 +55,7 @@ const ProductsRow = props => {
     getProducts();
   }, [isFetching]);
   function handleScroll() {
-    if (window.innerHeight + document.documentElement.scrollTop + 100 < document.documentElement.offsetHeight || isFetching)
-      return;
+    if (window.innerHeight + document.documentElement.scrollTop + 100 < document.documentElement.offsetHeight || isFetching) return;
     // console.log(page)
     // setPage(page + 1);
     setIsFetching(true);
@@ -67,10 +66,7 @@ const ProductsRow = props => {
     // }
   }
   const renderProducts = products.map(product => {
-    const productThumbNail =
-      product.pictures[0] != undefined
-        ? `https://api.qarun.ir/${product.pictures[0].thumbNail}`
-        : "/static/img/no-product-image.png";
+    const productThumbNail = product.pictures[0] != undefined ? `https://api.qarun.ir/${product.pictures[0].thumbNail}` : "/static/img/no-product-image.png";
     return (
       <Product
         key={product.id}

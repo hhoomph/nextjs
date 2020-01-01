@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-function useInterval(callback,  delay = 1000) {
+import { useEffect, useRef } from "react";
+function useInterval(callback, delay = 1000) {
   const savedCallback = useRef();
   // Remember the latest callback.
   useEffect(() => {

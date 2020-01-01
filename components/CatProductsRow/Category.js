@@ -1,12 +1,12 @@
-import React, { Fragment, useState, useEffect, memo } from 'react';
-import Link from '../Link';
-import { IoIosMore } from 'react-icons/io';
-import WindowsWidth from '../WindowsWidth';
-import '../../scss/components/categoriesRow.scss';
-const Category = (props) => {
+import React, { Fragment, useState, useEffect, memo } from "react";
+import Link from "../Link";
+import { IoIosMore } from "react-icons/io";
+import WindowsWidth from "../WindowsWidth";
+import "../../scss/components/categoriesRow.scss";
+const Category = props => {
   const width = WindowsWidth();
   const renderCatLi = () => {
-    // If Windows.Width < 992 (large) just show 5 coulmn users else show 11 users
+    // If Windows.Width < 992 (large) just show 5 column users else show 11 users
     // if (width < 992) {
     //   return (
     //     <>
@@ -28,45 +28,45 @@ const Category = (props) => {
     //     </>
     //   );
     // } else {
-      return (
-        <>
-          <li className="nav-item">
-            <Link href="/category/" passHref>
-              <a className="nav-link active">سوپر مارکت</a>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link href="/category/" passHref>
-              <a className="nav-link">رستوران و فست فود</a>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link href="/category/" passHref>
-              <a className="nav-link">نان و شیرینی</a>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link href="/category/" passHref>
-              <a className="nav-link">سوپر مارکت</a>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link href="/category/" passHref>
-              <a className="nav-link">رستوران و فست فود</a>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link href="/category/" passHref>
-              <a className="nav-link">نان و شیرینی</a>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link href="/category/" passHref>
-              <a className="nav-link">سوپر مارکت</a>
-            </Link>
-          </li>
-        </>
-      );
+    return (
+      <>
+        <li className="nav-item">
+          <Link href="/category/" passHref>
+            <a className="nav-link active">سوپر مارکت</a>
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link href="/category/" passHref>
+            <a className="nav-link">رستوران و فست فود</a>
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link href="/category/" passHref>
+            <a className="nav-link">نان و شیرینی</a>
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link href="/category/" passHref>
+            <a className="nav-link">سوپر مارکت</a>
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link href="/category/" passHref>
+            <a className="nav-link">رستوران و فست فود</a>
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link href="/category/" passHref>
+            <a className="nav-link">نان و شیرینی</a>
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link href="/category/" passHref>
+            <a className="nav-link">سوپر مارکت</a>
+          </Link>
+        </li>
+      </>
+    );
     // }
   };
   return (

@@ -123,7 +123,13 @@ function Page(props) {
           <Modal.Body>
             <div className="col-12 p-0 rtl d-flex">
               <label className="col-5 col-form-label text-right">تعداد قرون </label>
-              <input type="text" value={sellQerun} onChange={e => setSellQerun(forceNumeric(e.target.value))} className="col-5 form-control text-center" placeholder="تعداد قرون" />
+              <input
+                type="text"
+                value={sellQerun}
+                onChange={e => setSellQerun(forceNumeric(e.target.value))}
+                className="col-5 form-control text-center"
+                placeholder="تعداد قرون"
+              />
             </div>
           </Modal.Body>
           <Modal.Footer className="justify-content-center">

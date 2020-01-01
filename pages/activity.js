@@ -226,7 +226,7 @@ const Page = props => {
             image={"/static/img/profile.png"}
             followed={true}
             productImage={"/static/img/product6.jpg"}
-            message={"پاسخ نطرتان \"گرونه\" را داد: \"قیمت خریدمه\""}
+            message={"پاسخ نظرتان \"گرونه\" را داد: \"قیمت خریدمه\""}
             name={"نام نمایشی"}
             userName={"user_name_UserName"}
             time={"یک هفته پیش"}

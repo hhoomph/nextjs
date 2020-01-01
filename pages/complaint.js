@@ -1,14 +1,14 @@
-import React, { Fragment, useState, useRef, useEffect } from 'react';
-import dynamic from 'next/dynamic';
-import Loading from '../components/Loader/Loading';
-import fetchData from '../utils/fetchData';
-import Nav from '../components/Nav/Nav';
-import SubmitButton from '../components/Button/SubmitButton';
-import { ToastContainer, toast } from 'react-toastify';
-import '../scss/components/aboutPage.scss';
+import React, { Fragment, useState, useRef, useEffect } from "react";
+import dynamic from "next/dynamic";
+import Loading from "../components/Loader/Loading";
+import fetchData from "../utils/fetchData";
+import Nav from "../components/Nav/Nav";
+import SubmitButton from "../components/Button/SubmitButton";
+import { ToastContainer, toast } from "react-toastify";
+import "../scss/components/aboutPage.scss";
 function Page(props) {
   toast.configure({
-    position: 'top-right',
+    position: "top-right",
     autoClose: 1000,
     hideProgressBar: false,
     closeOnClick: true,
@@ -16,23 +16,23 @@ function Page(props) {
     draggable: true
   });
   const [loading, setLoading] = useState(false);
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [text, setText] = useState('');
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [text, setText] = useState("");
   const sendForm = () => {
     toast.dismiss();
-    if (name === '' || phone === '' || email === '' || text === '') {
-      toast.warn('لطفا تمامی فیلد ها را بدرستی وارد نمایید.');
+    if (name === "" || phone === "" || email === "" || text === "") {
+      toast.warn("لطفا تمامی فیلد ها را بدرستی وارد نمایید.");
     } else {
       setLoading(true);
       setTimeout(() => {
-        setName('');
-        setPhone('');
-        setEmail('');
-        setText('');
+        setName("");
+        setPhone("");
+        setEmail("");
+        setText("");
         setLoading(false);
-        toast.success('پیام شما با موفقیت ثبت شد.');
+        toast.success("پیام شما با موفقیت ثبت شد.");
       }, 900);
     }
   };
@@ -53,27 +53,54 @@ function Page(props) {
                     <label htmlFor="name" className="col-form-label">
                       نام
                     </label>
-                    <input value={name} onChange={e => setName(e.target.value)} type="text" id="name" className="form-control mt-1 mb-4 col-sm-12" placeholder="نام" />
+                    <input
+                      value={name}
+                      onChange={e => setName(e.target.value)}
+                      type="text"
+                      id="name"
+                      className="form-control mt-1 mb-4 col-sm-12"
+                      placeholder="نام"
+                    />
                   </div>
                   <div className="form-group row">
                     <label htmlFor="name" className="col-form-label">
                       ایمیل
                     </label>
-                    <input value={email} onChange={e => setEmail(e.target.value)} type="text" id="name" className="form-control mt-1 mb-4 col-sm-12" placeholder="ایمیل" />
+                    <input
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
+                      type="text"
+                      id="name"
+                      className="form-control mt-1 mb-4 col-sm-12"
+                      placeholder="ایمیل"
+                    />
                   </div>
                   <div className="form-group row">
                     <label htmlFor="name" className="col-form-label">
                       موبایل
                     </label>
-                    <input value={phone} onChange={e => setPhone(e.target.value)} type="text" id="name" className="form-control mt-1 mb-4 col-sm-12" placeholder="موبایل" />
+                    <input
+                      value={phone}
+                      onChange={e => setPhone(e.target.value)}
+                      type="text"
+                      id="name"
+                      className="form-control mt-1 mb-4 col-sm-12"
+                      placeholder="موبایل"
+                    />
                   </div>
                   <div className="form-group row">
                     <label htmlFor="email" className="col-form-label">
                       متن پیام
                     </label>
-                    <textarea value={text} onChange={e => setText(e.target.value)} id="text" className="form-control mt-1 mb-4  col-sm-12" placeholder="متن پیام" />
+                    <textarea
+                      value={text}
+                      onChange={e => setText(e.target.value)}
+                      id="text"
+                      className="form-control mt-1 mb-4  col-sm-12"
+                      placeholder="متن پیام"
+                    />
                   </div>
-                  <div className="text-center" style={{ marginTop: '-15px' }}>
+                  <div className="text-center" style={{ marginTop: "-15px" }}>
                     <SubmitButton loading={loading} className="btn-main" text="ارسال" onClick={sendForm} />
                   </div>
                 </form>
