@@ -17,7 +17,7 @@ import { Modal } from "react-bootstrap";
 import SubmitButton from "../components/Button/SubmitButton";
 import { ToastContainer, toast } from "react-toastify";
 const Category = dynamic({
-  loader: () => import("../components/profile/Category"),
+  loader: () => import("../components/Profile/Category"),
   loading: () => <Loading />,
   ssr: true
 });
