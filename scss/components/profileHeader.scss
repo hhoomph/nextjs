@@ -1,5 +1,5 @@
 @import "../vars";
-@import "../../node_modules/react-responsive-select/dist/ReactResponsiveSelect";
+// @import "../../node_modules/react-responsive-select/dist/ReactResponsiveSelect";
 .profile_container {
   width: 100%;
   min-height: 100vh;
@@ -119,6 +119,12 @@
     .productsTitle {
       margin-bottom: 0.5rem;
       cursor: pointer;
+      transition: all 0.1s ease-in-out;
+      &:hover,
+      &:active {
+        color: #000;
+        font-weight: bold;
+      }
     }
     .friends,
     .customers,
@@ -130,6 +136,12 @@
       padding: 1px 10px 0;
       overflow: hidden;
       cursor: pointer;
+      transition: all 0.1s ease-in-out;
+      &:hover,
+      &:active {
+        color: #000;
+        font-weight: bold;
+      }
     }
   }
 }
@@ -147,6 +159,12 @@
     p {
       margin-bottom: 0.2rem;
       cursor: pointer;
+      transition: all 0.1s ease-in-out;
+      &:hover,
+      &:active {
+        color: #000;
+        font-weight: bold;
+      }
     }
     .inventory,
     .debt,
@@ -222,6 +240,42 @@
     float: left;
     margin-top: -3rem;
   }
+  .first_edit_profile {
+    margin-top: -20px;
+    .complate_info {
+      cursor: pointer;
+      transition: all 0.1s ease-in-out;
+      &:hover,
+      &:active {
+        a {
+          color: #000;
+          font-weight: bold;
+        }
+        .edit_icon {
+          transition: all 0.1s ease-in-out;
+          border: 2px solid #000;
+          .svg_icon {
+            color: #000;
+            fill: #000;
+          }
+        }
+      }
+      a {
+        color: #616161;
+        font-size: 1.1rem;
+      }
+      .edit_icon {
+        width: 46px;
+        padding: 6px;
+        border: 1px solid #757575;
+        border-radius: 100px;
+        .svg_icon {
+          color: #757575;
+          fill: #757575;
+        }
+      }
+    }
+  }
 }
 .profile_menu {
   z-index: 999;
@@ -265,119 +319,59 @@
     background: none;
   }
 }
-.report_modal,
-.share_modal {
-  .modal-header {
-    .modal-title {
+.first_add_suggest_profile {
+  border-top: 1px solid#dadada;
+  box-shadow: 0 -1px 2px 0px #d9d9d9;
+  min-height: 30vh;
+  .first_add_col {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    max-width: 220px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    &:hover,
+    &:active {
+      background: #FAFAFA;
+      //border: 2px solid #ef6c00;
+      .icon_container {
+        border: 1px solid #000;
+        .svg_icon {
+          color: #000;
+          fill: #000;
+        }
+      }
+      .add_product {
+        border: none;
+      }
+      a {
+        color: #000;
+        font-weight: bold;
+      }
+    }
+    .icon_container {
+      cursor: pointer;
+      transition: all 0.1s ease-in-out;
+      width: 54px;
+      padding: 6px;
+      border: 1px solid #757575;
+      border-radius: 100px;
       display: block;
       margin: auto;
-      font-size: 1.3rem;
+      .svg_icon {
+        color: #757575;
+        fill: #757575;
+        display: block;
+        margin: auto;
+      }
     }
-    .close {
-      padding: 0;
-      margin: 0;
+    .add_product {
+      border: none;
+      padding: 2px;
     }
-  }
-  .modal-body{
-    font-size: 0.95rem;
-  }
-  .invite_info{
-    text-align: justify;
-    margin-bottom: 1%;
-  }
-  .more_btn{
-    color: #474747;
-    display: block;
-    border: 1px solid #d1d1d1;
-    width: 78px;
-    text-align: center;
-    border-radius: 4px;
-    transition: all 0.2s;
-    margin:auto;
-    margin-bottom: 10px;
-    &:hover, &:active{
-      transition: all 0.2s;
-      color: #000;
-      border: 1px solid #adadad;
-      text-decoration: none;
-    }
-  }
-  .share_text {
-    width: 90%;
-    font-size: 0.85rem;
-    text-align: justify;
-    padding: 10px;
-    padding-bottom: 60px;
-    border: 1px solid #f4f4f4;
-    border-radius: 10px;
-    resize: none;
-    color: #5d5d5d;
-  }
-  .copy_icon {
-    font-size: 1.4rem;
-    color: #5d5d5d;
-    transition: all 0.2s;
-    cursor: pointer;
-    &:hover, &:active{
-      transition: all 0.2s;
-      color: #000;
-      border: 1px solid #adadad;
-      text-decoration: none;
-    }
-  }
-  // react-responsive-select/
-  .rrs__button {
-    min-width: 45vw;
-    color: #555;
-    position: relative;
-    cursor: pointer;
-    line-height: 40px;
-    text-align: center;
-    align-self: center;
-    align-items: center;
-    justify-content: center;
-    justify-items: center;
-    background: #ffffff;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px 0.2px rgba(0, 0, 0, 0.2);
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    margin-bottom: 10px;
-    @media screen and (min-width: 768px) {
-      min-width: 15vw;
-    }
-  }
-  span[aria-label="انتخاب کنید"] {
-    color: #a9a9a9;
-  }
-  .rrs__option.rrs__option--next-selection {
-    background: #fea73047;
-    color: #fa6e62;
-  }
-  .rrs__option:hover {
-    color: #ef6c00;
-  }
-  .rrs__option:active {
-    background: #fbe9e7;
-  }
-  .rrs__option {
-    margin: 0;
-    padding-right: 10px;
-    padding-left: 0;
-    padding-top: 5px;
-    padding-bottom: 10px;
-  }
-  @media screen and (max-width: 768px) {
-    .rrs--options-visible .rrs__options {
-      max-height: none;
-      position: fixed;
-      font-size: 1rem;
-      width: auto;
-      left: 1rem;
-      right: 1rem;
-      top: 12%;
-      bottom: 4rem;
-      border: 0;
-      border-radius: 4px;
+    a {
+      display: block;
+      margin: auto;
     }
   }
 }

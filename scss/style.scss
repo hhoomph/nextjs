@@ -3,6 +3,7 @@ $enable-gradients: true;
 @import "./animation.scss";
 @import "./bootstrap.scss";
 @import "./font.scss";
+@import "../node_modules/react-responsive-select/dist/ReactResponsiveSelect";
 .hidden {
   display: none;
 }
@@ -37,73 +38,6 @@ body {
   //   bottom: 0;
   // }
 }
-// .over_flow::-webkit-scrollbar {
-//   -webkit-border-radius: 10px;
-//   border-radius: 10px;
-//   position: relative;
-//   -ms-touch-action: none;
-//   background: rgba(0, 0, 0, .1)
-// }
-// .over_flow::-webkit-scrollbar-track {
-//   -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
-// }
-// .over_flow::-webkit-scrollbar-thumb {
-//   background-color: #F57C00;
-//   outline: 1px solid slategrey;
-// }
-//
-// digikala scrollbar style
-// .swiper-pagination-lock {
-//   display: none
-// }
-// .swiper-scrollbar {
-//   -webkit-border-radius: 10px;
-//   border-radius: 10px;
-//   position: relative;
-//   -ms-touch-action: none;
-//   background: rgba(0, 0, 0, .1)
-// }
-// .swiper-container-horizontal>.swiper-scrollbar {
-//   position: absolute;
-//   left: 1%;
-//   bottom: 3px;
-//   z-index: 50;
-//   height: 5px;
-//   width: 98%
-// }
-// .swiper-container-vertical>.swiper-scrollbar {
-//   position: absolute;
-//   right: 3px;
-//   top: 1%;
-//   z-index: 50;
-//   width: 5px;
-//   height: 98%
-// }
-// .swiper-scrollbar-drag {
-//   height: 100%;
-//   width: 100%;
-//   position: relative;
-//   background: rgba(0, 0, 0, .5);
-//   -webkit-border-radius: 10px;
-//   border-radius: 10px;
-//   left: 0;
-//   top: 0
-// }
-// .swiper-scrollbar-cursor-drag {
-//   cursor: move
-// }
-// .swiper-scrollbar-lock {
-//   display: none
-// }
-// .over_flow::-webkit-scrollbar,
-// .cat_product_row .cat_sort ul.nav::-webkit-scrollbar {
-//   height: 2px;
-//   -webkit-border-radius: 10px;
-//   border-radius: 10px;
-//   position: relative;
-//   -ms-touch-action: none;
-//   background: rgba(0, 0, 0, 0.1);
-// }
 .over_flow,
 .cat_product_row .cat_sort ul.nav {
   scrollbar-width: thin;
@@ -196,6 +130,125 @@ body {
   .dropdown-item:not(.active):hover {
     color: none !important;
     background: none !important;
+  }
+}
+// ******* Modal Style ********
+.report_modal,
+.share_modal {
+  .modal-header {
+    .modal-title {
+      display: block;
+      margin: auto;
+      font-size: 1.3rem;
+    }
+    .close {
+      padding: 0;
+      margin: 0;
+    }
+  }
+  .modal-body {
+    font-size: 0.95rem;
+  }
+  .invite_info {
+    text-align: justify;
+    margin-bottom: 1%;
+  }
+  .more_btn {
+    color: #474747;
+    display: block;
+    border: 1px solid #d1d1d1;
+    width: 78px;
+    text-align: center;
+    border-radius: 4px;
+    transition: all 0.2s;
+    margin: auto;
+    margin-bottom: 10px;
+    &:hover,
+    &:active {
+      transition: all 0.2s;
+      color: #000;
+      border: 1px solid #adadad;
+      text-decoration: none;
+    }
+  }
+  .share_text {
+    width: 90%;
+    font-size: 0.85rem;
+    text-align: justify;
+    padding: 10px;
+    padding-bottom: 60px;
+    border: 1px solid #f4f4f4;
+    border-radius: 10px;
+    resize: none;
+    color: #5d5d5d;
+  }
+  .copy_icon {
+    font-size: 1.4rem;
+    color: #5d5d5d;
+    transition: all 0.2s;
+    cursor: pointer;
+    &:hover,
+    &:active {
+      transition: all 0.2s;
+      color: #000;
+      border: 1px solid #adadad;
+      text-decoration: none;
+    }
+  }
+  // react-responsive-select/
+  .rrs__button {
+    min-width: 45vw;
+    color: #555;
+    position: relative;
+    cursor: pointer;
+    line-height: 40px;
+    text-align: center;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    background: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px 0.2px rgba(0, 0, 0, 0.2);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    margin-bottom: 10px;
+    @media screen and (min-width: 768px) {
+      min-width: 15vw;
+    }
+  }
+  span[aria-label="انتخاب کنید"] {
+    color: #a9a9a9;
+  }
+  .rrs__option.rrs__option--next-selection {
+    background: #fea73047;
+    color: #fa6e62;
+  }
+  .rrs__option:hover {
+    color: #ef6c00;
+  }
+  .rrs__option:active {
+    background: #fbe9e7;
+  }
+  .rrs__option {
+    margin: 0;
+    padding-right: 10px;
+    padding-left: 0;
+    padding-top: 5px;
+    padding-bottom: 10px;
+  }
+  @media screen and (max-width: 768px) {
+    .rrs--options-visible .rrs__options {
+      max-height: none;
+      position: fixed;
+      font-size: 1rem;
+      width: auto;
+      left: 1rem;
+      right: 1rem;
+      top: 12%;
+      bottom: 4rem;
+      border: 0;
+      border-radius: 4px;
+    }
   }
 }
 @media (min-width: 1300px) {

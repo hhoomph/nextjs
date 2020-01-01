@@ -1,6 +1,7 @@
 import React, { Fragment, useContext, useReducer, useRef, useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Loading from "../components/Loader/Loading";
+import Link from "../components/Link";
 import Router from "next/router";
 import Nav from "../components/Nav/Nav";
 import ProfileHeader from "../components/Head/profileHeader";
@@ -9,6 +10,12 @@ import Auth from "../components/Auth/Auth";
 import fetchData from "../utils/fetchData";
 import { UserProductsContext } from "../context/context";
 import { userProductsReducer } from "../context/reducer";
+import { ReactComponent as AddSvg } from "../public/static/svg/add.svg";
+import { ReactComponent as InviteShare } from "../public/static/svg/invite-share2.svg";
+import { FaShareAlt, FaRegCopy } from "react-icons/fa";
+import { Modal } from "react-bootstrap";
+import SubmitButton from "../components/Button/SubmitButton";
+import { ToastContainer, toast } from "react-toastify";
 const Category = dynamic({
   loader: () => import("../components/profile/Category"),
   loading: () => <Loading />,
@@ -27,12 +34,19 @@ function Page(props) {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
-  const sellLimit = (props.sellLimit !== undefined && props.sellLimit.data !== undefined && props.sellLimit.data !== null) ? props.sellLimit.data : [];
+  const sellLimit = props.sellLimit !== undefined && props.sellLimit.data !== undefined && props.sellLimit.data !== null ? props.sellLimit.data : [];
   const [userProducts, userProductsDispatch] = useReducer(userProductsReducer, productsData);
   let userCategories = props.userCategories.data || [];
   userCategories = [].concat(userCategories, { id: 0, parentId: null, picture: null, thumbNail: null, titel: "همه" }).sort((a, b) => a.id - b.id);
   const [catActive, setCatActive] = useState(userCategories.length > 0 ? userCategories[0].id : null);
-  //console.log(profileData, props.userProducts, userCategories);
+  toast.configure({
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true
+  });
   const showProducts = userProducts.map(product => (
     <Product
       key={product.productId}
@@ -120,9 +134,11 @@ function Page(props) {
   }
   const productRef = useRef();
   const scrollToProducts = () => {
-    const productsDiv = productRef.current.clientHeight;
-    const t = window.innerHeight - productsDiv + 100;
-    window.scrollTo(0, t);
+    if (!showFirstAdd) {
+      const productsDiv = productRef.current.clientHeight;
+      const t = window.innerHeight - productsDiv + 100;
+      window.scrollTo(0, t);
+    }
   };
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -138,6 +154,35 @@ function Page(props) {
   useEffect(() => {
     getUserProductFromCat();
   }, [catActive]);
+  const [showFirstAdd, setShowFirstAdd] = useState(profileData !== null && profileData.productCount > 0 ? false : true);
+  const [modalShow, setModalShow] = useState(false);
+  const textCopy = useRef();
+  const copyText = () => {
+    const txt = textCopy.current;
+    txt.select();
+    txt.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+  };
+  const shareLink = async () => {
+    if (profileData !== null && profileData.userName !== undefined && profileData.userName !== "" && profileData.userName !== null) {
+      setLoading(true);
+      const shareData = {
+        title: "دعوت به قارون",
+        text: "خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون",
+        url: `https://qarun.ir/login?user=${profileData.userName}`
+      };
+      try {
+        await navigator.share(shareData);
+        setLoading(false);
+      } catch (e) {
+        //console.log("Share Error : ", e);
+        copyText();
+        setLoading(false);
+      }
+    } else {
+      toast.warn("لطفا اطلاعات نمایه خود را تکمیل کنید.");
+    }
+  };
   switch (view) {
   case 1:
     if (typeof window !== "undefined") {
@@ -148,33 +193,94 @@ function Page(props) {
         <div className="profile_container">
           <Nav />
           <ProfileHeader profileData={profileData} setView={setView} scrollToProducts={scrollToProducts} sellLimit={sellLimit} />
-          <div className="container mb-1 cat_product_row">
-            <div className="row">
-              <div className="col">
-                <div className="row d-flex justify-content-start rtl pr-2 categories">
-                  <Category categories={userCategories} catActive={catActive} setCatActive={setCatActive} setPage={setPage} />
+          {showFirstAdd ? (
+            <div className="container mt-2 mb-1 p-2 first_add_suggest_profile">
+              <div className="row d-flex justify-content-around rtl">
+                <div
+                  className="col-5 p-2 first_add_col"
+                  title="افزودن محصول"
+                  onClick={() => {
+                    if (profileData !== null && profileData.userName !== undefined && profileData.userName !== "" && profileData.canInvite === true) {
+                      Router.push({
+                        pathname: "/add-product"
+                      });
+                    } else {
+                      toast.warn("برای افزودن محصول باید اطلاعات پروفایل خود را کامل کنید.");
+                    }
+                  }}
+                >
+                  <div className="icon_container add_product">
+                    <AddSvg className="svg_icon" />
+                  </div>
+                  <a className="first_add">افزودن محصول</a>
+                </div>
+                <div className="col-5 p-2 first_add_col" title="دعوت دوستان" onClick={() => setModalShow(true)}>
+                  <div className="icon_container">
+                    <InviteShare className="svg_icon" />
+                  </div>
+                  <a className="first_add">دعوت دوستان</a>
                 </div>
               </div>
+              {/* Invite Modal */}
+              <Modal onHide={() => setModalShow(false)} show={modalShow} size="xl" scrollable className="share_modal">
+                <Modal.Header closeButton>
+                  <Modal.Title id="contained-modal-title-vcenter">لینک دعوت</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <div className="col-12 rtl">
+                    <p className="invite_info">با دعوت و اضافه کردن دوستان خود به بازار قارون از یک درصد مبلغ خرید ها و فروش های آنها پاداش دریافت کنید.</p>
+                    <Link href="/terms" passHref>
+                      <a className="more_btn">بیشتر</a>
+                    </Link>
+                  </div>
+                  <div className="col-12 p-0 rtl d-flex justify-content-between align-items-center">
+                    <textarea
+                      value={"خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." + "\n" + `https://qarun.ir/login?user=${profileData.userName !== undefined ? profileData.userName : ""}`}
+                      readOnly
+                      className="share_text"
+                      ref={textCopy}
+                    />
+                    <FaRegCopy className="font_icon copy_icon" onClick={copyText} title="کپی کردن" />
+                  </div>
+                </Modal.Body>
+                <Modal.Footer className="justify-content-center">
+                  <SubmitButton loading={loading} onClick={shareLink} text="اشتراک گذاری" className="d-inline-block btn-main rtl">
+                    <FaShareAlt className="font_icon" />
+                  </SubmitButton>
+                </Modal.Footer>
+              </Modal>
             </div>
-          </div>
-          <div className="container mb-5 pb-3 pt-3">
-            <div className="row d-flex justify-content-start rtl profile_products" ref={productRef}>
-              {showProducts}
-            </div>
-            {loading && (
-              <div
-                style={{
-                  display: "block !important",
-                  width: "100%",
-                  height: "40px",
-                  textAlign: "center",
-                  marginTop: "0.1rem"
-                }}
-              >
-                <Loading />
+          ) : (
+            <>
+              <div className="container mb-1 cat_product_row">
+                <div className="row">
+                  <div className="col">
+                    <div className="row d-flex justify-content-start rtl pr-2 categories">
+                      <Category categories={userCategories} catActive={catActive} setCatActive={setCatActive} setPage={setPage} />
+                    </div>
+                  </div>
+                </div>
               </div>
-            )}
-          </div>
+              <div className="container mb-5 pb-3 pt-3">
+                <div className="row d-flex justify-content-start rtl profile_products" ref={productRef}>
+                  {showProducts}
+                </div>
+                {loading && (
+                  <div
+                    style={{
+                      display: "block !important",
+                      width: "100%",
+                      height: "40px",
+                      textAlign: "center",
+                      marginTop: "0.1rem"
+                    }}
+                  >
+                    <Loading />
+                  </div>
+                )}
+              </div>{" "}
+            </>
+          )}
         </div>
       </UserProductsContext.Provider>
     );

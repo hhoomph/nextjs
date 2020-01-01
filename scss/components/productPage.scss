@@ -12,7 +12,25 @@
     box-shadow: 0 1px 5px 1px #d2d2d2;
     a {
       cursor: pointer;
-      color: #1b1b1b;
+      color: #424242;
+      transition: all .2s;
+      &:hover,
+      &.active {
+        color: #000;
+      }
+    }
+    .more_menu {
+      cursor: pointer;
+      color: #424242;
+      width: auto;
+      font-size: 2.3rem;
+      transition: all .2s;
+      position: relative;
+      z-index: 2;
+      &:hover,
+      &.active {
+        color: #000;
+      }
     }
     .user_name {
       display: inline-block;
@@ -25,9 +43,6 @@
       max-width: 12vw;
       border-radius: 10rem;
     }
-    .font_icon {
-      margin-top: 2.5vw;
-    }
     .svg_icon {
       cursor: pointer;
       width: 5vw;
@@ -35,6 +50,48 @@
       fill: rgb(41, 41, 41);
       transform: rotate(90deg);
       margin-top: 2.5vw;
+    }
+    .profile_menu {
+      z-index: 999;
+      background: rgba(255, 255, 255, 0.9);
+      top: 40px;
+      right: 15px;
+      border-radius: 10px;
+      visibility: visible;
+      opacity: 1;
+      transition: all ease-in-out 0.2s;
+      &:hover {
+        background: #fff;
+      }
+      a {
+        cursor: pointer;
+        transition: all ease-in-out 0.2s;
+        &:hover {
+          color: #ff5722 !important;
+        }
+      }
+    }
+    .profile_menu.hidden {
+      transition: all ease-in-out 0.3s !important;
+      visibility: hidden !important;
+      opacity: 0;
+      //display: none !important;
+    }
+    .more_menu_dropdown {
+      .dropdown-toggle:after {
+        content: none !important;
+      }
+      .dropdown-menu {
+        background: #fff;
+        left: -10px !important;
+        transition: all ease-in-out 0.3s !important;
+      }
+      .dropdown-item.active,
+      .dropdown-item:active {
+        color: #ff5722;
+        text-decoration: none;
+        background: none;
+      }
     }
   }
   .product_images {

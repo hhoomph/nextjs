@@ -9,19 +9,52 @@ import Link from "../components/Link";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { ToastContainer, toast } from "react-toastify";
-import { FaPlus, FaRegComment, FaRegHeart, FaEllipsisV } from "react-icons/fa";
+import { FaPlus, FaRegComment, FaRegHeart, FaHeart, FaEllipsisV } from "react-icons/fa";
 import { FiShare2 } from "react-icons/fi";
+import { IoMdMore } from "react-icons/io";
 import { ReactComponent as MenuDotsSvg } from "../public/static/svg/menu-dots.svg";
 import { numberSeparator, removeSeparator, forceNumeric } from "../utils/tools";
-import Carousel from "react-bootstrap/Carousel";
+import { Carousel, Dropdown, Modal } from "react-bootstrap";
+import RRS from "react-responsive-select";
 import "../scss/components/productPage.scss";
 import { setTimeout } from "core-js";
 function Page(props) {
   const productData = props.result.data || [];
+  //console.log(productData);
   const Router = useRouter();
   //const { productId } = Router.query;
   const productId = Router.query.id;
   const [loading, setLoading] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
+  const reportOptions = [
+    {
+      value: 1,
+      text: "انتشار محتوای نامناسب",
+      altered: false,
+      key: 1
+    },
+    {
+      value: 2,
+      text: "نقض قوانین فروش",
+      altered: false,
+      key: 2
+    }
+  ];
+  const [reportReason, setReportReason] = useState(null);
+  const handleReportSelectChange = ({ text, value, altered }) => {
+    setReportReason({
+      text,
+      value,
+      altered
+    });
+  };
+  const SelectCaretIcon = () => (
+    <svg className="caret-icon" x="0px" y="0px" width="11.848px" height="6.338px" viewBox="351.584 2118.292 11.848 6.338">
+      <g>
+        <path d="M363.311,2118.414c-0.164-0.163-0.429-0.163-0.592,0l-5.205,5.216l-5.215-5.216c-0.163-0.163-0.429-0.163-0.592,0s-0.163,0.429,0,0.592l5.501,5.501c0.082,0.082,0.184,0.123,0.296,0.123c0.103,0,0.215-0.041,0.296-0.123l5.501-5.501C363.474,2118.843,363.474,2118.577,363.311,2118.414L363.311,2118.414z" />
+      </g>
+    </svg>
+  );
   toast.configure({
     position: "top-right",
     autoClose: 2000,
@@ -66,7 +99,7 @@ function Page(props) {
       <img src={`https://api.qarun.ir/${image.value}`} className="product_image" />
     </Carousel.Item>
   ));
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(productData.isFavorited !== null ? productData.isFavorited : false);
   const toggleFavorite = async () => {
     setLoading(true);
     const Result = await fetchData(
@@ -96,7 +129,29 @@ function Page(props) {
       setLoading(false);
     }
   };
-  //console.log(productData);
+  const reportUser = async () => {
+    if (reportReason !== null && reportReason.value !== undefined) {
+      setLoading(true);
+      const result = await fetchData(
+        "User/U_Account/ReportUser",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            userId: productData.sellerId,
+            reason4Report: reportReason ? reportReason.value : null
+          })
+        },
+        nextCtx
+      );
+      if (result.isSuccess) {
+        toast.success("تخلف کاربر با موفقیت ثبت شد.");
+      }
+      setModalShow(false);
+      setLoading(false);
+    } else {
+      toast.warn("لطفا دلیل تخلف کاربر را مشخص کنید.");
+    }
+  };
   // Determine Server Or Browser env
   if (typeof window !== "undefined" && window.document !== undefined) {
     //console.log('browser');
@@ -112,13 +167,24 @@ function Page(props) {
       <div className="product_page">
         <div className="container product_header">
           <div className="row">
-            <div className="col-4 text-left">
-              <a className="nav_Icons active">
+            <div className="col-4 text-left align-self-center">
+              {/* <a className="nav_Icons active">
                 <MenuDotsSvg className="svg_icon" />
-                {/* <FaEllipsisV className="font_icon"/> */}
-              </a>
+              </a> */}
+              <Dropdown drop="right" className="dropDownMenu more_menu_dropdown">
+                <Dropdown.Toggle>
+                  <a className="nav_Icons">
+                    <IoMdMore className="font_icon more_menu" />
+                  </a>
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="rtl profile_menu">
+                  <Dropdown.Item eventKey="1" onClick={() => setModalShow(true)}>
+                    گزارش تخلف
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
-            <div className="col-8 text-right">
+            <div className="col-8 text-right align-self-center">
               <Link href={`/user/${productData.sellerUserName}`} passHref>
                 <a>
                   <p className="user_name">{productData.sellerUserName || ""}</p>
@@ -127,6 +193,30 @@ function Page(props) {
               </Link>
             </div>
           </div>
+          <Modal onHide={() => setModalShow(false)} show={modalShow} size="xl" scrollable className="report_modal">
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter"> گزارش تخلف</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="col-12 p-0 rtl d-flex">
+                <label className="col-5 col-form-label text-right">دلیل گزارش </label>
+                <div className="col-7">
+                  <RRS
+                    id={reportReason !== null ? "not_empty_select" : "empty_select"}
+                    noSelectionLabel={"انتخاب کنید"}
+                    name="category"
+                    options={reportOptions}
+                    onChange={handleReportSelectChange}
+                    caretIcon={<SelectCaretIcon key="c1" />}
+                    selectedValue={reportReason !== null ? reportReason.value : null}
+                  />
+                </div>
+              </div>
+            </Modal.Body>
+            <Modal.Footer className="justify-content-center">
+              <SubmitButton loading={loading} onClick={reportUser} text="ثبت تخلف" className="d-inline-block btn-main rtl" />
+            </Modal.Footer>
+          </Modal>
         </div>
         <div className="container p-0 product_images">
           <div className="row">
@@ -169,7 +259,7 @@ function Page(props) {
                 {/* <CommentSvg className="svg_icon" /> */}
                 <FaRegComment className="font_icon" />
               </div>
-              <FaRegHeart className={`font_icon ${isFavorite ? "red" : ""}`} onClick={toggleFavorite} />
+              {isFavorite ? <FaHeart className="font_icon red" onClick={toggleFavorite} /> : <FaRegHeart className="font_icon" onClick={toggleFavorite} />}
             </div>
             <div className="col-12 mt-1">
               <p className="text-right product_name">{productData.title || ""}</p>

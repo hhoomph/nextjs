@@ -2,12 +2,13 @@ import React, { useState, useEffect, useRef, memo } from "react";
 import Link from "../Link";
 import Router from "next/router";
 import fetchData from "../../utils/fetchData";
-import { FaShoppingBasket, FaRegUserCircle, FaShareAlt, FaRegCopy } from "react-icons/fa";
+import { FaShareAlt, FaRegCopy, FaUsers } from "react-icons/fa";
 import { IoMdMenu } from "react-icons/io";
 import { TiTickOutline } from "react-icons/ti";
-import { ReactComponent as MenuCircleSvg } from "../../public/static/svg/menu-circle.svg";
 import { ReactComponent as AddUserSvg } from "../../public/static/svg/add-user.svg";
 import { ReactComponent as PlusSvg } from "../../public/static/svg/plus.svg";
+import { ReactComponent as FirstEditSvg } from "../../public/static/svg/first-edit-profile.svg";
+import { ReactComponent as InviteShare } from "../../public/static/svg/invite-share2.svg";
 import { Dropdown, Modal } from "react-bootstrap";
 import SubmitButton from "../Button/SubmitButton";
 import SideBar from "../SideBar/SideBar";
@@ -140,6 +141,7 @@ const Header = props => {
       toast.warn("لطفا یک گزینه محدودیت فروش را انتخاب کنید.");
     }
   };
+  const [showFirstEdit, setShowFirstEdit] = useState(!props.profileData.canInvite || false);
   return (
     <>
       <SideBar toggle={toggleSideBar} isOpen={isOpen} setIsOpen={setIsOpen} userName={userName} setView={props.setView} setLimitModalShow={setLimitModalShow} />
@@ -204,37 +206,6 @@ const Header = props => {
             <a className={`nav_Icons ${isOpen ? "is_open_toggle" : "toggle"}`} onClick={toggleSideBar}>
               <IoMdMenu className="font_icon sidebar_toggle" />
             </a>
-            {/* <SideBar toggle={toggleSideBar} isOpen={isOpen} /> */}
-            {/* <Dropdown drop="left" className="dropDownMenu">
-              <Dropdown.Toggle>
-                <a className="nav_Icons">
-                  <MenuCircleSvg className="svg_Icons" />
-                </a>
-              </Dropdown.Toggle>
-              <Dropdown.Menu className="rtl profile_menu">
-                <Dropdown.Item eventKey="1" active>
-                  دوستان
-                </Dropdown.Item>
-                <Dropdown.Item eventKey="2">دنبال شده ها</Dropdown.Item>
-                <Dropdown.Item
-                  eventKey="3"
-                  onClick={() => {
-                    props.setView(2);
-                  }}
-                >
-                  ویرایش پروفایل
-                </Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item
-                  eventKey="4"
-                  onClick={() => {
-                    Logout();
-                  }}
-                >
-                  خروج
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown> */}
           </div>
         </div>
         <div className="row">
@@ -326,6 +297,21 @@ const Header = props => {
               <a className="btn btn-main">ویرایش</a>
             </Link> */}
           </div>
+          {showFirstEdit && (
+            <div className="col-12 mb-2 d-flex justify-content-center first_edit_profile">
+              <div
+                className="d-flex align-items-center align-self-center complate_info"
+                onClick={() => {
+                  props.setView(2);
+                }}
+              >
+                <a>تکمیل اطلاعات پروفایل</a>
+                <div className="ml-3 edit_icon">
+                  <FirstEditSvg className="svg_icon" />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>

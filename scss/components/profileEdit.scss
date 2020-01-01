@@ -16,8 +16,8 @@
     a {
       font-size: 1.5rem;
       cursor: pointer;
-      color: #000;
-      transition: all ease-in-out 0.2s;
+      color: #616161;
+      transition: all ease-in-out 0.1s;
       &:hover {
         color: $main_color;
         animation: shake_right 0.8s both;
@@ -25,7 +25,13 @@
       }
     }
     .check_btn {
-      color: #03a9f4 !important;
+      // color: #4caf50 !important;
+      &:hover,
+      &:active {
+        color: #4caf50 !important;
+        font-weight: bold;
+        font-size: 1.55rem;
+      }
       .preloader-icon {
         max-width: 40px;
       }
@@ -41,9 +47,16 @@
     .change_image {
       display: block;
       margin: auto;
-      font-size: 1.2rem;
-      color: #2196f3;
+      font-size: 1.1rem;
       cursor: pointer;
+      color: #878787;
+      transition: all 0.1s ease-in-out;
+      &:hover,
+      &:active {
+        color: #4caf50;
+        font-weight: bold;
+        font-size: 1.09rem;
+      }
     }
   }
   .edit_form {
@@ -53,9 +66,21 @@
       display: block !important;
     }
     .setLocation {
-      font-size: 1rem;
-      color: #2196f3;
+      font-size: 0.92rem;
       cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      &:hover,
+      &:active {
+        color: #4caf50;
+        font-weight: bold;
+        font-size: 0.95rem;
+        .click_link {
+          color: #4caf50;
+        }
+      }
+      .click_link {
+        color: #9d9d9d;
+      }
     }
     .form-group label {
       color: #8a8a8a;

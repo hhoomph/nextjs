@@ -25,7 +25,8 @@
     width: -ms-max-content;
     width: -webkit-max-content;
     width: max-content;
-    &:hover, &:active{
+    &:hover,
+    &:active {
       color: $main_color;
     }
     &.active {
@@ -44,13 +45,12 @@
       background: $main_gradient;
     }
   }
-  .more {
-  }
 }
-.categories{
-  .user_cats{
+.categories {
+  .user_cats {
     a {
-      &:hover, &:active{
+      &:hover,
+      &:active {
         color: $main_color;
       }
     }

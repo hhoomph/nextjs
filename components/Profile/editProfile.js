@@ -321,7 +321,7 @@ const EditProfile = props => {
               <label htmlFor="addresses">آدرس</label>
               <input type="text" id="addresses" value={addresses} onChange={e => setAddresses(e.target.value)} className="form-control mt-1 mb-4" placeholder="آدرس خود را وارد کنید" />
             </div>
-            <div className="map_part">
+            <div className="mb-4 map_part">
               <label>موقعیت روی نقشه</label>
               <LocationMap markPosition={markPosition} setMarkPosition={setMarkPosition} draggable={draggable} setCity={setCity} setState={setState} />
               <br />
@@ -332,7 +332,7 @@ const EditProfile = props => {
                 }}
                 title="لطفا علامت نارنجی نقشه را بر روی مکان مورد نظر خود قرار دهید "
               >
-                برای تغییر موقعیت کلیک کنید
+                برای تغییر موقعیت <span className="click_link"> کلیک </span> کنید
               </a>
             </div>
           </form>

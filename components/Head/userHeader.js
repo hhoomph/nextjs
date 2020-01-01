@@ -157,9 +157,6 @@ const Header = props => {
       <div className="container profile_header">
         <div className="row">
           <div className="col-6 pl-2 d-flex">
-            {/* <a className="nav_Icons active">
-                <IoMdMore className="svg_Icons more_menu" />
-              </a> */}
             <Dropdown drop="right" className="dropDownMenu more_menu_dropdown">
               <Dropdown.Toggle>
                 <a className="nav_Icons">

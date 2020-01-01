@@ -35,8 +35,17 @@
     .nav-link {
       color: #494949;
       cursor: pointer;
+      transition: all 0.1s;
       &:hover {
         color: #000;
+        transition: all 0.1s;
+        .font_icon {
+          font-size: 1.52rem;
+        }
+      }
+      .font_icon {
+        font-size: 1.5rem;
+        margin-left: 10px;
       }
     }
   }
@@ -53,6 +62,19 @@
       &:active {
         transition: all 0.1s;
         font-weight: bold;
+        .font_icon {
+          color: #000;
+          font-size: 1.72rem;
+        }
+      }
+      .font_icon {
+        color: #494949;
+        font-size: 1.7rem;
+        transition: all 0.05s;
+        &:hover,
+        &:active {
+          color: #000;
+        }
       }
     }
   }

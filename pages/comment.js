@@ -26,7 +26,6 @@ const Page = props => {
   const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(false);
   const firstComments = props.Comments.data || [];
-  console.log(firstComments);
   const [comments, setComments] = useState(firstComments);
   const [message, setMessage] = useState("");
   const [page, setPage] = useState(2);
@@ -84,7 +83,30 @@ const Page = props => {
           props.ctx
         );
         if (result !== undefined && result.isSuccess) {
+          setPage(1);
           setMessage("");
+          //getComments();
+          setLoading2(true);
+          const result2 = await fetchData(
+            "User/U_Comment/GetComments",
+            {
+              method: "POST",
+              body: JSON.stringify({
+                productId: productId,
+                page: 1,
+                pageSize: 10
+              })
+            },
+            props.ctx
+          );
+          if (result2 !== undefined && result2.isSuccess) {
+            document.documentElement.scrollTop = 0;
+            setComments(result2.data);
+            setPage(2);
+            if (result2.data.length >= 10) {
+              setTimeout(() => setIsFetching(false), 200);
+            }
+          }
         } else if (result !== undefined && result.message != undefined) {
           toast.warn(result.message);
         } else if (result !== undefined && result.error != undefined) {
@@ -133,7 +155,11 @@ const Page = props => {
       props.ctx
     );
     if (result !== undefined && result.isSuccess) {
-      setComments(comments.concat(result.data));
+      if (page === 1) {
+        setComments(result.data);
+      } else {
+        setComments(comments.concat(result.data));
+      }
       setPage(page + 1);
       if (result.data.length >= 10) {
         setTimeout(() => setIsFetching(false), 200);
