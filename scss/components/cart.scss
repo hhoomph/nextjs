@@ -1,4 +1,4 @@
-@import '../vars';
+@import "../vars";
 .cart {
   margin-bottom: 1%;
   &:hover,
@@ -38,7 +38,8 @@
       margin: auto;
       vertical-align: middle;
     }
-    .font_icon {}
+    .font_icon {
+    }
     .userImage {
       width: auto;
       height: auto;
@@ -83,6 +84,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
+        z-index: 999;
         .val_quantity {
           font-size: 0.8rem;
           border: 1px solid #bdbdbd;
@@ -100,21 +103,13 @@
         .delete_quantity {
           cursor: pointer;
           font-size: 1.4rem;
-          color: #43A047;
+          color: #43a047;
           position: relative;
           z-index: 9;
-          // border: 1px solid #dedede;
-          // border-radius: 2px;
-          // padding: 0;
-          // padding-right: 2px;
-          // padding-left: 2px;
-          // padding-bottom: 1px;
-          // margin-left: 1px;
           margin-right: 1px;
-          &:active {
+          &:active,
+          &:hover {
             color: $main_color;
-            animation: ping 0.4s both;
-            animation-iteration-count: infinite;
           }
         }
         select {
@@ -143,14 +138,10 @@
         border-radius: 3px;
         position: relative;
         z-index: 9;
-        &:hover {
-          background: #adadad;
-          color: #fff;
-        }
+        &:hover,
         &:active {
-          color: $main_color;
-          animation: ping 0.8s both;
-          animation-iteration-count: infinite;
+          background: #868686;
+          color: #fff;
         }
       }
     }
@@ -189,7 +180,7 @@
     .cancel {
       cursor: pointer;
       color: #757575;
-      background: #E0E0E0;
+      background: #e0e0e0;
       border-radius: 15px;
       border: none;
       height: 40px;
@@ -243,7 +234,7 @@
       transition: all 0.06s ease;
       &:hover,
       &:active {
-        background-image: linear-gradient(to left, #7CB342, #2E7D32);
+        background-image: linear-gradient(to left, #7cb342, #2e7d32);
         font-size: 34px;
       }
       .font_icon {

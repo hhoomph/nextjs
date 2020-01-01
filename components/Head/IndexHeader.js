@@ -1,7 +1,9 @@
 import React, { useState, useEffect, memo } from "react";
 import Link from "../Link";
 import { FaShoppingBasket, FaRegUserCircle } from "react-icons/fa";
-import { ReactComponent as SendSvg } from "../../public/static/svg/send.svg";
+// import { ReactComponent as SendSvg } from "../../public/static/svg/send.svg";
+import { ReactComponent as SendSvg } from "../../public/static/svg/new/send.svg";
+import { ReactComponent as BasketSvg } from "../../public/static/svg/new/shopping-basket.svg";
 import "../../scss/components/indexHeader.scss";
 const IndexHeader = props => {
   return (
@@ -10,7 +12,7 @@ const IndexHeader = props => {
         <div className="col-4">
           <Link href="/cart" passHref>
             <a className="nav_Icons active">
-              <FaShoppingBasket />
+              <BasketSvg className="svg_Icons" />
               <div className="badge badge-success">{props.cartCount}</div>
             </a>
           </Link>

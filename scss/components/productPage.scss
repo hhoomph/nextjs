@@ -148,13 +148,13 @@
         margin-right: 1rem;
         .comment_count {
           position: absolute;
-          font-size: 0.7rem;
-          top: 0.33rem;
+          font-size: 0.6rem;
+          top: 0.45rem;
           width: 8vw;
           max-width: 42px;
           text-align: center;
           @media screen and (min-width: 500px) {
-            top: 0.6rem;
+            top: 0.9rem;
           }
           z-index: 0;
         }
@@ -167,6 +167,7 @@
         cursor: pointer;
         font-size: 2rem;
         color: #424242;
+        stroke-width: 1px;
         transition: all 0.2s;
         &:hover,
         &:active {
@@ -179,13 +180,25 @@
         color: #c62828;
       }
       svg {
-        width: 8vw;
-        height: auto;
+        width: 7.8vw;
+        height: 7.8vw;
         max-width: 42px;
+        max-height: 42px;
         //fill: #292929;
         cursor: pointer;
         path {
           //fill: #292929;
+        }
+      }
+      .svg_icon {
+        fill: #424242;
+        padding: 3px;
+        &:hover,
+        &:active {
+          transition: all 0.2s;
+          fill: #000;
+          width: 7.82vw;
+          height: 7.82vw;
         }
       }
     }
@@ -208,6 +221,10 @@
       width: 90%;
       border-radius: 10px;
       max-width: 320px;
+      .spinner-border {
+        width: 1.6rem;
+        height: 1.6rem;
+      }
     }
     .description {
       border: 1px solid #484848;

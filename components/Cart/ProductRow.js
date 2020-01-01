@@ -110,23 +110,11 @@ const ProductRow = props => {
           {type === 1 && (
             <div className="product_quantity">
               <span>تعداد : </span>
-              <div
-                className="add_quantity"
-                onClick={() => {
-                  addProductQuantity();
-                  // setProductQuantity(productQuantity + 1);
-                }}
-              >
+              <div className="add_quantity" onClick={addProductQuantity}>
                 <FaPlusSquare className="font_icon" />
               </div>
               <div className="val_quantity">{productQuantity}</div>
-              <div
-                className="delete_quantity"
-                onClick={() => {
-                  reduceProductQuantity();
-                  //productQuantity > 1 ? setProductQuantity(productQuantity - 1) : setProductQuantity(1);
-                }}
-              >
+              <div className="delete_quantity" onClick={reduceProductQuantity}>
                 <FaMinusSquare className="font_icon" />
               </div>
             </div>

@@ -11,8 +11,12 @@ import Head from "next/head";
 import { ToastContainer, toast } from "react-toastify";
 import { FaPlus, FaRegComment, FaRegHeart, FaHeart, FaEllipsisV } from "react-icons/fa";
 import { FiShare2 } from "react-icons/fi";
-import { IoMdMore } from "react-icons/io";
-import { ReactComponent as MenuDotsSvg } from "../public/static/svg/menu-dots.svg";
+import { IoMdMore, IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
+import { IoIosHeartEmpty, IoIosHeart } from "react-icons/io";
+// import { ReactComponent as MenuDotsSvg } from "../public/static/svg/menu-dots.svg";
+import { ReactComponent as CommentSvg } from "../public/static/svg/new/comment.svg";
+// import { ReactComponent as LikeSvg } from "../public/static/svg/new/like.svg";
+import { ReactComponent as MenuDotsSvg } from "../public/static/svg/new/menu-dots.svg";
 import { numberSeparator, removeSeparator, forceNumeric } from "../utils/tools";
 import { Carousel, Dropdown, Modal } from "react-bootstrap";
 import RRS from "react-responsive-select";
@@ -259,10 +263,14 @@ function Page(props) {
                 }
               >
                 <div className="comment_count">{productData.commentCount || "0"}</div>
-                {/* <CommentSvg className="svg_icon" /> */}
-                <FaRegComment className="font_icon" />
+                <CommentSvg className="svg_icon" />
+                {/* <FaRegComment className="font_icon" /> */}
               </div>
-              {isFavorite ? <FaHeart className="font_icon red" onClick={toggleFavorite} /> : <FaRegHeart className="font_icon" onClick={toggleFavorite} />}
+              {isFavorite ? (
+                <IoIosHeart className="font_icon red" onClick={toggleFavorite} />
+              ) : (
+                <IoIosHeartEmpty className="font_icon" onClick={toggleFavorite} />
+              )}
             </div>
             <div className="col-12 mt-1">
               <p className="text-right product_name">{productData.title || ""}</p>
