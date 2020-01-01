@@ -235,7 +235,11 @@ function Page(props) {
                   </div>
                   <div className="col-12 p-0 rtl d-flex justify-content-between align-items-center">
                     <textarea
-                      value={"خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." + "\n" + `https://qarun.ir/login?user=${profileData.userName !== undefined ? profileData.userName : ""}`}
+                      value={
+                        "خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." +
+                          "\n" +
+                          `https://qarun.ir/login?user=${profileData.userName !== undefined ? profileData.userName : ""}`
+                      }
                       readOnly
                       className="share_text"
                       ref={textCopy}
@@ -301,33 +305,98 @@ function Page(props) {
       <UserProductsContext.Provider value={userProductsDispatch}>
         <Nav />
         <ProfileHeader setView={setView} profileData={profileData} scrollToProducts={scrollToProducts} sellLimit={sellLimit} />
-        <div className="container mb-1 cat_product_row">
-          <div className="row">
-            <div className="col">
-              <div className="row d-flex justify-content-start rtl pr-2 categories">
-                <Category categories={userCategories} catActive={catActive} setCatActive={setCatActive} setPage={setPage} />
+        {showFirstAdd ? (
+          <div className="container mt-2 mb-1 p-2 first_add_suggest_profile">
+            <div className="row d-flex justify-content-around rtl">
+              <div
+                className="col-5 p-2 first_add_col"
+                title="افزودن محصول"
+                onClick={() => {
+                  if (profileData !== null && profileData.userName !== undefined && profileData.userName !== "" && profileData.canInvite === true) {
+                    Router.push({
+                      pathname: "/add-product"
+                    });
+                  } else {
+                    toast.warn("برای افزودن محصول باید اطلاعات پروفایل خود را کامل کنید.");
+                  }
+                }}
+              >
+                <div className="icon_container add_product">
+                  <AddSvg className="svg_icon" />
+                </div>
+                <a className="first_add">افزودن محصول</a>
+              </div>
+              <div className="col-5 p-2 first_add_col" title="دعوت دوستان" onClick={() => setModalShow(true)}>
+                <div className="icon_container">
+                  <InviteShare className="svg_icon" />
+                </div>
+                <a className="first_add">دعوت دوستان</a>
               </div>
             </div>
+            {/* Invite Modal */}
+            <Modal onHide={() => setModalShow(false)} show={modalShow} size="xl" scrollable className="share_modal">
+              <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">لینک دعوت</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div className="col-12 rtl">
+                  <p className="invite_info">با دعوت و اضافه کردن دوستان خود به بازار قارون از یک درصد مبلغ خرید ها و فروش های آنها پاداش دریافت کنید.</p>
+                  <Link href="/terms" passHref>
+                    <a className="more_btn">بیشتر</a>
+                  </Link>
+                </div>
+                <div className="col-12 p-0 rtl d-flex justify-content-between align-items-center">
+                  <textarea
+                    value={
+                      "خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." +
+                        "\n" +
+                        `https://qarun.ir/login?user=${profileData.userName !== undefined ? profileData.userName : ""}`
+                    }
+                    readOnly
+                    className="share_text"
+                    ref={textCopy}
+                  />
+                  <FaRegCopy className="font_icon copy_icon" onClick={copyText} title="کپی کردن" />
+                </div>
+              </Modal.Body>
+              <Modal.Footer className="justify-content-center">
+                <SubmitButton loading={loading} onClick={shareLink} text="اشتراک گذاری" className="d-inline-block btn-main rtl">
+                  <FaShareAlt className="font_icon" />
+                </SubmitButton>
+              </Modal.Footer>
+            </Modal>
           </div>
-        </div>
-        <div className="container mb-5 pb-3 pt-3">
-          <div className="row d-flex justify-content-start rtl profile_products" ref={productRef}>
-            {showProducts}
-          </div>
-          {loading && (
-            <div
-              style={{
-                display: "block !important",
-                width: "100%",
-                height: "40px",
-                textAlign: "center",
-                marginTop: "0.1rem"
-              }}
-            >
-              <Loading />
+        ) : (
+          <>
+            <div className="container mb-1 cat_product_row">
+              <div className="row">
+                <div className="col">
+                  <div className="row d-flex justify-content-start rtl pr-2 categories">
+                    <Category categories={userCategories} catActive={catActive} setCatActive={setCatActive} setPage={setPage} />
+                  </div>
+                </div>
+              </div>
             </div>
-          )}
-        </div>
+            <div className="container mb-5 pb-3 pt-3">
+              <div className="row d-flex justify-content-start rtl profile_products" ref={productRef}>
+                {showProducts}
+              </div>
+              {loading && (
+                <div
+                  style={{
+                    display: "block !important",
+                    width: "100%",
+                    height: "40px",
+                    textAlign: "center",
+                    marginTop: "0.1rem"
+                  }}
+                >
+                  <Loading />
+                </div>
+              )}
+            </div>{" "}
+          </>
+        )}
       </UserProductsContext.Provider>
     );
     break;
