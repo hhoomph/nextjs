@@ -10,7 +10,7 @@ import Product from "../components/Profile/product";
 import { UserProductsContext } from "../context/context";
 import { userProductsReducer } from "../context/reducer";
 const Category = dynamic({
-  loader: () => import("../components/profile/Category"),
+  loader: () => import("../components/Profile/Category"),
   loading: () => <Loading />,
   ssr: true
 });
