@@ -50,7 +50,7 @@ const User = props => {
           <div className="row">
             <div className="col-4 m-auto pl-0">
               {type === "LikeProduct" || type === "LikeComment" || type === "CommentOnComment" || type === "CommentOnProduct" || type === "PostSave" ? (
-                <Link href={`/product/${props.productId}`} passHref>
+                <Link href={`/product/${props.productId}`} as={`/product/${props.productId}/${props.productTitle.trim().replace(/ /g, "-")}`} passHref>
                   <a className="product_image">
                     <img src={productImage} />
                   </a>
@@ -65,7 +65,16 @@ const User = props => {
               <Link href={`/user/${userName}`} passHref>
                 <a className="user_name">{userName}</a>
               </Link>
-              <div className="message">{message}</div>
+              {/* comment?id=89 */}
+              <div className="message">
+                {type === "LikeComment" || type === "CommentOnComment" || type === "CommentOnProduct" ? (
+                  <Link href={`/comment?id=${props.parentCommentId}`} passHref>
+                    <a className="">{message}</a>
+                  </Link>
+                ) : (
+                  message
+                )}
+              </div>
               <div className="time">{time}</div>
             </div>
           </div>

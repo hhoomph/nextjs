@@ -106,13 +106,14 @@ const Page = props => {
     }
     return (
       <User
-        key={activity.functorUserName + activity.eventLogStatus}
+        key={activity.functorUserName + activity.insertDate}
         id={activity.functorId}
         type={typeText}
         image={userImg}
         isFollowed={activity.isFollowed}
         productImage={productImg}
         productId={activity.productId}
+        productTitle={activity.productTitle}
         message={messageText}
         name={activity.functorDisplayName}
         userName={activity.functorUserName}
@@ -122,15 +123,12 @@ const Page = props => {
       />
     );
   });
-  console.log(activities);
+  //console.log(activities);
   return (
     <>
       <Nav />
       <div className="container pb-0 search_component">
         <div className="row p-2 cart_title">
-          {/* <div className="col text-center">
-            <h5 className="mr-2 ml-2 mt-1 page_title">فعالیت ها</h5>
-          </div> */}
           <div className="col-1 align-self-center pr-2" onClick={() => Router.back()}>
             <FaArrowLeft className="font_icon back_icon" onClick={console.log("asd")} />
           </div>
@@ -142,95 +140,6 @@ const Page = props => {
       <div className="container pb-5 rtl search_result activity_page">
         <div className="row pl-1 pr-1 pb-5 mb-5">
           {showActivities}
-          {/* <User
-            id={1}
-            type={"invite"}
-            image={"/static/img/user.jpg"}
-            followed={false}
-            productImage={"/static/img/product5.jpg"}
-            productId={"1"}
-            message={"متن پیام متن پیام"}
-            name={"نام نمایشی"}
-            userName={"user_name_UserName"}
-            time={"2 هفته"}
-          />
-          <User
-            id={2}
-            type={"productLike"}
-            image={"/static/img/user.png"}
-            followed={true}
-            productImage={"/static/img/product4.jpg"}
-            message={"شما را دنبال میکند"}
-            name={"نام نمایشی"}
-            userName={"user_name_UserName"}
-            time={"1 روز پیش"}
-          />
-          <User
-            id={3}
-            type={"follow"}
-            image={"/static/img/user.png"}
-            followed={true}
-            productImage={"/static/img/product6.jpg"}
-            message={"متن پیام متن پیام"}
-            name={"نام نمایشی"}
-            userName={"user_name_UserName"}
-            time={"50 دقیقه"}
-          />
-          <User
-            id={4}
-            type={"productLike"}
-            image={"/static/img/profile.png"}
-            followed={true}
-            productImage={"/static/img/product5.jpg"}
-            message={"پست شما را پسندید"}
-            name={"نام نمایشی"}
-            userName={"user_name_UserName"}
-            time={"5 دقیقه پیش"}
-          />
-          <User
-            id={5}
-            type={"productLike"}
-            image={"/static/img/user.jpg"}
-            followed={false}
-            productImage={"/static/img/product4.jpg"}
-            message={"متن پیام متن پیام"}
-            name={"نام نمایشی"}
-            userName={"user_name_UserName"}
-            time={"1 ماه"}
-          />
-          <User
-            id={6}
-            type={"productLike"}
-            image={"/static/img/user.png"}
-            followed={true}
-            productImage={"/static/img/product6.jpg"}
-            message={"شمار را دنبال میکند"}
-            name={"نام نمایشی"}
-            userName={"user_name_UserName"}
-            time={"یک هفته"}
-          />
-          <User
-            id={7}
-            type={"comment"}
-            image={"/static/img/user.png"}
-            followed={false}
-            productImage={"/static/img/product5.jpg"}
-            message={"متن پیام متن پیام"}
-            name={"نام نمایشی"}
-            userName={"user_name_UserName"}
-            time={"1 روز پیش"}
-          />
-          <User
-            id={8}
-            type={"commentLike"}
-            image={"/static/img/profile.png"}
-            followed={true}
-            productImage={"/static/img/product6.jpg"}
-            message={"پاسخ نظرتان \"گرونه\" را داد: \"قیمت خریدمه\""}
-            name={"نام نمایشی"}
-            userName={"user_name_UserName"}
-            time={"یک هفته پیش"}
-          /> */}
           {loading && (
             <div className="col-12 mt-2 p-0 user">
               <Loading />

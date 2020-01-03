@@ -161,7 +161,7 @@
         }
       }
       .show_replies {
-        color: #8c8c8c;
+        color: #5fad62;
         font-size: 0.8rem;
         cursor: pointer;
         font-weight: normal;
@@ -171,6 +171,9 @@
           color: #333;
           font-weight: bold;
         }
+      }
+      .show_replies._hide{
+        color: #ef9a9a;
       }
     }
     .btn-main {
@@ -193,24 +196,24 @@
   }
   .comment_child {
     ._txt {
-      font-size: .82rem;
+      font-size: .8rem;
     }
     .link {
       img {
-        max-width: 2.5rem;
+        max-width: 2.2rem;
       }
     }
     .heart .font_icon {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
     }
     .content .reply_btn {
-      font-size: 0.85rem;
+      font-size: 0.78rem;
     }
     .content .time {
-      font-size: .78rem;
+      font-size: .7rem;
     }
     .content {
-      font-size: 0.78rem;
+      font-size: 0.72rem;
     }
   }
   .input_text {

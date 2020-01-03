@@ -19,7 +19,7 @@ function Page(props) {
   const Favorite = props.Favorite.data.model || [];
   const [favorites, setFavorites] = useState(Favorite);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
   const productRef = useRef();
   const showProducts = favorites.map(product => (
@@ -53,8 +53,9 @@ function Page(props) {
       props.ctx
     );
     if (result !== undefined && result.isSuccess) {
-      let newProducts = result.data.model || [];
-      const p = favorites.concat(newProducts);
+      // let newProducts = result.data.model || [];
+      // const p = favorites.concat(newProducts);
+      // setFavorites(p);
       // // Remove duplicate products in array with productId
       // const uniqeResult = [];
       // const map = new Map();
@@ -64,7 +65,12 @@ function Page(props) {
       //     uniqeResult.push(item);
       //   }
       // }
-      setFavorites(p);
+      //
+      if (page === 1) {
+        setFavorites(result.data.model);
+      } else {
+        setFavorites(favorites.concat(result.data.model));
+      }
       if (result.data.model.length >= 9) {
         setPage(page + 1);
         setTimeout(() => setIsFetching(false), 200);

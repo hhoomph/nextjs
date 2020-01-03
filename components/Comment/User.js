@@ -41,6 +41,12 @@ const User = props => {
       userName={com.senderUserName}
       time={com.insertDateP}
       replyCount={com.replyCount}
+      setMessage={props.setMessage}
+      setParentId={props.setParentId}
+      setReplyUserName={props.setReplyUserName}
+      setCreateOrReply={props.setCreateOrReply}
+      focusOnTextArea={props.focusOnTextArea}
+      parentId4Reply={commentId}
     />
   ));
   const likeToggle = async () => {
@@ -122,12 +128,12 @@ const User = props => {
               <div className="time ml-2">{time}</div>
               {(replyCount > 0 || !showChild) && (
                 <div className="show_replies" onClick={getChildComments}>
-                  + نمایش پاسخ ها ({replyCount})
+                  +++ نمایش پاسخ ها ({replyCount})
                 </div>
               )}
               {childsComments.length > 0 && replyCount <= 0 && showChild && (
-                <div className="show_replies" onClick={() => setShowChild(false)}>
-                  - پنهان کردن پاسخ ها
+                <div className="show_replies _hide" onClick={() => setShowChild(false)}>
+                  --- پنهان کردن پاسخ ها
                 </div>
               )}
             </div>
