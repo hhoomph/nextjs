@@ -17,7 +17,7 @@ import "../scss/components/cartPage.scss";
 const Cart = dynamic({
   loader: () => import("../components/Cart/Cart"),
   loading: () => <Loading />,
-  ssr: false
+  ssr: true
 });
 function Page(props) {
   const nextCtx = props.ctx;
@@ -25,7 +25,10 @@ function Page(props) {
   const [cartData, cartDispatch] = useReducer(cartReduser, props.cartData.data || []);
   const [openCartData, setOpenCartData] = useState([]);
   const [historyCartData, setHistoryCartData] = useState([]);
+  const [showKey, setShowKey] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [isFetching, setIsFetching] = useState(false);
   const getCartCount = cartData
     .map(cart => cart.cartDetailsSelectDtos)
     .reduce((acc, val) => acc.concat(val), [])
@@ -54,8 +57,11 @@ function Page(props) {
         customerId={cart.userId}
         cartData={cart.cartDetailsSelectDtos}
         sellerAvatar={sellerImg}
+        id={cart.id}
         setLoading={setLoading}
         type={view}
+        showKey={showKey}
+        setShowKey={setShowKey}
       />
     );
   });
@@ -89,6 +95,8 @@ function Page(props) {
         sellerPhoneNumber={cart.sellerPhoneNumber}
         incomAmount={cart.incomAmount}
         setOpenCartData={setOpenCartData}
+        showKey={showKey}
+        setShowKey={setShowKey}
       />
     );
   });
@@ -121,6 +129,8 @@ function Page(props) {
         sellerUserName={cart.sellerUserName}
         sellerPhoneNumber={cart.sellerPhoneNumber}
         incomAmount={cart.incomAmount}
+        showKey={showKey}
+        setShowKey={setShowKey}
       />
     );
   });
@@ -181,6 +191,9 @@ function Page(props) {
       );
       if (getCartDataRes !== undefined && getCartDataRes.isSuccess) {
         let cData = getCartDataRes.data || [];
+        if (cData.length > 0) {
+          setShowKey(cData[0].id);
+        }
         cartDispatch({ type: "refresh", payload: [] });
         cartDispatch({ type: "refresh", payload: cData });
       }
@@ -194,6 +207,9 @@ function Page(props) {
       );
       if (getCartDataRes !== undefined && getCartDataRes.isSuccess) {
         let cData = getCartDataRes.data || [];
+        if (cData.length > 0) {
+          setShowKey(cData[0].id);
+        }
         setOpenCartData(cData);
       }
     } else if (view === 3) {
@@ -203,19 +219,39 @@ function Page(props) {
         {
           method: "POST",
           body: JSON.stringify({
-            page: 1,
+            page: page,
             pageSize: 10
           })
         },
         props.ctx
       );
       if (getCartDataRes1 !== undefined && getCartDataRes1.isSuccess) {
-        let cData = historyCartData.concat(getCartDataRes1.data);
-        setHistoryCartData(cData);
+        if (page === 1) {
+          setHistoryCartData(getCartDataRes1.data);
+        } else {
+          let cData = historyCartData.concat(getCartDataRes1.data);
+          setHistoryCartData(cData);
+        }
+        if (getCartDataRes1.data.length >= 10) {
+          setPage(page + 1);
+          setTimeout(() => setIsFetching(false), 200);
+        }
       }
     }
     setLoading(false);
   };
+  const handleScroll = () => {
+    if (window.innerHeight + document.documentElement.scrollTop + 60 < document.documentElement.offsetHeight || isFetching) return;
+    setIsFetching(true);
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  useEffect(() => {
+    if (!isFetching) return;
+    getCartData();
+  }, [isFetching]);
   useEffect(() => {
     getCartData();
   }, [view]);
@@ -224,7 +260,7 @@ function Page(props) {
       <CartCountContext.Provider value={cartCountDispatch}>
         <Nav cartCount={cartCount} />
         {view === 1 && (
-          <div className="container cart_page">
+          <div className="container cart_head_continue">
             <div className="row mb-3 p-2 header_link">
               <div className="col pt-2 text-center">
                 <a className="d-inline-block btn-main" onClick={handleOrder}>
@@ -300,48 +336,6 @@ function Page(props) {
               )}
             </div>
           )}
-          {/* <div className="row mt-0 mb-3 pt-3 pb-5 cart_amount_detail">
-            {getCartCount > 0 ? (
-              <>
-                <div className="col-12 d-block rtl">
-                  <span className="total">مبلغ کل : </span>
-                  <span className="total_price">
-                    {totalPrices.totalPrice !== undefined ? numberSeparator(totalPrices.totalPrice) : "0"}
-                    تومان
-                  </span>
-                </div>
-                <div className="col-12 d-block rtl">
-                  <span className="discount">مجموع تخفیف : </span>
-                  <span className="total_discount">
-                    {totalPrices.totalDiscount !== undefined ? numberSeparator(totalPrices.totalDiscount) : "0"}
-                    تومان
-                  </span>
-                </div>
-                <div className="col-12 d-block rtl">
-                  <span className="final">مبلغ قابل پرداخت : </span>
-                  <span className="final_price">
-                    {totalPrices.totalLastPrice !== undefined ? numberSeparator(totalPrices.totalLastPrice) : "0"}
-                    تومان
-                  </span>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="col-12">
-                  <hr />
-                </div>
-                <div className="col-12 d-flex justify-content-center empty_cart">
-                  <FaShoppingCart className="font_icon" />
-                </div>
-                <div className="col-12 d-flex justify-content-center empty_cart">
-                  <p>سبد خرید شما خالی است</p>
-                </div>
-                <div className="col-12 mb-5 pb-5">
-                  <hr />
-                </div>
-              </>
-            )}
-          </div> */}
         </div>
       </CartCountContext.Provider>
     </CartContext.Provider>

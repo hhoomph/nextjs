@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect, useContext, memo } from "react";
 import Link from "../Link";
+import Router from "next/router";
 import fetchData from "../../utils/fetchData";
 import { CartContext, CartCountContext } from "../../context/context";
 import { FaTimesCircle, FaPlusSquare, FaMinusSquare } from "react-icons/fa";
@@ -7,6 +8,7 @@ import { numberSeparator, removeSeparator } from "../../utils/tools";
 import "../../scss/components/cart.scss";
 const ProductRow = props => {
   const nextCtx = props.ctx;
+  const type = props.type;
   const { shopingCartId, productId, setLoading } = props;
   const [productQuantity, setProductQuantity] = useState(props.productQuantity);
   const cartDispatch = useContext(CartContext);
@@ -86,46 +88,23 @@ const ProductRow = props => {
     setLoading(false);
   };
   return (
-    <div className="col-12 p-0 rtl d-flex justify-content-start product_row">
-      <div className="col-3 p-0  align-self-center">
+    <div className="col-12 p-0 pr-3 pl-3 rtl d-flex justify-content-start product_row">
+      <div className="col-2 p-0  align-self-center">
         <Link href={`/product/${productId}`} as={`/product/${productId}/${props.productName.trim().replace(/ /g, "-")}`} passHref>
-          <img className="product_img" src={`${props.productImage}`} />
+          <img className="product_img" src={`https://api.qarun.ir/${props.productImage}`} />
         </Link>
       </div>
-      <div className="col-9 p-0 align-self-center">
+      <div className="col-10 p-0 align-self-center">
         <div className="col-12 p-1 d-flex">
           <div className="product_name text-truncate">{props.productName}</div>
-          <div className="product_close" onClick={() => deleteProduct(productQuantity)}>
-            {/* <FaTimesCircle className="font_icon" /> */}
-            حذف
-          </div>
+          <div className="mr-2 price_label">مبلغ کل</div>
         </div>
         <div className="col-12 p-1 d-flex">
-          <div className="product_price">
+          <div className="col-5 p-0 product_price">
             {numberSeparator(props.productPrice)} <span> تومان </span>
           </div>
-          <div className="product_quantity">
-            <span>تعداد : </span>
-            <div
-              className="add_quantity"
-              onClick={() => {
-                addProductQuantity();
-                // setProductQuantity(productQuantity + 1);
-              }}
-            >
-              <FaPlusSquare className="font_icon" />
-            </div>
-            <div className="val_quantity">{productQuantity}</div>
-            <div
-              className="delete_quantity"
-              onClick={() => {
-                reduceProductQuantity();
-                //productQuantity > 1 ? setProductQuantity(productQuantity - 1) : setProductQuantity(1);
-              }}
-            >
-              <FaMinusSquare className="font_icon" />
-            </div>
-          </div>
+          <div className="col-2 p-0 product_quantity">{productQuantity} عدد</div>
+          <div className="col-5 product_total_price_val">{numberSeparator(productQuantity * props.productPrice)} تومان</div>
         </div>
       </div>
     </div>

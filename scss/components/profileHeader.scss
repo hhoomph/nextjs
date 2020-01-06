@@ -341,7 +341,7 @@
           fill: #000;
         }
       }
-      .add_product {
+      .first_add_product {
         border: none;
       }
       a {
@@ -358,6 +358,7 @@
       border-radius: 100px;
       display: block;
       margin: auto;
+      margin-bottom: 1%;
       .svg_icon {
         color: #757575;
         fill: #757575;
@@ -365,9 +366,10 @@
         margin: auto;
       }
     }
-    .add_product {
+    .first_add_product {
       border: none;
       padding: 2px;
+      max-height: 55px !important;
     }
     a {
       display: block;

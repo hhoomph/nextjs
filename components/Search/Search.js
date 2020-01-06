@@ -3,7 +3,7 @@ import Link from "../Link";
 import dynamic from "next/dynamic";
 import Loading from "../Loader/Loader";
 import fetchData from "../../utils/fetchData";
-import { FaArrowRight, FaSearch } from "react-icons/fa";
+import { FaArrowRight, FaArrowLeft, FaSearch } from "react-icons/fa";
 import { numberSeparator, removeSeparator } from "../../utils/tools";
 import "../../scss/components/searchComponent.scss";
 import { async } from "q";
@@ -102,6 +102,7 @@ const Header = props => {
       <div className="container pb-0 map_header search_component">
         <div className="row">
           <div className="col-12 d-flex rtl align-items-center flex-row-reverse">
+            <FaArrowLeft className="font_icon search_icon" onClick={() => props.setView(1)} />
             <input
               type="text"
               value={search}
@@ -113,7 +114,6 @@ const Header = props => {
               ref={searchInput}
               placeholder="جستجو"
             />
-            <FaArrowRight className="font_icon search_icon" onClick={() => props.setView(1)} />
           </div>
           <div className="col-12 p-0">
             <ul className="nav d-flex ltr align-items-center flex-row-reverse filters">{showFilters}</ul>

@@ -209,7 +209,7 @@ function Page(props) {
                     }
                   }}
                 >
-                  <div className="icon_container add_product">
+                  <div className="icon_container first_add_product">
                     <AddSvg className="svg_icon" />
                   </div>
                   <a className="first_add">افزودن محصول</a>
@@ -321,7 +321,7 @@ function Page(props) {
                   }
                 }}
               >
-                <div className="icon_container add_product">
+                <div className="icon_container first_add_product">
                   <AddSvg className="svg_icon" />
                 </div>
                 <a className="first_add">افزودن محصول</a>

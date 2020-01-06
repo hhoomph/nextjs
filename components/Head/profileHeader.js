@@ -288,7 +288,7 @@ const Header = props => {
               <p>قرون</p>
               <p className="debt">{qerun ? `${qerun} ` : "0 "}</p>
             </div>
-            <Link href="/orders" passHref>
+            <Link href="/order" passHref>
               <div className="col-4 d-block text-center">
                 <p>سفارشات</p>
                 <p className="orders">{deliveredOrderCount ? `${deliveredOrderCount} ` : "0 "}</p>

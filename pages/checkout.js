@@ -17,22 +17,23 @@ function Page(props) {
   console.log(_orderId);
   const [view, setView] = useState(1);
   const [loading, setLoading] = useState(false);
-  const _addresses =
-    props.Res !== undefined &&
-    props.Res.data !== undefined &&
-    props.Res.data !== null &&
-    props.Res.data.address !== undefined &&
-    props.Res.data.address !== null &&
-    props.Res.data.address.length > 0
-      ? props.Res.data.address
-      : [];
-  const _address = _addresses.length > 0 ? _addresses[_addresses.length - 1] : "";
+  // const _addresses =
+  //   props.Res !== undefined &&
+  //   props.Res.data !== undefined &&
+  //   props.Res.data !== null &&
+  //   props.Res.data.address !== undefined &&
+  //   props.Res.data.address !== null &&
+  //   props.Res.data.address.length > 0
+  //     ? props.Res.data.address
+  //     : [];
+  // const _address = _addresses.length > 0 ? _addresses[_addresses.length - 1] : "";
   const _phone = props.Res.data !== null && props.Res.data.phoneNumber ? props.Res.data.phoneNumber : "";
+  const _address = props.Res.data !== null && props.Res.data.address ? props.Res.data.address : "";
   const [address, setAddress] = useState(_address);
   const [phoneNumber, setPhoneNumber] = useState(_phone);
   const [description, setDescription] = useState("");
   const [paymentMethod, setPaymentMethod] = useState(1);
-  const [orderId, setOrderId] = useState(0);
+  const [orderId, setOrderId] = useState(null);
   const handleRadioPayment = e => {
     setPaymentMethod(e.target.value);
   };
@@ -84,7 +85,7 @@ function Page(props) {
       {
         method: "POST",
         body: JSON.stringify({
-          //orderId: orderId,   -> Send Old Order Id for repayment order (if customer canceled an order)
+          orderId: orderId,
           phoneNumber: phoneNumber,
           address: address,
           description: description,

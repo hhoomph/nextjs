@@ -15,22 +15,20 @@ import { CartContext, CartCountContext } from "../context/context";
 import { cartReduser, cartCountReduser } from "../context/reducer";
 import "../scss/components/cartPage.scss";
 const Cart = dynamic({
-  loader: () => import("../components/Cart/Cart"),
+  loader: () => import("../components/Order/Cart"),
   loading: () => <Loading />,
-  ssr: false
+  ssr: true
 });
 function Page(props) {
   const nextCtx = props.ctx;
-  const [cartData, cartDispatch] = useReducer(cartReduser, props.cartData.data || []);
+  const [view, setView] = useState(1);
+  const [openData, setOpenData] = useState(props.OpenOrder.data || []);
+  const [historyData, setHistoryData] = useState([]);
+  const [showKey, setShowKey] = useState(null);
   const [loading, setLoading] = useState(false);
-  const getCartCount = cartData
-    .map(cart => cart.cartDetailsSelectDtos)
-    .reduce((acc, val) => acc.concat(val), [])
-    .reduce((acc, val) => {
-      const { count } = val;
-      return acc + count;
-    }, 0);
-  const [cartCount, cartCountDispatch] = useReducer(cartCountReduser, getCartCount);
+  const [page, setPage] = useState(1);
+  const [isFetching, setIsFetching] = useState(false);
+  const [orderPage, setOrderPage] = useState(false);
   toast.configure({
     position: "top-right",
     autoClose: 3000,
@@ -39,162 +37,169 @@ function Page(props) {
     pauseOnHover: true,
     draggable: true
   });
-  //console.log(cartData);
-  const renderCart = cartData.map(cart => (
-    <Cart
-      key={cart.sellerId}
-      sellerId={cart.sellerId}
-      userId={cart.userId}
-      cartData={cart}
-      sellerAvatar={`https://api.qarun.ir/${cart.sellerAvatar}`}
-      sellerName={""}
-      setLoading={setLoading}
-      // shopingCartId={cart.id}
-    />
-  ));
-  const totalPrices = cartData
-    .map(cart => cart.cartDetailsSelectDtos)
-    .reduce((acc, val) => acc.concat(val), [])
-    .reduce((acc, val) => {
-      const { totalDiscount, totalLastPrice, totalPrice } = val;
-      if (acc["totalDiscount"]) {
-        acc["totalDiscount"] += totalDiscount;
-      } else {
-        acc["totalDiscount"] = totalDiscount;
-      }
-      if (acc["totalLastPrice"]) {
-        acc["totalLastPrice"] += totalLastPrice;
-      } else {
-        acc["totalLastPrice"] = totalLastPrice;
-      }
-      if (acc["totalPrice"]) {
-        acc["totalPrice"] += totalPrice;
-      } else {
-        acc["totalPrice"] = totalPrice;
-      }
-      return acc;
-    }, {});
-  const handleOrder = async () => {
-    if (getCartCount > 0) {
-      setLoading(true);
-      const Res = await fetchData(
-        "User/U_Order/AddS1",
+  const renderOpen = openData.map(cart => {
+    const sellerImg =
+      cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
+    return (
+      <Cart
+        key={cart.orderId + cart.id}
+        userId={cart.customerId}
+        cartData={cart.products}
+        sellerAvatar={sellerImg}
+        sellerName={cart.sellerDisplayName}
+        setLoading={setLoading}
+        type={view}
+        orderId={cart.orderId}
+        orderStatus={cart.orderStatus}
+        reason4DisapprovedDelivery={cart.reason4DisapprovedDelivery}
+        sendDate={cart.sendDate}
+        totalPrice={cart.totalPrice}
+        totalDiscount={cart.totalDiscount}
+        totalLastPrice={cart.totalLastPrice}
+        id={cart.id}
+        customerId={cart.customerId}
+        pOrderStatus={cart.pOrderStatus}
+        orderPaymentType={cart.orderPaymentType}
+        pOrderPaymentType={cart.pOrderPaymentType}
+        pReason4DisapprovedDelivery={cart.pReason4DisapprovedDelivery}
+        pSendDate={cart.pSendDate}
+        sellerUserName={cart.sellerUserName}
+        sellerPhoneNumber={cart.sellerPhoneNumber}
+        incomAmount={cart.incomAmount}
+        setOpenData={setOpenData}
+        showKey={showKey}
+        setShowKey={setShowKey}
+        orderPage={orderPage}
+        setOrderPage={setOrderPage}
+      />
+    );
+  });
+  const renderHistory = historyData.map(cart => {
+    const sellerImg =
+      cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
+    return (
+      <Cart
+        key={cart.orderId + cart.id}
+        userId={cart.customerId}
+        cartData={cart.products}
+        sellerAvatar={sellerImg}
+        sellerName={cart.sellerDisplayName}
+        setLoading={setLoading}
+        type={view}
+        orderId={cart.orderId}
+        orderStatus={cart.orderStatus}
+        reason4DisapprovedDelivery={cart.reason4DisapprovedDelivery}
+        sendDate={cart.sendDate}
+        totalPrice={cart.totalPrice}
+        totalDiscount={cart.totalDiscount}
+        totalLastPrice={cart.totalLastPrice}
+        id={cart.id}
+        customerId={cart.customerId}
+        pOrderStatus={cart.pOrderStatus}
+        orderPaymentType={cart.orderPaymentType}
+        pOrderPaymentType={cart.pOrderPaymentType}
+        pReason4DisapprovedDelivery={cart.pReason4DisapprovedDelivery}
+        pSendDate={cart.pSendDate}
+        sellerUserName={cart.sellerUserName}
+        sellerPhoneNumber={cart.sellerPhoneNumber}
+        incomAmount={cart.incomAmount}
+        showKey={showKey}
+        setShowKey={setShowKey}
+        setOrderPage={setOrderPage}
+      />
+    );
+  });
+  const getCartData = async () => {
+    setLoading(true);
+    if (view === 1) {
+      const getCartDataRes = await fetchData(
+        "User/U_Order/SellerOpenOrder",
         {
-          method: "POST"
+          method: "GET"
         },
         props.ctx
       );
-      if (Res !== undefined && Res.isSuccess) {
-        toast.success(Res.message);
-        Router.push("/checkout");
-      } else if (Res !== undefined && Res.message != undefined) {
-        toast.warn(Res.message);
-      } else if (Res !== undefined && Res.error != undefined) {
-        toast.error(Res.error);
+      if (getCartDataRes !== undefined && getCartDataRes.isSuccess) {
+        let cData = getCartDataRes.data || [];
+        if (cData.length > 0) {
+          setShowKey(cData[0].id);
+        }
+        setOpenData(cData);
       }
-      setLoading(false);
-    } else {
-      toast.warn("سبد خرید شما خالی است.");
+    } else if (view === 2) {
+      const getCartDataRes = await fetchData(
+        "User/U_Order/SellerHistory",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            page: page,
+            pageSize: 10
+          })
+        },
+        props.ctx
+      );
+      if (getCartDataRes !== undefined && getCartDataRes.isSuccess) {
+        if (page === 1) {
+          setHistoryData(getCartDataRes.data);
+        } else {
+          let cData = historyData.concat(getCartDataRes.data);
+          setHistoryData(cData);
+        }
+        if (getCartDataRes.data.length >= 10) {
+          setPage(page + 1);
+          setTimeout(() => setIsFetching(false), 200);
+        }
+      }
     }
+    setLoading(false);
   };
+  const handleScroll = () => {
+    if (window.innerHeight + document.documentElement.scrollTop + 60 < document.documentElement.offsetHeight || isFetching) return;
+    setIsFetching(true);
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  useEffect(() => {
+    if (!isFetching) return;
+    getCartData();
+  }, [isFetching]);
+  useEffect(() => {
+    getCartData();
+  }, [view, orderPage]);
   return (
-    <CartContext.Provider value={cartDispatch}>
-      <CartCountContext.Provider value={cartCountDispatch}>
-        <Nav cartCount={cartCount} />
-        <div className="container cart_page">
-          <div className="row mb-3 p-2 header_link">
-            <div className="col pt-2 text-center">
-              {/* <Link href="/checkout" passHref>
-              <a className="d-inline-block btn-main">
-                ادامه
-                {loading ? <Loading className="font_icon" /> : <FaArrowLeft className="font_icon" />}
-              </a>
-            </Link> */}
-              <a className="d-inline-block btn-main" onClick={handleOrder}>
-                ادامه
-                {loading ? <Loading className="font_icon" /> : <FaArrowLeft className="font_icon" />}
-              </a>
-            </div>
+    <>
+      <Nav />
+      <div className="container cart_filter">
+        <div className="row">
+          <div className="col-12 mb-2">
+            <ul className="nav d-flex ltr align-items-center flex-row-reverse filters">
+              <li className={`nav-item ${view == 1 ? "active" : ""}`} onClick={() => setView(1)}>
+                <a className="nav-link">جدید</a>
+              </li>
+              <li className={`nav-item ${view == 2 ? "active" : ""}`} onClick={() => setView(2)}>
+                <a className="nav-link">سوابق</a>
+              </li>
+            </ul>
           </div>
         </div>
-        <div className="container ">
-          <div className="row cart_title">
-            <div className="col text-center">
-              <FaCartPlus className="font_icon" />
-              <h5 className="mr-2 ml-2 page_title">سبد خرید </h5>
-              <FaCartArrowDown className="font_icon" />
-              {/* <hr /> */}
-            </div>
-          </div>
-        </div>
-        <div className="container cart_page">
-          {renderCart}
-          <div className="row mt-0 mb-3 pt-3 pb-5 cart_amount_detail">
-            {getCartCount > 0 ? (
-              <>
-                <div className="col-12 d-block rtl">
-                  <span className="total">مبلغ کل : </span>
-                  <span className="total_price">
-                    {totalPrices.totalPrice !== undefined ? numberSeparator(totalPrices.totalPrice) : "0"}
-                    تومان
-                  </span>
-                </div>
-                <div className="col-12 d-block rtl">
-                  <span className="discount">مجموع تخفیف : </span>
-                  <span className="total_discount">
-                    {totalPrices.totalDiscount !== undefined ? numberSeparator(totalPrices.totalDiscount) : "0"}
-                    تومان
-                  </span>
-                </div>
-                <div className="col-12 d-block rtl">
-                  <span className="final">مبلغ قابل پرداخت : </span>
-                  <span className="final_price">
-                    {totalPrices.totalLastPrice !== undefined ? numberSeparator(totalPrices.totalLastPrice) : "0"}
-                    تومان
-                  </span>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="col-12">
-                  <hr />
-                </div>
-                <div className="col-12 d-flex justify-content-center empty_cart">
-                  <FaShoppingCart className="font_icon" />
-                </div>
-                <div className="col-12 d-flex justify-content-center empty_cart">
-                  <p>سبد خرید شما خالی است</p>
-                </div>
-                <div className="col-12 mb-5 pb-5">
-                  <hr />
-                </div>
-              </>
-            )}
-            {/* <div className="col-12 d-block rtl">
-              <span className="total">مبلغ کل : </span> <span className="total_price">{totalPrices.totalPrice !== undefined ? numberSeparator(totalPrices.totalPrice) : '0'} تومان</span>
-            </div>
-            <div className="col-12 d-block rtl">
-              <span className="discount">مجموع تخفیف : </span>{' '}
-              <span className="total_discount">{totalPrices.totalDiscount !== undefined ? numberSeparator(totalPrices.totalDiscount) : '0'} تومان</span>
-            </div>
-            <div className="col-12 d-block rtl">
-              <span className="final">مبلغ قابل پرداخت : </span>{' '}
-              <span className="final_price">{totalPrices.totalLastPrice !== undefined ? numberSeparator(totalPrices.totalLastPrice) : '0'} تومان</span>
-            </div> */}
-          </div>
-        </div>
-      </CartCountContext.Provider>
-    </CartContext.Provider>
+      </div>
+      <div className="container cart_page">
+        {view === 1 && renderOpen}
+        {view === 2 && renderHistory}
+      </div>
+    </>
   );
 }
 Page.getInitialProps = async function(context) {
-  const cartData = await fetchData(
-    "User/U_Cart/GetAll",
+  const OpenOrder = await fetchData(
+    "User/U_Order/SellerOpenOrder",
     {
       method: "GET"
     },
     context
   );
-  return { cartData };
+  return { OpenOrder };
 };
 export default Auth(Page);

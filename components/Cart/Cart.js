@@ -17,7 +17,7 @@ const ProductRow = dynamic({
 const Cart = props => {
   const nextCtx = props.ctx;
   const type = props.type;
-  const [showRow, setShowRow] = useState(true);
+  const showRow = props.id === props.showKey ? true : false;
   const [loading, setLoading] = useState(false);
   const [call, setCall] = useState(false);
   const { cartData } = props;
@@ -76,22 +76,19 @@ const Cart = props => {
     default:
       break;
     }
-    // <ProductRow
-    //   key={product.productId}
-    //   productId={product.productId}
-    //   productName={product.productTitle}
-    //   productImage={product.pictures[0].thumbNail}
-    //   productPrice={product.productPrice}
-    //   shopingCartId={product.id}
-    //   productQuantity={product.count}
-    //   setLoading={props.setLoading}
-    // />;
   });
   const toggleRow = () => {
     if (showRow) {
-      return <FaChevronUp onClick={() => setShowRow(!showRow)} className="font_icon up" />;
+      props.setShowKey(null);
     } else {
-      return <FaChevronDown onClick={() => setShowRow(!showRow)} className="font_icon down" />;
+      props.setShowKey(props.id);
+    }
+  };
+  const showToggleRow = () => {
+    if (showRow) {
+      return <FaChevronUp onClick={toggleRow} className="font_icon up" />;
+    } else {
+      return <FaChevronDown onClick={toggleRow} className="font_icon down" />;
     }
   };
   const changeCall = () => {
@@ -125,11 +122,31 @@ const Cart = props => {
       toast.error(result.error);
     }
   };
+  const cancelOrder = async () => {
+    const result = await fetchData(
+      `User/U_Order/CanceleOrder?orderChildId=${props.id}`,
+      {
+        method: "GET"
+      },
+      props.ctx
+    );
+    if (result !== undefined && result.isSuccess) {
+      if (result.message != undefined) {
+        toast.success(result.message);
+      } else {
+        toast.success("سفارش با موفقیت لغو شد.");
+      }
+    } else if (result !== undefined && result.message != undefined) {
+      toast.warn(result.message);
+    } else if (result !== undefined && result.error != undefined) {
+      toast.error(result.error);
+    }
+  };
   return (
     <div className="container cart">
-      <div className={"row cart_seller justify-content-end"} onClick={() => setShowRow(!showRow)}>
+      <div className={"row cart_seller justify-content-end"} onClick={toggleRow}>
         <div className="col-2 align-self-center text-left">
-          <a className="nav_Icons active">{toggleRow()}</a>
+          <a className="nav_Icons active">{showToggleRow()}</a>
         </div>
         <div className="col-10 text-right p-0 pr-1 pt-1">
           <p className="seller_name d-inline-block mr-2 text-truncate">{props.sellerUserName}</p>
@@ -151,7 +168,7 @@ const Cart = props => {
           <a className="tell_call" title="تماس با فروشنده" href={`tel:${props.sellerPhoneNumber}`} onClick={changeCall}>
             <IoMdCall className="font_icon" />
           </a>
-          {call && <SubmitButton loading={loading} onClick={console.log("")} text="لغو سفارش" className="d-inline-block cancel" />}
+          {call && <SubmitButton loading={loading} onClick={cancelOrder} text="لغو سفارش" className="d-inline-block cancel" />}
         </div>
       )}
       {type === 2 && props.pOrderStatus === "درانتظار پرداخت" && props.orderPaymentType === 0 && (

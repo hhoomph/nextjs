@@ -1,13 +1,12 @@
 @import "../vars";
 .cart_page {
-  padding-bottom: 3.6rem;
+  padding-bottom: 4rem;
   .header_link {
     background: #fafafa;
     box-shadow: 0px 1px 5px 1px #d2d2d2;
     position: fixed;
     width: 100%;
-    top: 0;
-    bottom: auto;
+    bottom: 40px;
     z-index: 9999;
     a {
       cursor: pointer;
@@ -93,6 +92,11 @@
   }
 }
 .cart_filter {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  margin-bottom: 2px;
+  box-shadow: 0 0 1px 0 #c1c1c1;
   ul.filters {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -109,6 +113,37 @@
       font-weight: bold;
       color: #212121;
       border-bottom: 1px solid #616161;
+    }
+  }
+}
+.cart_head_continue{
+  .header_link {
+    background: #fafafa;
+    box-shadow: 0px 1px 5px 1px #d2d2d2;
+    position: fixed;
+    width: 100%;
+    bottom: 40px;
+    z-index: 9999;
+    a {
+      cursor: pointer;
+    }
+  }
+  .btn-main {
+    color: #fff !important;
+    font-size: 1rem;
+    min-width: 150px;
+    direction: rtl;
+    .font_icon {
+      margin-right: 0.5rem;
+      //margin-left: 6px;
+    }
+    .spinner-border {
+      display: inline-block;
+      color: #fff !important;
+      margin-right: 6px;
+      margin-left: 6px;
+      height: 25px;
+      width: 25px;
     }
   }
 }
