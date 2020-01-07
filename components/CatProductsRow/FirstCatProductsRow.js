@@ -80,7 +80,7 @@ const FirstCatProductsRow = props => {
             oldPrice={product.price}
             image={productThumbNail}
             userId={product.sellerUserName}
-            sellerAvatar={`https://api.qarun.ir/${product.sellerAvatar}`}
+            sellerAvatar={product.sellerAvatar !== undefined && product.sellerAvatar !== null ? `https://api.qarun.ir/${product.sellerAvatar}` : "/static/img/no-userimage.png"}
             sellerUserName={product.sellerUserName}
           />
         );
