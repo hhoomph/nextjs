@@ -19,8 +19,17 @@ const Nav = dynamic({
   ssr: true
 });
 const ticket = props => {
+  const Router = useRouter();
   return (
-    <div className="col-12 mt-2 p-0 pt-1 ticket_row">
+    <div
+      className="col-12 mt-2 p-0 pt-1 ticket_row"
+      onClick={() =>
+        Router.push({
+          pathname: "/ticket",
+          query: { id: "ticketId" }
+        })
+      }
+    >
       <div className="row">
         <div className="col-2 align-self-center">
           <a className="ticket_icon">

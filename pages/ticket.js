@@ -25,14 +25,16 @@ const Page = props => {
   const productId = Router.query.id;
   const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(false);
-  const firstComments = props.Comments.data || [];
-  const [comments, setComments] = useState(firstComments);
-  const [message, setMessage] = useState("");
   const [page, setPage] = useState(2);
   const [isFetching, setIsFetching] = useState(false);
   const [parentId, setParentId] = useState(null);
   const [createOrReply, setCreateOrReply] = useState(0);
   const [replyUserName, setReplyUserName] = useState(null);
+  //
+  const [messages, setMessages] = useState(props.Response.data !== undefined && props.Response.data.model !== undefined ? props.Response.data.model : []);
+  const ParentId = "";
+  const [content, setContent] = useState("");
+  const fileInput = useRef();
   const textRef = useRef();
   const focusOnTextArea = () => {
     textRef.current.focus();
@@ -45,7 +47,7 @@ const Page = props => {
     pauseOnHover: true,
     draggable: true
   });
-  const showComments = comments.map(com => (
+  const showComments = messages.map(com => (
     <Ticket
       key={com.commentId}
       commentId={com.commentId}
@@ -62,13 +64,62 @@ const Page = props => {
       setParentId={setParentId}
       setCreateOrReply={setCreateOrReply}
       setReplyUserName={setReplyUserName}
-      replyMessage={message}
-      setMessage={setMessage}
       focusOnTextArea={focusOnTextArea}
     />
   ));
+  const answerTicket = async () => {
+    toast.dismiss();
+    const errs = [];
+    const formData = new FormData();
+    formData.append("ParentId", ParentId);
+    if (content.trim() === "") {
+      errs.push("لطفا متن تیکت را مشخص کنید.");
+    } else {
+      formData.append("Content", content);
+    }
+    const types = ["image/png", "image/jpeg", "image/gif"];
+    const files = Array.from(fileInput.current.files);
+    if (files.length > 5) {
+      return toast.warn("تنها امکان آپلود 5 فایل همزمان وجود دارد.");
+    }
+    files.forEach((file, i) => {
+      if (types.every(type => file.type !== type)) {
+        errs.push(`فرمت '${file.type}' پشتیبانی نمی شود.`);
+      }
+      if (file.size > 2550000) {
+        errs.push(`حجم فایل '${file.name}' بیشتر از حد مجاز است، لطفا فایل کم حجم تری انتخاب کنید.`);
+      }
+      formData.append(`Files${i}`, file);
+    });
+    if (errs.length) {
+      return errs.forEach(err => toast.warn(err));
+    }
+    setLoading(true);
+    const result = await fetchData(
+      "User/U_Support/CreateTicketAnswer",
+      {
+        method: "POST",
+        body: formData
+      },
+      props.ctx,
+      true
+    );
+    if (result.isSuccess) {
+      fileInput.current.value = "";
+      setContent("");
+      toast.success("تیکت شما با موفقیت ثبت شد.");
+      setPage(1);
+      setTimeout(() => setIsFetching(false), 200);
+      getMessages();
+    } else if (result.message != undefined) {
+      toast.warn(result.message);
+    } else if (result.error != undefined) {
+      toast.error(result.error);
+    }
+    setLoading(false);
+  };
   const sendComment = async () => {
-    if (message.trim() !== "") {
+    if (content.trim() !== "") {
       if (createOrReply === 0) {
         setLoading(true);
         const result = await fetchData(
@@ -77,14 +128,14 @@ const Page = props => {
             method: "POST",
             body: JSON.stringify({
               productId: productId,
-              message: message
+              message: content
             })
           },
           props.ctx
         );
         if (result !== undefined && result.isSuccess) {
           setPage(1);
-          setMessage("");
+          setContent("");
           //getComments();
           setLoading2(true);
           const result2 = await fetchData(
@@ -101,7 +152,7 @@ const Page = props => {
           );
           if (result2 !== undefined && result2.isSuccess) {
             document.documentElement.scrollTop = 0;
-            setComments(result2.data);
+            setMessages(result2.data);
             setPage(2);
             if (result2.data.length >= 10) {
               setTimeout(() => setIsFetching(false), 200);
@@ -121,13 +172,13 @@ const Page = props => {
             method: "POST",
             body: JSON.stringify({
               parentId: parentId,
-              message: message
+              message: content
             })
           },
           props.ctx
         );
         if (result !== undefined && result.isSuccess) {
-          setMessage("");
+          setContent("");
           setCreateOrReply(0);
         } else if (result !== undefined && result.message != undefined) {
           toast.warn(result.message);
@@ -137,17 +188,18 @@ const Page = props => {
         setLoading(false);
       }
     } else {
-      toast.warn("لطفا نظر خود را بنویسید.");
+      toast.warn("لطفا متن پیام خود را بنویسید.");
     }
   };
-  const getComments = async () => {
+  const getMessages = async () => {
     setLoading2(true);
     const result = await fetchData(
-      "User/U_Comment/GetComments",
+      "User/U_Support/GetTicketResponse",
       {
         method: "POST",
         body: JSON.stringify({
-          productId: productId,
+          ticketStatus: "",
+          parentId: "id",
           page: page,
           pageSize: 10
         })
@@ -156,9 +208,9 @@ const Page = props => {
     );
     if (result !== undefined && result.isSuccess) {
       if (page === 1) {
-        setComments(result.data);
+        setMessages(result.data);
       } else {
-        setComments(comments.concat(result.data));
+        setMessages(messages.concat(result.data));
       }
       setPage(page + 1);
       if (result.data.length >= 10) {
@@ -181,7 +233,7 @@ const Page = props => {
   }, []);
   useEffect(() => {
     if (!isFetching) return;
-    getComments();
+    getMessages();
   }, [isFetching]);
   useEffect(() => {
     focusOnTextArea();
@@ -195,7 +247,7 @@ const Page = props => {
             <FaArrowLeft className="font_icon back_icon" />
           </div>
           <div className="col-10 p-0 text-center align-self-center">
-            <h5 className="mr-0 ml-2 mt-1 page_title">پشتیبانی</h5>
+            <h5 className="mr-0 ml-2 mt-1 page_title">موضوع تیکت</h5>
           </div>
         </div>
       </div>
@@ -213,7 +265,6 @@ const Page = props => {
             userName={"user_name_UserName"}
             time={"2 هفته"}
           /> */}
-          {showComments}
           {loading2 && (
             <div className="col-12 mt-2 p-0 user">
               <Loading />
@@ -225,7 +276,7 @@ const Page = props => {
             className="font_icon"
             onClick={() => {
               setCreateOrReply(0);
-              setMessage("");
+              setContent("");
             }}
           />
           <p> پاسخ دادن به نظر @{replyUserName}</p>
@@ -236,10 +287,10 @@ const Page = props => {
               <textarea
                 type="text"
                 className="form-control col-9"
-                placeholder="متن نظر"
+                placeholder="متن پیام"
                 ref={textRef}
-                value={message}
-                onChange={e => setMessage(e.target.value)}
+                value={content}
+                onChange={e => setContent(e.target.value)}
               />
               <div className="col-2 align-self-center">
                 <SubmitButton loading={loading} onClick={sendComment} text="ارسال" className="btn btn-main send_comment" />
@@ -253,18 +304,19 @@ const Page = props => {
 };
 Page.getInitialProps = async function(context) {
   const { id } = context.query;
-  const Comments = await fetchData(
-    "User/U_Comment/GetComments",
+  const Response = await fetchData(
+    "User/U_Support/GetTicketResponse",
     {
       method: "POST",
       body: JSON.stringify({
-        productId: id,
+        ticketStatus: "",
+        parentId: id,
         page: 1,
         pageSize: 10
       })
     },
     context
   );
-  return { Comments };
+  return { Response };
 };
 export default Auth(Page);
