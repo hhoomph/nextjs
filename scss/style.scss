@@ -195,6 +195,29 @@ body {
       text-decoration: none;
     }
   }
+  .file_upload_btn {
+    font-size: 1.6rem;
+    color: #757575;
+    background: #efefef;
+    padding: 4px;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 10rem;
+    transition: all 0.1s ease-in-out;
+    &:hover,&:active{
+      font-size: 1.7rem;
+      color:#212121;
+      background: #e0e0e0;
+    }
+  }
+  .add_ticket{
+    input,label,textarea{
+      font-size: 0.9rem;
+    }
+    ::placeholder{
+      font-size: 0.9rem;
+    }
+  }
   // react-responsive-select/
   .rrs__button {
     min-width: 45vw;
