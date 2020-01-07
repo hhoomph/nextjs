@@ -10,11 +10,12 @@ const { parsed: localEnv } = require("dotenv").config();
 module.exports = withPlugins([withSass, withSize, withOffline], {
   //target: 'serverless',
   poweredByHeader: false,
+  reactStrictMode: true,
   // staticFolder: '/static',
   // distDir: 'build',
   // Start of next-offline config for service worker:
   // generateInDevMode: true,
-  // transformManifest: manifest => ["/"].concat(manifest), // add the homepage to the cache
+  transformManifest: manifest => ["/"].concat(manifest), // add the homepage to the cache
   // workboxOpts: {
   //   swDest: "static/service-worker.js"
   // },

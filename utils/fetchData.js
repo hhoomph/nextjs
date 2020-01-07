@@ -13,8 +13,8 @@ export default async (path, opts = {}, context, isFile = false) => {
     headers.Authorization = `bearer ${accessToken}`;
   }
   if (isFile) {
-    // headers.Accept = 'text/plain';
-    //headers['Content-Type'] = 'multipart/form-data';
+    // headers.Accept = "text/plain";
+    // headers["Content-Type"] = "multipart/form-data";
   } else {
     headers.Accept = "application/json";
     headers["Content-Type"] = "application/json;charset=utf-8";

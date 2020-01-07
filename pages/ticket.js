@@ -6,7 +6,7 @@ import Auth from "../components/Auth/Auth";
 import { useRouter } from "next/router";
 import fetchData from "../utils/fetchData";
 import SubmitButton from "../components/Button/SubmitButton";
-import { FaArrowRight, FaArrowLeft, FaTimes } from "react-icons/fa";
+import { FaArrowRight, FaArrowLeft, FaTimes, FaFileUpload } from "react-icons/fa";
 import { numberSeparator, removeSeparator } from "../utils/tools";
 import { ToastContainer, toast } from "react-toastify";
 import "../scss/components/ticket.scss";
@@ -89,11 +89,12 @@ const Page = props => {
       if (file.size > 2550000) {
         errs.push(`حجم فایل '${file.name}' بیشتر از حد مجاز است، لطفا فایل کم حجم تری انتخاب کنید.`);
       }
-      formData.append(`Files${i}`, file);
+      //formData.append(`Files${i}`, file);
     });
     if (errs.length) {
       return errs.forEach(err => toast.warn(err));
     }
+    formData.append("Files", files);
     setLoading(true);
     const result = await fetchData(
       "User/U_Support/CreateTicketAnswer",
@@ -265,8 +266,8 @@ const Page = props => {
                   <div className="col-12 p-0 rtl content">
                     <a className="user_name">user name USER_NAME</a>
                     <div className="message">
-                      متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام
-                      متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو
+                      متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست
+                      دمو متن پیام متن پیام تست دمو
                     </div>
                   </div>
                 </div>
@@ -298,8 +299,8 @@ const Page = props => {
                   <div className="col-12 p-0 rtl content">
                     <a className="user_name">user name USER_NAME</a>
                     <div className="message">
-                      متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام
-                      متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو
+                      متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست
+                      دمو متن پیام متن پیام تست دمو
                     </div>
                   </div>
                 </div>
@@ -338,14 +339,11 @@ const Page = props => {
         <div className="row fixed-bottom input_text">
           <div className="col-12">
             <div className="row p-3">
-              <textarea
-                type="text"
-                className="form-control col-9"
-                placeholder="متن پیام"
-                ref={textRef}
-                value={content}
-                onChange={e => setContent(e.target.value)}
-              />
+              <textarea type="text" className="form-control col-9" placeholder="متن پیام" ref={textRef} value={content} onChange={e => setContent(e.target.value)} />
+              <input type="file" accept="image/*" ref={fileInput} multiple={true} hidden={true} />
+              <div className="btn btn_main file_upload_btn" onClick={() => fileInput.current.click()}>
+                <FaFileUpload className="font_icon" />
+              </div>
               <div className="col-2 align-self-center">
                 <SubmitButton loading={loading} onClick={sendComment} text="ارسال" className="btn btn-main send_comment" />
               </div>
@@ -363,7 +361,7 @@ Page.getInitialProps = async function(context) {
     {
       method: "POST",
       body: JSON.stringify({
-        ticketStatus: "",
+        ticketStatus: "2",
         parentId: id,
         page: 1,
         pageSize: 10

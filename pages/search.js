@@ -110,7 +110,7 @@ const Page = props => {
   const handleSearchChange = e => {
     setSearchValue(e.current.value);
   };
-  const showFirstCatProductsRow = allCategories.map(cat => <FirstCatProductsRow key={cat.id} id={cat.id} title={cat.titel} />);
+  const showFirstCatProductsRow = allCategories.map(cat => <FirstCatProductsRow key={cat.id} id={cat.id} title={cat.titel} isLogin={true} />);
   // useEffect(() => {
   //   window.addEventListener("scroll", handleScrollSize);
   //   return () => window.removeEventListener("scroll", handleScrollSize);

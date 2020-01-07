@@ -18,7 +18,7 @@ const Nav = dynamic({
   loading: () => <Loading />,
   ssr: true
 });
-const ticket = props => {
+const Ticket = props => {
   const Router = useRouter();
   return (
     <div
@@ -26,7 +26,7 @@ const ticket = props => {
       onClick={() =>
         Router.push({
           pathname: "/ticket",
-          query: { id: "ticketId" }
+          query: { id: props.ticketId }
         })
       }
     >
@@ -39,11 +39,9 @@ const ticket = props => {
         <div className="col-10 p-0">
           <div className="row m-auto p-0 pl-2 justify-content-start">
             <div className="col-10 p-0 rtl content">
-              <div className="subject">موضوع تیکت موضوع مشکل یا مسئله</div>
-              <div className="status ml-2">
-                <span className="badge badge-warning">در انتظار پاسخ</span>
-              </div>
-              <div className="time ml-2">29 دی ماه 1398</div>
+              <div className="subject">{props.subject}</div>
+              <div className="status ml-2">{props.adminAnswered ? <span className="badge badge-success">پاسخ داده شده</span> : <span className="badge badge-warning">در انتظار پاسخ</span>}</div>
+              <div className="time ml-2">{props.insertDateP}</div>
             </div>
           </div>
         </div>
@@ -69,11 +67,23 @@ const Page = props => {
     pauseOnHover: true,
     draggable: true
   });
-  const onSelectFile = e => {
-    if (e.target.files && e.target.files.length > 0) {
-      console.log();
-    }
-  };
+  const showTickets = tickets.map(t => (
+    <Ticket
+      key={t.ticketId}
+      ticketId={t.ticketId}
+      subject={t.subject}
+      content={t.content}
+      insertDateP={t.insertDateP}
+      filesUrl={t.filesUrl}
+      adminAnswered={t.adminAnswered}
+      userAnswered={t.userAnswered}
+      userViewed={t.userViewed}
+      adminViewed={t.adminViewed}
+      senderName={t.senderName}
+      senderId={t.senderId}
+      senderType={t.senderType}
+    />
+  ));
   const addTicket = async () => {
     toast.dismiss();
     const errs = [];
@@ -100,20 +110,25 @@ const Page = props => {
       if (file.size > 2550000) {
         errs.push(`حجم فایل '${file.name}' بیشتر از حد مجاز است، لطفا فایل کم حجم تری انتخاب کنید.`);
       }
-      formData.append(`Files${i}`, file);
+      //formData.append(`Files${i}`, file);
     });
     if (errs.length) {
       return errs.forEach(err => toast.warn(err));
     }
+    formData.append("Files", files);
     setLoading(true);
     const result = await fetchData(
       "User/U_Support/Create",
       {
         method: "POST",
-        body: formData
+        //body: formData
+        body: JSON.stringify({
+          Subject: subject,
+          Content: content,
+          Files: files
+        })
       },
-      props.ctx,
-      true
+      props.ctx
     );
     if (result.isSuccess) {
       setModalShow(false);
@@ -210,7 +225,7 @@ const Page = props => {
           <div className="col-12 mt-2 p-0 rtl d-flex align-items-center">
             <label className="col-4 col-form-label text-left pr-0 pl-0">فایل ضمیمه:</label>
             <div className="col-8 text-center p-0">
-              <input type="file" accept="image/*" onChange={onSelectFile} ref={fileInput} hidden={true} />
+              <input type="file" accept="image/*" multiple={true} ref={fileInput} hidden={true} />
               <div className="btn btn_main file_upload_btn" onClick={() => fileInput.current.click()}>
                 <FaFileUpload className="font_icon" />
               </div>
@@ -225,86 +240,7 @@ const Page = props => {
       </Modal>
       <div className="container pb-5 rtl ticket_page">
         <div className="row pl-1 pr-1 pb-5 mb-5">
-          <div className="col-12 mt-2 p-0 pt-1 ticket_row">
-            <div className="row">
-              <div className="col-2 align-self-center">
-                <a className="ticket_icon">
-                  <MdHeadsetMic className="font_icon" />
-                </a>
-              </div>
-              <div className="col-10 p-0">
-                <div className="row m-auto p-0 pl-2 justify-content-start">
-                  <div className="col-10 p-0 rtl content">
-                    <div className="subject">موضوع تیکت موضوع مشکل یا مسئله</div>
-                    <div className="status ml-2">
-                      <span className="badge badge-warning">در انتظار پاسخ</span>
-                    </div>
-                    <div className="time ml-2">29 دی ماه 1398</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 mt-2 p-0 pt-1 ticket_row">
-            <div className="row">
-              <div className="col-2 align-self-center">
-                <a className="ticket_icon">
-                  <MdHeadsetMic className="font_icon" />
-                </a>
-              </div>
-              <div className="col-10 p-0">
-                <div className="row m-auto p-0 pl-2 justify-content-start">
-                  <div className="col-10 p-0 rtl content">
-                    <div className="subject">موضوع تیکت موضوع مشکل یا مسئله</div>
-                    <div className="status ml-2">
-                      <span className="badge badge-warning">در انتظار پاسخ</span>
-                    </div>
-                    <div className="time ml-2">29 دی ماه 1398</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 mt-2 p-0 pt-1 ticket_row">
-            <div className="row">
-              <div className="col-2 align-self-center">
-                <a className="ticket_icon">
-                  <MdHeadsetMic className="font_icon" />
-                </a>
-              </div>
-              <div className="col-10 p-0">
-                <div className="row m-auto p-0 pl-2 justify-content-start">
-                  <div className="col-10 p-0 rtl content">
-                    <div className="subject">موضوع تیکت موضوع مشکل یا مسئله</div>
-                    <div className="status ml-2">
-                      <span className="badge badge-warning">در انتظار پاسخ</span>
-                    </div>
-                    <div className="time ml-2">29 دی ماه 1398</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 mt-2 p-0 pt-1 ticket_row">
-            <div className="row">
-              <div className="col-2 align-self-center">
-                <a className="ticket_icon">
-                  <MdHeadsetMic className="font_icon" />
-                </a>
-              </div>
-              <div className="col-10 p-0">
-                <div className="row m-auto p-0 pl-2 justify-content-start">
-                  <div className="col-10 p-0 rtl content">
-                    <div className="subject">موضوع تیکت موضوع مشکل یا مسئله</div>
-                    <div className="status ml-2">
-                      <span className="badge badge-warning">در انتظار پاسخ</span>
-                    </div>
-                    <div className="time ml-2">29 دی ماه 1398</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {showTickets}
           {loading && (
             <div className="col-12 mt-2 p-0 user">
               <Loading />

@@ -78,59 +78,7 @@ body {
   }
 }
 .modal-open .modal {
-  z-index: 9999;
-}
-// .modal-body{
-//   minheight: 1000px;
-// }
-// .ReactCrop__crop-selection {
-//   margin: auto;
-//   right: 20%;
-// }
-// ******* Toastify ********
-.Toastify {
-  .Toastify__toast-body,
-  .Toastify__toast {
-    direction: rtl !important;
-    font-family: "IranSans", sans-serif !important;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: right;
-  }
-  .Toastify__toast-container {
-    direction: rtl !important;
-    right: 0 !important;
-    left: initial !important;
-  }
-  .Toastify__progress-bar {
-    right: 0 !important;
-    left: initial !important;
-    transform-origin: right !important;
-  }
-  .Toastify__toast--warning {
-    background: #fea92e;
-  }
-  .Toastify__toast--success {
-    background: #019e06;
-  }
-}
-// ******* Drop Down Menu ********
-.dropDownMenu {
-  .dropdown-toggle,
-  .dropdown-toggle:focus {
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    &::before {
-      display: none !important;
-    }
-  }
-  .dropdown-item:not(.active):focus,
-  .dropdown-item:not(.active):hover {
-    color: none !important;
-    background: none !important;
-  }
+  z-index: 1050;
 }
 // ******* Modal Style ********
 .report_modal,
@@ -204,17 +152,20 @@ body {
     height: 3.2rem;
     border-radius: 10rem;
     transition: all 0.1s ease-in-out;
-    &:hover,&:active{
+    &:hover,
+    &:active {
       font-size: 1.7rem;
-      color:#212121;
+      color: #212121;
       background: #e0e0e0;
     }
   }
-  .add_ticket{
-    input,label,textarea{
+  .add_ticket {
+    input,
+    label,
+    textarea {
       font-size: 0.9rem;
     }
-    ::placeholder{
+    ::placeholder {
       font-size: 0.9rem;
     }
   }
@@ -272,6 +223,58 @@ body {
       border: 0;
       border-radius: 4px;
     }
+  }
+}
+// .modal-body{
+//   minheight: 1000px;
+// }
+// .ReactCrop__crop-selection {
+//   margin: auto;
+//   right: 20%;
+// }
+// ******* Toastify ********
+.Toastify {
+  .Toastify__toast-body,
+  .Toastify__toast {
+    direction: rtl !important;
+    font-family: "IranSans", sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: right;
+  }
+  .Toastify__toast-container {
+    direction: rtl !important;
+    right: 0 !important;
+    left: initial !important;
+  }
+  .Toastify__progress-bar {
+    right: 0 !important;
+    left: initial !important;
+    transform-origin: right !important;
+  }
+  .Toastify__toast--warning {
+    background: #fea92e;
+  }
+  .Toastify__toast--success {
+    background: #019e06;
+  }
+}
+// ******* Drop Down Menu ********
+.dropDownMenu {
+  .dropdown-toggle,
+  .dropdown-toggle:focus {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    &::before {
+      display: none !important;
+    }
+  }
+  .dropdown-item:not(.active):focus,
+  .dropdown-item:not(.active):hover {
+    color: none !important;
+    background: none !important;
   }
 }
 @media (min-width: 1300px) {

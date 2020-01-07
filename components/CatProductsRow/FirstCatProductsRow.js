@@ -70,8 +70,7 @@ const FirstCatProductsRow = props => {
       );
     } else {
       const productsElements = products.map(product => {
-        const productThumbNail =
-          product.pictures[0] != undefined ? `https://api.qarun.ir/${product.pictures[0].thumbNail}` : "/static/img/no-product-image.png";
+        const productThumbNail = product.pictures[0] != undefined ? `https://api.qarun.ir/${product.pictures[0].thumbNail}` : "/static/img/no-product-image.png";
         return (
           <Product
             key={product.id}
@@ -96,11 +95,14 @@ const FirstCatProductsRow = props => {
           <div className="row d-flex justify-content-center rtl pr-1 mb-3 cat_sort">
             <div className="col-12 mt-2 cat_title">
               <h3>{props.title}</h3>
-              {more && (
+              {/* {more && (
                 <Link href={`category/${props.id}`} passHref>
                   <a className="more">همه</a>
                 </Link>
-              )}
+              )} */}
+              <Link href={`categories/${props.id}`} passHref>
+                <a className="more">همه</a>
+              </Link>
             </div>
           </div>
           <div className="row d-flex justify-content-start rtl products">{renderProducts()}</div>

@@ -148,7 +148,16 @@ const Header = props => {
       <div className="container profile_header">
         <div className="row">
           <div className="col-2 pl-4 d-flex">
-            <a className="nav_Icons active" onClick={() => setModalShow(true)}>
+            <a
+              className="nav_Icons active"
+              onClick={() => {
+                if (userName !== undefined && userName !== "" && props.profileData.canInvite === true) {
+                  setModalShow(true);
+                } else {
+                  toast.warn("برای دعوت از دوستان باید اطلاعات نمایه خود را تکمیل نمایید.");
+                }
+              }}
+            >
               <AddUserSvg className="svg_Icons" />
             </a>
           </div>
@@ -165,12 +174,7 @@ const Header = props => {
                 </Link>
               </div>
               <div className="col-12 p-0 rtl d-flex justify-content-between align-items-center">
-                <textarea
-                  value={"خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." + "\n" + `https://qarun.ir/login?user=${userName}`}
-                  readOnly
-                  className="share_text"
-                  ref={textCopy}
-                />
+                <textarea value={"خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." + "\n" + `https://qarun.ir/login?user=${userName}`} readOnly className="share_text" ref={textCopy} />
                 <FaRegCopy className="font_icon copy_icon" onClick={copyText} title="کپی کردن" />
               </div>
             </Modal.Body>
@@ -310,7 +314,7 @@ const Header = props => {
                   props.setView(2);
                 }}
               >
-                <a>تکمیل اطلاعات پروفایل</a>
+                <a>تکمیل اطلاعات نمایه</a>
                 <div className="ml-3 edit_icon">
                   <FirstEditSvg className="svg_icon" />
                 </div>

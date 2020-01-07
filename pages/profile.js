@@ -26,6 +26,11 @@ const EditProfile = dynamic({
   loading: () => <Loading />,
   ssr: true
 });
+const MapComponent = dynamic({
+  loader: () => import("../components/Map/LocationMap2"),
+  loading: () => <Loading />,
+  ssr: false
+});
 function Page(props) {
   const [view, setView] = useState(1);
   const resultData = props.result.data || [];
@@ -39,6 +44,11 @@ function Page(props) {
   let userCategories = props.userCategories.data || [];
   userCategories = [].concat(userCategories, { id: 0, parentId: null, picture: null, thumbNail: null, titel: "همه" }).sort((a, b) => a.id - b.id);
   const [catActive, setCatActive] = useState(userCategories.length > 0 ? userCategories[0].id : null);
+  // Get Current Location If User not setted his location
+  const [lat, setLat] = useState(resultData.lat || 0);
+  const [long, setLong] = useState(resultData.long || 0);
+  const [markPosition, setMarkPosition] = useState([resultData.lat || 0, resultData.long || 0]);
+  const [city, setCity] = useState(null);
   toast.configure({
     position: "top-right",
     autoClose: 5000,
@@ -205,7 +215,7 @@ function Page(props) {
                         pathname: "/add-product"
                       });
                     } else {
-                      toast.warn("برای افزودن محصول باید اطلاعات پروفایل خود را کامل کنید.");
+                      toast.warn("برای افزودن محصول باید اطلاعات نمایه خود را کامل کنید.");
                     }
                   }}
                 >
@@ -214,7 +224,17 @@ function Page(props) {
                   </div>
                   <a className="first_add">افزودن محصول</a>
                 </div>
-                <div className="col-5 p-2 first_add_col" title="دعوت دوستان" onClick={() => setModalShow(true)}>
+                <div
+                  className="col-5 p-2 first_add_col"
+                  title="دعوت دوستان"
+                  onClick={() => {
+                    if (profileData !== null && profileData.userName !== undefined && profileData.userName !== "" && profileData.canInvite === true) {
+                      setModalShow(true);
+                    } else {
+                      toast.warn("برای دعوت از دوستان باید اطلاعات نمایه خود را تکمیل نمایید.");
+                    }
+                  }}
+                >
                   <div className="icon_container">
                     <InviteShare className="svg_icon" />
                   </div>
@@ -235,11 +255,7 @@ function Page(props) {
                   </div>
                   <div className="col-12 p-0 rtl d-flex justify-content-between align-items-center">
                     <textarea
-                      value={
-                        "خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." +
-                          "\n" +
-                          `https://qarun.ir/login?user=${profileData.userName !== undefined ? profileData.userName : ""}`
-                      }
+                      value={"خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." + "\n" + `https://qarun.ir/login?user=${profileData.userName !== undefined ? profileData.userName : ""}`}
                       readOnly
                       className="share_text"
                       ref={textCopy}
@@ -317,7 +333,7 @@ function Page(props) {
                       pathname: "/add-product"
                     });
                   } else {
-                    toast.warn("برای افزودن محصول باید اطلاعات پروفایل خود را کامل کنید.");
+                    toast.warn("برای افزودن محصول باید اطلاعات نمایه خود را کامل کنید.");
                   }
                 }}
               >
@@ -326,7 +342,17 @@ function Page(props) {
                 </div>
                 <a className="first_add">افزودن محصول</a>
               </div>
-              <div className="col-5 p-2 first_add_col" title="دعوت دوستان" onClick={() => setModalShow(true)}>
+              <div
+                className="col-5 p-2 first_add_col"
+                title="دعوت دوستان"
+                onClick={() => {
+                  if (profileData !== null && profileData.userName !== undefined && profileData.userName !== "" && profileData.canInvite === true) {
+                    setModalShow(true);
+                  } else {
+                    toast.warn("برای دعوت از دوستان باید اطلاعات نمایه خود را تکمیل نمایید.");
+                  }
+                }}
+              >
                 <div className="icon_container">
                   <InviteShare className="svg_icon" />
                 </div>
@@ -347,11 +373,7 @@ function Page(props) {
                 </div>
                 <div className="col-12 p-0 rtl d-flex justify-content-between align-items-center">
                   <textarea
-                    value={
-                      "خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." +
-                        "\n" +
-                        `https://qarun.ir/login?user=${profileData.userName !== undefined ? profileData.userName : ""}`
-                    }
+                    value={"خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." + "\n" + `https://qarun.ir/login?user=${profileData.userName !== undefined ? profileData.userName : ""}`}
                     readOnly
                     className="share_text"
                     ref={textCopy}

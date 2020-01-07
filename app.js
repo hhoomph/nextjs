@@ -116,6 +116,23 @@ app
       const queryParams = { id: req.params.id };
       app.render(req, res, actualPage, queryParams);
     });
+    server.get("/categories/manifest.json", (req, res) => {
+      const parsedUrl = parse(req.url, true);
+      const { pathname } = parsedUrl;
+      const filePath = join(__dirname, "public", pathname);
+      app.serveStatic(req, res, filePath);
+    });
+    server.get("/categories/favicon.ico", (req, res) => {
+      const parsedUrl = parse(req.url, true);
+      const { pathname } = parsedUrl;
+      const filePath = join(__dirname, "public", pathname);
+      app.serveStatic(req, res, filePath);
+    });
+    server.get("/categories/:id", (req, res) => {
+      const actualPage = "/categories";
+      const queryParams = { id: req.params.id };
+      app.render(req, res, actualPage, queryParams);
+    });
     server.get("/service-worker.js", (req, res) => {
       const parsedUrl = parse(req.url, true);
       const { pathname } = parsedUrl;

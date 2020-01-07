@@ -13,7 +13,7 @@ function Page(props) {
           <div className="col-12">
             <div className="row d-flex justify-content-start rtl pt-4">
               <div className="col-12 text-center page_title">
-                <h2>درباره قارون</h2>
+                <h2>حریم خصوصی</h2>
                 <hr />
               </div>
               <div className="col-12 mt-3">

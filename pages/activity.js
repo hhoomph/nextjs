@@ -19,7 +19,7 @@ const User = dynamic({
   ssr: true
 });
 const Page = props => {
-  const [activities, setActivities] = useState(props.result.data.model || []);
+  const [activities, setActivities] = useState(props.result.data !== undefined && props.result.data.model !== undefined ? props.result.data.model : []);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(2);
   const [isFetching, setIsFetching] = useState(false);
@@ -85,7 +85,7 @@ const Page = props => {
       typeText = "CommentOnProduct";
       break;
     case 4:
-      messageText = "پاسخ نظرتان " + `"${activities.parentComment}" را داد :` + ` "${activity.comment}".`;
+      messageText = "پاسخ نظرتان " + `"${activity.parentComment}" را داد :` + ` "${activity.comment}".`;
       typeText = "CommentOnComment";
       break;
     case 5:
@@ -118,6 +118,7 @@ const Page = props => {
         name={activity.functorDisplayName}
         userName={activity.functorUserName}
         commentId={activity.commentId}
+        parentComment={activity.parentComment}
         parentCommentId={activity.parentCommentId}
         time={activity.insertDateP}
       />
@@ -130,7 +131,7 @@ const Page = props => {
       <div className="container pb-0 search_component">
         <div className="row p-2 cart_title">
           <div className="col-1 align-self-center pr-2" onClick={() => Router.back()}>
-            <FaArrowLeft className="font_icon back_icon" onClick={console.log("asd")} />
+            <FaArrowLeft className="font_icon back_icon" />
           </div>
           <div className="col-10 p-0 text-center align-self-center">
             <h5 className="mr-0 ml-2 mt-1 page_title">فعالیت ها</h5>

@@ -22,9 +22,14 @@
       line-height: initial;
       float: left;
       display: block;
-      color: #ee944f;
+      color: #757575;
       font-size: 1rem;
       text-decoration: none;
+      transition: all 0.1s ease-in-out;
+      &:hover,&:active{
+        color: #000;
+        font-weight: 600;
+      }
     }
   }
   .cat_sort {

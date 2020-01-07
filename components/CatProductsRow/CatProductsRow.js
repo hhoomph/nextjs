@@ -21,7 +21,6 @@ const CatProductsRow = props => {
         method: "POST",
         body: JSON.stringify({
           filters: sortFilter,
-          categoryId: 1,
           page: 1,
           pageSize: 10
         })
@@ -69,26 +68,6 @@ const CatProductsRow = props => {
       return productsElements;
     }
   };
-  // products.map(product => {
-  //   const productThumbNail = product.pictures[0] != undefined ? `https://api.qarun.ir/${product.pictures[0].thumbNail}` : '/static/img/no-product-image.png';
-  //   if (loading) {
-  //     return <Loading />;
-  //   } else {
-  //     return (
-  //       <Product
-  //         key={product.id}
-  //         id={product.id}
-  //         productName={product.title}
-  //         price={product.price}
-  //         oldPrice={product.lastPrice}
-  //         image={productThumbNail}
-  //         userId={product.sellerUserName}
-  //         sellerAvatar={`https://api.qarun.ir/${product.sellerAvatar}`}
-  //         sellerUserName={product.sellerUserName}
-  //       />
-  //     );
-  //   }
-  // });
   return (
     <div className="container mb-1 cat_product_row">
       <div className="row">
@@ -98,19 +77,13 @@ const CatProductsRow = props => {
             <Sort handleSort={handleSort} />
             <div className="col-12 mt-2 cat_title">
               <h3>اطراف</h3>
-              <Link href={""} passHref>
+              <Link href={`all-around/`} passHref>
                 <a className="more">همه</a>
               </Link>
             </div>
           </div>
           <div className="row d-flex justify-content-start rtl products">
             {renderProducts()}
-            {/* <Product id={1} price={120000} oldPrice={'140000'} image={'product.png'} userId={1} />
-            <Product id={2} price={140000} image={'product3.png'} userId={2} />
-            <Product id={3} price={120000} image={'product2.png'} userId={1} />
-            <Product id={4} price={130000} image={'product.png'} userId={2} />
-            <Product id={5} price={120000} image={'product3.png'} userId={3} />
-            <Product id={6} price={110000} oldPrice={'120000'} image={'product2.png'} userId={2} /> */}
           </div>
         </div>
       </div>
