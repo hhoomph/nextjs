@@ -252,21 +252,75 @@ const Page = props => {
         </div>
       </div>
       <div className="container pb-5 rtl ticket_page">
-        <div className="row pl-1 pr-1 pb-5 mb-5">
-          {/* <User
-            id={1}
-            type={"invite"}
-            image={"/static/img/user.jpg"}
-            followed={false}
-            productImage={"/static/img/product5.jpg"}
-            productId={"1"}
-            message={"متن پیام متن پیام"}
-            name={"نام نمایشی"}
-            userName={"user_name_UserName"}
-            time={"2 هفته"}
-          /> */}
+        <div className="row pb-5 mb-5">
+          <div className="col-12 mt-2 _ticket">
+            <div className="row">
+              <div className="col-2 d-flex justify-content-center align-self-center">
+                <a className="user_img">
+                  <img src="/static/img/user.jpg" />
+                </a>
+              </div>
+              <div className="col-10 pl-0 pr-2">
+                <div className="row m-auto p-0 justify-content-end">
+                  <div className="col-12 p-0 rtl content">
+                    <a className="user_name">user name USER_NAME</a>
+                    <div className="message">
+                      متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام
+                      متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-12 pl-5 mt-2 text-left attach_files">
+                <img className="file" src="/static/img/product.png" />
+                <img className="file" src="/static/img/product2.png" />
+                <img className="file" src="/static/img/product5.jpg" />
+                <img className="file" src="/static/img/product6.jpg" />
+                <img className="file" src="/static/img/user.png" />
+              </div>
+              <div className="col-12 text-center">
+                <div className="time ml-2">29 دی ماه 1398 ساعت 10 و نیم</div>
+              </div>
+              <div className="col-12">
+                <hr />
+              </div>
+            </div>
+          </div>
+          <div className="col-12 mt-2 _ticket _admin">
+            <div className="row">
+              <div className="col-2 d-flex justify-content-center align-self-center">
+                <a className="user_img">
+                  <img src="/static/img/user.jpg" />
+                </a>
+              </div>
+              <div className="col-10">
+                <div className="row m-auto p-0 justify-content-end">
+                  <div className="col-12 p-0 rtl content">
+                    <a className="user_name">user name USER_NAME</a>
+                    <div className="message">
+                      متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام
+                      متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-12 pl-2 mt-2 text-left attach_files">
+                <img className="file" src="/static/img/product.png" />
+                <img className="file" src="/static/img/product2.png" />
+                <img className="file" src="/static/img/product5.jpg" />
+                <img className="file" src="/static/img/product6.jpg" />
+                <img className="file" src="/static/img/user.png" />
+              </div>
+              <div className="col-12 text-center">
+                <div className="time ml-2">29 دی ماه 1398 ساعت 10 و نیم</div>
+              </div>
+              <div className="col-12">
+                <hr />
+              </div>
+            </div>
+          </div>
           {loading2 && (
-            <div className="col-12 mt-2 p-0 user">
+            <div className="col-12 mt-2 p-0 _ticket">
               <Loading />
             </div>
           )}
