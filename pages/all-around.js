@@ -35,7 +35,7 @@ function Page(props) {
       isDisable={product.isDisable}
       price={product.lastPrice}
       oldPrice={product.price}
-      image={product.picture !== undefined && product.picture !== null ? `https://api.qarun.ir/${product.picture}` : "/static/img/no-product-image.png"}
+      image={product.pictures !== undefined && product.pictures[0] !== undefined ? `https://api.qarun.ir/${product.pictures[0].thumbNail}` : "/static/img/no-product-image.png"}
     />
   ));
   const getProducts = async () => {

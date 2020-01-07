@@ -23,8 +23,7 @@ function Page(props) {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
-  const catTitle = allCategories.filter(cat => cat.id === id);
-  //console.log(allCategories, catTitle);
+  const catTitle = allCategories.filter(cat => cat.id == id);
   const productRef = useRef();
   const showProducts = products.map(product => (
     <Product
@@ -38,7 +37,7 @@ function Page(props) {
       isDisable={product.isDisable}
       price={product.lastPrice}
       oldPrice={product.price}
-      image={product.picture !== undefined && product.picture !== null ? `https://api.qarun.ir/${product.picture}` : "/static/img/no-product-image.png"}
+      image={product.pictures !== undefined && product.pictures[0] !== undefined ? `https://api.qarun.ir/${product.pictures[0].thumbNail}` : "/static/img/no-product-image.png"}
     />
   ));
   const getProducts = async () => {
@@ -94,7 +93,7 @@ function Page(props) {
             <FaArrowLeft className="font_icon" onClick={() => Router.back()} />
           </div>
           <div className="col-10 text-right align-self-center">
-            <h5 className="mr-2 ml-2 mt-1 page_title">{catTitle !== undefined && catTitle.titel !== undefined ? catTitle : " "}</h5>
+            <h5 className="mr-2 ml-2 mt-1 page_title">{catTitle !== undefined && catTitle[0]["titel"] !== undefined ? catTitle[0]["titel"] : " "}</h5>
           </div>
         </div>
       </div>
