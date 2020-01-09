@@ -6,6 +6,7 @@ import Auth from "../components/Auth/Auth";
 import Router from "next/router";
 import fetchData from "../utils/fetchData";
 import { FaArrowRight, FaArrowLeft, FaSearch } from "react-icons/fa";
+import { FiChevronRight } from "react-icons/fi";
 import { numberSeparator, removeSeparator } from "../utils/tools";
 import "../scss/components/searchComponent.scss";
 const Nav = dynamic({
@@ -128,13 +129,13 @@ const Page = props => {
   return (
     <>
       <Nav />
-      <div className="container pb-0 search_component">
-        <div className="row p-2 cart_title">
-          <div className="col-1 align-self-center pr-2" onClick={() => Router.back()}>
-            <FaArrowLeft className="font_icon back_icon" />
-          </div>
+      <div className="container pt-2 pb-2 pr-0 pl-0 search_component">
+        <div className="row cart_title">
           <div className="col-10 p-0 text-center align-self-center">
-            <h5 className="mr-0 ml-2 mt-1 page_title">فعالیت ها</h5>
+            <h6 className="ml-5 pl-2 mt-1 page_title">فعالیت ها</h6>
+          </div>
+          <div className="col-1 text-right align-self-center pr-0" onClick={() => Router.back()}>
+            <FiChevronRight className="font_icon back_icon" />
           </div>
         </div>
       </div>

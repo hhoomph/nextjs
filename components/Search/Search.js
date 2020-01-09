@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Loading from "../Loader/Loader";
 import fetchData from "../../utils/fetchData";
 import { FaArrowRight, FaArrowLeft, FaSearch } from "react-icons/fa";
+import { FiChevronRight } from "react-icons/fi";
 import { numberSeparator, removeSeparator } from "../../utils/tools";
 import "../../scss/components/searchComponent.scss";
 import { async } from "q";
@@ -80,21 +81,15 @@ const Header = props => {
   useEffect(() => {
     handleSearch();
   }, [search, filters]);
+  useEffect(() => {
+    searchInput.current.focus();
+  }, []);
   const showResult = searchResult.map(res => {
     const img = res.avatar !== null ? `https://api.qarun.ir/${res.avatar}` : "/static/img/no-product-image.png";
     if (res.userId !== null) {
       return <User key={res.userId + res.userName} id={res.userId} image={img} name={res.displayName} userName={res.userName} price={""} />;
     } else {
-      return (
-        <Product
-          key={res.id + res.displayName}
-          id={res.id}
-          image={img}
-          name={res.displayName || ""}
-          userName={res.userName}
-          price={numberSeparator(res.lastPrice)}
-        />
-      );
+      return <Product key={res.productid + res.displayName} id={res.productid} image={img} name={res.userName || ""} userName={res.userName} price={numberSeparator(res.lastPrice)} />;
     }
   });
   return (
@@ -102,7 +97,7 @@ const Header = props => {
       <div className="container pb-0 map_header search_component">
         <div className="row">
           <div className="col-12 d-flex rtl align-items-center flex-row-reverse">
-            <FaArrowLeft className="font_icon search_icon" onClick={() => props.setView(1)} />
+            
             <input
               type="text"
               value={search}
@@ -114,6 +109,7 @@ const Header = props => {
               ref={searchInput}
               placeholder="جستجو"
             />
+            <FiChevronRight className="font_icon back_icon" onClick={() => props.setView(1)} />
           </div>
           <div className="col-12 p-0">
             <ul className="nav d-flex ltr align-items-center flex-row-reverse filters">{showFilters}</ul>
@@ -122,14 +118,6 @@ const Header = props => {
       </div>
       <div className="container mt-5 pt-5 rtl search_result">
         <div className="row pl-1 pr-1">
-          {/* <Product id={1} image={'/static/img/product5.jpg'} name={'کشمش پلویی نام محصول'} userName={''} price={numberSeparator(150000)} />
-          <User id={2} image={'/static/img/user.png'} name={'نام نمایشی'} userName={'user_name_UserName'} price={``} />
-          <Product id={1} image={'/static/img/product5.jpg'} name={'کشمش پلویی نام محصول'} userName={''} price={numberSeparator(150000)} />
-          <User id={2} image={'/static/img/user.png'} name={'نام نمایشی'} userName={'user_name_UserName'} price={``} />
-          <Product id={1} image={'/static/img/product5.jpg'} name={'کشمش پلویی نام محصول'} userName={''} price={numberSeparator(150000)} />
-          <User id={2} image={'/static/img/user.png'} name={'نام نمایشی'} userName={'user_name_UserName'} price={``} />
-          <Product id={1} image={'/static/img/product5.jpg'} name={'کشمش پلویی نام محصول'} userName={''} price={numberSeparator(150000)} />
-          <User id={2} image={'/static/img/user.png'} name={'نام نمایشی'} userName={'user_name_UserName'} price={``} /> */}
           {showResult.length > 0 ? (
             showResult
           ) : (

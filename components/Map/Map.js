@@ -56,7 +56,7 @@ const MapComponent = props => {
   const [currentLocationClass, setCurrentLocationClass] = useState("current_location");
   const markRef = useRef();
   const mapRef = useRef();
-  const activeUser = props.activeUser || { id: 0, lat: 34.635059, long: 50.880823 };
+  const activeUser = props.activeUser;
   const users = props.users || [];
   useEffect(() => {
     if (props.searchValue != "" && props.searchValue.length >= 2) {
@@ -190,7 +190,7 @@ const MapComponent = props => {
   };
   const showUsers = users.map(user => {
     const userImg = user.userAvatar !== null ? `https://api.qarun.ir/${user.userAvatar}` : "/static/img/no-userimage.svg";
-    if (user.id === activeUser.id) {
+    if (user.id == activeUser.id) {
       return (
         <Marker position={[user.lat, user.long]} icon={myIcon} draggable={false} key={user.id} onClick={() =>
           Router.push({
@@ -245,4 +245,4 @@ const MapComponent = props => {
     </div>
   );
 };
-export default memo(MapComponent);
+export default MapComponent;

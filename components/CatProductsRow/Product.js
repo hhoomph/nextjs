@@ -34,21 +34,23 @@ const Product = props => {
   return (
     <div className="col-4 col-lg-2 product">
       <div className="product_frame">
+        <Link href={`/user/${props.sellerUserName}`} passHref>
+          <a className="product_user text-truncate">
+            {props.sellerUserName}
+            <img src={props.sellerAvatar} alt={props.sellerUserName} className="product_img" />
+          </a>
+        </Link>
         <Link href={`/product/${props.id}`} as={`/product/${props.id}/${props.productName.trim().replace(/ /g, "-")}`} passHref>
           <a className="product_link">
             <img src={props.image} alt={props.productName} className="product_img" />
           </a>
         </Link>
-        <div className="product_basket" id={props.id} onClick={addToCart}>
+        {/* <div className="product_basket" id={props.id} onClick={addToCart}>
           <p>سبد خرید</p>
           <FaShoppingBasket className="svg_Icons" />
-        </div>
-        <Link href={`/user/${props.sellerUserName}`} passHref>
-          <a className="product_user">
-            <img src={props.sellerAvatar} alt={props.sellerUserName} className="product_img" />
-          </a>
-        </Link>
-        <div className="product_text mb-1">
+        </div> */}
+        <div className="product_text mb-1 p-0">
+          <p className="text-truncate">{props.productName}</p>
           <p>
             <span className="product_price">{numberSeparator(props.price)} </span>
             <span className="product_currency">تومان</span>

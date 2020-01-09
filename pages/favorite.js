@@ -8,6 +8,7 @@ import Product from "../components/Profile/product";
 import Auth from "../components/Auth/Auth";
 import fetchData from "../utils/fetchData";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import { FiChevronRight } from "react-icons/fi";
 import "../scss/components/favoritePage.scss";
 const User = dynamic({
   loader: () => import("../components/Friend/User"),
@@ -53,19 +54,6 @@ function Page(props) {
       props.ctx
     );
     if (result !== undefined && result.isSuccess) {
-      // let newProducts = result.data.model || [];
-      // const p = favorites.concat(newProducts);
-      // setFavorites(p);
-      // // Remove duplicate products in array with productId
-      // const uniqeResult = [];
-      // const map = new Map();
-      // for (const item of p) {
-      //   if (!map.has(item.productId)) {
-      //     map.set(item.productId, true); // set any value to Map
-      //     uniqeResult.push(item);
-      //   }
-      // }
-      //
       if (page === 1) {
         setFavorites(result.data.model);
       } else {
@@ -99,11 +87,12 @@ function Page(props) {
       <Nav />
       <div className="container favorite_title">
         <div className="row p-2 cart_title">
-          <div className="col-2 text-left align-self-center">
-            <FaArrowLeft className="font_icon" onClick={() => Router.back()} />
+          
+          <div className="col-10 text-center align-self-center">
+            <h6 className="ml-5 pl-3 mt-1 page_title">علاقه مندی ها</h6>
           </div>
-          <div className="col-10 text-right align-self-center">
-            <h5 className="mr-2 ml-2 mt-1 page_title">علاقه مندی ها</h5>
+          <div className="col-2 text-right align-self-center pr-1">
+            <FiChevronRight className="font_icon" onClick={() => Router.back()} />
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import Link from "../Link";
 import Router from "next/router";
 import fetchData from "../../utils/fetchData";
 import { FaShareAlt, FaRegCopy, FaUsers } from "react-icons/fa";
-import { IoMdMenu } from "react-icons/io";
+import { IoIosMenu } from "react-icons/io";
 import { TiTickOutline } from "react-icons/ti";
 import { ReactComponent as AddUserSvg } from "../../public/static/svg/add-user.svg";
 import { ReactComponent as PlusSvg } from "../../public/static/svg/plus.svg";
@@ -215,7 +215,7 @@ const Header = props => {
           </Modal>
           <div className="col-10 pr-4 d-flex justify-content-end">
             <a className={`nav_Icons ${isOpen ? "is_open_toggle" : "toggle"}`} onClick={toggleSideBar}>
-              <IoMdMenu className="font_icon sidebar_toggle" />
+              <IoIosMenu className="font_icon sidebar_toggle" />
             </a>
           </div>
         </div>

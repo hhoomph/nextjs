@@ -3,7 +3,7 @@
   top: 0;
   border-bottom: 1px solid #e0e0e0;
   .page_title {
-    text-align: right;
+    text-align: center;
     font-weight: 600;
   }
   ul.filters {
@@ -22,10 +22,10 @@
     }
   }
   .back_icon {
-    font-size: 1.2rem;
+    font-size: 1.7rem !important;
     cursor: pointer;
     transition: all 0.2s ease-in;
-    float: right;
+    //float: right;
     color: #333;
     &:hover {
       color: #5e5e5e;

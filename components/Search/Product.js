@@ -12,7 +12,7 @@ const Product = props => {
       </Link>
       <div className="_txt">
         <FaTimes className="close" onClick={() => setHide(true)} />
-        <Link href={`/product/${props.id}`} as={`/product/${props.name}/${props.id}`} passHref>
+        <Link href={`/product/${props.id}`} as={`/product/${props.id}/${props.name.trim().replace(/ /g, "-")}`} passHref>
           <a className="name">{props.name}</a>
         </Link>
         <div className="price">
