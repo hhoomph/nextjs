@@ -104,8 +104,13 @@ const ProductRow = props => {
           )}
         </div>
         <div className="col-12 p-1 d-flex">
+          {props.productDiscount > 0 && (
+            <div className="_product_discount">
+              تخفیف : {numberSeparator(props.productDiscount)} <span> تومان </span>
+            </div>
+          )}
           <div className="product_price">
-            {numberSeparator(props.productPrice)} <span> تومان </span>
+            {numberSeparator(props.productPrice - props.productDiscount)} <span> تومان </span>
           </div>
           {type === 1 && (
             <div className="product_quantity">

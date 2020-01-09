@@ -24,7 +24,7 @@ import "../scss/components/productPage.scss";
 import { setTimeout } from "core-js";
 function Page(props) {
   const productData = props.result.data || [];
-  //console.log(productData);
+  console.log(productData);
   const Router = useRouter();
   //const { productId } = Router.query;
   const productId = Router.query.id;
@@ -320,3 +320,4 @@ Page.getInitialProps = async function(context) {
   return { result, id };
 };
 export default Auth(Page);
+//export default Page;

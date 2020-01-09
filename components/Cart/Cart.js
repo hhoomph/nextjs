@@ -8,6 +8,8 @@ import { FaTimesCircle, FaChevronUp, FaChevronDown } from "react-icons/fa";
 import { IoMdCall } from "react-icons/io";
 import SubmitButton from "../Button/SubmitButton";
 import { ToastContainer, toast } from "react-toastify";
+import RRS from "react-responsive-select";
+import { Modal } from "react-bootstrap";
 import "../../scss/components/cart.scss";
 const ProductRow = dynamic({
   loader: () => import("./ProductRow"),
@@ -21,6 +23,8 @@ const Cart = props => {
   const [loading, setLoading] = useState(false);
   const [call, setCall] = useState(false);
   const { cartData } = props;
+  const [modalShow, setModalShow] = useState(false);
+  const [cancelReason, setCancelReason] = useState(null);
   toast.configure({
     position: "top-right",
     autoClose: 5000,
@@ -39,6 +43,7 @@ const Cart = props => {
           productName={product.productTitle}
           productImage={product.pictures[0].thumbNail}
           productPrice={product.productPrice}
+          productDiscount={product.productDiscount}
           shopingCartId={product.id}
           productQuantity={product.count}
           setLoading={props.setLoading}
@@ -52,7 +57,9 @@ const Cart = props => {
           productId={product.id}
           productName={product.title}
           productImage={product.pictures[0].thumbNail}
-          productPrice={product.lastPrice}
+          // productPrice={product.lastPrice}
+          productPrice={product.price}
+          productDiscount={product.discount}
           shopingCartId={product.id}
           productQuantity={product.count}
           setLoading={props.setLoading}
@@ -66,7 +73,9 @@ const Cart = props => {
           productId={product.id}
           productName={product.title}
           productImage={product.pictures[0].thumbNail}
-          productPrice={product.lastPrice}
+          // productPrice={product.lastPrice}
+          productPrice={product.price}
+          productDiscount={product.discount}
           shopingCartId={product.id}
           productQuantity={product.count}
           setLoading={props.setLoading}
@@ -123,23 +132,39 @@ const Cart = props => {
     }
   };
   const cancelOrder = async () => {
-    const result = await fetchData(
-      `User/U_Order/CanceleOrder?orderChildId=${props.id}`,
-      {
-        method: "GET"
-      },
-      props.ctx
-    );
-    if (result !== undefined && result.isSuccess) {
-      if (result.message != undefined) {
-        toast.success(result.message);
-      } else {
-        toast.success("سفارش با موفقیت لغو شد.");
+    // const result = await fetchData(
+    //   `User/U_Order/CanceleOrder?orderChildId=${props.id}`,
+    //   {
+    //     method: "GET"
+    //   },
+    //   props.ctx
+    // );
+    if (cancelReason !== null) {
+      const result = await fetchData(
+        "User/U_Order/DisapprovedDeliveryOrder",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            orderChildId: props.id,
+            reason4DisapprovedDelivery: cancelReason
+          })
+        },
+        props.ctx
+      );
+      if (result !== undefined && result.isSuccess) {
+        if (result.message != undefined) {
+          toast.success(result.message);
+        } else {
+          toast.success("سفارش با موفقیت لغو شد.");
+        }
+        setModalShow(false);
+      } else if (result !== undefined && result.message != undefined) {
+        toast.warn(result.message);
+      } else if (result !== undefined && result.error != undefined) {
+        toast.error(result.error);
       }
-    } else if (result !== undefined && result.message != undefined) {
-      toast.warn(result.message);
-    } else if (result !== undefined && result.error != undefined) {
-      toast.error(result.error);
+    } else {
+      toast.warn("لطفا دلیل لغو سفارش را مشخص کنید.");
     }
   };
   return (
@@ -153,7 +178,25 @@ const Cart = props => {
           <img src={props.sellerAvatar} className="userImage" />
           {type !== 1 && (
             <div className="col-12 p-0 pr-5 text-center d-block " style={{ margin: "auto", marginTop: "-10px" }}>
-              <div className="badge badge-warning">{props.pOrderStatus}</div>
+              {props.pOrderStatus == "درانتظار تأیید فروشنده" ? (
+                <div className="badge badge-warning">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "درانتظار پرداخت" ? (
+                <div className="badge bg-amber">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "ارسال شده" || props.pOrderStatus == "درحال ارسال" ? (
+                <div className="badge bg-blue">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "عدم تأیید فروشنده" ? (
+                <div className="badge bg-brown">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "لغو شده توسط خریدار" ? (
+                <div className="badge bg-pink">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "عدم تحویل" ? (
+                <div className="badge bg-red">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "تحویل شده" ? (
+                <div className="badge bg-green">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "بازگشتی" ? (
+                <div className="badge bg-purple">{props.pOrderStatus}</div>
+              ) : (
+                <div className="badge badge-warning">{props.pOrderStatus}</div>
+              )}
             </div>
           )}
         </div>
@@ -168,7 +211,53 @@ const Cart = props => {
           <a className="tell_call" title="تماس با فروشنده" href={`tel:${props.sellerPhoneNumber}`} onClick={changeCall}>
             <IoMdCall className="font_icon" />
           </a>
-          {call && <SubmitButton loading={loading} onClick={cancelOrder} text="لغو سفارش" className="d-inline-block cancel" />}
+          {call && <SubmitButton loading={loading} onClick={() => setModalShow(true)} text="لغو سفارش" className="d-inline-block cancel" />}
+          {/* Cancel Modal */}
+          <Modal onHide={() => setModalShow(false)} show={modalShow} size="xl" scrollable className="share_modal reason_modal">
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">لغو سفارش</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="col-12 p-0 rtl d-flex">
+                <form className="reasonForm">
+                  <div className="col-12 p-0">
+                    <p>لطفا دلیل لغو سفارش خود را مشخص کنید : </p>
+                  </div>
+                  <div className="form-group row">
+                    <div className="col-12">
+                      <label className={`${cancelReason === "None" ? " active" : ""}`} onClick={e => setCancelReason("None")}>
+                        انصراف از خرید
+                      </label>
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <div className="col-12">
+                      <label className={`${cancelReason === "IHaveNotDeliveredAnything" ? " active" : ""}`} onClick={e => setCancelReason("IHaveNotDeliveredAnything")}>
+                        تاخیر در ارسال کالا
+                      </label>
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <div className="col-12">
+                      <label className={`${cancelReason === "DeliveredProductsAreDefective" ? " active" : ""}`} onClick={e => setCancelReason("DeliveredProductsAreDefective")}>
+                        کالای تحویل شده معیوب است
+                      </label>
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <div className="col-12">
+                      <label className={`${cancelReason === "ProductIsInConflictWithTheImage" ? " active" : ""}`} onClick={e => setCancelReason("ProductIsInConflictWithTheImage")}>
+                        کالا با تصویر سایت مغایرت دارد
+                      </label>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </Modal.Body>
+            <Modal.Footer className="justify-content-center">
+              <SubmitButton loading={loading} onClick={cancelOrder} text="لغو سفارش" className="d-inline-block btn-main rtl cancel"></SubmitButton>
+            </Modal.Footer>
+          </Modal>
         </div>
       )}
       {type === 2 && props.pOrderStatus === "درانتظار پرداخت" && props.orderPaymentType === 0 && (

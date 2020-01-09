@@ -26,11 +26,6 @@ const EditProfile = dynamic({
   loading: () => <Loading />,
   ssr: true
 });
-const MapComponent = dynamic({
-  loader: () => import("../components/Map/LocationMap2"),
-  loading: () => <Loading />,
-  ssr: false
-});
 function Page(props) {
   const [view, setView] = useState(1);
   const resultData = props.result.data || [];
@@ -47,8 +42,7 @@ function Page(props) {
   // Get Current Location If User not setted his location
   const [lat, setLat] = useState(resultData.lat || 0);
   const [long, setLong] = useState(resultData.long || 0);
-  const [markPosition, setMarkPosition] = useState([resultData.lat || 0, resultData.long || 0]);
-  const [city, setCity] = useState(null);
+  const [cityId, setCityId] = useState(null);
   toast.configure({
     position: "top-right",
     autoClose: 5000,
@@ -97,7 +91,12 @@ function Page(props) {
       props.ctx
     );
     if (result !== undefined && result.isSuccess) {
-      userProductsDispatch({ type: "add", payload: result.data.model });
+      if (page === 1) {
+        userProductsDispatch({ type: "refresh", payload: [] });
+        userProductsDispatch({ type: "refresh", payload: result.data.model });
+      } else {
+        userProductsDispatch({ type: "add", payload: result.data.model });
+      }
       setPage(page + 1);
       if (result.data.model.length >= 6) {
         setTimeout(() => setIsFetching(false), 200);
@@ -138,6 +137,44 @@ function Page(props) {
     }
     setLoading(false);
   };
+  // geolocation Options
+  const geoOptions = {
+    enableHighAccuracy: true,
+    maximumAge: 30000,
+    timeout: 10000
+  };
+  const getLocation = async () => {
+    /*
+     * Get Current Location With Direct web Api
+     */
+    if (navigator.geolocation) {
+      await navigator.geolocation.getCurrentPosition(showPosition, errorGetPosition, geoOptions);
+    } else {
+      await console.log("Geolocation is not supported by this browser.");
+    }
+  };
+  const showPosition = async position => {
+    setLat(position.coords.latitude);
+    setLong(position.coords.longitude);
+    const result = await fetchData(
+      "User/U_Account/SetLocation",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          lat: position.coords.latitude,
+          long: position.coords.longitude,
+          cityId: null
+        })
+      },
+      props.ctx
+    );
+    if (result.isSuccess) {
+      console.log("location Updated");
+    }
+  };
+  const errorGetPosition = err => {
+    console.warn(`Geolocation ERROR(${err.code}): ${err.message}`);
+  };
   function handleScroll() {
     if (window.innerHeight + document.documentElement.scrollTop + 100 < document.documentElement.offsetHeight || isFetching) return;
     setIsFetching(true);
@@ -152,6 +189,9 @@ function Page(props) {
   };
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
+    if (lat == 0 || long == 0) {
+      getLocation();
+    }
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   useEffect(() => {

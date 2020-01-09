@@ -97,6 +97,11 @@ function Page(props) {
     if (Res !== undefined && Res.isSuccess) {
       // setOrderId(Res.data.orderId);
       // setView(2);
+      if (paymentMethod == 3) {
+        toast.success("سفارش شما با موفقیت ثبت شد، لطفا مبلغ سفارش را هنگام تحویل به فروشنده پرداخت کنید.");
+      } else if (paymentMethod == 2) {
+        toast.success("سفارش شما با موفقیت ثبت شد، مبلغ سفارش پس از تحویل از کیف پول شما کسر خواهد شد.");
+      }
       Router.push("/cart");
     } else if (Res !== undefined && Res.message != undefined) {
       toast.warn(Res.message);

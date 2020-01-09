@@ -31,8 +31,7 @@ const EditProfile = props => {
   const [lat, setLat] = useState(profileData.lat || 0);
   const [long, setLong] = useState(profileData.long || 0);
   const [markPosition, setMarkPosition] = useState([profileData.lat || 0, profileData.long || 0]);
-  const [city, setCity] = useState(null);
-  const [state, setState] = useState(null);
+  const [cityId, setCityId] = useState(null);
   const [draggable, setDraggable] = useState(false);
   const _addresses = profileData.addresses !== undefined && profileData.addresses.length > 0 ? profileData.addresses : [];
   const _address = _addresses.length > 0 ? _addresses[_addresses.length - 1] : "";
@@ -356,7 +355,7 @@ const EditProfile = props => {
             </div>
             <div className="mb-4 map_part">
               <label>موقعیت روی نقشه</label>
-              <LocationMap markPosition={markPosition} setMarkPosition={setMarkPosition} draggable={draggable} setCity={setCity} setState={setState} />
+              <LocationMap markPosition={markPosition} setMarkPosition={setMarkPosition} draggable={draggable} setCityId={setCityId} />
               <br />
               <a
                 className="setLocation"

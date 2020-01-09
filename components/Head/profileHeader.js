@@ -141,7 +141,9 @@ const Header = props => {
       toast.warn("لطفا یک گزینه محدودیت فروش را انتخاب کنید.");
     }
   };
-  const [showFirstEdit, setShowFirstEdit] = useState(!props.profileData.canInvite || false);
+  const [showFirstEdit, setShowFirstEdit] = useState(
+    props.profileData !== null && props.profileData.userName !== undefined && props.profileData.userName !== "" && props.profileData.userName !== null ? false : true
+  );
   return (
     <>
       <SideBar toggle={toggleSideBar} isOpen={isOpen} setIsOpen={setIsOpen} userName={userName} setView={props.setView} setLimitModalShow={setLimitModalShow} />

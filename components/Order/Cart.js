@@ -61,7 +61,25 @@ const Cart = props => {
             <img src={props.sellerAvatar} className="col-3 userImage" />
           </div>
           <div className="col-12 m-auto rtl p-0 pb-1 text-center">
-            <div className="badge badge-warning">{props.pOrderStatus}</div>
+            {props.pOrderStatus == "درانتظار تأیید فروشنده" ? (
+              <div className="badge badge-warning">{props.pOrderStatus}</div>
+            ) : props.pOrderStatus == "درانتظار پرداخت" ? (
+              <div className="badge bg-amber">{props.pOrderStatus}</div>
+            ) : props.pOrderStatus == "ارسال شده" || props.pOrderStatus == "درحال ارسال" ? (
+              <div className="badge bg-blue">{props.pOrderStatus}</div>
+            ) : props.pOrderStatus == "عدم تأیید فروشنده" ? (
+              <div className="badge bg-brown">{props.pOrderStatus}</div>
+            ) : props.pOrderStatus == "لغو شده توسط خریدار" ? (
+              <div className="badge bg-pink">{props.pOrderStatus}</div>
+            ) : props.pOrderStatus == "عدم تحویل" ? (
+              <div className="badge bg-red">{props.pOrderStatus}</div>
+            ) : props.pOrderStatus == "تحویل شده" ? (
+              <div className="badge bg-green">{props.pOrderStatus}</div>
+            ) : props.pOrderStatus == "بازگشتی" ? (
+              <div className="badge bg-purple">{props.pOrderStatus}</div>
+            ) : (
+              <div className="badge badge-warning">{props.pOrderStatus}</div>
+            )}
           </div>
         </div>
       </div>
@@ -125,7 +143,25 @@ const Cart = props => {
             <img src={props.sellerAvatar} className="col-3 userImage" />
           </div>
           <div className="col-12 m-auto rtl p-0 pb-1 text-center">
-            <div className="badge badge-warning">{props.pOrderStatus}</div>
+            {props.pOrderStatus == "درانتظار تأیید فروشنده" ? (
+              <div className="badge badge-warning">{props.pOrderStatus}</div>
+            ) : props.pOrderStatus == "درانتظار پرداخت" ? (
+              <div className="badge bg-amber">{props.pOrderStatus}</div>
+            ) : props.pOrderStatus == "ارسال شده" ? (
+              <div className="badge bg-blue">{props.pOrderStatus}</div>
+            ) : props.pOrderStatus == "عدم تأیید فروشنده" ? (
+              <div className="badge bg-brown">{props.pOrderStatus}</div>
+            ) : props.pOrderStatus == "لغو شده توسط خریدار" ? (
+              <div className="badge bg-pink">{props.pOrderStatus}</div>
+            ) : props.pOrderStatus == "عدم تحویل" ? (
+              <div className="badge bg-red">{props.pOrderStatus}</div>
+            ) : props.pOrderStatus == "تحویل شده" ? (
+              <div className="badge bg-green">{props.pOrderStatus}</div>
+            ) : props.pOrderStatus == "بازگشتی" ? (
+              <div className="badge bg-purple">{props.pOrderStatus}</div>
+            ) : (
+              <div className="badge badge-warning">{props.pOrderStatus}</div>
+            )}
           </div>
         </div>
       </div>

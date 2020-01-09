@@ -96,6 +96,7 @@ body {
   }
   .modal-body {
     font-size: 0.95rem;
+    min-height: 35vh;
   }
   .invite_info {
     text-align: justify;
@@ -276,6 +277,29 @@ body {
     color: none !important;
     background: none !important;
   }
+}
+// *********** Background Colors ***********
+.bg-amber {
+  background-color: #FFC107 !important;
+  color: #000 !important;
+}
+.bg-blue {
+  background-color: #2196F3 !important;
+}
+.bg-brown {
+  background-color: #795548 !important;
+}
+.bg-pink {
+  background-color: #E91E63 !important;
+}
+.bg-red {
+  background-color: #F44336 !important;
+}
+.bg-green {
+  background-color: #4CAF50 !important;
+}
+.bg-purple {
+  background-color: #9C27B0 !important;
 }
 @media (min-width: 1300px) {
   .container {

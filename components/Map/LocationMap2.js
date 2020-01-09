@@ -35,7 +35,7 @@ const placeholderIcon = new L.Icon({
 });
 const MapComponent = props => {
   //const [markPosition, setMarkPosition] = useState(props.laLong);
-  const { markPosition, setMarkPosition, draggable, setCity, setState } = props;
+  const { markPosition, setMarkPosition, draggable, setCityId } = props;
   const [searchResult, setSearchResult] = useState([]);
   const [loadingGetLocation, setLoadingGetLocation] = useState("");
   const [searchValue, setSearchValue] = useState("");
@@ -57,18 +57,20 @@ const MapComponent = props => {
   const showSearchResult = () => {
     return searchResult.length >= 1 ? (
       <div className="location_search_results">
-        {searchResult.map(v => (
-          <a
-            key={v.raw.place_id}
-            title={v.label}
-            onClick={() => {
-              setMarkPosition([v.y, v.x]);
-              setSearchResult([]);
-            }}
-          >
-            {v.label}
-          </a>
-        ))}
+        <div className="search_res_wrapper">
+          {searchResult.map(v => (
+            <a
+              key={v.raw.place_id}
+              title={v.label}
+              onClick={() => {
+                setMarkPosition([v.y, v.x]);
+                setSearchResult([]);
+              }}
+            >
+              {v.label}
+            </a>
+          ))}
+        </div>
       </div>
     ) : null;
   };
@@ -83,9 +85,7 @@ const MapComponent = props => {
       map.setView(convertLatlngToArray(latlng));
       // Get City Name From Lat & Long (https://nominatim.openstreetmap.org)
       const res = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${convertLatlngToArray(latlng)[0]}&lon=${
-          convertLatlngToArray(latlng)[1]
-        }&zoom=10&addressdetails=1&extratags=1`,
+        `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${convertLatlngToArray(latlng)[0]}&lon=${convertLatlngToArray(latlng)[1]}&zoom=10&addressdetails=1&extratags=1`,
         {
           method: "GET"
           //credentials: 'include'
@@ -93,12 +93,16 @@ const MapComponent = props => {
       );
       if (res !== undefined && res.ok) {
         const result = await res.json();
+        let cityName = null;
+        let cityState = null;
         if (result !== undefined && result.name !== undefined) {
-          setCity(result.name);
+          cityName = result.name;
+          setCityId(result.name);
         }
         if (result !== undefined && result.address !== undefined && result.address.state !== undefined) {
-          setState(result.address.state.replace("استان ", ""));
+          cityState = result.address.state.replace("استان ", "");
         }
+        console.log(cityName, cityState);
       } else {
         // network error
       }
