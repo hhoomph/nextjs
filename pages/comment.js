@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import fetchData from "../utils/fetchData";
 import SubmitButton from "../components/Button/SubmitButton";
 import { FaArrowRight, FaArrowLeft, FaTimes } from "react-icons/fa";
+import { FiChevronRight } from "react-icons/fi";
 import { numberSeparator, removeSeparator } from "../utils/tools";
 import { ToastContainer, toast } from "react-toastify";
 import "../scss/components/commentPage.scss";
@@ -189,13 +190,13 @@ const Page = props => {
   return (
     <>
       <Nav />
-      <div className="container pb-0 pr-0 comment_head">
+      <div className="container pb-0 comment_head">
         <div className="row p-2 cart_title">
-          <div className="col-1 align-self-center pr-2" onClick={() => Router.back()}>
-            <FaArrowLeft className="font_icon back_icon" />
-          </div>
           <div className="col-10 p-0 text-center align-self-center">
-            <h5 className="mr-0 ml-2 mt-1 page_title">نظرات</h5>
+            <h5 className="ml-5 pl-3 mt-1 page_title">نظرات</h5>
+          </div>
+          <div className="col-2 text-right align-self-center pr-1" onClick={() => Router.back()}>
+            <FiChevronRight className="font_icon back_icon" />
           </div>
         </div>
       </div>
@@ -233,14 +234,7 @@ const Page = props => {
         <div className="row fixed-bottom input_text">
           <div className="col-12">
             <div className="row p-3">
-              <textarea
-                type="text"
-                className="form-control col-9"
-                placeholder="متن نظر"
-                ref={textRef}
-                value={message}
-                onChange={e => setMessage(e.target.value)}
-              />
+              <textarea type="text" className="form-control col-9" placeholder="متن نظر" ref={textRef} value={message} onChange={e => setMessage(e.target.value)} />
               <div className="col-2 align-self-center">
                 <SubmitButton loading={loading} onClick={sendComment} text="ارسال" className="btn btn-main send_comment" />
               </div>

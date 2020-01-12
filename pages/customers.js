@@ -7,6 +7,7 @@ import ProfileHeader from "../components/Head/profileHeader";
 import Product from "../components/Profile/product";
 import Auth from "../components/Auth/Auth";
 import fetchData from "../utils/fetchData";
+import { FiChevronRight } from "react-icons/fi";
 import "../scss/components/friends.scss";
 const User = dynamic({
   loader: () => import("../components/Friend/User"),

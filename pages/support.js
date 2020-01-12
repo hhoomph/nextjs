@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import fetchData from "../utils/fetchData";
 import SubmitButton from "../components/Button/SubmitButton";
 import { FaArrowLeft, FaPlusCircle, FaFileUpload } from "react-icons/fa";
+import { FiChevronRight } from "react-icons/fi";
 import { MdAddBox } from "react-icons/md";
 import { numberSeparator, removeSeparator } from "../utils/tools";
 import { ToastContainer, toast } from "react-toastify";
@@ -193,14 +194,14 @@ const Page = props => {
       <Nav />
       <div className="container pb-0 pr-0 ticket_head">
         <div className="row p-2 cart_title">
-          <div className="col-1 align-self-center pr-2" onClick={() => Router.back()}>
-            <FaArrowLeft className="font_icon back_icon" />
-          </div>
-          <div className="col-5 p-0 text-right align-self-center">
+          <div className="col-3 p-0 text-left align-self-center">
             <MdAddBox className="font_icon add_ticket" title="افزودن تیکت" onClick={() => setModalShow(true)} />
           </div>
-          <div className="col-5 p-0 text-center align-self-center">
+          <div className="col-6 p-0 text-center align-self-center">
             <h5 className="mr-0 ml-2 mt-1 page_title">پشتیبانی</h5>
+          </div>
+          <div className="col-3 text-right align-self-center pr-3" onClick={() => Router.back()}>
+            <FiChevronRight className="font_icon back_icon" />
           </div>
         </div>
       </div>

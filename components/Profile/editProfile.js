@@ -187,7 +187,7 @@ const EditProfile = props => {
           //iban: null,
           id: id,
           userName: username,
-          email: email,
+          email: email
           // orderLimitationId: profileData.orderLimitationId
         })
       },
@@ -210,7 +210,7 @@ const EditProfile = props => {
   return (
     <div className="container mb-1 rtl edit_profile">
       <div className="row mb-3 p-2 header_link">
-        <div className="col-8 pt-2 text-left">
+        <div className="col-3 pt-2 text-left">
           <a
             className="d-inline-block clos_btn"
             onClick={() => {
@@ -219,9 +219,11 @@ const EditProfile = props => {
           >
             <FaTimes className="font_icon font-weight-lighter" />
           </a>
-          <p className="d-inline-block ml-4 title">ویرایش نمایه</p>
         </div>
-        <div className="col-4 pt-2 text-right">
+        <div className="col-6 pt-2 text-center">
+          <p className="d-inline-block title">ویرایش نمایه</p>
+        </div>
+        <div className="col-3 pt-2 text-right">
           <a
             className="d-inline-block check_btn"
             onClick={() => {
@@ -234,13 +236,7 @@ const EditProfile = props => {
       </div>
       <div className="row">
         <div className="col d-block text-center profile_image">
-          {uploading ? (
-            <Loading />
-          ) : avatar != null ? (
-            <img src={avatar} className="rounded-circle img-thumbnail" />
-          ) : (
-            <UserImageSvg className="rounded-circle img-thumbnail" />
-          )}
+          {uploading ? <Loading /> : avatar != null ? <img src={avatar} className="rounded-circle img-thumbnail" /> : <UserImageSvg className="rounded-circle img-thumbnail" />}
           {/* <input type="file" accept="image/*" onChange={uploadHandler} ref={fileInput} hidden={true} /> */}
           <input type="file" accept="image/*" onChange={onSelectFile} ref={fileInput} hidden={true} />
           {/* <MyVerticallyCenteredModal /> */}
@@ -307,36 +303,16 @@ const EditProfile = props => {
             <div className="form-group">
               <label htmlFor="biography">بیوگرافی</label>
               {/* <input type="text" value={biography} onChange={e => setBiography(e.target.value)} id="biography" className="form-control mt-1 mb-4" placeholder="بیوگرافی" /> */}
-              <textarea
-                value={biography}
-                onChange={e => setBiography(e.target.value)}
-                id="biography"
-                className="form-control mt-1 mb-4"
-                placeholder="بیوگرافی"
-              />
+              <textarea value={biography} onChange={e => setBiography(e.target.value)} id="biography" className="form-control mt-1 mb-4" placeholder="بیوگرافی" />
             </div>
             <h5 className="mt-4 mb-4 pt-2">اطلاعات خصوصی</h5>
             <div className="form-group">
               <label htmlFor="email">آدرس ایمیل</label>
-              <input
-                type="text"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                id="email"
-                className="form-control mt-1 mb-4"
-                placeholder="آدرس ایمیل"
-              />
+              <input type="text" value={email} onChange={e => setEmail(e.target.value)} id="email" className="form-control mt-1 mb-4" placeholder="آدرس ایمیل" />
             </div>
             <div className="form-group">
               <label htmlFor="phoneNumber">شماره تلفن</label>
-              <input
-                type="text"
-                value={phoneNumber}
-                onChange={e => setPhoneNumber(e.target.value)}
-                id="phoneNumber"
-                className="form-control mt-1 mb-4"
-                placeholder="شماره تلفنتان را وارد کنید"
-              />
+              <input type="text" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} id="phoneNumber" className="form-control mt-1 mb-4" placeholder="شماره تلفنتان را وارد کنید" />
             </div>
             <div className="form-group">
               <label htmlFor="iban">شماره شبا</label>
@@ -344,14 +320,7 @@ const EditProfile = props => {
             </div>
             <div className="form-group">
               <label htmlFor="addresses">آدرس</label>
-              <input
-                type="text"
-                id="addresses"
-                value={addresses}
-                onChange={e => setAddresses(e.target.value)}
-                className="form-control mt-1 mb-4"
-                placeholder="آدرس خود را وارد کنید"
-              />
+              <input type="text" id="addresses" value={addresses} onChange={e => setAddresses(e.target.value)} className="form-control mt-1 mb-4" placeholder="آدرس خود را وارد کنید" />
             </div>
             <div className="mb-4 map_part">
               <label>موقعیت روی نقشه</label>

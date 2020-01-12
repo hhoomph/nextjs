@@ -104,7 +104,7 @@
           height: auto;
           display: block;
           margin: auto;
-          max-height: 30vh;
+          max-height: 31vh;
           overflow: hidden;
           img {
             width: 100%;
@@ -114,8 +114,8 @@
             border-radius: 8px;
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
-            margin-top: -20px;
-            margin-bottom: -20px;
+            margin-top: -15px;
+            margin-bottom: -14px;
           }
         }
         .product_basket {
@@ -177,6 +177,8 @@
           background: #fff;
           display: block;
           padding: 1px;
+          padding-top: 4px;
+          padding-bottom: 4px;
           direction: ltr;
           font-size: 0.75rem;
           color: #424242;

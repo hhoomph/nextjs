@@ -55,10 +55,10 @@ const Cart = props => {
           </div>
           <div className="col-7 text-right d-flex p-1">
             <div className="col-9 p-0 align-self-center">
-              <p className="seller_name seller_user_name d-block mr-2 text-truncate rtl">{props.sellerUserName}</p>
-              <p className="seller_name seller_display_name d-block mr-2 text-truncate rtl">{props.sellerName}</p>
+              <p className="seller_name seller_user_name d-block mr-2 text-truncate rtl">{props.customerUserName}</p>
+              <p className="seller_name seller_display_name d-block mr-2 text-truncate rtl">{props.customerDisplayName}</p>
             </div>
-            <img src={props.sellerAvatar} className="col-3 userImage" />
+            <img src={props.customerAvatar} className="col-3 userImage" />
           </div>
           <div className="col-12 m-auto rtl p-0 pb-1 text-center">
             {props.pOrderStatus == "درانتظار تأیید فروشنده" ? (
@@ -91,11 +91,12 @@ const Cart = props => {
         <Order
           cartData={cartData}
           userId={props.userId}
-          sellerAvatar={props.sellerAvatar}
-          sellerName={props.sellerName}
+          sellerAvatar={props.customerAvatar}
+          sellerName={props.customerDisplayName}
           type={props.type}
           orderId={props.orderId}
           orderStatus={props.orderStatus}
+          description={props.description}
           reason4DisapprovedDelivery={props.reason4DisapprovedDelivery}
           sendDate={props.sendDate}
           totalPrice={props.totalPrice}
@@ -108,8 +109,8 @@ const Cart = props => {
           pOrderPaymentType={props.pOrderPaymentType}
           pReason4DisapprovedDelivery={props.pReason4DisapprovedDelivery}
           pSendDate={props.pSendDate}
-          sellerUserName={props.sellerUserName}
-          sellerPhoneNumber={props.sellerPhoneNumber}
+          sellerUserName={props.customerUserName}
+          sellerPhoneNumber={props.customerPhoneNumber}
           incomAmount={props.incomAmount}
           orderPage={props.orderPage}
           setOrderPage={props.setOrderPage}
@@ -137,10 +138,10 @@ const Cart = props => {
           </div>
           <div className="col-7 text-right d-flex p-1">
             <div className="col-9 p-0 align-self-center">
-              <p className="seller_name seller_user_name d-block mr-2 text-truncate rtl">{props.sellerUserName}</p>
-              <p className="seller_name seller_display_name d-block mr-2 text-truncate rtl">{props.sellerName}</p>
+              <p className="seller_name seller_user_name d-block mr-2 text-truncate rtl">{props.customerUserName}</p>
+              <p className="seller_name seller_display_name d-block mr-2 text-truncate rtl">{props.customerDisplayName}</p>
             </div>
-            <img src={props.sellerAvatar} className="col-3 userImage" />
+            <img src={props.customerAvatar} className="col-3 userImage" />
           </div>
           <div className="col-12 m-auto rtl p-0 pb-1 text-center">
             {props.pOrderStatus == "درانتظار تأیید فروشنده" ? (

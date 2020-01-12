@@ -291,7 +291,7 @@
   right: 0;
   left: 0;
   width: 100%;
-  min-height: 90vh;
+  min-height: 130vh;
   overflow-x: hidden;
   overflow-y: auto;
   z-index: 1020;
@@ -308,6 +308,17 @@
       &:hover {
         color: #5e5e5e;
       }
+    }
+  }
+  .description {
+    h6 {
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+    p {
+      color: #616161;
+      text-align: justify;
+      font-size: 0.79rem;
     }
   }
   .product_img {
@@ -350,13 +361,14 @@
       transition: all 0.1s ease-in-out;
     }
   }
-  .cancel{
+  .cancel {
     cursor: pointer;
     background-image: none;
     color: #757575;
     background: #e0e0e0;
     align-self: center;
-    &:hover, &:active {
+    &:hover,
+    &:active {
       background-image: none;
       background: #b6b6b6;
       animation: shadow_drop .8s both;

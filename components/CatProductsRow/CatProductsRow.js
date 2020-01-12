@@ -77,7 +77,7 @@ const CatProductsRow = props => {
             <Sort handleSort={handleSort} />
             <div className="col-12 mt-2 cat_title">
               <h3>اطراف</h3>
-              <Link href={`all-around/`} passHref>
+              <Link href={`/all-around`} passHref>
                 <a className="more">همه</a>
               </Link>
             </div>

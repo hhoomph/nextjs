@@ -22,14 +22,14 @@ const Ticket = dynamic({
 });
 const Page = props => {
   const Router = useRouter();
-  const productId = Router.query.id;
+  const parentId = Router.query.id;
   const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(false);
   const [page, setPage] = useState(2);
   const [isFetching, setIsFetching] = useState(false);
-  const [parentId, setParentId] = useState(null);
   const [createOrReply, setCreateOrReply] = useState(0);
   const [replyUserName, setReplyUserName] = useState(null);
+  console.log(props.Response.data);
   //
   const [messages, setMessages] = useState(props.Response.data !== undefined && props.Response.data.model !== undefined ? props.Response.data.model : []);
   const ParentId = "";
@@ -47,26 +47,7 @@ const Page = props => {
     pauseOnHover: true,
     draggable: true
   });
-  const showComments = messages.map(com => (
-    <Ticket
-      key={com.commentId}
-      commentId={com.commentId}
-      userId={com.userId}
-      image={com.userAvatar !== undefined && com.userAvatar !== null ? `https://api.qarun.ir/${com.userAvatar}` : "/static/img/no-userimage.png"}
-      liked={com.liked}
-      productImage={"/static/img/product5.jpg"}
-      productId={productId}
-      message={com.content}
-      name={com.senderDisplayName}
-      userName={com.senderUserName}
-      time={com.insertDateP}
-      replyCount={com.replyCount}
-      setParentId={setParentId}
-      setCreateOrReply={setCreateOrReply}
-      setReplyUserName={setReplyUserName}
-      focusOnTextArea={focusOnTextArea}
-    />
-  ));
+  //const showComments = messages.map(tik => <Ticket key={tik.ticketId} ticketId={tik.ticketId} focusOnTextArea={focusOnTextArea} />);
   const answerTicket = async () => {
     toast.dismiss();
     const errs = [];
@@ -111,7 +92,6 @@ const Page = props => {
       toast.success("تیکت شما با موفقیت ثبت شد.");
       setPage(1);
       setTimeout(() => setIsFetching(false), 200);
-      getMessages();
     } else if (result.message != undefined) {
       toast.warn(result.message);
     } else if (result.error != undefined) {
@@ -119,110 +99,23 @@ const Page = props => {
     }
     setLoading(false);
   };
-  const sendComment = async () => {
-    if (content.trim() !== "") {
-      if (createOrReply === 0) {
-        setLoading(true);
-        const result = await fetchData(
-          "User/U_Comment/AddComment",
-          {
-            method: "POST",
-            body: JSON.stringify({
-              productId: productId,
-              message: content
-            })
-          },
-          props.ctx
-        );
-        if (result !== undefined && result.isSuccess) {
-          setPage(1);
-          setContent("");
-          //getComments();
-          setLoading2(true);
-          const result2 = await fetchData(
-            "User/U_Comment/GetComments",
-            {
-              method: "POST",
-              body: JSON.stringify({
-                productId: productId,
-                page: 1,
-                pageSize: 10
-              })
-            },
-            props.ctx
-          );
-          if (result2 !== undefined && result2.isSuccess) {
-            document.documentElement.scrollTop = 0;
-            setMessages(result2.data);
-            setPage(2);
-            if (result2.data.length >= 10) {
-              setTimeout(() => setIsFetching(false), 200);
-            }
-          }
-        } else if (result !== undefined && result.message != undefined) {
-          toast.warn(result.message);
-        } else if (result !== undefined && result.error != undefined) {
-          toast.error(result.error);
-        }
-        setLoading(false);
-      } else if (createOrReply === 1 && parentId !== null) {
-        setLoading(true);
-        const result = await fetchData(
-          "User/U_Comment/ReplyComment",
-          {
-            method: "POST",
-            body: JSON.stringify({
-              parentId: parentId,
-              message: content
-            })
-          },
-          props.ctx
-        );
-        if (result !== undefined && result.isSuccess) {
-          setContent("");
-          setCreateOrReply(0);
-        } else if (result !== undefined && result.message != undefined) {
-          toast.warn(result.message);
-        } else if (result !== undefined && result.error != undefined) {
-          toast.error(result.error);
-        }
-        setLoading(false);
-      }
-    } else {
-      toast.warn("لطفا متن پیام خود را بنویسید.");
-    }
-  };
-  const getMessages = async () => {
-    setLoading2(true);
-    const result = await fetchData(
+  const getTickets = async () => {
+    const Response = await fetchData(
       "User/U_Support/GetTicketResponse",
       {
         method: "POST",
         body: JSON.stringify({
-          ticketStatus: "",
-          parentId: "id",
-          page: page,
+          ticketStatus: "All",
+          parentId: parentId,
+          page: 1,
           pageSize: 10
         })
       },
       props.ctx
     );
-    if (result !== undefined && result.isSuccess) {
-      if (page === 1) {
-        setMessages(result.data);
-      } else {
-        setMessages(messages.concat(result.data));
-      }
-      setPage(page + 1);
-      if (result.data.length >= 10) {
-        setTimeout(() => setIsFetching(false), 200);
-      }
-    } else if (result !== undefined && result.message != undefined) {
-      setTimeout(() => setIsFetching(false), 200);
-    } else if (result !== undefined && result.error != undefined) {
-      setTimeout(() => setIsFetching(false), 200);
+    if (Response.isSuccess) {
+      console.log(Response.data);
     }
-    setLoading2(false);
   };
   const handleScroll = () => {
     if (window.innerHeight + document.documentElement.scrollTop + 60 < document.documentElement.offsetHeight || isFetching) return;
@@ -234,9 +127,9 @@ const Page = props => {
   }, []);
   useEffect(() => {
     if (!isFetching) return;
-    getMessages();
   }, [isFetching]);
   useEffect(() => {
+    getTickets();
     focusOnTextArea();
   }, []);
   return (
@@ -345,7 +238,7 @@ const Page = props => {
                 <FaFileUpload className="font_icon" />
               </div>
               <div className="col-2 align-self-center">
-                <SubmitButton loading={loading} onClick={sendComment} text="ارسال" className="btn btn-main send_comment" />
+                <SubmitButton loading={loading} text="ارسال" className="btn btn-main send_comment" />
               </div>
             </div>
           </div>
@@ -361,7 +254,7 @@ Page.getInitialProps = async function(context) {
     {
       method: "POST",
       body: JSON.stringify({
-        ticketStatus: "2",
+        ticketStatus: "All",
         parentId: id,
         page: 1,
         pageSize: 10

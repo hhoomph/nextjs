@@ -16,6 +16,11 @@ const ProductRow = dynamic({
   loading: () => <Loading />,
   ssr: true
 });
+const Ask = dynamic({
+  loader: () => import("../Modal/Ask"),
+  loading: () => <Loading />,
+  ssr: true
+});
 const Cart = props => {
   const nextCtx = props.ctx;
   const type = props.type;
@@ -23,6 +28,7 @@ const Cart = props => {
   const [loading, setLoading] = useState(false);
   const [call, setCall] = useState(false);
   const { cartData } = props;
+  const [askModalShow, setAskModalShow] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [cancelReason, setCancelReason] = useState(null);
   toast.configure({
@@ -125,6 +131,7 @@ const Cart = props => {
         let cData = getCartDataRes.data || [];
         props.setOpenCartData(cData);
       }
+      setAskModalShow(false);
     } else if (result !== undefined && result.message != undefined) {
       toast.warn(result.message);
     } else if (result !== undefined && result.error != undefined) {
@@ -169,6 +176,7 @@ const Cart = props => {
   };
   return (
     <div className="container cart">
+    <Ask header={"تحویل گرفتن سفارش"} text={"سفارش خود را تحویل گرفتید؟!"} command={deliveredOrder} setModalShow={setAskModalShow} modalShow={askModalShow} loading={loading} />
       <div className={"row cart_seller justify-content-end"} onClick={toggleRow}>
         <div className="col-2 align-self-center text-left">
           <a className="nav_Icons active">{showToggleRow()}</a>
@@ -206,12 +214,18 @@ const Cart = props => {
       </div>
       {type === 2 && props.pOrderStatus !== "درانتظار پرداخت" && (
         <div className="row d-flex justify-content-around rtl contact_row" hidden={!showRow}>
-          <SubmitButton loading={loading} onClick={deliveredOrder} text="تحویل گرفتم" className="d-inline-block delivered" />
+          {props.pOrderStatus !== "درانتظار تأیید فروشنده" && <SubmitButton loading={loading} onClick={()=>setAskModalShow(true)} text="تحویل گرفتم" className="d-inline-block delivered" />}
           {/* Call To Seller */}
           <a className="tell_call" title="تماس با فروشنده" href={`tel:${props.sellerPhoneNumber}`} onClick={changeCall}>
             <IoMdCall className="font_icon" />
           </a>
-          {call && <SubmitButton loading={loading} onClick={() => setModalShow(true)} text="لغو سفارش" className="d-inline-block cancel" />}
+          {props.pOrderStatus !== "درانتظار تأیید فروشنده" && call ? (
+            <SubmitButton loading={loading} onClick={() => setModalShow(true)} text="لغو سفارش" className="d-inline-block cancel" />
+          ) : props.pOrderStatus == "درانتظار تأیید فروشنده" ? (
+            <SubmitButton loading={loading} onClick={() => setModalShow(true)} text="لغو سفارش" className="d-inline-block cancel" />
+          ) : (
+            ""
+          )}
           {/* Cancel Modal */}
           <Modal onHide={() => setModalShow(false)} show={modalShow} size="xl" scrollable className="share_modal reason_modal">
             <Modal.Header closeButton>

@@ -38,17 +38,19 @@ function Page(props) {
     draggable: true
   });
   const renderOpen = openData.map(cart => {
-    const sellerImg =
-      cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
+    const customerImg =
+      cart.customerAvatar !== undefined && cart.customerAvatar !== null ? `https://api.qarun.ir/${cart.customerAvatar}` : "/static/img/no-userimage.png";
     return (
       <Cart
         key={cart.orderId + cart.id}
         userId={cart.customerId}
         cartData={cart.products}
-        sellerAvatar={sellerImg}
+        customerAvatar={customerImg}
         sellerName={cart.sellerDisplayName}
+        customerDisplayName={cart.customerDisplayName}
         setLoading={setLoading}
         type={view}
+        description={cart.description}
         orderId={cart.orderId}
         orderStatus={cart.orderStatus}
         reason4DisapprovedDelivery={cart.reason4DisapprovedDelivery}
@@ -64,7 +66,9 @@ function Page(props) {
         pReason4DisapprovedDelivery={cart.pReason4DisapprovedDelivery}
         pSendDate={cart.pSendDate}
         sellerUserName={cart.sellerUserName}
+        customerUserName={cart.customerUserName}
         sellerPhoneNumber={cart.sellerPhoneNumber}
+        customerPhoneNumber={cart.customerPhoneNumber}
         incomAmount={cart.incomAmount}
         setOpenData={setOpenData}
         showKey={showKey}
@@ -75,17 +79,19 @@ function Page(props) {
     );
   });
   const renderHistory = historyData.map(cart => {
-    const sellerImg =
-      cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
+    const customerImg =
+      cart.customerAvatar !== undefined && cart.customerAvatar !== null ? `https://api.qarun.ir/${cart.customerAvatar}` : "/static/img/no-userimage.png";
     return (
       <Cart
         key={cart.orderId + cart.id}
         userId={cart.customerId}
         cartData={cart.products}
-        sellerAvatar={sellerImg}
+        customerAvatar={customerImg}
         sellerName={cart.sellerDisplayName}
+        customerDisplayName={cart.customerDisplayName}
         setLoading={setLoading}
         type={view}
+        description={cart.description}
         orderId={cart.orderId}
         orderStatus={cart.orderStatus}
         reason4DisapprovedDelivery={cart.reason4DisapprovedDelivery}
@@ -101,7 +107,9 @@ function Page(props) {
         pReason4DisapprovedDelivery={cart.pReason4DisapprovedDelivery}
         pSendDate={cart.pSendDate}
         sellerUserName={cart.sellerUserName}
+        customerUserName={cart.customerUserName}
         sellerPhoneNumber={cart.sellerPhoneNumber}
+        customerPhoneNumber={cart.customerPhoneNumber}
         incomAmount={cart.incomAmount}
         showKey={showKey}
         setShowKey={setShowKey}
@@ -179,7 +187,7 @@ function Page(props) {
                 <a className="nav-link">جدید</a>
               </li>
               <li className={`nav-item ${view == 2 ? "active" : ""}`} onClick={() => setView(2)}>
-                <a className="nav-link">سوابق</a>
+                <a className="nav-link">قبلی</a>
               </li>
             </ul>
           </div>

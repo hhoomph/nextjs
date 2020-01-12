@@ -12,7 +12,8 @@ $font_path: '/static/font/';
 //   src: url($font_path+'iransansweb_light.ttf') format('TrueType');
 // }
 html,
-body {
+body,
+.rrs {
   font-family: 'IranSans', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -100,7 +100,7 @@ const FirstCatProductsRow = props => {
                   <a className="more">همه</a>
                 </Link>
               )} */}
-              <Link href={`categories/${props.id}`} passHref>
+              <Link href={`/categories/${props.id}`} passHref>
                 <a className="more">همه</a>
               </Link>
             </div>

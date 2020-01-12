@@ -282,7 +282,7 @@ function Page(props) {
                   <a className="nav-link">جاری</a>
                 </li>
                 <li className={`nav-item ${view == 3 ? "active" : ""}`} onClick={() => setView(3)}>
-                  <a className="nav-link">سوابق</a>
+                  <a className="nav-link">قبلی</a>
                 </li>
               </ul>
             </div>

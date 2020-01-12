@@ -45,8 +45,8 @@ const ProductsRow = dynamic({
 function Page(props) {
   let Following = props.Following.data || [];
   const noFriends = Following.length <= 0 ? true : false;
-  const GetMarketAround = props.GetMarketAround.data || [];
-  const FriendsMarket = props.FriendsMarket.data || [];
+  const [marketAround, setMarketAround] = useState(props.GetMarketAround.data || []);
+  const [friendsMarket, setFriendsMarket] = useState(props.FriendsMarket.data || []);
   const Profile = props.Profile.data || null;
   const isLogin = Profile !== null ? true : false;
   const lat = Profile !== null && Profile.lat !== undefined && Profile.lat !== null ? Profile.lat : 0;
@@ -125,10 +125,47 @@ function Page(props) {
       setSuggestionUsers(res);
     }
   };
+  const getMarketAround = async () => {
+    const GetMarketAround = await fetchData(
+      "User/U_Product/GetMarketAround",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          filters: "New",
+          categoryId: 1,
+          page: 1,
+          pageSize: 10
+        })
+      },
+      props.ctx
+    );
+    if (GetMarketAround !== undefined && GetMarketAround.isSuccess) {
+      setMarketAround(GetMarketAround.data);
+    }
+  };
+  const getFriendsMarket = async () => {
+    const FriendsMarket = await fetchData(
+      "User/U_Product/FriendsMarket",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          page: 1,
+          pageSize: 6
+        })
+      },
+      props.ctx
+    );
+    if (FriendsMarket !== undefined && FriendsMarket.isSuccess) {
+      setFriendsMarket(FriendsMarket.data);
+    }
+  };
   useEffect(() => {
     if (noFriends && Profile !== null) {
       getUserFromClosestPeople();
       //getSuggestionUsers();
+    } else {
+      getMarketAround();
+      getFriendsMarket();
     }
   }, []);
   // Determine Server Or Browser env
@@ -161,13 +198,13 @@ function Page(props) {
       {noFriends && Profile !== null ? (
         <>
           <FirstUserSuggest users={suggestionUsers} />
-          <CatProductsRow products={GetMarketAround} />
+          <CatProductsRow products={marketAround} />
           {showFirstCatProductsRow}
         </>
       ) : Profile !== null ? (
         <>
-          <UserSuggest users={Following} /> <CatProductsRow products={GetMarketAround} />
-          <ProductsRow products={FriendsMarket} />
+          <UserSuggest users={Following} /> <CatProductsRow products={marketAround} />
+          <ProductsRow products={friendsMarket} />
         </>
       ) : (
         showFirstCatProductsRow

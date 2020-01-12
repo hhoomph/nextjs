@@ -4,7 +4,7 @@
   border-bottom: 1px solid #e0e0e0;
   .page_title {
     text-align: center;
-    font-weight: 600;
+    // font-weight: 600;
   }
   ul.filters {
     flex-wrap: nowrap;
@@ -50,8 +50,8 @@
       float: right;
       cursor: pointer;
       img {
-        width: auto;
-        height: auto;
+        width: 3rem;
+        height: 3rem;
         max-width: 3rem;
       }
     }
@@ -74,8 +74,8 @@
       float: right;
       cursor: pointer;
       img {
-        width: auto;
-        height: auto;
+        width: 3rem;
+        height: 3rem;
         max-width: 3rem;
         border-radius: 10rem;
       }
@@ -127,6 +127,7 @@
   overflow: hidden;
   .user {
     .link {
+      float: none !important;
       //width: 15%;
     }
     .product_image {

@@ -96,7 +96,37 @@ body {
   }
   .modal-body {
     font-size: 0.95rem;
-    min-height: 35vh;
+    min-height: 34vh;
+  }
+  .ask_cancel {
+    border-radius: 6px;
+    background-image: none;
+    background: $button_cancel;
+    transition: all 0.1s ease;
+    &:hover,
+    &:active {
+      opacity: 0.9;
+    }
+  }
+  .ask_submit {
+    border-radius: 6px;
+    background-image: none;
+    background: $button_color;
+    transition: all 0.1s ease;
+    &:hover,
+    &:active {
+      opacity: 0.9;
+    }
+  }
+  .ask_text {
+    font-size: 0.9rem;
+    color: #616161;
+    text-align: center;
+  }
+  .ask_question {
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
   }
   .invite_info {
     text-align: justify;
@@ -195,18 +225,23 @@ body {
     color: #a9a9a9;
   }
   .rrs__option.rrs__option--next-selection {
-    background: #fea73047;
-    color: #fa6e62;
+    background: rgba(216, 216, 216, 0.28);
+    color: #000000;
+    font-weight: bold;
   }
   .rrs__option:hover {
-    color: #ef6c00;
+    color: #000000;
   }
   .rrs__option:active {
-    background: #fbe9e7;
+    background: #e4e4e4;
   }
   .rrs__option {
+    font-size: .95rem;
+    text-align: center;
+    color: #9e9e9e;
+    transition: all .1s ease-in-out;
     margin: 0;
-    padding-right: 10px;
+    padding-right: 0;
     padding-left: 0;
     padding-top: 5px;
     padding-bottom: 10px;

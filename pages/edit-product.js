@@ -6,6 +6,7 @@ import Nav from "../components/Nav/Nav";
 import Auth from "../components/Auth/Auth";
 import fetchData from "../utils/fetchData";
 import { FaCheck, FaArrowLeft, FaArrowRight, FaTimes, FaEdit, FaPlus } from "react-icons/fa";
+import { FiChevronRight } from "react-icons/fi";
 import { MdAddCircle, MdAddAPhoto } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import { numberSeparator, removeSeparator, forceNumeric } from "../utils/tools";
@@ -22,7 +23,7 @@ function Page(props) {
   const { id } = router.query;
   const productData = props.productData.data || [];
   const profileData = props.profileData.data || [];
-  console.log(productData);
+  //console.log(productData);
   const categories = props.result.data || [];
   const catId = parseInt(productData.categoryId.replace(",", ""));
   const catName = productData.category.replace(",", "");
@@ -342,13 +343,21 @@ function Page(props) {
   };
   switch (view) {
   case 1:
-    // if (typeof window !== 'undefined') {
-    //   window.scroll(0, 0);
-    // }
+    if (typeof window !== 'undefined') {
+      window.scroll(0, 0);
+    }
     return (
       <>
         <Nav />
         <div className="container mb-1 rtl add_product">
+          <div className="row p-2 _title">
+            <div className="col-10 text-center align-self-center">
+              <h6 className="mr-5 pr-3 mt-1 page_title">ویرایش محصول</h6>
+            </div>
+            <div className="col-2 text-left align-self-center pl-1">
+              <FiChevronRight className="font_icon" onClick={() => router.back()} />
+            </div>
+          </div>
           <div className="row mb-3 p-2 header_link">
             <div className="col pt-2 text-center">
               <a className="d-inline-block btn-main" onClick={() => editProduct()}>
@@ -474,7 +483,7 @@ function Page(props) {
       <>
         <Nav />
         <div className="container mb-1 rtl add_product">
-          <div className="row mb-3 p-2 header_link image_tabs">
+          <div className="row mb-3 p-1 header_link_tab image_tabs">
             <div className="col-4 pt-2 text-center active" onClick={() => setView(2)}>
               <a className="d-inline-block tab_link">پیشنهادی</a>
             </div>
@@ -503,7 +512,7 @@ function Page(props) {
               <MdAddAPhoto className="font_icon" />
             </div>
           </div>
-          <div className="row mt-0 mb-5 add_image">
+          <div className="row mt-5 pt-3 mb-5 add_image">
             <div className="col">
               <div className="row">
                 <div className="col pt-3">
@@ -515,11 +524,12 @@ function Page(props) {
                   <div className="images_row">{showUploadedImages()}</div>
                 </div>
               </div>
-              <div className="row">
+              <div className="row mb-3 p-2 header_link">
                 <div className="col pt-2 text-center">
-                  <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ویرایش محصول" className="d-inline-block btn-main">
-                    <FaEdit className="font_icon" />
-                  </SubmitButton>
+                  <a className="d-inline-block btn-main" onClick={() => setProductImages()}>
+                      ویرایش محصول
+                    {loading || uploading ? <Loading className="font_icon" /> : <FaEdit className="font_icon" />}
+                  </a>
                 </div>
               </div>
             </div>
@@ -533,7 +543,7 @@ function Page(props) {
       <>
         <Nav />
         <div className="container mb-1 rtl add_product">
-          <div className="row mb-3 p-2 header_link image_tabs">
+          <div className="row mb-3 p-1 header_link_tab image_tabs">
             {/* <div className="col-4 pt-2 text-center" onClick={() => setView(2)}>
               <a className="d-inline-block tab_link">پیشنهادی</a>
             </div> */}
@@ -562,7 +572,7 @@ function Page(props) {
               <MdAddAPhoto className="font_icon" />
             </div>
           </div>
-          <div className="row mt-0 mb-5 add_image">
+          <div className="row mt-5 pt-3 add_image">
             <div className="col">
               <div className="row">
                 <div className="col">
@@ -575,11 +585,12 @@ function Page(props) {
                   <div className="images_row">{showUploadedImages()}</div>
                 </div>
               </div>
-              <div className="row">
+              <div className="row mb-3 p-2 header_link">
                 <div className="col pt-2 text-center">
-                  <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ویرایش محصول" className="d-inline-block btn-main">
-                    <FaEdit className="font_icon" />
-                  </SubmitButton>
+                  <a className="d-inline-block btn-main" onClick={() => setProductImages()}>
+                      ویرایش محصول
+                    {loading || uploading ? <Loading className="font_icon" /> : <FaEdit className="font_icon" />}
+                  </a>
                 </div>
               </div>
             </div>
@@ -623,7 +634,7 @@ function Page(props) {
       <>
         <Nav />
         <div className="container mb-1 rtl add_product">
-          <div className="row mb-3 p-2 header_link image_tabs">
+          <div className="row mb-3 p-1 header_link_tab image_tabs">
             {/* <div className="col-4 pt-2 text-center" onClick={() => setView(2)}>
               <a className="d-inline-block tab_link">پیشنهادی</a>
             </div> */}
@@ -652,7 +663,7 @@ function Page(props) {
               <MdAddAPhoto className="font_icon" />
             </div>
           </div>
-          <div className="row mt-3 mb-5 add_image">
+          <div className="row mt-5 pt-3 mb-5 add_image">
             <div className="col">
               <div className="row">
                 <div className="col">
@@ -665,11 +676,12 @@ function Page(props) {
                   <div className="images_row">{showUploadedImages()}</div>
                 </div>
               </div>
-              <div className="row">
+              <div className="row mb-3 p-2 header_link">
                 <div className="col pt-2 text-center">
-                  <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ویرایش محصول" className="d-inline-block btn-main">
-                    <FaEdit className="font_icon" />
-                  </SubmitButton>
+                  <a className="d-inline-block btn-main" onClick={() => setProductImages()}>
+                      ویرایش محصول
+                    {loading || uploading ? <Loading className="font_icon" /> : <FaEdit className="font_icon" />}
+                  </a>
                 </div>
               </div>
             </div>

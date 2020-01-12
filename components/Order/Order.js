@@ -12,10 +12,17 @@ const ProductRow = dynamic({
   loading: () => <Loading />,
   ssr: true
 });
+const Ask = dynamic({
+  loader: () => import("../Modal/Ask"),
+  loading: () => <Loading />,
+  ssr: true
+});
 const Order = props => {
   const nextCtx = props.ctx;
   const [showRow, setShowRow] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [askModalShow, setAskModalShow] = useState(false);
+  const [askModalShow1, setAskModalShow1] = useState(false);
   const cartData = props.cartData || [];
   toast.configure({
     position: "top-right",
@@ -55,6 +62,7 @@ const Order = props => {
         toast.success("سفارش با موفقیت تایید و ارسال شد.");
       }
       props.setOrderPage(!props.orderPage);
+      setAskModalShow1(false);
     } else if (result !== undefined && result.message != undefined) {
       toast.warn(result.message);
     } else if (result !== undefined && result.error != undefined) {
@@ -76,12 +84,16 @@ const Order = props => {
         toast.success("سفارش با موفقیت لغو شد.");
       }
       props.setOrderPage(!props.orderPage);
+      setAskModalShow(false);
     } else if (result !== undefined && result.message != undefined) {
       toast.warn(result.message);
     } else if (result !== undefined && result.error != undefined) {
       toast.error(result.error);
     }
   };
+  useEffect(() => {
+    document.documentElement.scrollTop = 0;
+  }, []);
   return (
     <div className="_order">
       <div className="container p-3 order_header">
@@ -91,11 +103,31 @@ const Order = props => {
           </div>
         </div>
       </div>
+      <Ask header={"لغو سفارش"} text={"با لغو این سفارش هزینه آن به حساب خریدار واریز می شود."} command={cancelOrder} setModalShow={setAskModalShow} modalShow={askModalShow} loading={loading} />
+      <Ask header={"قبول و ارسال"} text={""} command={deliveredOrder} setModalShow={setAskModalShow1} modalShow={askModalShow1} loading={loading} />
       <div className="container mb-2 mt-2 cart p-0 pr-1 pl-1">
         <div className="row cart_seller p-1 justify-content-end">
           <div className="col-5 m-auto rtl p-0 pl-1 text-center">
             <div className="status_div">
-              <div className="badge badge-warning">{props.pOrderStatus}</div>
+              {props.pOrderStatus == "درانتظار تأیید فروشنده" ? (
+                <div className="badge badge-warning">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "درانتظار پرداخت" ? (
+                <div className="badge bg-amber">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "ارسال شده" || props.pOrderStatus == "درحال ارسال" ? (
+                <div className="badge bg-blue">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "عدم تأیید فروشنده" ? (
+                <div className="badge bg-brown">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "لغو شده توسط خریدار" ? (
+                <div className="badge bg-pink">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "عدم تحویل" ? (
+                <div className="badge bg-red">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "تحویل شده" ? (
+                <div className="badge bg-green">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "بازگشتی" ? (
+                <div className="badge bg-purple">{props.pOrderStatus}</div>
+              ) : (
+                <div className="badge badge-warning">{props.pOrderStatus}</div>
+              )}
             </div>
           </div>
           <div className="col-7 text-right d-flex p-1 pr-2">
@@ -108,6 +140,12 @@ const Order = props => {
         </div>
         <div className="row products_rows" hidden={!showRow}>
           {renderProductsRow}
+          {props.description !== "" && (
+            <div className="col-12 mt-2 rtl description">
+              <h6>توضیحات تکمیلی سفارش</h6>
+              <p>{props.description}</p>
+            </div>
+          )}
         </div>
         <div className="row mt-0 pt-3 pb-3 cart_amount_detail">
           <div className="col-12 d-block rtl">
@@ -115,10 +153,10 @@ const Order = props => {
             <span className="total_price">{props.totalLastPrice !== undefined ? numberSeparator(props.totalLastPrice) + " تومان" : "0 تومان"}</span>
           </div>
         </div>
-        {props.type === 1 && (
+        {props.type === 1 && props.pOrderStatus == "درانتظار تأیید فروشنده" && (
           <div className="row d-flex pb-3 justify-content-around rtl contact_row">
-            <SubmitButton loading={loading} onClick={deliveredOrder} text="قبول و ارسال" className="d-inline-block delivered" />
-            <SubmitButton loading={loading} onClick={cancelOrder} text="رد سفارش" className="d-inline-block cancel" />
+            <SubmitButton loading={loading} onClick={()=>setAskModalShow1(true)} text="قبول و ارسال" className="d-inline-block delivered" />
+            <SubmitButton loading={loading} onClick={()=>setAskModalShow(true)} text="رد سفارش" className="d-inline-block cancel" />
           </div>
         )}
       </div>

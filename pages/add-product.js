@@ -6,6 +6,7 @@ import Nav from "../components/Nav/Nav";
 import Auth from "../components/Auth/Auth";
 import fetchData from "../utils/fetchData";
 import { FaCheck, FaArrowLeft, FaArrowRight, FaTimes, FaPlus } from "react-icons/fa";
+import { FiChevronRight } from "react-icons/fi";
 import { MdAddCircle, MdAddAPhoto } from "react-icons/md";
 //import Select from "react-select";
 import { ToastContainer, toast } from "react-toastify";
@@ -357,6 +358,14 @@ function Page(props) {
       <>
         <Nav />
         <div className="container mb-1 rtl add_product">
+          <div className="row p-2 _title">
+            <div className="col-10 text-center align-self-center">
+              <h6 className="mr-5 pr-3 mt-1 page_title">افزودن محصول</h6>
+            </div>
+            <div className="col-2 text-left align-self-center pl-1">
+              <FiChevronRight className="font_icon" onClick={() => Router.back()} />
+            </div>
+          </div>
           <div className="row mb-3 p-2 header_link">
             <div className="col pt-2 text-center">
               <a className="d-inline-block btn-main" onClick={() => addProduct()}>
@@ -387,24 +396,6 @@ function Page(props) {
                   <label htmlFor="category" className="col-sm-2 col-form-label">
                       دسته بندی
                   </label>
-                  {/* <Select
-                      closeMenuOnSelect={true}
-                      isSearchable={true}
-                      instanceId={"id"}
-                      className="mt-1 mb-4 col-sm-10 p-0 react_select"
-                      value={categoryId}
-                      onChange={handleCategoryChange}
-                      options={categoriesOptions}
-                      placeholder="انتخاب کنید"
-                      theme={theme => ({
-                        ...theme,
-                        borderWidth: "thin",
-                        boxShadow: "0px 0px 2px 0px #FF5722 !important",
-                        colors: { ...theme.colors, primary25: "#ffd698", primary: "#ff9800" }
-                      })}
-                      onFocus={scrollToFocused}
-                      onBlur={scrollToFocusOut}
-                    /> */}
                   <RRS
                     id={categoryId !== null ? "not_empty_select" : "empty_select"}
                     noSelectionLabel={"انتخاب کنید"}
@@ -501,7 +492,7 @@ function Page(props) {
       <>
         <Nav />
         <div className="container mb-1 rtl add_product">
-          <div className="row mb-3 p-2 header_link image_tabs">
+          <div className="row mb-3 p-1 header_link_tab image_tabs">
             <div className="col-4 pt-2 text-center active" onClick={() => setView(2)}>
               <a className="d-inline-block tab_link">پیشنهادی</a>
             </div>
@@ -530,7 +521,7 @@ function Page(props) {
               <MdAddAPhoto className="font_icon" />
             </div>
           </div>
-          <div className="row mt-0 mb-5 add_image">
+          <div className="row mt-5 pt-3 mb-5 add_image">
             <div className="col">
               <div className="row">
                 <div className="col pt-3">
@@ -542,7 +533,7 @@ function Page(props) {
                   <div className="images_row">{showUploadedImages()}</div>
                 </div>
               </div>
-              <div className="row">
+              <div className="row mb-3 p-2 header_link">
                 <div className="col pt-2 text-center">
                   <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main">
                     <FaCheck className="font_icon" />
@@ -560,7 +551,7 @@ function Page(props) {
       <>
         <Nav />
         <div className="container mb-1 rtl add_product">
-          <div className="row mb-3 p-2 header_link image_tabs">
+          <div className="row mb-3 p-1 header_link_tab image_tabs">
             {/* <div className="col-4 pt-2 text-center" onClick={() => setView(2)}>
               <a className="d-inline-block tab_link">پیشنهادی</a>
             </div> */}
@@ -589,7 +580,7 @@ function Page(props) {
               <MdAddAPhoto className="font_icon" />
             </div>
           </div>
-          <div className="row mt-0 mb-5 add_image">
+          <div className="row mt-5 pt-3 mb-5 add_image">
             <div className="col">
               <div className="row">
                 <div className="col pt-3">
@@ -602,7 +593,7 @@ function Page(props) {
                   <div className="images_row">{showUploadedImages()}</div>
                 </div>
               </div>
-              <div className="row">
+              <div className="row mb-3 p-2 header_link">
                 <div className="col pt-2 text-center">
                   <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main">
                     <FaCheck className="font_icon" />
@@ -652,7 +643,7 @@ function Page(props) {
       <>
         <Nav />
         <div className="container mb-1 rtl add_product">
-          <div className="row mb-3 p-2 header_link image_tabs">
+          <div className="row mb-3 p-1 header_link_tab image_tabs">
             {/* <div className="col-4 pt-2 text-center" onClick={() => setView(2)}>
               <a className="d-inline-block tab_link">پیشنهادی</a>
             </div> */}
@@ -681,7 +672,7 @@ function Page(props) {
               <MdAddAPhoto className="font_icon" />
             </div>
           </div>
-          <div className="row mt-3 mb-5 add_image">
+          <div className="row mt-5 pt-3 mb-5 add_image">
             <div className="col">
               <div className="row">
                 <div className="col">
@@ -694,7 +685,7 @@ function Page(props) {
                   <div className="images_row">{showUploadedImages()}</div>
                 </div>
               </div>
-              <div className="row">
+              <div className="row mb-3 p-2 header_link">
                 <div className="col pt-2 text-center">
                   <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main">
                     <FaCheck className="font_icon" />

@@ -129,13 +129,13 @@ const Page = props => {
   return (
     <>
       <Nav />
-      <div className="container pt-2 pb-2 pr-0 pl-0 search_component">
+      <div className="container pt-2 pb-2 search_component">
         <div className="row cart_title">
-          <div className="col-10 p-0 text-center align-self-center">
-            <h6 className="ml-5 pl-2 mt-1 page_title">فعالیت ها</h6>
+          <div className="col-10 text-center align-self-center">
+            <h6 className="ml-5 pl-3 mt-1 page_title">فعالیت ها</h6>
           </div>
-          <div className="col-1 text-right align-self-center pr-0" onClick={() => Router.back()}>
-            <FiChevronRight className="font_icon back_icon" />
+          <div className="col-2 text-center align-self-center pr-1">
+            <FiChevronRight className="font_icon back_icon" onClick={() => Router.back()} />
           </div>
         </div>
       </div>

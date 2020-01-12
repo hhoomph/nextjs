@@ -23,7 +23,7 @@ function Page(props) {
   const [loading, setLoading] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [sellQerun, setSellQerun] = useState("");
-  const Inventory = props.Inventory ? props.Inventory.data : [];
+  const Inventory = props.Inventory !== undefined && props.Inventory.data !== undefined ? props.Inventory.data : [];
   const [qerun, setQerun] = useState(Inventory.qerun || 0);
   const Transactions = Inventory.transactions || [];
   const GetWithdrawal = props.GetWithdrawal ? props.GetWithdrawal.data : [];

@@ -7,7 +7,7 @@ import ProfileHeader from "../components/Head/profileHeader";
 import Product from "../components/Profile/product";
 import Auth from "../components/Auth/Auth";
 import fetchData from "../utils/fetchData";
-import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import { FiChevronRight } from "react-icons/fi";
 import "../scss/components/favoritePage.scss";
 const User = dynamic({
   loader: () => import("../components/Friend/User"),
@@ -49,7 +49,7 @@ function Page(props) {
         body: JSON.stringify({
           filters: "New",
           categoryId: id,
-          page: 1,
+          page: page,
           pageSize: 10
         })
       },
@@ -89,11 +89,11 @@ function Page(props) {
       <Nav />
       <div className="container favorite_title">
         <div className="row p-2 cart_title">
-          <div className="col-2 text-left align-self-center">
-            <FaArrowLeft className="font_icon" onClick={() => Router.back()} />
+          <div className="col-10 text-center align-self-center">
+            <h6 className="ml-5 pl-3 mt-1 page_title">{catTitle !== undefined && catTitle[0]["titel"] !== undefined ? catTitle[0]["titel"] : " "}</h6>
           </div>
-          <div className="col-10 text-right align-self-center">
-            <h5 className="mr-2 ml-2 mt-1 page_title">{catTitle !== undefined && catTitle[0]["titel"] !== undefined ? catTitle[0]["titel"] : " "}</h5>
+          <div className="col-2 text-right align-self-center pr-1">
+            <FiChevronRight className="font_icon" onClick={() => Router.back()} />
           </div>
         </div>
       </div>

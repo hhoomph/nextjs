@@ -31,9 +31,7 @@ function Page(props) {
       profile={false}
       favorite={true}
       sellerUserName={product.sellerUserName}
-      sellerAvatar={
-        product.sellerAvatar !== undefined && product.sellerAvatar !== null ? `https://api.qarun.ir/${product.sellerAvatar}` : "/static/img/no-userimage.png"
-      }
+      sellerAvatar={product.sellerAvatar !== undefined && product.sellerAvatar !== null ? `https://api.qarun.ir/${product.sellerAvatar}` : "/static/img/no-userimage.png"}
       isDisable={product.isDisable}
       price={product.lastPrice}
       oldPrice={product.price}
@@ -87,7 +85,6 @@ function Page(props) {
       <Nav />
       <div className="container favorite_title">
         <div className="row p-2 cart_title">
-          
           <div className="col-10 text-center align-self-center">
             <h6 className="ml-5 pl-3 mt-1 page_title">علاقه مندی ها</h6>
           </div>
