@@ -83,6 +83,7 @@ function Page(props) {
   }, [isFetching]);
   return (
     <>
+      <title>قارون</title>
       <Nav />
       <div className="container favorite_title">
         <div className="row p-2 cart_title">

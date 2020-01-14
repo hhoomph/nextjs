@@ -348,6 +348,7 @@ function Page(props) {
     }
     return (
       <>
+        <title>قارون</title>
         <Nav />
         <div className="container mb-1 rtl add_product">
           <div className="row p-2 _title">
@@ -360,7 +361,7 @@ function Page(props) {
           </div>
           <div className="row mb-3 p-2 header_link">
             <div className="col pt-2 text-center">
-              <a className="d-inline-block btn-main" onClick={() => editProduct()}>
+              <a className="d-inline-block btn-main btn-green" onClick={() => editProduct()}>
                   ادامه
                 {loading ? <Loading className="font_icon" /> : <FaEdit className="font_icon" />}
               </a>
@@ -481,6 +482,7 @@ function Page(props) {
   case 2:
     return (
       <>
+        <title>قارون</title>
         <Nav />
         <div className="container mb-1 rtl add_product">
           <div className="row mb-3 p-1 header_link_tab image_tabs">
@@ -526,7 +528,7 @@ function Page(props) {
               </div>
               <div className="row mb-3 p-2 header_link">
                 <div className="col pt-2 text-center">
-                  <a className="d-inline-block btn-main" onClick={() => setProductImages()}>
+                  <a className="d-inline-block btn-main btn-green" onClick={() => setProductImages()}>
                       ویرایش محصول
                     {loading || uploading ? <Loading className="font_icon" /> : <FaEdit className="font_icon" />}
                   </a>
@@ -541,6 +543,7 @@ function Page(props) {
   case 3:
     return (
       <>
+        <title>قارون</title>
         <Nav />
         <div className="container mb-1 rtl add_product">
           <div className="row mb-3 p-1 header_link_tab image_tabs">
@@ -587,7 +590,7 @@ function Page(props) {
               </div>
               <div className="row mb-3 p-2 header_link">
                 <div className="col pt-2 text-center">
-                  <a className="d-inline-block btn-main" onClick={() => setProductImages()}>
+                  <a className="d-inline-block btn-main btn-green" onClick={() => setProductImages()}>
                       ویرایش محصول
                     {loading || uploading ? <Loading className="font_icon" /> : <FaEdit className="font_icon" />}
                   </a>
@@ -632,6 +635,7 @@ function Page(props) {
   case 4:
     return (
       <>
+      <title>قارون</title>
         <Nav />
         <div className="container mb-1 rtl add_product">
           <div className="row mb-3 p-1 header_link_tab image_tabs">
@@ -678,7 +682,7 @@ function Page(props) {
               </div>
               <div className="row mb-3 p-2 header_link">
                 <div className="col pt-2 text-center">
-                  <a className="d-inline-block btn-main" onClick={() => setProductImages()}>
+                  <a className="d-inline-block btn-main btn-green" onClick={() => setProductImages()}>
                       ویرایش محصول
                     {loading || uploading ? <Loading className="font_icon" /> : <FaEdit className="font_icon" />}
                   </a>

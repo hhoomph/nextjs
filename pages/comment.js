@@ -189,6 +189,7 @@ const Page = props => {
   }, []);
   return (
     <>
+      <title>قارون</title>
       <Nav />
       <div className="container pb-0 comment_head">
         <div className="row p-2 cart_title">

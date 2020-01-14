@@ -45,12 +45,15 @@ function Page(props) {
   });
   return (
     <>
+      <title>قارون | مشتریان</title>
       <Nav />
       <div className="container friends_page">
         <div className="row p-2 cart_title">
-          <div className="col text-center">
-            <h5 className="mr-2 ml-2 mt-1 page_title">مشتریان</h5>
-            {/* <hr /> */}
+          <div className="col-12 p-0 text-center">
+            <h6 className="ml-5 mt-1 page_title">مشتریان</h6>
+            <div className="mr-1 pl-1 d-inline-block text-right float-right">
+              <FiChevronRight className="font_icon back_icon" onClick={() => Router.back()} />
+            </div>
           </div>
         </div>
       </div>

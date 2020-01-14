@@ -59,7 +59,10 @@ const Page = props => {
   const [lastScroll, setLastScroll] = useState(0);
   const [page, setPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
-  const currentUserLatLong = props.result.data !== undefined && props.result.data !== null && props.result.data.lat != 0 ? [props.result.data.lat, props.result.data.long] : [34.635059, 50.880823];
+  const currentUserLatLong =
+    props.result.data !== undefined && props.result.data !== null && props.result.data.lat != 0
+      ? [props.result.data.lat, props.result.data.long]
+      : [34.635059, 50.880823];
   const scrollButton = useRef();
   const scrollDiv = useRef();
   const peopleDiv = useRef();
@@ -254,15 +257,28 @@ const Page = props => {
   case 1:
     return (
       <>
+        <title>قارون</title>
         <Nav />
         <MapHeader setView={setView} searchValue={searchValue} handleSearchChange={handleSearchChange} />
         <div className="container mb-1 rtl p-0 mapContainer">
-          <MapComponent id="map_id" searchValue={searchValue} users={mapPeople} activeUser={activeUser} setMapRadius={setMapRadius} center={currentUserLatLong} />
+          <MapComponent
+            id="map_id"
+            searchValue={searchValue}
+            users={mapPeople}
+            activeUser={activeUser}
+            setMapRadius={setMapRadius}
+            center={currentUserLatLong}
+          />
         </div>
         <div className="container mb-1 rtl" ref={scrollButton} onTouchEndCapture={scrollHandle}>
           <div className="row">
             <div className="col-12 d-flex justify-content-center pt-0 scroller_div">
-              <FaGripLines className="font-icon scroller_line" onClick={scrollHandle} onTouchEndCapture={scrollHandle} style={{ transform: `scale(${topScale})` }} />
+              <FaGripLines
+                className="font-icon scroller_line"
+                onClick={scrollHandle}
+                onTouchEndCapture={scrollHandle}
+                style={{ transform: `scale(${topScale})` }}
+              />
             </div>
             <div className={"col-12 d-flex justify-content-start p-0 pt-4 map_user_suggestion"} ref={peopleDiv}>
               {showPepole}
@@ -283,6 +299,7 @@ const Page = props => {
   case 2:
     return (
       <>
+        <title>قارون</title>
         <Nav />
         <SearchPage setView={setView} />
       </>
@@ -291,15 +308,28 @@ const Page = props => {
   default:
     return (
       <>
+        <title>قارون</title>
         <Nav />
         <MapHeader setView={setView} searchValue={searchValue} handleSearchChange={handleSearchChange} />
         <div className="container mb-1 rtl p-0 mapContainer">
-          <MapComponent id="map_id" searchValue={searchValue} users={mapPeople} activeUser={activeUser} setMapRadius={setMapRadius} center={currentUserLatLong} />
+          <MapComponent
+            id="map_id"
+            searchValue={searchValue}
+            users={mapPeople}
+            activeUser={activeUser}
+            setMapRadius={setMapRadius}
+            center={currentUserLatLong}
+          />
         </div>
         <div className="container mb-1 rtl" ref={scrollButton} onTouchEndCapture={scrollHandle}>
           <div className="row">
             <div className="col-12 d-flex justify-content-center pt-0 scroller_div">
-              <FaGripLines className="font-icon scroller_line" onClick={scrollHandle} onTouchEndCapture={scrollHandle} style={{ transform: `scale(${topScale})` }} />
+              <FaGripLines
+                className="font-icon scroller_line"
+                onClick={scrollHandle}
+                onTouchEndCapture={scrollHandle}
+                style={{ transform: `scale(${topScale})` }}
+              />
             </div>
             <div className={"col-12 d-flex justify-content-start p-0 pt-4 map_user_suggestion"} ref={peopleDiv}>
               {showPepole}

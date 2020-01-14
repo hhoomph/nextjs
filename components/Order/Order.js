@@ -2,8 +2,10 @@ import React, { Fragment, useState, useEffect, memo } from "react";
 import Link from "../Link";
 import dynamic from "next/dynamic";
 import Loading from "../Loader/Loading";
+import { useRouter } from "next/router";
 import SubmitButton from "../Button/SubmitButton";
 import { FaTimesCircle, FaChevronUp, FaChevronDown, FaArrowLeft } from "react-icons/fa";
+import { FiChevronRight } from "react-icons/fi";
 import { ToastContainer, toast } from "react-toastify";
 import fetchData from "../../utils/fetchData";
 import { numberSeparator, removeSeparator } from "../../utils/tools";
@@ -18,6 +20,7 @@ const Ask = dynamic({
   ssr: true
 });
 const Order = props => {
+  const Router = useRouter();
   const nextCtx = props.ctx;
   const [showRow, setShowRow] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -96,14 +99,21 @@ const Order = props => {
   }, []);
   return (
     <div className="_order">
-      <div className="container p-3 order_header">
+      <div className="container pr-3 pl-3 pt-2 pb-2 order_header">
         <div className="row">
-          <div className="col-12 d-flex align-items-end">
-            <FaArrowLeft className="font_icon back_icon" onClick={() => props.setView(1)} />
+          <div className="col-12 d-flex align-items-end justify-content-end">
+            <FiChevronRight className="font_icon back_icon" onClick={() => props.setView(1)} />
           </div>
         </div>
       </div>
-      <Ask header={"لغو سفارش"} text={"با لغو این سفارش هزینه آن به حساب خریدار واریز می شود."} command={cancelOrder} setModalShow={setAskModalShow} modalShow={askModalShow} loading={loading} />
+      <Ask
+        header={"لغو سفارش"}
+        text={"با لغو این سفارش هزینه آن به حساب خریدار واریز می شود."}
+        command={cancelOrder}
+        setModalShow={setAskModalShow}
+        modalShow={askModalShow}
+        loading={loading}
+      />
       <Ask header={"قبول و ارسال"} text={""} command={deliveredOrder} setModalShow={setAskModalShow1} modalShow={askModalShow1} loading={loading} />
       <div className="container mb-2 mt-2 cart p-0 pr-1 pl-1">
         <div className="row cart_seller p-1 justify-content-end">
@@ -155,8 +165,8 @@ const Order = props => {
         </div>
         {props.type === 1 && props.pOrderStatus == "درانتظار تأیید فروشنده" && (
           <div className="row d-flex pb-3 justify-content-around rtl contact_row">
-            <SubmitButton loading={loading} onClick={()=>setAskModalShow1(true)} text="قبول و ارسال" className="d-inline-block delivered" />
-            <SubmitButton loading={loading} onClick={()=>setAskModalShow(true)} text="رد سفارش" className="d-inline-block cancel" />
+            <SubmitButton loading={loading} onClick={() => setAskModalShow1(true)} text="قبول و ارسال" className="d-inline-block delivered" />
+            <SubmitButton loading={loading} onClick={() => setAskModalShow(true)} text="رد سفارش" className="d-inline-block cancel" />
           </div>
         )}
       </div>

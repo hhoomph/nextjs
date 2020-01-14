@@ -193,6 +193,7 @@ function Page(props) {
   const showFirstCatProductsRow = allCategories.map(cat => <FirstCatProductsRow key={cat.id} id={cat.id} title={cat.titel} isLogin={isLogin} />);
   return (
     <CartCountContext.Provider value={cartCountDispatch}>
+      <title>قارون</title>
       <IndexHeader cartCount={cartCount} />
       <Nav cartCount={cartCount} />
       {noFriends && Profile !== null ? (

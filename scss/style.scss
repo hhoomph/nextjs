@@ -70,9 +70,23 @@ body {
   background: no-repeat;
   background-image: $main_gradient;
   border: none;
-  &:hover {
+  &:hover,
+  &:active {
     background-image: none;
     background: #feaa2d;
+    animation: shadow_drop 0.8s both;
+    animation-iteration-count: infinite;
+  }
+}
+.btn-green {
+  color: #fff !important;
+  background-image: none !important;
+  background: $button_color !important;
+  border: none;
+  &:hover,
+  &:active {
+    background-image: none !important;
+    background: $button_hover !important;
     animation: shadow_drop 0.8s both;
     animation-iteration-count: infinite;
   }
@@ -236,10 +250,10 @@ body {
     background: #e4e4e4;
   }
   .rrs__option {
-    font-size: .95rem;
+    font-size: 0.95rem;
     text-align: center;
     color: #9e9e9e;
-    transition: all .1s ease-in-out;
+    transition: all 0.1s ease-in-out;
     margin: 0;
     padding-right: 0;
     padding-left: 0;
@@ -315,26 +329,26 @@ body {
 }
 // *********** Background Colors ***********
 .bg-amber {
-  background-color: #FFC107 !important;
+  background-color: #ffc107 !important;
   color: #000 !important;
 }
 .bg-blue {
-  background-color: #2196F3 !important;
+  background-color: #2196f3 !important;
 }
 .bg-brown {
   background-color: #795548 !important;
 }
 .bg-pink {
-  background-color: #E91E63 !important;
+  background-color: #e91e63 !important;
 }
 .bg-red {
-  background-color: #F44336 !important;
+  background-color: #f44336 !important;
 }
 .bg-green {
-  background-color: #4CAF50 !important;
+  background-color: #4caf50 !important;
 }
 .bg-purple {
-  background-color: #9C27B0 !important;
+  background-color: #9c27b0 !important;
 }
 @media (min-width: 1300px) {
   .container {

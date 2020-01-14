@@ -130,6 +130,7 @@ const Page = props => {
     if (step == 1) {
       return (
         <>
+          <title>قارون</title>
           <div className="row">
             <div className="col d-block text-center messages">
               <p className="text_message">لطفا شماره موبایل یا ایمیل خود را وارد نمایید</p>
@@ -152,7 +153,7 @@ const Page = props => {
                   }}
                 />
                 <input value={reagent} onChange={e => setReagent(e.target.value)} type="text" className="form-control mb-4" placeholder=" معرف " />
-                <SubmitButton loading={isLoading} onClick={() => handleSubmitStep1()} text="ادامه" className="btn btn-lg btn-block btn-submit" />
+                <SubmitButton loading={isLoading} onClick={() => handleSubmitStep1()} text="ادامه" className="btn btn-lg btn-green btn-block btn-submit" />
               </form>
             </div>
           </div>
@@ -162,6 +163,7 @@ const Page = props => {
       let change_txt = EMAIL_RX.test(userName) ? `کد ارسالی به ایمیل ${userName} را وارد نمایید` : `کد ارسالی به شماره ${userName} را وارد نمایید`;
       return (
         <>
+          <title>قارون</title>
           <div className="row">
             <div className="col d-block text-center messages">
               <p className="text_message"> {change_txt} </p>
@@ -192,7 +194,7 @@ const Page = props => {
                     }
                   }}
                 />
-                <SubmitButton loading={isLoading} onClick={() => handleSubmitStep2()} text="ورود" className="btn btn-lg btn-block btn-submit" />
+                <SubmitButton loading={isLoading} onClick={() => handleSubmitStep2()} text="ورود" className="btn btn-lg btn-green btn-block btn-submit" />
                 <Resend />
               </form>
             </div>

@@ -204,6 +204,19 @@ function Page(props) {
   useEffect(() => {
     getUserProductFromCat();
   }, [catActive]);
+  useEffect(() => {
+    //props.statusHub
+    if (profileData !== null && profileData.userName !== undefined && profileData.userName !== "" && profileData.userName !== null) {
+      // props.baseHub
+      //   .invoke("GetUserStatus", profileData.userName)
+      //   .then(function(e) {
+      //     console.log(e);
+      //   })
+      //   .catch(err => console.error(err.toString()));
+      // props.statusHub.on("ReceiveMessage", (user, message, roomId, messageId, postedAt) => {
+      // });
+    }
+  }, []);
   const [showFirstAdd, setShowFirstAdd] = useState(profileData !== null && profileData.productCount > 0 ? false : true);
   const [modalShow, setModalShow] = useState(false);
   const textCopy = useRef();
@@ -241,6 +254,7 @@ function Page(props) {
     return (
       <UserProductsContext.Provider value={userProductsDispatch}>
         <div className="profile_container">
+          <title>قارون</title>
           <Nav />
           <ProfileHeader profileData={profileData} setView={setView} scrollToProducts={scrollToProducts} sellLimit={sellLimit} />
           {showFirstAdd ? (
@@ -295,7 +309,11 @@ function Page(props) {
                   </div>
                   <div className="col-12 p-0 rtl d-flex justify-content-between align-items-center">
                     <textarea
-                      value={"خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." + "\n" + `https://qarun.ir/login?user=${profileData.userName !== undefined ? profileData.userName : ""}`}
+                      value={
+                        "خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." +
+                          "\n" +
+                          `https://qarun.ir/login?user=${profileData.userName !== undefined ? profileData.userName : ""}`
+                      }
                       readOnly
                       className="share_text"
                       ref={textCopy}
@@ -348,6 +366,7 @@ function Page(props) {
   case 2:
     return (
       <>
+        <title>قارون</title>
         <Nav />
         <EditProfile setView={setView} profileData={profileData} />
       </>
@@ -359,6 +378,7 @@ function Page(props) {
     }
     return (
       <UserProductsContext.Provider value={userProductsDispatch}>
+        <title>قارون</title>
         <Nav />
         <ProfileHeader setView={setView} profileData={profileData} scrollToProducts={scrollToProducts} sellLimit={sellLimit} />
         {showFirstAdd ? (
@@ -413,7 +433,11 @@ function Page(props) {
                 </div>
                 <div className="col-12 p-0 rtl d-flex justify-content-between align-items-center">
                   <textarea
-                    value={"خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." + "\n" + `https://qarun.ir/login?user=${profileData.userName !== undefined ? profileData.userName : ""}`}
+                    value={
+                      "خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." +
+                        "\n" +
+                        `https://qarun.ir/login?user=${profileData.userName !== undefined ? profileData.userName : ""}`
+                    }
                     readOnly
                     className="share_text"
                     ref={textCopy}

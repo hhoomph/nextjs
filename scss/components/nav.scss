@@ -96,6 +96,7 @@
     font-size: 2em;
     width: 25%;
     text-align: center;
+    position: relative;
     transition: all 0.2s;
     &:hover {
       color: $main_color;
@@ -124,22 +125,52 @@
       height: 70%;
       fill: $bottomIcon_color;
     }
+    &.notify:after {
+      display: block;
+      content: "";
+      width: 5px;
+      height: 5px;
+      margin: auto;
+      margin-top: -8px;
+      padding-top: 0;
+      border-bottom: 2px solid;
+      border-radius: 10px;
+      background: linear-gradient(270deg, #ffa51b 0, #fc884b 51%, #fa5048);
+    }
     .badge {
       position: absolute;
-      width: 6.5vw;
-      height: 6.5vw;
-      max-width: 2.5rem;
-      max-height: 2.5rem;
-      border-radius: 2rem;
-      font-size: 3.2vw;
+      width: 11.5vw;
+      height: auto;
+      max-width: 2.8rem;
+      border-radius: 5px;
+      font-size: 0.69rem;
       font-weight: 100;
-      padding: 2px;
+      padding: 3px;
       text-align: center;
-      line-height: 1.7;
-      top: 1vw;
-      left: 11vw;
+      line-height: normal;
+      top: -5vw;
+      left: 4.2vw;
       color: #fff;
       background-image: linear-gradient(90deg, #feaa2d, #fc884b 51%, #fa6966);
+      z-index: 2;
+      .font_icon {
+        font-size: 0.88rem;
+        margin-right: 2px;
+        fill: #fff;
+        width: 0.88rem;
+      }
+      .arrow-down {
+        position: absolute;
+        bottom: -9px;
+        left: 8px;
+        width: 0;
+        height: 0;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-top: 12px solid #fc8b48;
+        transform: rotate(1turn);
+        z-index: 0;
+      }
     }
   }
 }

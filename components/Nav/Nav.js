@@ -88,17 +88,34 @@ const Nav = props => {
       <nav className="d-flex d-lg-none bottom_nav navbar fixed-bottom navbar-white bg-white">
         <div className="col-12 d-flex justify-content-center p-1">
           <Link href="/profile" passHref>
-            <a className="nav_Icons">
-              <UserIcon className="svg_Icons" />
-              {/* <img src={"/static/img/user.png"} className="svg_Icons" style={{ width: "2rem", height: "2rem" }} />
-              <div className="badge badge-success">2</div> */}
-            </a>
+            {props.notify > 0 ? (
+              <a className="nav_Icons notify">
+                <UserIcon className="svg_Icons" />
+                <div className="badge badge-success">
+                  <FaShoppingBasket className="font_icon" />
+                  43
+                  <span className="arrow-down"></span>
+                </div>
+              </a>
+            ) : (
+              <a className="nav_Icons">
+                <UserIcon className="svg_Icons" />
+              </a>
+            )}
           </Link>
           <Link href="/activity" passHref>
             <a className="nav_Icons">
               {/* <MenuSvg className="svg_Icons" /> */}
               <HeartIcon className="svg_Icons" />
             </a>
+            {/* If Have Notify*/}
+            {/* <a className="nav_Icons notify">
+              <MenuSvg className="svg_Icons" />
+              <HeartIcon className="svg_Icons" />
+              <div className="badge badge-success">
+                <HeartIcon className="font_icon" />2<span className="arrow-down"></span>
+              </div>
+            </a> */}
           </Link>
           <Link href="/add-product" passHref>
             <a className="nav_Icons">

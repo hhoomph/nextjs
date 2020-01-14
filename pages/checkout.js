@@ -117,11 +117,12 @@ function Page(props) {
     // }
     return (
       <>
+        <title>قارون</title>
         <Nav />
         <div className="container mb-1 rtl checkout_page">
           <div className="row mb-3 p-2 header_link">
             <div className="col pt-2 text-center">
-              <a className="d-inline-block btn-main" onClick={stepTwo}>
+              <a className="d-inline-block btn-main btn-green" onClick={stepTwo}>
                   ثبت نهایی
                 {loading ? <Loading className="font_icon" /> : <FaCheck className="font_icon" />}
               </a>
@@ -160,11 +161,12 @@ function Page(props) {
   case 2:
     return (
       <>
+        <title>قارون</title>
         <Nav />
         <div className="container mb-1 rtl checkout_page">
           <div className="row mb-3 p-2 header_link">
             <div className="col pt-2 text-center">
-              <a className="d-inline-block btn-main" onClick={stepThree}>
+              <a className="d-inline-block btn-main btn-green" onClick={stepThree}>
                   پرداخت
                 {loading ? <Loading className="font_icon" /> : <FaCheckDouble className="font_icon" />}
               </a>

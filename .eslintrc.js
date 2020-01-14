@@ -21,7 +21,7 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: "module"
   },
-  plugins: ["react"],
+  plugins: ["react", "react-hooks"],
   rules: {
     indent: [2, 2],
     "linebreak-style": ["warn", "windows"],

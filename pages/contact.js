@@ -7,6 +7,7 @@ import "../scss/components/aboutPage.scss";
 function Page(props) {
   return (
     <>
+      <title>قارون</title>
       <Nav />
       <div className="container mb-1 about_page">
         <div className="row">

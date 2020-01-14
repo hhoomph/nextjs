@@ -202,7 +202,7 @@ const Header = props => {
           <div className="col-6 pr-4 d-flex justify-content-end">
             <Link href="" passHref>
               <a className="nav_Icons">
-                <SendSvg className="svg_Icons" />
+                <SendSvg className="svg_Icons send_icon" />
               </a>
             </Link>
           </div>

@@ -128,6 +128,7 @@ const Page = props => {
   //console.log(activities);
   return (
     <>
+      <title>قارون</title>
       <Nav />
       <div className="container pt-2 pb-2 search_component">
         <div className="row cart_title">

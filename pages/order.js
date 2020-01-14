@@ -178,6 +178,7 @@ function Page(props) {
   }, [view, orderPage]);
   return (
     <>
+      <title>قارون</title>
       <Nav />
       <div className="container cart_filter">
         <div className="row">

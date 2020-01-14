@@ -38,6 +38,7 @@ function Page(props) {
   };
   return (
     <>
+      <title>قارون</title>
       <Nav />
       <div className="container mb-5 about_page">
         <div className="row">

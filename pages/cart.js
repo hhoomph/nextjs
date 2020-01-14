@@ -258,12 +258,13 @@ function Page(props) {
   return (
     <CartContext.Provider value={cartDispatch}>
       <CartCountContext.Provider value={cartCountDispatch}>
+        <title>قارون</title>
         <Nav cartCount={cartCount} />
         {view === 1 && (
           <div className="container cart_head_continue">
             <div className="row mb-3 p-2 header_link">
               <div className="col pt-2 text-center">
-                <a className="d-inline-block btn-main" onClick={handleOrder}>
+                <a className="d-inline-block btn-main btn-green" onClick={handleOrder}>
                   ادامه
                   {loading ? <Loading className="font_icon" /> : <FaArrowLeft className="font_icon" />}
                 </a>

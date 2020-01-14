@@ -11,6 +11,7 @@ import fetchData from "../utils/fetchData";
 import SubmitButton from "../components/Button/SubmitButton";
 import { numberSeparator, removeSeparator, forceNumeric } from "../utils/tools";
 import { FaArrowLeft, FaArrowRight, FaMinus, FaPlus, FaCaretDown, FaCaretUp } from "react-icons/fa";
+import { FiChevronRight } from "react-icons/fi";
 import "../scss/components/inventory.scss";
 const User = dynamic({
   loader: () => import("../components/Friend/User"),
@@ -18,6 +19,7 @@ const User = dynamic({
   ssr: true
 });
 function Page(props) {
+  const Router = useRouter();
   const [loading, setLoading] = useState(false);
   const Inventory = props.Inventory.data || [];
   const [walletCharge, setWalletCharge] = useState(Inventory.walletCharge || 0);
@@ -44,9 +46,19 @@ function Page(props) {
   return (
     <>
       <Head>
-        <title>موجودی</title>
+        <title>قارون | موجودی</title>
       </Head>
       <Nav />
+      <div className="container inventory_page">
+        <div className="row p-2 page_title">
+          <div className="col-10 text-center align-self-center">
+            <h6 className="ml-5 pl-3 mt-1">موجودی</h6>
+          </div>
+          <div className="col-2 text-right align-self-center pr-1">
+            <FiChevronRight className="font_icon back_icon" onClick={() => Router.back()} />
+          </div>
+        </div>
+      </div>
       <div className="container pt-3 inventory_page">
         <div className="row">
           <div className="col-12 text-center">
@@ -61,7 +73,7 @@ function Page(props) {
         <div className="row">
           <div className="col-12 d-block pb-2" style={{ position: "relative", zIndex: "1" }}>
             <div className="col-6 text-center float-right">
-              <SubmitButton loading={loading} onClick={console.log("")} text="شارژ" className="d-inline-block btn-main charge">
+              <SubmitButton loading={loading} onClick={console.log("")} text="شارژ" className="d-inline-block btn-main btn-green charge">
                 <FaPlus className="font_icon" />
               </SubmitButton>
             </div>

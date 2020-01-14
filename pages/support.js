@@ -191,6 +191,7 @@ const Page = props => {
   }, [isFetching]);
   return (
     <>
+      <title>قارون</title>
       <Nav />
       <div className="container pb-0 pr-0 ticket_head">
         <div className="row p-2 cart_title">
@@ -234,7 +235,7 @@ const Page = props => {
           </div>
         </Modal.Body>
         <Modal.Footer className="justify-content-center">
-          <SubmitButton loading={loading} onClick={addTicket} text="ثبت تیکت" className="d-inline-block btn-main">
+          <SubmitButton loading={loading} onClick={addTicket} text="ثبت تیکت" className="d-inline-block btn-main btn-green">
             <FaPlusCircle className="font_icon" />
           </SubmitButton>
         </Modal.Footer>

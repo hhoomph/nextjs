@@ -65,6 +65,7 @@ function Page(props) {
       });
   return (
     <>
+      <title>قارون</title>
       <Nav />
       <div className="container pb-0 map_header friends_page">
         <div className="row">

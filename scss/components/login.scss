@@ -70,15 +70,11 @@
       }
     }
   }
-  .btn-submit {
-    background: $button_color;
-    color: #fff;
-    border: none;
-    &:hover {
-      animation: shadow_drop 0.8s both;
-      animation-iteration-count: infinite;
-    }
-  }
+  // .btn-submit {
+  //   background: $button_color;
+  //   color: #fff;
+  //   border: none;
+  // }
   input {
     background: #E0E0E0;
     direction: ltr;

@@ -131,6 +131,7 @@ function Page(props) {
   }, [catActive]);
   return (
     <UserProductsContext.Provider value={userProductsDispatch}>
+      <title>قارون</title>
       <Nav />
       <UserHeader profileData={profileData} userOnline={true} scrollToProducts={scrollToProducts} />
       <div className="container mb-1 cat_product_row">
