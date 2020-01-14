@@ -135,7 +135,13 @@ body {
   .ask_text {
     font-size: 0.9rem;
     color: #616161;
+    line-height: normal;
     text-align: center;
+    .font_icon {
+      font-size: 1rem;
+      margin-left: 4px;
+      color: #ef6c00;
+    }
   }
   .ask_question {
     font-size: 1rem;

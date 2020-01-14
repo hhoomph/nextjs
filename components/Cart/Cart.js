@@ -176,7 +176,7 @@ const Cart = props => {
   };
   return (
     <div className="container cart">
-    <Ask header={"تحویل گرفتن سفارش"} text={"سفارش خود را تحویل گرفتید؟!"} command={deliveredOrder} setModalShow={setAskModalShow} modalShow={askModalShow} loading={loading} />
+    <Ask header={"تحویل گرفتن سفارش"} text={""} customerRecive={true} command={deliveredOrder} setModalShow={setAskModalShow} modalShow={askModalShow} loading={loading} />
       <div className={"row cart_seller justify-content-end"} onClick={toggleRow}>
         <div className="col-2 align-self-center text-left">
           <a className="nav_Icons active">{showToggleRow()}</a>

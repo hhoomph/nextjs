@@ -24,7 +24,6 @@ import "../scss/components/productPage.scss";
 import { setTimeout } from "core-js";
 function Page(props) {
   const productData = props.result.data || [];
-  console.log(productData);
   const Router = useRouter();
   //const { productId } = Router.query;
   const productId = Router.query.id;
@@ -156,6 +155,13 @@ function Page(props) {
       toast.warn("لطفا دلیل تخلف کاربر را مشخص کنید.");
     }
   };
+  const showHashtags = productData.hashtags.map(h => (
+    <Link href={`/hashtags/${h.replace("#", "")}`} passHref key={h}>
+      <a className="hashtag" title={h.replace("#", "")}>
+        {h}
+      </a>
+    </Link>
+  ));
   // Determine Server Or Browser env
   if (typeof window !== "undefined" && window.document !== undefined) {
     //console.log('browser');
@@ -290,7 +296,22 @@ function Page(props) {
             </div>
           </div>
         </div>
-        <div className="container mb-3 pt-2 related_products">
+        <div className="container pb-5 pt-2 product_hashtags">
+          <div className="row pb-3">
+            <div className="col-12 mt-2 text-right">
+              <h6 className="">هشتگ ها</h6>
+            </div>
+            <div className="col-12 rtl">
+              <Link href={`/categories/${productData.categoryId.replace(",", "")}`} passHref>
+                <a className="hashtag" style={{ fontWeight: "bold" }} title={productData.category.replace(",", "")}>
+                  #{productData.category.replace(",", "")}
+                </a>
+              </Link>
+              {showHashtags}
+            </div>
+          </div>
+        </div>
+        {/* <div className="container mb-3 pt-2 related_products">
           <div className="row">
             <div className="col-12">
               <div className="related_product_ttile">
@@ -299,7 +320,7 @@ function Page(props) {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

@@ -247,6 +247,22 @@
       }
     }
   }
+  .product_hashtags {
+    a {
+      cursor: pointer;
+      color: #757575;
+      font-size: 0.8rem;
+      display: inline-block;
+      padding: 2px;
+      margin-left: 4px;
+      transition: all 0.1s ease;
+      &:hover,
+      &:active {
+        font-size: 0.85rem;
+        color: #000;
+      }
+    }
+  }
   .related_products {
     .related_product_ttile {
       width: 94%;

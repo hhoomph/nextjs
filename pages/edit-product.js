@@ -343,7 +343,7 @@ function Page(props) {
   };
   switch (view) {
   case 1:
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       window.scroll(0, 0);
     }
     return (
@@ -635,7 +635,7 @@ function Page(props) {
   case 4:
     return (
       <>
-      <title>قارون</title>
+        <title>قارون</title>
         <Nav />
         <div className="container mb-1 rtl add_product">
           <div className="row mb-3 p-1 header_link_tab image_tabs">

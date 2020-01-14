@@ -133,6 +133,23 @@ app
       const queryParams = { id: req.params.id };
       app.render(req, res, actualPage, queryParams);
     });
+    server.get("/hashtags/manifest.json", (req, res) => {
+      const parsedUrl = parse(req.url, true);
+      const { pathname } = parsedUrl;
+      const filePath = join(__dirname, "public", pathname);
+      app.serveStatic(req, res, filePath);
+    });
+    server.get("/hashtags/favicon.ico", (req, res) => {
+      const parsedUrl = parse(req.url, true);
+      const { pathname } = parsedUrl;
+      const filePath = join(__dirname, "public", pathname);
+      app.serveStatic(req, res, filePath);
+    });
+    server.get("/hashtags/:id", (req, res) => {
+      const actualPage = "/hashtags";
+      const queryParams = { id: req.params.id };
+      app.render(req, res, actualPage, queryParams);
+    });
     server.get("/service-worker.js", (req, res) => {
       const parsedUrl = parse(req.url, true);
       const { pathname } = parsedUrl;

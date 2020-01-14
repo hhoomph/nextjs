@@ -108,13 +108,21 @@ const Order = props => {
       </div>
       <Ask
         header={"لغو سفارش"}
-        text={"با لغو این سفارش هزینه آن به حساب خریدار واریز می شود."}
+        text={"سفارش مورد نظر لغو شود؟"}
         command={cancelOrder}
         setModalShow={setAskModalShow}
         modalShow={askModalShow}
         loading={loading}
       />
-      <Ask header={"قبول و ارسال"} text={""} command={deliveredOrder} setModalShow={setAskModalShow1} modalShow={askModalShow1} loading={loading} />
+      <Ask
+        header={"تایید و ارسال"}
+        text={""}
+        sellerSend={true}
+        command={deliveredOrder}
+        setModalShow={setAskModalShow1}
+        modalShow={askModalShow1}
+        loading={loading}
+      />
       <div className="container mb-2 mt-2 cart p-0 pr-1 pl-1">
         <div className="row cart_seller p-1 justify-content-end">
           <div className="col-5 m-auto rtl p-0 pl-1 text-center">
