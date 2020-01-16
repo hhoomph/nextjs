@@ -64,19 +64,20 @@ const Product = props => {
   };
   return (
     <div className="col-4 col-lg-2 product">
-      <div className="product_frame">
+      <div className={`product_frame ${props.profile ? "profileP_frame" : ""}`}>
+        {props.favorite && (
+          <Link href={`/user/${props.sellerUserName}`} passHref>
+            <a className="product_user text-truncate">
+              {props.sellerUserName}
+              <img src={props.sellerAvatar} alt={props.sellerUserName} className="product_img" />
+            </a>
+          </Link>
+        )}
         <Link href={`/product/${props.id}`} as={`/product/${props.id}/${props.name.trim().replace(/ /g, "-")}`} passHref>
           <a className="product_link">
             <img src={props.image} alt={props.productName} className="product_img" />
           </a>
         </Link>
-        {props.favorite && (
-          <Link href={`/user/${props.sellerUserName}`} passHref>
-            <a className="product_user">
-              <img src={props.sellerAvatar} alt={props.sellerUserName} className="product_img" />
-            </a>
-          </Link>
-        )}
         {props.profile ? (
           <>
             <div className={`product_basket ${disableClass}`} id={props.id} onClick={disableToggle}>
@@ -120,6 +121,7 @@ const Product = props => {
           </div>
         )}
         <div className="product_text mb-1">
+          <p className="text-truncate">{props.name}</p>
           <p>
             <span className="product_price">{numberSeparator(props.price)} </span>
             <span className="product_currency">تومان</span>

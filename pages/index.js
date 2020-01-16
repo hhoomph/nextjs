@@ -195,7 +195,7 @@ function Page(props) {
     <CartCountContext.Provider value={cartCountDispatch}>
       <title>قارون</title>
       <IndexHeader cartCount={cartCount} />
-      <Nav _tkn={props._tkn} _tkn={props._tkn} orderCount={props.orderCount} eventCount={props.eventCount} statusHub={props.statusHub} cartCount={cartCount} />
+      <Nav _tkn={props._tkn} orderCount={props.orderCount} eventCount={props.eventCount} statusHub={props.statusHub} cartCount={cartCount} />
       {noFriends && Profile !== null ? (
         <>
           <FirstUserSuggest users={suggestionUsers} />
