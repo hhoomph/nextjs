@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useRef, useState, useEffect, memo } from "react";
+import React, { Fragment, useContext, useRef, useState, useEffect, useCallback, memo } from "react";
 import dynamic from "next/dynamic";
 import Loading from "../components/Loader/Loading";
 import { useRouter } from "next/router";
@@ -11,10 +11,10 @@ import { MdAddCircle, MdAddAPhoto } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import { numberSeparator, removeSeparator, forceNumeric } from "../utils/tools";
 import SubmitButton from "../components/Button/SubmitButton";
-import ReactCrop from "react-image-crop";
+import Cropper from "react-easy-crop";
+import Slider from "@material-ui/core/Slider";
 import Modal from "react-bootstrap/Modal";
 import RRS from "react-responsive-select";
-import "react-image-crop/lib/ReactCrop.scss";
 import "../scss/components/addProduct.scss";
 //import { setTimeout } from 'core-js';
 function Page(props) {
@@ -142,16 +142,13 @@ function Page(props) {
   // Add Crop Image
   const [modalShow, setModalShow] = useState(false);
   const [src, setSrc] = useState(null);
-  const [crop, setCrop] = useState({
-    unit: "%",
-    width: 50,
-    height: 50,
-    x: 25,
-    y: 25,
-    aspect: 4 / 5
-  });
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [croppedImageUrl, setCroppedImageUrl] = useState(null);
-  const [imageRef, setImageRef] = useState(null);
+  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  }, []);
   let fileUrl = null;
   const onSelectFile = e => {
     if (e.target.files && e.target.files.length > 0) {
@@ -161,38 +158,38 @@ function Page(props) {
       setModalShow(true);
     }
   };
-  const onImageLoaded = image => {
-    setImageRef(image);
+  const createImage = url =>
+    new Promise((resolve, reject) => {
+      const image = new Image();
+      image.addEventListener("load", () => resolve(image));
+      image.addEventListener("error", error => reject(error));
+      image.setAttribute("crossOrigin", "anonymous"); // needed to avoid cross-origin issues on CodeSandbox
+      image.src = url;
+    });
+  const getRadianAngle = degreeValue => {
+    return (degreeValue * Math.PI) / 180;
   };
-  const onCropComplete = c => {
-    makeClientCrop(c);
-  };
-  const onCropChange = (c, percentCrop) => {
-    setCrop(c);
-  };
-  const makeClientCrop = async c => {
-    if (imageRef !== null && c.width && c.height) {
-      const _croppedImageUrl = await getCroppedImg(imageRef, c, "newFile.jpg");
-      setCroppedImageUrl(_croppedImageUrl);
-      fileInput.current.value = "";
-    }
-  };
-  const getCroppedImg = (image, c, fileName) => {
+  const getCroppedImg = async (imageSrc, pixelCrop, rotation = 0) => {
+    const image = await createImage(imageSrc);
     const canvas = document.createElement("canvas");
-    const scaleX = image.naturalWidth / image.width;
-    const scaleY = image.naturalHeight / image.height;
-    canvas.width = 640;
-    canvas.height = 800;
     const ctx = canvas.getContext("2d");
-    ctx.drawImage(image, c.x * scaleX, c.y * scaleY, c.width * scaleX, c.height * scaleY, 0, 0, 640, 800);
-    return new Promise((resolve, reject) => {
-      canvas.toBlob(blob => {
-        if (!blob) {
-          console.error("Canvas is empty");
-          return;
-        }
-        blob.name = fileName;
-        resolve(blob);
+    const safeArea = Math.max(image.width, image.height) * 2;
+    canvas.width = safeArea;
+    canvas.height = safeArea;
+    ctx.translate(safeArea / 2, safeArea / 2);
+    ctx.rotate(getRadianAngle(rotation));
+    ctx.translate(-safeArea / 2, -safeArea / 2);
+    ctx.drawImage(image, safeArea / 2 - image.width * 0.5, safeArea / 2 - image.height * 0.5);
+    const data = ctx.getImageData(0, 0, safeArea, safeArea);
+    canvas.width = pixelCrop.width;
+    canvas.height = pixelCrop.height;
+    ctx.putImageData(data, 0 - safeArea / 2 + image.width * 0.5 - pixelCrop.x, 0 - safeArea / 2 + image.height * 0.5 - pixelCrop.y);
+    // As Base64 string
+    // return canvas.toDataURL('image/jpeg');
+    // As a blob
+    return new Promise(resolve => {
+      canvas.toBlob(file => {
+        resolve(file);
       }, "image/jpeg");
     });
   };
@@ -242,8 +239,13 @@ function Page(props) {
     toast.dismiss();
     setModalShow(false);
     const errs = [];
-    // const file = e.target.files[0];
-    const file = new File([croppedImageUrl], "newFile.jpg", { type: "image/jpeg", lastModified: Date.now() });
+    setLoading(true);
+    const croppedImage = await getCroppedImg(src, croppedAreaPixels, 0);
+    setCroppedImageUrl(croppedImage);
+    fileInput.current.value = "";
+    setLoading(false);
+    const file = new File([croppedImage], "newFile.jpg", { type: "image/jpeg", lastModified: Date.now() });
+    // const file = new File([croppedImageUrl], "newFile.jpg", { type: "image/jpeg", lastModified: Date.now() });
     const formData = new FormData();
     const types = ["image/png", "image/jpeg", "image/gif"];
     if (types.every(type => file.type !== type)) {
@@ -598,28 +600,44 @@ function Page(props) {
               </div>
             </div>
           </div>
-          <Modal onHide={() => setModalShow(false)} show={modalShow} size="xl" aria-labelledby="contained-modal-title-vcenter" centered scrollable>
+          <Modal
+            onHide={() => setModalShow(false)}
+            className="crop_image_modal"
+            show={modalShow}
+            size="xl"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            scrollable
+          >
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">بارگذاری تصویر</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               {src && (
-                <ReactCrop
-                  src={src}
-                  crop={crop}
-                  locked={false}
-                  onImageLoaded={e => {
-                    onImageLoaded(e);
-                  }}
-                  onComplete={e => {
-                    onCropComplete(e);
-                  }}
-                  onChange={e => {
-                    onCropChange(e);
-                  }}
-                  minWidth={640}
-                  minHeight={800}
-                />
+                <>
+                  <div className="crop-container">
+                    <Cropper
+                      image={src}
+                      crop={crop}
+                      zoom={zoom}
+                      aspect={4 / 5}
+                      onCropChange={setCrop}
+                      onCropComplete={onCropComplete}
+                      onZoomChange={setZoom}
+                    />
+                  </div>
+                  <div className="controls">
+                    <Slider
+                      value={zoom}
+                      min={1}
+                      max={3}
+                      step={0.1}
+                      aria-labelledby="Zoom"
+                      onChange={(e, zoom) => setZoom(zoom)}
+                      classes={{ container: "slider" }}
+                    />
+                  </div>
+                </>
               )}
             </Modal.Body>
             <Modal.Footer className="justify-content-center">
@@ -690,28 +708,44 @@ function Page(props) {
               </div>
             </div>
           </div>
-          <Modal onHide={() => setModalShow(false)} show={modalShow} size="xl" aria-labelledby="contained-modal-title-vcenter" centered scrollable>
+          <Modal
+            onHide={() => setModalShow(false)}
+            show={modalShow}
+            className="crop_image_modal"
+            size="xl"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            scrollable
+          >
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">بارگذاری تصویر</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               {src && (
-                <ReactCrop
-                  src={src}
-                  crop={crop}
-                  locked={false}
-                  onImageLoaded={e => {
-                    onImageLoaded(e);
-                  }}
-                  onComplete={e => {
-                    onCropComplete(e);
-                  }}
-                  onChange={e => {
-                    onCropChange(e);
-                  }}
-                  minWidth={640}
-                  minHeight={800}
-                />
+                <>
+                  <div className="crop-container">
+                    <Cropper
+                      image={src}
+                      crop={crop}
+                      zoom={zoom}
+                      aspect={4 / 5}
+                      onCropChange={setCrop}
+                      onCropComplete={onCropComplete}
+                      onZoomChange={setZoom}
+                    />
+                  </div>
+                  <div className="controls">
+                    <Slider
+                      value={zoom}
+                      min={1}
+                      max={3}
+                      step={0.1}
+                      aria-labelledby="Zoom"
+                      onChange={(e, zoom) => setZoom(zoom)}
+                      classes={{ container: "slider" }}
+                    />
+                  </div>
+                </>
               )}
             </Modal.Body>
             <Modal.Footer className="justify-content-center">

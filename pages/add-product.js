@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useRef, useState, useEffect, memo } from "react";
+import React, { Fragment, useContext, useRef, useState, useEffect, useCallback, memo } from "react";
 import dynamic from "next/dynamic";
 import Loading from "../components/Loader/Loading";
 import Router from "next/router";
@@ -12,10 +12,12 @@ import { MdAddCircle, MdAddAPhoto } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import { numberSeparator, removeSeparator, forceNumeric } from "../utils/tools";
 import SubmitButton from "../components/Button/SubmitButton";
-import ReactCrop from "react-image-crop";
+// import ReactCrop from "react-image-crop";
+import Cropper from "react-easy-crop";
+import Slider from "@material-ui/core/Slider";
 import Modal from "react-bootstrap/Modal";
 import RRS from "react-responsive-select";
-import "react-image-crop/lib/ReactCrop.scss";
+// import "react-image-crop/lib/ReactCrop.scss";
 import "../scss/components/addProduct.scss";
 //import { setTimeout } from 'core-js';
 function Page(props) {
@@ -116,19 +118,61 @@ function Page(props) {
   });
   let imgId = 0;
   const [uploadedImages, setUploadedImages] = useState([]);
+  // New Crop
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  }, []);
   // Add Crop Image
   const [modalShow, setModalShow] = useState(false);
   const [src, setSrc] = useState(null);
-  const [crop, setCrop] = useState({
-    unit: "%",
-    width: 50,
-    height: 50,
-    // minWidth: 640,
-    // minHeight: 800,
-    x: 25,
-    y: 25,
-    aspect: 4 / 5
-  });
+  const createImage = url =>
+    new Promise((resolve, reject) => {
+      const image = new Image();
+      image.addEventListener("load", () => resolve(image));
+      image.addEventListener("error", error => reject(error));
+      image.setAttribute("crossOrigin", "anonymous"); // needed to avoid cross-origin issues on CodeSandbox
+      image.src = url;
+    });
+  const getRadianAngle = degreeValue => {
+    return (degreeValue * Math.PI) / 180;
+  };
+  const getCroppedImg = async (imageSrc, pixelCrop, rotation = 0) => {
+    const image = await createImage(imageSrc);
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    const safeArea = Math.max(image.width, image.height) * 2;
+    canvas.width = safeArea;
+    canvas.height = safeArea;
+    ctx.translate(safeArea / 2, safeArea / 2);
+    ctx.rotate(getRadianAngle(rotation));
+    ctx.translate(-safeArea / 2, -safeArea / 2);
+    ctx.drawImage(image, safeArea / 2 - image.width * 0.5, safeArea / 2 - image.height * 0.5);
+    const data = ctx.getImageData(0, 0, safeArea, safeArea);
+    canvas.width = pixelCrop.width;
+    canvas.height = pixelCrop.height;
+    ctx.putImageData(data, 0 - safeArea / 2 + image.width * 0.5 - pixelCrop.x, 0 - safeArea / 2 + image.height * 0.5 - pixelCrop.y);
+    // As Base64 string
+    // return canvas.toDataURL('image/jpeg');
+    // As a blob
+    return new Promise(resolve => {
+      canvas.toBlob(file => {
+        resolve(file);
+      }, "image/jpeg");
+    });
+  };
+  // const [crop, setCrop] = useState({
+  //   unit: "%",
+  //   width: 50,
+  //   height: 50,
+  //   // minWidth: 640,
+  //   // minHeight: 800,
+  //   x: 25,
+  //   y: 25,
+  //   aspect: 4 / 5
+  // });
   const [croppedImageUrl, setCroppedImageUrl] = useState(null);
   const [imageRef, setImageRef] = useState(null);
   let fileUrl = null;
@@ -140,43 +184,43 @@ function Page(props) {
       setModalShow(true);
     }
   };
-  const onImageLoaded = image => {
-    setImageRef(image);
-  };
-  const onCropComplete = c => {
-    makeClientCrop(c);
-  };
-  const onCropChange = (c, percentCrop) => {
-    setCrop(c);
-  };
-  const makeClientCrop = async c => {
-    if (imageRef !== null && c.width && c.height) {
-      const _croppedImageUrl = await getCroppedImg(imageRef, c, "newFile.jpg");
-      setCroppedImageUrl(_croppedImageUrl);
-      fileInput.current.value = "";
-    }
-  };
-  const getCroppedImg = (image, c, fileName) => {
-    const canvas = document.createElement("canvas");
-    const scaleX = image.naturalWidth / image.width;
-    const scaleY = image.naturalHeight / image.height;
-    canvas.width = 640;
-    canvas.height = 800;
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(image, c.x * scaleX, c.y * scaleY, c.width * scaleX, c.height * scaleY, 0, 0, 640, 800);
-    return new Promise((resolve, reject) => {
-      canvas.toBlob(blob => {
-        if (!blob) {
-          console.error("Canvas is empty");
-          return;
-        }
-        blob.name = fileName;
-        //window.URL.revokeObjectURL(fileUrl);
-        //fileUrl = window.URL.createObjectURL(blob);
-        resolve(blob);
-      }, "image/jpeg");
-    });
-  };
+  // const onImageLoaded = image => {
+  //   setImageRef(image);
+  // };
+  // const onCropComplete = c => {
+  //   makeClientCrop(c);
+  // };
+  // const onCropChange = (c, percentCrop) => {
+  //   setCrop(c);
+  // };
+  // const makeClientCrop = async c => {
+  //   if (imageRef !== null && c.width && c.height) {
+  //     const _croppedImageUrl = await getCroppedImg(imageRef, c, "newFile.jpg");
+  //     setCroppedImageUrl(_croppedImageUrl);
+  //     fileInput.current.value = "";
+  //   }
+  // };
+  // const getCroppedImg = (image, c, fileName) => {
+  //   const canvas = document.createElement("canvas");
+  //   const scaleX = image.naturalWidth / image.width;
+  //   const scaleY = image.naturalHeight / image.height;
+  //   canvas.width = 640;
+  //   canvas.height = 800;
+  //   const ctx = canvas.getContext("2d");
+  //   ctx.drawImage(image, c.x * scaleX, c.y * scaleY, c.width * scaleX, c.height * scaleY, 0, 0, 640, 800);
+  //   return new Promise((resolve, reject) => {
+  //     canvas.toBlob(blob => {
+  //       if (!blob) {
+  //         console.error("Canvas is empty");
+  //         return;
+  //       }
+  //       blob.name = fileName;
+  //       //window.URL.revokeObjectURL(fileUrl);
+  //       //fileUrl = window.URL.createObjectURL(blob);
+  //       resolve(blob);
+  //     }, "image/jpeg");
+  //   });
+  // };
   // End Of Crop Image
   const addProduct = async () => {
     if (categoryId !== null && title != "") {
@@ -246,47 +290,58 @@ function Page(props) {
     setModalShow(false);
     const errs = [];
     // const file = e.target.files[0];
-    const file = new File([croppedImageUrl], "newFile.jpg", { type: "image/jpeg", lastModified: Date.now() });
-    const formData = new FormData();
-    const types = ["image/png", "image/jpeg", "image/gif"];
-    if (types.every(type => file.type !== type)) {
-      errs.push(`فرمت '${file.type}' پشتیبانی نمی شود.`);
+    try {
+      setLoading(true);
+      const croppedImage = await getCroppedImg(src, croppedAreaPixels, 0);
+      setCroppedImageUrl(croppedImage);
+      fileInput.current.value = "";
+      setLoading(false);
+      const file = new File([croppedImage], "newFile.jpg", { type: "image/jpeg", lastModified: Date.now() });
+      // const file = new File([croppedImageUrl], "newFile.jpg", { type: "image/jpeg", lastModified: Date.now() });
+      const formData = new FormData();
+      const types = ["image/png", "image/jpeg", "image/gif"];
+      if (types.every(type => file.type !== type)) {
+        errs.push(`فرمت '${file.type}' پشتیبانی نمی شود.`);
+      }
+      if (file.size > 1550000) {
+        errs.push(`حجم فایل '${file.name}' بیشتر از حد مجاز است، لطفا فایل کم حجم تری انتخاب کنید.`);
+      }
+      formData.append("File", file);
+      formData.append("ProductId", productId);
+      if (errs.length) {
+        return errs.forEach(err => toast.warn(err));
+      }
+      setUploading(true);
+      const result = await fetchData(
+        "User/U_Product/UploadProductImageFromGalery",
+        {
+          method: "POST",
+          body: formData
+        },
+        nextCtx,
+        true
+      );
+      if (result.isSuccess) {
+        const all = uploadedImages
+          .concat({
+            id: result.data.pictureId,
+            url: `https://api.qarun.ir/${result.data.value}`,
+            thumbnail: `https://api.qarun.ir/${result.data.thumbNail}`,
+            active: true
+          })
+          .sort((a, b) => a.id - b.id);
+        setUploadedImages(all);
+        //toast.success('تصویر شما با موفقیت آپلود شد.');
+      } else if (result.message != undefined) {
+        toast.warn(result.message);
+      } else if (result.error != undefined) {
+        toast.error(result.error);
+      }
+      setUploading(false);
+    } catch (e) {
+      toast.warn("متاسفانه خطایی در بارگذاری عکس رخ داده است.");
+      console.error(e);
     }
-    if (file.size > 1550000) {
-      errs.push(`حجم فایل '${file.name}' بیشتر از حد مجاز است، لطفا فایل کم حجم تری انتخاب کنید.`);
-    }
-    formData.append("File", file);
-    formData.append("ProductId", productId);
-    if (errs.length) {
-      return errs.forEach(err => toast.warn(err));
-    }
-    setUploading(true);
-    const result = await fetchData(
-      "User/U_Product/UploadProductImageFromGalery",
-      {
-        method: "POST",
-        body: formData
-      },
-      nextCtx,
-      true
-    );
-    if (result.isSuccess) {
-      const all = uploadedImages
-        .concat({
-          id: result.data.pictureId,
-          url: `https://api.qarun.ir/${result.data.value}`,
-          thumbnail: `https://api.qarun.ir/${result.data.thumbNail}`,
-          active: true
-        })
-        .sort((a, b) => a.id - b.id);
-      setUploadedImages(all);
-      //toast.success('تصویر شما با موفقیت آپلود شد.');
-    } else if (result.message != undefined) {
-      toast.warn(result.message);
-    } else if (result.error != undefined) {
-      toast.error(result.error);
-    }
-    setUploading(false);
   };
   const showUploadedImages = () =>
     uploadedImages.map((image, index) => (
@@ -537,7 +592,12 @@ function Page(props) {
               </div>
               <div className="row mb-3 p-2 header_link">
                 <div className="col pt-2 text-center">
-                  <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main btn-green">
+                  <SubmitButton
+                    loading={loading || uploading}
+                    onClick={() => setProductImages()}
+                    text="ثبت نهایی محصول"
+                    className="d-inline-block btn-main btn-green"
+                  >
                     <FaCheck className="font_icon" />
                   </SubmitButton>
                 </div>
@@ -598,19 +658,32 @@ function Page(props) {
               </div>
               <div className="row mb-3 p-2 header_link">
                 <div className="col pt-2 text-center">
-                  <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main btn-green">
+                  <SubmitButton
+                    loading={loading || uploading}
+                    onClick={() => setProductImages()}
+                    text="ثبت نهایی محصول"
+                    className="d-inline-block btn-main btn-green"
+                  >
                     <FaCheck className="font_icon" />
                   </SubmitButton>
                 </div>
               </div>
             </div>
           </div>
-          <Modal onHide={() => setModalShow(false)} show={modalShow} size="xl" aria-labelledby="contained-modal-title-vcenter" centered scrollable>
+          <Modal
+            onHide={() => setModalShow(false)}
+            show={modalShow}
+            className="crop_image_modal"
+            size="xl"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            scrollable
+          >
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">بارگذاری تصویر</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              {src && (
+              {/* {src && (
                 <ReactCrop
                   src={src}
                   crop={crop}
@@ -627,8 +700,33 @@ function Page(props) {
                   minWidth={640}
                   minHeight={800}
                 />
+              )} */}
+              {src && (
+                <>
+                  <div className="crop-container">
+                    <Cropper
+                      image={src}
+                      crop={crop}
+                      zoom={zoom}
+                      aspect={4 / 5}
+                      onCropChange={setCrop}
+                      onCropComplete={onCropComplete}
+                      onZoomChange={setZoom}
+                    />
+                  </div>
+                  <div className="controls">
+                    <Slider
+                      value={zoom}
+                      min={1}
+                      max={3}
+                      step={0.1}
+                      aria-labelledby="Zoom"
+                      onChange={(e, zoom) => setZoom(zoom)}
+                      classes={{ container: "slider" }}
+                    />
+                  </div>
+                </>
               )}
-              {/* {croppedImageUrl && <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />} */}
             </Modal.Body>
             <Modal.Footer className="justify-content-center">
               {/* <button onClick={() => setModalShow(false)}>بستن</button> */}
@@ -691,19 +789,32 @@ function Page(props) {
               </div>
               <div className="row mb-3 p-2 header_link">
                 <div className="col pt-2 text-center">
-                  <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main btn-green">
+                  <SubmitButton
+                    loading={loading || uploading}
+                    onClick={() => setProductImages()}
+                    text="ثبت نهایی محصول"
+                    className="d-inline-block btn-main btn-green"
+                  >
                     <FaCheck className="font_icon" />
                   </SubmitButton>
                 </div>
               </div>
             </div>
           </div>
-          <Modal onHide={() => setModalShow(false)} show={modalShow} size="xl" aria-labelledby="contained-modal-title-vcenter" centered scrollable>
+          <Modal
+            onHide={() => setModalShow(false)}
+            show={modalShow}
+            className="crop_image_modal"
+            size="xl"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            scrollable
+          >
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">بارگذاری تصویر</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              {src && (
+              {/* {src && (
                 <ReactCrop
                   src={src}
                   crop={crop}
@@ -720,8 +831,33 @@ function Page(props) {
                   minWidth={640}
                   minHeight={800}
                 />
+              )} */}
+              {src && (
+                <>
+                  <div className="crop-container">
+                    <Cropper
+                      image={src}
+                      crop={crop}
+                      zoom={zoom}
+                      aspect={4 / 5}
+                      onCropChange={setCrop}
+                      onCropComplete={onCropComplete}
+                      onZoomChange={setZoom}
+                    />
+                  </div>
+                  <div className="controls">
+                    <Slider
+                      value={zoom}
+                      min={1}
+                      max={3}
+                      step={0.1}
+                      aria-labelledby="Zoom"
+                      onChange={(e, zoom) => setZoom(zoom)}
+                      classes={{ container: "slider" }}
+                    />
+                  </div>
+                </>
               )}
-              {/* {croppedImageUrl && <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />} */}
             </Modal.Body>
             <Modal.Footer className="justify-content-center">
               {/* <button onClick={() => setModalShow(false)}>بستن</button> */}
