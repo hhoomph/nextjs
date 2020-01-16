@@ -7,12 +7,21 @@ import SubmitButton from "../Button/SubmitButton";
 import WindowsWidth from "../WindowsWidth";
 import { IoIosMore } from "react-icons/io";
 import AppContext from "../../context/context";
+import { ToastContainer, toast } from "react-toastify";
 import "../../scss/components/userSuggest2.scss";
 const UserSuggest = props => {
   const [loading, setLoading] = useState(false);
   const [followed, setFollowed] = useState(props.isFollowed);
   const width = WindowsWidth();
   const userClass = width > 992 ? "p-1 text-center col-2 user_div" : "p-1 text-center col-4 user_div";
+  toast.configure({
+    position: "top-right",
+    autoClose: 4000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true
+  });
   const followToggle = async () => {
     setLoading(true);
     const result = await fetchData(
@@ -22,8 +31,12 @@ const UserSuggest = props => {
       },
       props.ctx
     );
-    if (result.isSuccess) {
+    if (result !== undefined && result.isSuccess) {
       setFollowed(!followed);
+    } else if (result !== undefined && result.message != undefined) {
+      toast.warn(result.message);
+    } else if (result !== undefined && result.error != undefined) {
+      toast.error(result.error);
     }
     setLoading(false);
   };

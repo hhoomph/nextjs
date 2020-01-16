@@ -4,10 +4,19 @@ import Loading from "../Loader/Loader";
 import fetchData from "../../utils/fetchData";
 import SubmitButton from "../Button/SubmitButton";
 import { FaTimes } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
 const FirstUser = props => {
   const [loading, setLoading] = useState(false);
   const [followed, setFollowed] = useState(props.isFollowed);
   const [hide, setHide] = useState(false);
+  toast.configure({
+    position: "top-right",
+    autoClose: 4000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true
+  });
   const showToggle = () => {
     setHide(!hide);
   };
@@ -20,8 +29,12 @@ const FirstUser = props => {
       },
       props.ctx
     );
-    if (result.isSuccess) {
+    if (result !== undefined && result.isSuccess) {
       setFollowed(!followed);
+    } else if (result !== undefined && result.message != undefined) {
+      toast.warn(result.message);
+    } else if (result !== undefined && result.error != undefined) {
+      toast.error(result.error);
     }
     setLoading(false);
   };

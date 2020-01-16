@@ -3,10 +3,19 @@ import Link from "../Link";
 import fetchData from "../../utils/fetchData";
 import Loading from "../Loader/Loader";
 import SubmitButton from "../Button/SubmitButton";
+import { ToastContainer, toast } from "react-toastify";
 const User = props => {
   const [loading, setLoading] = useState(false);
   const [followed, setFollowed] = useState(props.followed);
   const [hide, setHide] = useState(false);
+  toast.configure({
+    position: "top-right",
+    autoClose: 4000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true
+  });
   const followToggle = async () => {
     setLoading(true);
     const result = await fetchData(
@@ -16,9 +25,13 @@ const User = props => {
       },
       props.ctx
     );
-    if (result.isSuccess) {
+    if (result !== undefined && result.isSuccess) {
       setFollowed(!followed);
       props.setUpdate(Date());
+    }else if (result !== undefined && result.message != undefined) {
+      toast.warn(result.message);
+    } else if (result !== undefined && result.error != undefined) {
+      toast.error(result.error);
     }
     setLoading(false);
   };

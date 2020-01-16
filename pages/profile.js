@@ -206,16 +206,17 @@ function Page(props) {
   }, [catActive]);
   useEffect(() => {
     //props.statusHub
-    if (profileData !== null && profileData.userName !== undefined && profileData.userName !== "" && profileData.userName !== null) {
-      // props.baseHub
-      //   .invoke("GetUserStatus", profileData.userName)
-      //   .then(function(e) {
-      //     console.log(e);
-      //   })
-      //   .catch(err => console.error(err.toString()));
-      // props.statusHub.on("ReceiveMessage", (user, message, roomId, messageId, postedAt) => {
-      // });
-    }
+    // setTimeout(() => {
+    //   if (profileData !== null && profileData.userName !== undefined && profileData.userName !== "" && profileData.userName !== null) {
+    //     props.baseHub
+    //       .invoke("GetUserStatus", profileData.userName)
+    //       .then(function(e) {})
+    //       .catch(err => console.error(err.toString()));
+    //     props.statusHub.on("GetStatus", res => {
+    //       console.log(res);
+    //     });
+    //   }
+    // }, 3000);
   }, []);
   const [showFirstAdd, setShowFirstAdd] = useState(profileData !== null && profileData.productCount > 0 ? false : true);
   const [modalShow, setModalShow] = useState(false);
@@ -255,7 +256,7 @@ function Page(props) {
       <UserProductsContext.Provider value={userProductsDispatch}>
         <div className="profile_container">
           <title>قارون</title>
-          <Nav />
+          <Nav _tkn={props._tkn} statusHub={props.statusHub} />
           <ProfileHeader profileData={profileData} setView={setView} scrollToProducts={scrollToProducts} sellLimit={sellLimit} />
           {showFirstAdd ? (
             <div className="container mt-2 mb-1 p-2 first_add_suggest_profile">
@@ -367,7 +368,7 @@ function Page(props) {
     return (
       <>
         <title>قارون</title>
-        <Nav />
+        <Nav _tkn={props._tkn} statusHub={props.statusHub} />
         <EditProfile setView={setView} profileData={profileData} />
       </>
     );
@@ -379,7 +380,7 @@ function Page(props) {
     return (
       <UserProductsContext.Provider value={userProductsDispatch}>
         <title>قارون</title>
-        <Nav />
+        <Nav _tkn={props._tkn} statusHub={props.statusHub} />
         <ProfileHeader setView={setView} profileData={profileData} scrollToProducts={scrollToProducts} sellLimit={sellLimit} />
         {showFirstAdd ? (
           <div className="container mt-2 mb-1 p-2 first_add_suggest_profile">

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, memo } from "react";
 import Link from "../Link";
+import { HubConnectionBuilder, LogLevel } from "@aspnet/signalr";
 import Search from "./Search";
 import { FiGrid } from "react-icons/fi";
 import { FaShoppingBasket, FaRegUserCircle } from "react-icons/fa";
@@ -31,6 +32,34 @@ const UserIcon = props => {
   );
 };
 const Nav = props => {
+  const [orderCount, setOrderCount] = useState(0);
+  const [eventCount, setEventCount] = useState(0);
+  const statusHub = new HubConnectionBuilder()
+    .withUrl("https://api.qarun.ir/statusHub", {
+      accessTokenFactory: () => {
+        return props._tkn;
+      }
+    })
+    .configureLogging(LogLevel.Error)
+    .build();
+  useEffect(() => {
+    if (props.statusHub !== undefined && props._tkn !== undefined) {
+      statusHub
+        .start({ withCredentials: false })
+        .then(function() {
+          console.log("statusHub connected");
+          statusHub.on("EventsCount", res => {
+            console.log(res);
+            setEventCount(res);
+          });
+          statusHub.on("OrderCount", res => {
+            console.log(res);
+            setOrderCount(res);
+          });
+        })
+        .catch(err => console.error(err.toString()));
+    }
+  }, []);
   return (
     <>
       {/* Top Navbar in Desktop Mode */}
@@ -88,12 +117,12 @@ const Nav = props => {
       <nav className="d-flex d-lg-none bottom_nav navbar fixed-bottom navbar-white bg-white">
         <div className="col-12 d-flex justify-content-center p-1">
           <Link href="/profile" passHref>
-            {props.notify > 0 ? (
+            {orderCount > 0 ? (
               <a className="nav_Icons notify">
                 <UserIcon className="svg_Icons" />
                 <div className="badge badge-success">
                   <FaShoppingBasket className="font_icon" />
-                  43
+                  {orderCount}
                   <span className="arrow-down"></span>
                 </div>
               </a>
@@ -104,10 +133,22 @@ const Nav = props => {
             )}
           </Link>
           <Link href="/activity" passHref>
-            <a className="nav_Icons">
-              {/* <MenuSvg className="svg_Icons" /> */}
-              <HeartIcon className="svg_Icons" />
-            </a>
+            {eventCount > 0 ? (
+              <a className="nav_Icons notify">
+                <MenuSvg className="svg_Icons" />
+                <HeartIcon className="svg_Icons" />
+                <div className="badge badge-success">
+                  <HeartIcon className="font_icon" />
+                  {eventCount}
+                  <span className="arrow-down"></span>
+                </div>
+              </a>
+            ) : (
+              <a className="nav_Icons">
+                {/* <MenuSvg className="svg_Icons" /> */}
+                <HeartIcon className="svg_Icons" />
+              </a>
+            )}
             {/* If Have Notify*/}
             {/* <a className="nav_Icons notify">
               <MenuSvg className="svg_Icons" />

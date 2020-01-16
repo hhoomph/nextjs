@@ -87,7 +87,7 @@ function Page(props) {
   return (
     <>
       <title>قارون</title>
-      <Nav />
+      <Nav _tkn={props._tkn} statusHub={props.statusHub} />
       <div className="container favorite_title">
         <div className="row p-2 cart_title">
           <div className="col-10 text-center align-self-center">

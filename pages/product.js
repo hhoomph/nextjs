@@ -173,7 +173,7 @@ function Page(props) {
     <>
       <Head>{productData.title}</Head>
       <title>{productData.title}</title>
-      <Nav />
+      <Nav _tkn={props._tkn} statusHub={props.statusHub} />
       <div className="product_page">
         <div className="container product_header">
           <div className="row">
@@ -298,12 +298,10 @@ function Page(props) {
         </div>
         <div className="container pb-5 pt-2 product_hashtags">
           <div className="row pb-3">
-            <div className="col-12 mt-2 text-right">
-              <h6 className="">هشتگ ها</h6>
-            </div>
+            <div className="col-12 mt-2 text-right">{/* <h6 className="">هشتگ ها</h6> */}</div>
             <div className="col-12 rtl">
               <Link href={`/categories/${productData.categoryId.replace(",", "")}`} passHref>
-                <a className="hashtag" style={{ fontWeight: "bold" }} title={productData.category.replace(",", "")}>
+                <a className="hashtag" style={{ fontWeight: "bold", color: "#2f2e2e" }} title={productData.category.replace(",", "")}>
                   #{productData.category.replace(",", "")}
                 </a>
               </Link>

@@ -39,7 +39,7 @@ function Page(props) {
   return (
     <>
       <title>قارون</title>
-      <Nav />
+      <Nav _tkn={props._tkn} statusHub={props.statusHub} />
       <div className="container mb-5 about_page">
         <div className="row">
           <div className="col-12 mb-5">

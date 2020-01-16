@@ -46,7 +46,7 @@ function Page(props) {
   return (
     <>
       <title>قارون | مشتریان</title>
-      <Nav />
+      <Nav _tkn={props._tkn} statusHub={props.statusHub} />
       <div className="container friends_page">
         <div className="row p-2 cart_title">
           <div className="col-12 p-0 text-center">

@@ -205,7 +205,7 @@ const Page = props => {
   };
   return (
     <div className="login_page">
-      {/* <Nav /> */}
+      {/* <Nav _tkn={props._tkn} /> */}
       <LoginHeader />
       <div className="container mb-1 rtl login">
         <View />

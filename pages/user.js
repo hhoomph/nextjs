@@ -26,6 +26,7 @@ function Page(props) {
   let userCategories = props.userCategories.data || [];
   userCategories = [].concat(userCategories, { id: 0, parentId: null, picture: null, thumbNail: null, titel: "همه" }).sort((a, b) => a.id - b.id);
   const [catActive, setCatActive] = useState(userCategories.length > 0 ? userCategories[0].id : null);
+  const [userOnline, setUserOnline] = useState(false);
   //console.log(profileData, props.userProducts, userCategories);
   const showProducts = userProducts.map(product => (
     <Product
@@ -129,11 +130,26 @@ function Page(props) {
   useEffect(() => {
     getUserProductFromCat();
   }, [catActive]);
+  useEffect(() => {
+    // setTimeout(() => {
+    if (profileData !== null && profileData.userName !== undefined && profileData.userName !== "" && profileData.userName !== null) {
+      setTimeout(() => {
+        props.baseHub
+          .invoke("GetUserStatus", profileData.userName)
+          .then(function(e) {})
+          .catch(err => console.error(err.toString()));
+        props.baseHub.on("GetStatus", res => {
+          // console.log(res);
+          setUserOnline(res);
+        });
+      }, 1000);
+    }
+  }, []);
   return (
     <UserProductsContext.Provider value={userProductsDispatch}>
       <title>قارون</title>
-      <Nav />
-      <UserHeader profileData={profileData} userOnline={true} scrollToProducts={scrollToProducts} />
+      <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+      <UserHeader profileData={profileData} userOnline={userOnline} scrollToProducts={scrollToProducts} />
       <div className="container mb-1 cat_product_row">
         <div className="row">
           <div className="col">

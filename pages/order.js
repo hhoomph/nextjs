@@ -179,7 +179,7 @@ function Page(props) {
   return (
     <>
       <title>قارون</title>
-      <Nav />
+      <Nav _tkn={props._tkn} statusHub={props.statusHub} />
       <div className="container cart_filter">
         <div className="row">
           <div className="col-12 mb-2">

@@ -19,20 +19,6 @@ class MyApp extends App {
     if (nextCookie(ctx).accessToken !== undefined) {
       accessToken = nextCookie(ctx).accessToken;
     }
-    // Add Cart Count Context Later
-    // const GetCartCount = await fetchData(
-    //   'User/U_Cart/GetAll',
-    //   {
-    //     method: 'GET'
-    //   },
-    //   context
-    // );
-    // if (GetCartCount !== undefined && GetCartCount.isSuccess) {
-    //   let cData = GetCartCount.data || [];
-    //   cartDispatch({ type: 'refresh', payload: cData });
-    // } else if (GetCartCount !== undefined && GetCartCount.message != undefined) {
-    // } else if (GetCartCount !== undefined && GetCartCount.error != undefined) {
-    // }
     if (router.route !== "/login") {
       //console.log(router);
     }
@@ -40,27 +26,19 @@ class MyApp extends App {
   }
   constructor() {
     super();
+    this.state = {
+      orderCount: 0,
+      eventCount: 0,
+      userStatus: false
+    };
     this.baseHub = new HubConnectionBuilder()
-      .withUrl("https://api.qarun.ir/baseHub")
+      .withUrl("https://api.qarun.ir/baseHub", {
+        accessTokenFactory: () => {
+          return this.props.accessToken;
+        }
+      })
       .configureLogging(LogLevel.Error)
       .build();
-    //this.connection2 = new HubConnectionBuilder().withUrl("https://chatappwithsignalr.azurewebsites.net/chatHub").build();
-  }
-  async start() {
-    try {
-      await this.baseHub.start();
-      await this.statusHub.start();
-      console.log("connected");
-    } catch (err) {
-      console.log(err);
-      setTimeout(() => this.start(), 5000);
-    }
-  }
-  componentDidMount() {
-    // this.baseHub = new HubConnectionBuilder()
-    //   .withUrl("https://api.qarun.ir/baseHub")
-    //   .configureLogging(LogLevel.Error)
-    //   .build();
     this.statusHub = new HubConnectionBuilder()
       .withUrl("https://api.qarun.ir/statusHub", {
         accessTokenFactory: () => {
@@ -69,6 +47,36 @@ class MyApp extends App {
       })
       .configureLogging(LogLevel.Error)
       .build();
+    // this.baseHub = this.baseHub.bind(this);
+    // this.statusHub = this.statusHub.bind(this);
+  }
+  async start() {
+    try {
+      await this.baseHub.start();
+      await this.statusHub.start();
+      console.log("connected");
+    } catch (err) {
+      console.log(err);
+      setTimeout(() => this.start(), 4000);
+    }
+  }
+  componentDidMount() {
+    // this.baseHub = new HubConnectionBuilder()
+    //   .withUrl("https://api.qarun.ir/baseHub", {
+    //     accessTokenFactory: () => {
+    //       return this.props.accessToken;
+    //     }
+    //   })
+    //   .configureLogging(LogLevel.Error)
+    //   .build();
+    // this.statusHub = new HubConnectionBuilder()
+    //   .withUrl("https://api.qarun.ir/statusHub", {
+    //     accessTokenFactory: () => {
+    //       return this.props.accessToken;
+    //     }
+    //   })
+    //   .configureLogging(LogLevel.Error)
+    //   .build();
     // Manually reconnect hub
     // this.baseHub.onclose(async () => {
     //   await this.start();
@@ -83,26 +91,53 @@ class MyApp extends App {
         console.log("baseHub connected");
       })
       .catch(err => console.error(err.toString()));
-    this.statusHub
-      .start({ withCredentials: false })
-      .then(function() {
-        console.log("statusHub connected");
-      })
-      .catch(err => console.error(err.toString()));
-    //this.connection2.start({ withCredentials: false }).catch(err => console.error(err.toString()));
-    // this.baseHub
-    //   .invoke("GetUserStatus", "oomph")
-    //   .then(function(e) {
-    //     console.log(e);
+    // this.baseHub.onclose(async () => {
+    //   await this.start();
+    // });
+    // setTimeout(() => {
+    //   this.baseHub
+    //     .invoke("GetUserStatus", "hhoomph")
+    //     .then(function(e) {})
+    //     .catch(err => console.error(err.toString()));
+    //   this.baseHub.on("GetStatus", res => {
+    //     console.log(res);
+    //     this.setState({ userStatus: res });
+    //   });
+    // }, 3000);
+    // this.statusHub
+    //   .start({ withCredentials: false })
+    //   .then(function() {
+    //     console.log("statusHub connected");
     //   })
     //   .catch(err => console.error(err.toString()));
+    // this.statusHub.onclose(async () => {
+    //   await this.start();
+    // });
+    // setTimeout(() => {
+    //   this.statusHub.on("EventsCount", res => {
+    //     console.log(res);
+    //     this.setState({ eventCount: res });
+    //   });
+    //   // this.statusHub.on("OrderCount", res => {
+    //   //   console.log(res);
+    //   //   this.setState({ orderCount: res });
+    //   // });
+    // }, 6000);
   }
   componentWillUnmount() {}
   render() {
     const { Component, pageProps } = this.props;
     return (
       <>
-        <Component baseHub={this.baseHub} statusHub={this.statusHub} {...pageProps} />
+        <Component
+          baseHub={this.baseHub}
+          statusHub={this.statusHub}
+          orderCount={this.state.orderCount}
+          eventCount={this.state.eventCount}
+          userStatus={this.state.userStatus}
+          _tkn={this.props.accessToken}
+          {...pageProps}
+        />
       </>
     );
   }

@@ -4,10 +4,19 @@ import fetchData from "../../utils/fetchData";
 import Loading from "../Loader/Loader";
 import SubmitButton from "../Button/SubmitButton";
 import { FaTimes } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
 const User = props => {
   const [loading, setLoading] = useState(false);
   const { type, image, productImage, message, name, userName, time } = props;
   const [followed, setFollowed] = useState(props.isFollowed || false);
+  toast.configure({
+    position: "top-right",
+    autoClose: 4000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true
+  });
   const followToggle = async () => {
     setLoading(true);
     const result = await fetchData(
@@ -17,8 +26,12 @@ const User = props => {
       },
       props.ctx
     );
-    if (result.isSuccess) {
+    if (result !== undefined && result.isSuccess) {
       setFollowed(!followed);
+    } else if (result !== undefined && result.message != undefined) {
+      toast.warn(result.message);
+    } else if (result !== undefined && result.error != undefined) {
+      toast.error(result.error);
     }
     setLoading(false);
   };
@@ -49,8 +62,14 @@ const User = props => {
         <div className="col-10 _txt">
           <div className="row">
             <div className="col-4 m-auto pl-0">
-              {type === "LikeProduct" || type === "LikeComment" || type === "CommentOnComment" || type === "CommentOnProduct" || type === "PostSave" ? (
+              {type === "LikeProduct" || type === "PostSave" ? (
                 <Link href={`/product/${props.productId}`} as={`/product/${props.productId}/${props.productTitle.trim().replace(/ /g, "-")}`} passHref>
+                  <a className="product_image">
+                    <img src={productImage} />
+                  </a>
+                </Link>
+              ) : type === "LikeComment" || type === "CommentOnComment" || type === "CommentOnProduct" ? (
+                <Link href={`/comment?id=${props.productId}`} passHref>
                   <a className="product_image">
                     <img src={productImage} />
                   </a>
@@ -68,7 +87,7 @@ const User = props => {
               {/* comment?id=89 */}
               <div className="message">
                 {type === "LikeComment" || type === "CommentOnComment" || type === "CommentOnProduct" ? (
-                  <Link href={`/comment?id=${props.parentCommentId}`} passHref>
+                  <Link href={`/comment?id=${props.productId}`} passHref>
                     <a className="">{message}</a>
                   </Link>
                 ) : (
