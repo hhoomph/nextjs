@@ -54,13 +54,19 @@
       border-bottom-right-radius: 4px;
       box-shadow: 0px 0px 4px 0px #e6e6e6;
       transition: all ease-in-out 0.2s;
+      background: #fff;
+      overflow: hidden;
       &:hover {
         background: #e8e8e8;
       }
       .product_link {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: auto;
+        max-height: 31vh;
+        overflow: hidden;
         img {
-          // width: 7rem;
-          // height: 10rem;
           max-width: 10rem;
           max-height: 12rem;
           width: auto;
@@ -68,14 +74,17 @@
           border-radius: 8px;
           border-bottom-left-radius: 0;
           border-bottom-right-radius: 0;
+          margin-top: -20px;
+          margin-bottom: -19px;
         }
       }
       .product_basket {
         cursor: pointer;
         background-color: #2fa841;
-        position: relative;
-        //top: -10px;
-        top: 8px;
+        // position: relative;
+        // top: 8px;
+        position: absolute;
+        bottom: 4px;
         border-radius: 50px;
         text-align: center;
         // width: auto;
@@ -113,31 +122,33 @@
         }
       }
       .product_user {
-        position: absolute;
-        // right: 3px;
-        // top: 7px;
-        right: -8px;
-        top: -5px;
+        position: relative;
+        text-align: right;
+        width: 100%;
+        background: #fff;
+        display: block;
+        padding: 1px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        direction: ltr;
+        font-size: 0.75rem;
+        color: #424242;
+        transition: all ease-in-out 0.2s;
         &:hover {
-          border-radius: 150px;
           animation: shadow_drop 0.8s both;
           animation-iteration-count: infinite;
         }
         img {
           border-radius: 8em;
-          width: 50px;
+          width: 39px;
+          margin-left: 6px;
         }
       }
     }
     .product_text {
       direction: rtl;
       text-align: left;
-      // background: #fff;
-      // padding-right: 10px;
-      // padding-top: 5px;
-      // font-size: 1em;
-      // margin-top: -38px;
-      margin-top: -30px;
+      margin-top: 3px;
       font-size: 0.8rem;
       padding-left: 4px;
       p {
@@ -150,8 +161,7 @@
         padding-right: 5px;
         text-decoration: line-through;
       }
-      span {
-      }
+      span {}
     }
   }
   @media screen and (min-width: 992px) {
@@ -173,9 +183,9 @@
       .product_user {
         // right: 34px !important;
         // top: 12px !important;
-        img {
-          width: 65px !important;
-        }
+        // img {
+        //   width: 65px !important;
+        // }
       }
     }
   }

@@ -88,7 +88,7 @@ class MyApp extends App {
     this.baseHub
       .start({ withCredentials: false })
       .then(function() {
-        console.log("baseHub connected");
+        // console.log("baseHub connected");
       })
       .catch(err => console.error(err.toString()));
     // this.baseHub.onclose(async () => {

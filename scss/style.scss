@@ -292,12 +292,13 @@ body {
   }
   .modal-content {
     background: #212121;
+    max-height: 100%;
   }
   .modal-header {
     padding: 3%;
     border-color: #1f1f1f;
     @media (min-width: 992px) {
-      padding: 1.8%;
+      padding: 1%;
       padding-right: 1rem;
     }
     .close {

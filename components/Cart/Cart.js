@@ -164,6 +164,17 @@ const Cart = props => {
         } else {
           toast.success("سفارش با موفقیت لغو شد.");
         }
+        const getCartDataRes = await fetchData(
+          "User/U_Order/CustomerOpenOrder",
+          {
+            method: "GET"
+          },
+          props.ctx
+        );
+        if (getCartDataRes !== undefined && getCartDataRes.isSuccess) {
+          let cData = getCartDataRes.data || [];
+          props.setOpenCartData(cData);
+        }
         setModalShow(false);
       } else if (result !== undefined && result.message != undefined) {
         toast.warn(result.message);
@@ -176,7 +187,7 @@ const Cart = props => {
   };
   return (
     <div className="container cart">
-    <Ask header={"تحویل گرفتن سفارش"} text={""} customerRecive={true} command={deliveredOrder} setModalShow={setAskModalShow} modalShow={askModalShow} loading={loading} />
+      <Ask header={"تحویل گرفتن سفارش"} text={""} customerRecive={true} command={deliveredOrder} setModalShow={setAskModalShow} modalShow={askModalShow} loading={loading} />
       <div className={"row cart_seller justify-content-end"} onClick={toggleRow}>
         <div className="col-2 align-self-center text-left">
           <a className="nav_Icons active">{showToggleRow()}</a>
@@ -214,7 +225,7 @@ const Cart = props => {
       </div>
       {type === 2 && props.pOrderStatus !== "درانتظار پرداخت" && (
         <div className="row d-flex justify-content-around rtl contact_row" hidden={!showRow}>
-          {props.pOrderStatus !== "درانتظار تأیید فروشنده" && <SubmitButton loading={loading} onClick={()=>setAskModalShow(true)} text="تحویل گرفتم" className="d-inline-block delivered" />}
+          {props.pOrderStatus !== "درانتظار تأیید فروشنده" && <SubmitButton loading={loading} onClick={() => setAskModalShow(true)} text="تحویل گرفتم" className="d-inline-block delivered" />}
           {/* Call To Seller */}
           <a className="tell_call" title="تماس با فروشنده" href={`tel:${props.sellerPhoneNumber}`} onClick={changeCall}>
             <IoMdCall className="font_icon" />

@@ -117,6 +117,11 @@ const Page = props => {
       return errs.forEach(err => toast.warn(err));
     }
     formData.append("Files", files);
+    // const fileList = [];
+    // for (let i = 0; i < fileInput.current.files.length; i++) {
+    //   fileList.push(fileInput.current.files[i]);
+    //   console.log(fileInput.current.files[i]);
+    // }
     setLoading(true);
     const result = await fetchData(
       "User/U_Support/Create",

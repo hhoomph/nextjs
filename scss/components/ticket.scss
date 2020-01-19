@@ -19,12 +19,12 @@
   }
   .add_ticket {
     font-size: 1.8rem;
-    color: #388e3c;
+    color: #388e3c !important;
     cursor: pointer;
     transition: all 0.1s ease-in-out;
-    &:hover {
+    &:hover,&:active{
       font-size: 1.85rem;
-      color: #1b5e20;
+      color: #1b5e20 !important;
     }
   }
 }

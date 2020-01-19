@@ -355,5 +355,5 @@ Page.getInitialProps = async function(context) {
   );
   return { result, id };
 };
-export default Auth(Page);
-//export default Page;
+// export default Auth(Page);
+export default Page;

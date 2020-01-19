@@ -43,6 +43,12 @@ const Product = props => {
   return (
     <div className={productClass()}>
       <div className="product_frame">
+        <Link href={`/user/${props.sellerUserName}`} passHref>
+          <a className="text-truncate product_user">
+            {props.sellerUserName}
+            <img src={props.sellerAvatar} alt={props.sellerUserName} className="product_img" />
+          </a>
+        </Link>
         <Link href={`/product/${props.id}`} as={`/product/${props.id}/${props.productName.trim().replace(/ /g, "-")}`} passHref>
           <a className="product_link">
             <img src={props.image} alt={props.productName} className="product_img" />
@@ -52,11 +58,6 @@ const Product = props => {
           <p>سبد خرید</p>
           <FaShoppingBasket className="svg_Icons" />
         </div>
-        <Link href={`/user/${props.sellerUserName}`} passHref>
-          <a className="product_user">
-            <img src={props.sellerAvatar} alt={props.sellerUserName} className="product_img" />
-          </a>
-        </Link>
         <div className="product_text">
           <p>
             <span className="product_price">{numberSeparator(props.price)} </span>

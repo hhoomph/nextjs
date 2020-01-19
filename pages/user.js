@@ -9,6 +9,7 @@ import UserHeader from "../components/Head/userHeader";
 import Product from "../components/Profile/product";
 import { UserProductsContext } from "../context/context";
 import { userProductsReducer } from "../context/reducer";
+import { HubConnectionBuilder, LogLevel } from "@aspnet/signalr";
 const Category = dynamic({
   loader: () => import("../components/Profile/Category"),
   loading: () => <Loading />,
@@ -131,18 +132,40 @@ function Page(props) {
     getUserProductFromCat();
   }, [catActive]);
   useEffect(() => {
-    // setTimeout(() => {
     if (profileData !== null && profileData.userName !== undefined && profileData.userName !== "" && profileData.userName !== null) {
-      setTimeout(() => {
-        props.baseHub
-          .invoke("GetUserStatus", profileData.userName)
-          .then(function(e) {})
+      // setTimeout(() => {
+      //   props.baseHub
+      //     .invoke("GetUserStatus", profileData.userName)
+      //     .then(function(e) {})
+      //     .catch(err => console.error(err.toString()));
+      //   props.baseHub.on("GetStatus", res => {
+      //     // console.log(res);
+      //     setUserOnline(res);
+      //   });
+      // }, 1000);
+      if (props.baseHub !== undefined && props._tkn !== undefined) {
+        const baseHub = new HubConnectionBuilder()
+          .withUrl("https://api.qarun.ir/baseHub", {
+            accessTokenFactory: () => {
+              return props._tkn;
+            }
+          })
+          .configureLogging(LogLevel.Error)
+          .build();
+        baseHub
+          .start({ withCredentials: false })
+          .then(function() {
+            console.log("user baseHub connected");
+            baseHub
+              .invoke("GetUserStatus", profileData.userName)
+              .then(function(e) {})
+              .catch(err => console.error(err.toString()));
+            baseHub.on("GetStatus", res => {
+              setUserOnline(res);
+            });
+          })
           .catch(err => console.error(err.toString()));
-        props.baseHub.on("GetStatus", res => {
-          // console.log(res);
-          setUserOnline(res);
-        });
-      }, 1000);
+      }
     }
   }, []);
   return (
