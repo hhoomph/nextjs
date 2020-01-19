@@ -20,6 +20,7 @@ import { ReactComponent as MenuDotsSvg } from "../public/static/svg/new/menu-dot
 import { numberSeparator, removeSeparator, forceNumeric } from "../utils/tools";
 import { Carousel, Dropdown, Modal } from "react-bootstrap";
 import RRS from "react-responsive-select";
+import ImageGallery from "react-image-gallery";
 import "../scss/components/productPage.scss";
 import { setTimeout } from "core-js";
 function Page(props) {
@@ -29,6 +30,8 @@ function Page(props) {
   const productId = Router.query.id;
   const [loading, setLoading] = useState(false);
   const [modalShow, setModalShow] = useState(false);
+  const [startIndex, setStartIndex] = useState(0);
+  const [showGallery, setShowGallery] = useState(false);
   const reportOptions = [
     {
       value: 1,
@@ -97,8 +100,20 @@ function Page(props) {
       return 0;
     }
   };
+  const images = productData.pictures.map((image, index) => {
+    return {
+      original: `https://api.qarun.ir/${image.value}`,
+      thumbnail: `https://api.qarun.ir/${image.value}`
+    };
+  });
   const showProductImages = productData.pictures.map((image, index) => (
-    <Carousel.Item key={image.id}>
+    <Carousel.Item
+      key={image.id}
+      onClick={() => {
+        setStartIndex(index);
+        setShowGallery(true);
+      }}
+    >
       <img src={`https://api.qarun.ir/${image.value}`} className="product_image" />
     </Carousel.Item>
   ));
@@ -198,10 +213,7 @@ function Page(props) {
               <Link href={`/user/${productData.sellerUserName}`} passHref>
                 <a>
                   <p className="user_name">{productData.sellerUserName || ""}</p>
-                  <img
-                    src={productData.sellerUserAvatar ? `https://api.qarun.ir/${productData.sellerUserAvatar}` : "/static/img/user.png"}
-                    className="userImage"
-                  />
+                  <img src={productData.sellerUserAvatar ? `https://api.qarun.ir/${productData.sellerUserAvatar}` : "/static/img/user.png"} className="userImage" />
                 </a>
               </Link>
             </div>
@@ -235,22 +247,31 @@ function Page(props) {
           <div className="row">
             <div className="col-12">
               <Carousel fade={true} indicators={true} interval={6000} keyboard={true} pauseOnHover={true} slide={true} wrap={true} touch={true}>
-                {/* <Carousel.Item>
-                  <img src="/static/img/1.jpg" className="product_image" />
-                  <Carousel.Caption>
-                    <h3>{productData.title || ''}</h3>
-                    <p>{productData.description || ''}</p>
-                  </Carousel.Caption>
-                </Carousel.Item> */}
-                {/* <Carousel.Item>
-                  <img src={productData.picture ? 'https://api.qarun.ir/' + productData.picture : '/static/img/no-product-image.png'} className="product_image" />
-                </Carousel.Item> */}
                 {showProductImages}
               </Carousel>
               {discountPercent() > 0 && <div className="discount_div">%{discountPercent()}</div>}
             </div>
           </div>
         </div>
+        <Modal onHide={() => setShowGallery(false)} show={showGallery} size="xl" scrollable className="gallery_modal">
+          <Modal.Header closeButton></Modal.Header>
+          <Modal.Body>
+            <div className="col-12 p-0 rtl d-flex justify-content-center img_gallery_container">
+              <ImageGallery
+                items={images}
+                isRTL={true}
+                startIndex={startIndex}
+                showIndex={false}
+                showFullscreenButton={false}
+                showPlayButton={false}
+                showThumbnails={true}
+                showBullets={true}
+                lazyLoad={true}
+                useBrowserFullscreen={false}
+              />
+            </div>
+          </Modal.Body>
+        </Modal>
         <div className="container pt-2 product_details">
           <div className="row">
             <div className="col-6 text-left _top_icons">
@@ -272,11 +293,7 @@ function Page(props) {
                 <CommentSvg className="svg_icon" />
                 {/* <FaRegComment className="font_icon" /> */}
               </div>
-              {isFavorite ? (
-                <IoIosHeart className="font_icon red" onClick={toggleFavorite} />
-              ) : (
-                <IoIosHeartEmpty className="font_icon" onClick={toggleFavorite} />
-              )}
+              {isFavorite ? <IoIosHeart className="font_icon red" onClick={toggleFavorite} /> : <IoIosHeartEmpty className="font_icon" onClick={toggleFavorite} />}
             </div>
             <div className="col-12 mt-1">
               <p className="text-right product_name">{productData.title || ""}</p>

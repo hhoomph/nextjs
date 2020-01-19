@@ -57,6 +57,7 @@
     "react-easy-crop": "^2.0.0",
     "react-icons": "^3.8.0",
     "react-image-crop": "^8.5.0",
+    "react-image-gallery": "^1.0.5",
     "react-leaflet": "^2.6.1",
     "react-popper": "^1.3.7",
     "react-preloader-icon": "^0.3.4",

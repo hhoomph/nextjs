@@ -7,7 +7,7 @@ const Sort = props => {
     { id: 1, name: "تخفیف", filter: "Discount", active: false },
     { id: 2, name: "پرفروش", filter: "BestSeller", active: false },
     { id: 3, name: "محبوب", filter: "Popular", active: false },
-    { id: 4, name: "فعال", filter: "NotSet", active: false }
+    { id: 4, name: "فعال", filter: "Online", active: false }
   ]);
   const toggleActiveSort = index => {
     sorts[index];
