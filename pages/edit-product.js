@@ -144,6 +144,7 @@ function Page(props) {
   const [src, setSrc] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
+  const [rotation, setRotation] = useState(0);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [croppedImageUrl, setCroppedImageUrl] = useState(null);
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
@@ -240,7 +241,7 @@ function Page(props) {
     setModalShow(false);
     const errs = [];
     setLoading(true);
-    const croppedImage = await getCroppedImg(src, croppedAreaPixels, 0);
+    const croppedImage = await getCroppedImg(src, croppedAreaPixels, rotation);
     setCroppedImageUrl(croppedImage);
     fileInput.current.value = "";
     setLoading(false);
@@ -251,7 +252,7 @@ function Page(props) {
     if (types.every(type => file.type !== type)) {
       errs.push(`فرمت '${file.type}' پشتیبانی نمی شود.`);
     }
-    if (file.size > 1550000) {
+    if (file.size > 4550000) {
       errs.push(`حجم فایل '${file.name}' بیشتر از حد مجاز است، لطفا فایل کم حجم تری انتخاب کنید.`);
     }
     formData.append("File", file);
@@ -600,15 +601,7 @@ function Page(props) {
               </div>
             </div>
           </div>
-          <Modal
-            onHide={() => setModalShow(false)}
-            className="crop_image_modal"
-            show={modalShow}
-            size="xl"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-            scrollable
-          >
+          <Modal onHide={() => setModalShow(false)} className="crop_image_modal" show={modalShow} size="xl" aria-labelledby="contained-modal-title-vcenter" centered scrollable>
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">بارگذاری تصویر</Modal.Title>
             </Modal.Header>
@@ -620,22 +613,17 @@ function Page(props) {
                       image={src}
                       crop={crop}
                       zoom={zoom}
+                      rotation={rotation}
                       aspect={4 / 5}
                       onCropChange={setCrop}
                       onCropComplete={onCropComplete}
                       onZoomChange={setZoom}
+                      onRotationChange={setRotation}
                     />
                   </div>
                   <div className="controls">
-                    <Slider
-                      value={zoom}
-                      min={1}
-                      max={3}
-                      step={0.1}
-                      aria-labelledby="Zoom"
-                      onChange={(e, zoom) => setZoom(zoom)}
-                      classes={{ container: "slider" }}
-                    />
+                    <Slider key={1} value={zoom} min={1} max={3} step={0.1} aria-labelledby="Zoom" onChange={(e, zoom) => setZoom(zoom)} classes={{ container: "slider" }} />
+                    <Slider key={2} value={rotation} min={0} max={360} step={1} aria-labelledby="Rotation" classes={{ container: "slider" }} onChange={(e, rotation) => setRotation(rotation)} />
                   </div>
                 </>
               )}
@@ -708,15 +696,7 @@ function Page(props) {
               </div>
             </div>
           </div>
-          <Modal
-            onHide={() => setModalShow(false)}
-            show={modalShow}
-            className="crop_image_modal"
-            size="xl"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-            scrollable
-          >
+          <Modal onHide={() => setModalShow(false)} show={modalShow} className="crop_image_modal" size="xl" aria-labelledby="contained-modal-title-vcenter" centered scrollable>
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">بارگذاری تصویر</Modal.Title>
             </Modal.Header>
@@ -728,29 +708,24 @@ function Page(props) {
                       image={src}
                       crop={crop}
                       zoom={zoom}
+                      rotation={rotation}
                       aspect={4 / 5}
                       onCropChange={setCrop}
                       onCropComplete={onCropComplete}
                       onZoomChange={setZoom}
+                      onRotationChange={setRotation}
                     />
                   </div>
                   <div className="controls">
-                    <Slider
-                      value={zoom}
-                      min={1}
-                      max={3}
-                      step={0.1}
-                      aria-labelledby="Zoom"
-                      onChange={(e, zoom) => setZoom(zoom)}
-                      classes={{ container: "slider" }}
-                    />
+                    <Slider key={1} value={zoom} min={1} max={3} step={0.1} aria-labelledby="Zoom" onChange={(e, zoom) => setZoom(zoom)} classes={{ container: "slider" }} />
+                    <Slider key={2} value={rotation} min={0} max={360} step={1} aria-labelledby="Rotation" classes={{ container: "slider" }} onChange={(e, rotation) => setRotation(rotation)} />
                   </div>
                 </>
               )}
             </Modal.Body>
             <Modal.Footer className="justify-content-center">
               <button className="btn btn-success" onClick={() => uploadHandler()}>
-                  بارگذاری{" "}
+                  بارگذاری
               </button>
             </Modal.Footer>
           </Modal>

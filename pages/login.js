@@ -34,8 +34,8 @@ const Page = props => {
     const [isLoading, setIsLoading] = useState(false);
     const handleSubmitStep1 = async () => {
       toast.dismiss();
-      if (userName.length > 0) {
-        if ((Mobile_RX.test(userName) && userName.length < 12) || EMAIL_RX.test(userName)) {
+      if (userName.trim().length > 0) {
+        if ((Mobile_RX.test(userName.trim()) && userName.trim().length < 12) || EMAIL_RX.test(userName.trim())) {
           setIsLoading(true);
           const apiUrl = `${getHost()}Common/C_Account/RegisterOrLogin`;
           const response = await fetch(apiUrl, {
@@ -45,7 +45,7 @@ const Page = props => {
               "Content-Type": "application/json",
               "Access-Control-Allow-Origin": "*"
             },
-            body: JSON.stringify({ phoneNumber_Or_Email: userName, marketerCode: reagent }),
+            body: JSON.stringify({ phoneNumber_Or_Email: userName.trim(), marketerCode: reagent.trim() }),
             credentials: "include"
           });
           if (response != undefined && response.ok) {
@@ -93,7 +93,7 @@ const Page = props => {
     };
     const handleSubmitStep2 = async () => {
       toast.dismiss();
-      if (userName.length > 0 && code.length > 0 && step == 2) {
+      if (userName.trim().length > 0 && code.length > 0 && step == 2) {
         setIsLoading(true);
         const apiUrl = `${getHost()}Common/C_Account/Token`;
         const response = await fetch(apiUrl, {
@@ -103,7 +103,7 @@ const Page = props => {
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*"
           },
-          body: JSON.stringify({ phoneNumber_Or_Email: userName, code: code }),
+          body: JSON.stringify({ phoneNumber_Or_Email: userName.trim(), code: code }),
           credentials: "include"
         });
         if (response != undefined && response.ok) {
@@ -160,7 +160,7 @@ const Page = props => {
         </>
       );
     } else if (step == 2) {
-      let change_txt = EMAIL_RX.test(userName) ? `کد ارسالی به ایمیل ${userName} را وارد نمایید` : `کد ارسالی به شماره ${userName} را وارد نمایید`;
+      let change_txt = EMAIL_RX.test(userName.trim()) ? `کد ارسالی به ایمیل ${userName.trim()} را وارد نمایید` : `کد ارسالی به شماره ${userName.trim()} را وارد نمایید`;
       return (
         <>
           <title>قارون</title>

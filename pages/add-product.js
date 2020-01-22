@@ -23,12 +23,6 @@ import "../scss/components/addProduct.scss";
 function Page(props) {
   const nextCtx = props.ctx;
   const categories = props.result.data || [];
-  // const categoriesOptions = categories.map(category => {
-  //   return {
-  //     value: category.id,
-  //     label: category.titel
-  //   };
-  // });
   const categoriesOptions = categories.map(category => {
     return {
       value: category.id,
@@ -48,9 +42,6 @@ function Page(props) {
   const [long, setLong] = useState(profileData.long || 0);
   const [productId, setProductId] = useState(null);
   const [categoryId, setCategoryId] = useState(null);
-  // const handleCategoryChange = selectedOption => {
-  //   setCategoryId(selectedOption);
-  // };
   const handleCategorySelectChange = ({ text, value, altered }) => {
     setCategoryId({
       text,
@@ -121,6 +112,7 @@ function Page(props) {
   // New Crop
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
+  const [rotation, setRotation] = useState(0);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -292,7 +284,7 @@ function Page(props) {
     // const file = e.target.files[0];
     try {
       setLoading(true);
-      const croppedImage = await getCroppedImg(src, croppedAreaPixels, 0);
+      const croppedImage = await getCroppedImg(src, croppedAreaPixels, rotation);
       setCroppedImageUrl(croppedImage);
       fileInput.current.value = "";
       setLoading(false);
@@ -303,7 +295,7 @@ function Page(props) {
       if (types.every(type => file.type !== type)) {
         errs.push(`فرمت '${file.type}' پشتیبانی نمی شود.`);
       }
-      if (file.size > 1550000) {
+      if (file.size > 4550000) {
         errs.push(`حجم فایل '${file.name}' بیشتر از حد مجاز است، لطفا فایل کم حجم تری انتخاب کنید.`);
       }
       formData.append("File", file);
@@ -592,12 +584,7 @@ function Page(props) {
               </div>
               <div className="row mb-3 p-2 header_link">
                 <div className="col pt-2 text-center">
-                  <SubmitButton
-                    loading={loading || uploading}
-                    onClick={() => setProductImages()}
-                    text="ثبت نهایی محصول"
-                    className="d-inline-block btn-main btn-green"
-                  >
+                  <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main btn-green">
                     <FaCheck className="font_icon" />
                   </SubmitButton>
                 </div>
@@ -658,27 +645,14 @@ function Page(props) {
               </div>
               <div className="row mb-3 p-2 header_link">
                 <div className="col pt-2 text-center">
-                  <SubmitButton
-                    loading={loading || uploading}
-                    onClick={() => setProductImages()}
-                    text="ثبت نهایی محصول"
-                    className="d-inline-block btn-main btn-green"
-                  >
+                  <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main btn-green">
                     <FaCheck className="font_icon" />
                   </SubmitButton>
                 </div>
               </div>
             </div>
           </div>
-          <Modal
-            onHide={() => setModalShow(false)}
-            show={modalShow}
-            className="crop_image_modal"
-            size="xl"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-            scrollable
-          >
+          <Modal onHide={() => setModalShow(false)} show={modalShow} className="crop_image_modal" size="xl" aria-labelledby="contained-modal-title-vcenter" centered scrollable>
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">بارگذاری تصویر</Modal.Title>
             </Modal.Header>
@@ -708,22 +682,17 @@ function Page(props) {
                       image={src}
                       crop={crop}
                       zoom={zoom}
+                      rotation={rotation}
                       aspect={4 / 5}
                       onCropChange={setCrop}
                       onCropComplete={onCropComplete}
                       onZoomChange={setZoom}
+                      onRotationChange={setRotation}
                     />
                   </div>
                   <div className="controls">
-                    <Slider
-                      value={zoom}
-                      min={1}
-                      max={3}
-                      step={0.1}
-                      aria-labelledby="Zoom"
-                      onChange={(e, zoom) => setZoom(zoom)}
-                      classes={{ container: "slider" }}
-                    />
+                    <Slider key={1} value={zoom} min={1} max={3} step={0.1} aria-labelledby="Zoom" onChange={(e, zoom) => setZoom(zoom)} classes={{ container: "slider" }} />
+                    <Slider key={2} value={rotation} min={0} max={360} step={1} aria-labelledby="Rotation" classes={{ container: "slider" }} onChange={(e, rotation) => setRotation(rotation)} />
                   </div>
                 </>
               )}
@@ -731,7 +700,7 @@ function Page(props) {
             <Modal.Footer className="justify-content-center">
               {/* <button onClick={() => setModalShow(false)}>بستن</button> */}
               <button className="btn btn-success" onClick={() => uploadHandler()}>
-                  بارگذاری{" "}
+                  بارگذاری
               </button>
             </Modal.Footer>
           </Modal>
@@ -789,27 +758,14 @@ function Page(props) {
               </div>
               <div className="row mb-3 p-2 header_link">
                 <div className="col pt-2 text-center">
-                  <SubmitButton
-                    loading={loading || uploading}
-                    onClick={() => setProductImages()}
-                    text="ثبت نهایی محصول"
-                    className="d-inline-block btn-main btn-green"
-                  >
+                  <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main btn-green">
                     <FaCheck className="font_icon" />
                   </SubmitButton>
                 </div>
               </div>
             </div>
           </div>
-          <Modal
-            onHide={() => setModalShow(false)}
-            show={modalShow}
-            className="crop_image_modal"
-            size="xl"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-            scrollable
-          >
+          <Modal onHide={() => setModalShow(false)} show={modalShow} className="crop_image_modal" size="xl" aria-labelledby="contained-modal-title-vcenter" centered scrollable>
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">بارگذاری تصویر</Modal.Title>
             </Modal.Header>
@@ -839,22 +795,17 @@ function Page(props) {
                       image={src}
                       crop={crop}
                       zoom={zoom}
+                      rotation={rotation}
                       aspect={4 / 5}
                       onCropChange={setCrop}
                       onCropComplete={onCropComplete}
                       onZoomChange={setZoom}
+                      onRotationChange={setRotation}
                     />
                   </div>
                   <div className="controls">
-                    <Slider
-                      value={zoom}
-                      min={1}
-                      max={3}
-                      step={0.1}
-                      aria-labelledby="Zoom"
-                      onChange={(e, zoom) => setZoom(zoom)}
-                      classes={{ container: "slider" }}
-                    />
+                    <Slider key={1} value={zoom} min={1} max={3} step={0.1} aria-labelledby="Zoom" onChange={(e, zoom) => setZoom(zoom)} classes={{ container: "slider" }} />
+                    <Slider key={2} value={rotation} min={0} max={360} step={1} aria-labelledby="Rotation" classes={{ container: "slider" }} onChange={(e, rotation) => setRotation(rotation)} />
                   </div>
                 </>
               )}
@@ -862,7 +813,7 @@ function Page(props) {
             <Modal.Footer className="justify-content-center">
               {/* <button onClick={() => setModalShow(false)}>بستن</button> */}
               <button className="btn btn-success" onClick={() => uploadHandler()}>
-                  بارگذاری{" "}
+                  بارگذاری
               </button>
             </Modal.Footer>
           </Modal>

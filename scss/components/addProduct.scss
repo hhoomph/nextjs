@@ -369,9 +369,9 @@
     bottom: 0;
     left: 0%;
     width: 100%;
-    padding: 0 16px;
-    height: 80px;
-    display: flex;
+    padding: 0 20px;
+    height: 70px;
+    display: block;
     align-items: center;
   }
   .slider {
@@ -379,5 +379,6 @@
   }
   .MuiSlider-root {
     color: #ff5722;
+    padding: 12px 0;
   }
 }
