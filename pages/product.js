@@ -188,7 +188,7 @@ function Page(props) {
     <>
       <Head>{productData.title}</Head>
       <title>{productData.title}</title>
-      <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+      <Nav _tkn={props._tkn} />
       <div className="product_page">
         <div className="container product_header">
           <div className="row">

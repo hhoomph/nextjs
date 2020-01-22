@@ -135,7 +135,7 @@ const Page = props => {
   return (
     <>
       <title>قارون</title>
-      <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+      <Nav _tkn={props._tkn} />
       <div className="container pb-0 pr-0 ticket_head">
         <div className="row p-2 cart_title">
           <div className="col-1 align-self-center pr-2" onClick={() => Router.back()}>

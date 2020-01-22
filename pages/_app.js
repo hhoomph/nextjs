@@ -8,6 +8,7 @@ import { HubConnectionBuilder, LogLevel } from "@aspnet/signalr";
 import { CartCountContext } from "../context/context";
 import { cartCountReduser } from "../context/reducer";
 import getHost from "../utils/get-host";
+import BottomNav from "../components/Nav/BottomNav";
 import "../scss/style.scss";
 class MyApp extends App {
   static async getInitialProps({ Component, router, ctx }) {
@@ -39,14 +40,14 @@ class MyApp extends App {
       })
       .configureLogging(LogLevel.Error)
       .build();
-    this.statusHub = new HubConnectionBuilder()
-      .withUrl("https://api.qarun.ir/statusHub", {
-        accessTokenFactory: () => {
-          return this.props.accessToken;
-        }
-      })
-      .configureLogging(LogLevel.Error)
-      .build();
+    // this.statusHub = new HubConnectionBuilder()
+    //   .withUrl("https://api.qarun.ir/statusHub", {
+    //     accessTokenFactory: () => {
+    //       return this.props.accessToken;
+    //     }
+    //   })
+    //   .configureLogging(LogLevel.Error)
+    //   .build();
     // this.baseHub = this.baseHub.bind(this);
     // this.statusHub = this.statusHub.bind(this);
   }
@@ -85,12 +86,12 @@ class MyApp extends App {
     //   await this.start();
     // });
     // Start to signalR hub
-    this.baseHub
-      .start({ withCredentials: false })
-      .then(function() {
-        // console.log("baseHub connected");
-      })
-      .catch(err => console.error(err.toString()));
+    // this.baseHub
+    //   .start({ withCredentials: false })
+    //   .then(function() {
+    //     // console.log("baseHub connected");
+    //   })
+    //   .catch(err => console.error(err.toString()));
     // this.baseHub.onclose(async () => {
     //   await this.start();
     // });
@@ -131,13 +132,10 @@ class MyApp extends App {
       <>
         <Component
           baseHub={this.baseHub}
-          statusHub={this.statusHub}
-          orderCount={this.state.orderCount}
-          eventCount={this.state.eventCount}
-          userStatus={this.state.userStatus}
           _tkn={this.props.accessToken}
           {...pageProps}
         />
+        <BottomNav/>
       </>
     );
   }

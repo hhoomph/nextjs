@@ -118,7 +118,7 @@ function Page(props) {
     return (
       <>
         <title>قارون</title>
-        <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+        <Nav _tkn={props._tkn} />
         <div className="container mb-1 rtl checkout_page">
           <div className="row mb-3 p-2 header_link">
             <div className="col pt-2 text-center">
@@ -162,7 +162,7 @@ function Page(props) {
     return (
       <>
         <title>قارون</title>
-        <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+        <Nav _tkn={props._tkn} />
         <div className="container mb-1 rtl checkout_page">
           <div className="row mb-3 p-2 header_link">
             <div className="col pt-2 text-center">
@@ -227,7 +227,7 @@ function Page(props) {
     // }
     return (
       <>
-        <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+        <Nav _tkn={props._tkn} />
       </>
     );
     break;

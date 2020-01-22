@@ -259,7 +259,7 @@ function Page(props) {
     <CartContext.Provider value={cartDispatch}>
       <CartCountContext.Provider value={cartCountDispatch}>
         <title>قارون</title>
-        <Nav _tkn={props._tkn} statusHub={props.statusHub} cartCount={cartCount} />
+        <Nav _tkn={props._tkn} cartCount={cartCount} />
         {view === 1 && (
           <div className="container cart_head_continue">
             <div className="row mb-3 p-2 header_link">

@@ -65,18 +65,22 @@ const Header = props => {
     }
   };
   const UserStatus = () => {
-    if (props.userOnline) {
-      return (
-        <div className="status online" title="آنلاین">
-          <span></span>
-        </div>
-      );
+    if (props.userOnline !== undefined && props.userOnline !== null) {
+      if (props.userOnline) {
+        return (
+          <div className="status online" title="آنلاین">
+            <span></span>
+          </div>
+        );
+      } else {
+        return (
+          <div className="status offline" title="آفلاین">
+            <span></span>
+          </div>
+        );
+      }
     } else {
-      return (
-        <div className="status offline" title="آفلاین">
-          <span></span>
-        </div>
-      );
+      return null;
     }
   };
   const followToggle = async () => {

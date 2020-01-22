@@ -2,11 +2,12 @@ import React, { Fragment, useState, useEffect, useContext, memo } from "react";
 import Link from "../Link";
 import fetchData from "../../utils/fetchData";
 import Router from "next/router";
-import { FaShoppingBasket } from "react-icons/fa";
+import { FaShoppingBasket, FaTimesCircle, FaPlusSquare, FaMinusSquare, FaPlus } from "react-icons/fa";
 import WindowsWidth from "../WindowsWidth";
 import { numberSeparator, removeSeparator } from "../../utils/tools";
-import { CartCountContext } from "../../context/context";
+import { CartContext, CartCountContext } from "../../context/context";
 const Product = props => {
+  const cartDispatch = useContext(CartContext);
   const cartCountDispatch = useContext(CartCountContext);
   const width = WindowsWidth();
   const productClass = () => {
@@ -40,6 +41,53 @@ const Product = props => {
     }
     //setLoading(false);
   };
+  // const getCartData = async () => {
+  //   const getCartDataRes = await fetchData(
+  //     "User/U_Cart/GetAll",
+  //     {
+  //       method: "GET"
+  //     },
+  //     props.ctx
+  //   );
+  //   if (getCartDataRes !== undefined && getCartDataRes.isSuccess) {
+  //     let cData = getCartDataRes.data || [];
+  //     cartDispatch({ type: "refresh", payload: [] });
+  //     cartDispatch({ type: "refresh", payload: cData });
+  //   }
+  // };
+  // const addProductQuantity = async () => {
+  //   const result = await fetchData(
+  //     "User/U_Cart/Add",
+  //     {
+  //       method: "POST",
+  //       body: JSON.stringify({
+  //         productId: props.id,
+  //         count: 1
+  //       })
+  //     },
+  //     props.ctx
+  //   );
+  //   if (result.isSuccess) {
+  //     getCartData();
+  //     cartCountDispatch({ type: "add" });
+  //   }
+  // };
+  // const reduceProductQuantity = async () => {
+  //   const result = await fetchData(
+  //     "User/U_Cart/Reduce",
+  //     {
+  //       method: "POST",
+  //       body: JSON.stringify({
+  //         shopingCartId: shopingCartId
+  //       })
+  //     },
+  //     props.ctx
+  //   );
+  //   if (result.isSuccess) {
+  //     getCartData();
+  //     cartCountDispatch({ type: "remove" });
+  //   }
+  // };
   return (
     <div className={productClass()}>
       <div className="product_frame">
@@ -56,9 +104,10 @@ const Product = props => {
         </Link>
         <div className="product_basket" id={props.id} onClick={addToCart}>
           <p>سبد خرید</p>
-          <FaShoppingBasket className="svg_Icons" />
+          <FaPlus className="font_icon" />
         </div>
         <div className="product_text">
+          <p className="text-truncate text-center product_name">{props.productName}</p>
           <p>
             <span className="product_price">{numberSeparator(props.price)} </span>
             <span className="product_currency">تومان</span>

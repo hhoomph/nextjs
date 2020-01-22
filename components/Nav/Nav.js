@@ -34,25 +34,29 @@ const UserIcon = props => {
 const Nav = props => {
   const [orderCount, setOrderCount] = useState(0);
   const [eventCount, setEventCount] = useState(0);
-  const statusHub = new HubConnectionBuilder()
-    .withUrl("https://api.qarun.ir/statusHub", {
-      accessTokenFactory: () => {
-        return props._tkn;
-      }
-    })
-    .configureLogging(LogLevel.Error)
-    .build();
   useEffect(() => {
-    if (props.statusHub !== undefined && props._tkn !== undefined) {
-      statusHub
+    if (props._tkn !== undefined) {
+      const baseHub = new HubConnectionBuilder()
+        .withUrl("https://api.qarun.ir/baseHub", {
+          accessTokenFactory: () => {
+            return props._tkn;
+          }
+        })
+        .configureLogging(LogLevel.Error)
+        .build();
+      baseHub
         .start({ withCredentials: false })
         .then(function() {
-          console.log("statusHub connected");
-          statusHub.on("EventsCount", res => {
+          console.log("baseHub connected");
+          // baseHub.invoke("GetEventCount", res => {
+          // });
+          baseHub.on("EventsCount", res => {
             console.log(res);
             setEventCount(res);
           });
-          statusHub.on("OrderCount", res => {
+          // baseHub.invoke("GetOrderCount", res => {
+          // });
+          baseHub.on("OrderCount", res => {
             console.log(res);
             setOrderCount(res);
           });
@@ -94,7 +98,7 @@ const Nav = props => {
         </div>
       </nav>
       {/* Bottom Navbar in Desktop Mode */}
-      <nav className="d-none d-lg-flex fixed-bottom top_nav navbar navbar-expand navbar-white desktop_bottom">
+      {/* <nav className="d-none d-lg-flex fixed-bottom top_nav navbar navbar-expand navbar-white desktop_bottom">
         <div className="col-12 d-flex justify-content-center">
           <Link href="/help" passHref>
             <a className="nav-link">راهنمای ثبت سفارش</a>
@@ -112,7 +116,7 @@ const Nav = props => {
             <a className="nav-link">درباره ما</a>
           </Link>
         </div>
-      </nav>
+      </nav> */}
       {/* Bottom Navbar in Mobile Mode */}
       <nav className="d-flex d-lg-none bottom_nav navbar fixed-bottom navbar-white bg-white">
         <div className="col-12 d-flex justify-content-center p-1">
@@ -135,7 +139,6 @@ const Nav = props => {
           <Link href="/activity" passHref>
             {eventCount > 0 ? (
               <a className="nav_Icons notify">
-                <MenuSvg className="svg_Icons" />
                 <HeartIcon className="svg_Icons" />
                 <div className="badge badge-success">
                   <HeartIcon className="font_icon" />

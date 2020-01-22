@@ -38,8 +38,7 @@
       position: relative;
       text-align: center;
       //width: 160px;
-      // height: 210px;
-      height: 250px;
+      // height: 250px;
       padding: 10px;
       padding-right: 0;
       padding-left: 0;
@@ -67,30 +66,37 @@
         max-height: 31vh;
         overflow: hidden;
         img {
-          max-width: 10rem;
-          max-height: 12rem;
+          // max-width: 10rem;
+          // max-height: 12rem;
+          max-width: 50vw;
+          max-height: 60vw;
           width: auto;
           height: auto;
           border-radius: 8px;
           border-bottom-left-radius: 0;
           border-bottom-right-radius: 0;
-          margin-top: -20px;
-          margin-bottom: -19px;
+          margin-top: -6vw;
+          margin-bottom: -5.8vw;
         }
       }
       .product_basket {
         cursor: pointer;
-        background-color: #2fa841;
-        // position: relative;
-        // top: 8px;
+        background-color: #ffffff00;
         position: absolute;
         bottom: 4px;
+        border: 1px solid #BDBDBD;
         border-radius: 50px;
         text-align: center;
-        // width: auto;
-        width: 40px;
-        height: 40px;
-        // margin: auto;
+        // width: 40px;
+        // height: 40px;
+        line-height: normal;
+        width: 30px;
+        height: 30px;
+        right: 2px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-self: center;
         z-index: 1;
         &:hover {
           border-radius: 150px;
@@ -110,13 +116,14 @@
           padding-right: 0.6em;
           display: none;
         }
+        .font_icon {
+          color: #13bf5d;
+          font-size: 1.4rem;
+        }
         .svg_Icons {
-          // position: absolute;
           position: relative;
           font-size: 1.55rem;
-          // top: 4px;
           top: 5px;
-          //right: 8px;
           fill: #fff;
           padding-top: 5px;
         }
@@ -130,6 +137,7 @@
         padding: 1px;
         padding-top: 4px;
         padding-bottom: 4px;
+        padding-right: 6px;
         direction: ltr;
         font-size: 0.75rem;
         color: #424242;
@@ -140,7 +148,7 @@
         }
         img {
           border-radius: 8em;
-          width: 39px;
+          width: 32px;
           margin-left: 6px;
         }
       }
@@ -151,6 +159,9 @@
       margin-top: 3px;
       font-size: 0.8rem;
       padding-left: 4px;
+      .product_name {
+        color: #757575;
+      }
       p {
         padding: 0;
         margin: 0;
@@ -178,6 +189,8 @@
           height: 280px !important;
           max-width: 26rem !important;
           max-height: 30rem !important;
+          margin-top: -1.5vw !important;
+          margin-bottom: -2.8vw !important;
         }
       }
       .product_user {

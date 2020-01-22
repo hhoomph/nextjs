@@ -66,7 +66,7 @@ function Page(props) {
   return (
     <>
       <title>قارون</title>
-      <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+      <Nav _tkn={props._tkn} />
       <div className="container pb-0 map_header friends_page">
         <div className="row">
           <div className="col-12 p-0 pt-2">

@@ -48,7 +48,7 @@ function Page(props) {
       <Head>
         <title>قارون | موجودی</title>
       </Head>
-      <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+      <Nav _tkn={props._tkn} />
       <div className="container inventory_page">
         <div className="row p-2 page_title">
           <div className="col-10 text-center align-self-center">

@@ -256,7 +256,7 @@ function Page(props) {
       <UserProductsContext.Provider value={userProductsDispatch}>
         <div className="profile_container">
           <title>قارون</title>
-          <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+          <Nav _tkn={props._tkn} />
           <ProfileHeader profileData={profileData} setView={setView} scrollToProducts={scrollToProducts} sellLimit={sellLimit} />
           {showFirstAdd ? (
             <div className="container mt-2 mb-1 p-2 first_add_suggest_profile">
@@ -368,7 +368,7 @@ function Page(props) {
     return (
       <>
         <title>قارون</title>
-        <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+        <Nav _tkn={props._tkn} />
         <EditProfile setView={setView} profileData={profileData} />
       </>
     );
@@ -380,7 +380,7 @@ function Page(props) {
     return (
       <UserProductsContext.Provider value={userProductsDispatch}>
         <title>قارون</title>
-        <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+        <Nav _tkn={props._tkn} />
         <ProfileHeader setView={setView} profileData={profileData} scrollToProducts={scrollToProducts} sellLimit={sellLimit} />
         {showFirstAdd ? (
           <div className="container mt-2 mb-1 p-2 first_add_suggest_profile">

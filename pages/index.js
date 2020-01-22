@@ -43,14 +43,14 @@ const ProductsRow = dynamic({
   ssr: true
 });
 function Page(props) {
-  let Following = props.Following.data || [];
-  const noFriends = Following.length <= 0 ? true : false;
+  const [following, setFollowing] = useState(props.Following.data || []);
+  const noFriends = following.length <= 0 ? true : false;
   const [marketAround, setMarketAround] = useState(props.GetMarketAround.data || []);
   const [friendsMarket, setFriendsMarket] = useState(props.FriendsMarket.data || []);
-  const Profile = props.Profile.data || null;
-  const isLogin = Profile !== null ? true : false;
-  const lat = Profile !== null && Profile.lat !== undefined && Profile.lat !== null ? Profile.lat : 0;
-  const long = Profile !== null && Profile.long !== undefined && Profile.long !== null ? Profile.long : 0;
+  const [profile, setProfile] = useState(props.Profile.data || null);
+  const isLogin = profile !== null ? true : false;
+  const lat = profile !== null && profile.lat !== undefined && profile.lat !== null ? profile.lat : 0;
+  const long = profile !== null && profile.long !== undefined && profile.long !== null ? profile.long : 0;
   const allCategories = props.allCategories.data || [];
   const cartData = props.cartData.data || [];
   const getCartCount = cartData
@@ -61,19 +61,19 @@ function Page(props) {
       return acc + count;
     }, 0);
   const [cartCount, cartCountDispatch] = useReducer(cartCountReduser, getCartCount);
-  if (Profile !== null) {
-    const selfUser = {
-      displayName: Profile.displayName,
-      id: Profile.id,
-      isFollowed: true,
-      phoneNumber: Profile.phoneNumber,
-      qerun: Profile.qerun,
-      userAvatar: Profile.avatar,
-      userName: Profile.userName,
-      self: true
-    };
-    Following = [selfUser, ...Following];
-  }
+  // if (profile !== null) {
+  //   const selfUser = {
+  //     displayName: profile.displayName,
+  //     id: profile.id,
+  //     isFollowed: true,
+  //     phoneNumber: profile.phoneNumber,
+  //     qerun: profile.qerun,
+  //     userAvatar: profile.avatar,
+  //     userName: profile.userName,
+  //     self: true
+  //   };
+  //   setFollowing([selfUser, ...following]);
+  // }
   const [suggestionUsers, setSuggestionUsers] = useState([]);
   const getUserFromClosestPeople = async () => {
     const getClosestPeople = await fetchData(
@@ -159,8 +159,41 @@ function Page(props) {
       setFriendsMarket(FriendsMarket.data);
     }
   };
+  const checkProfile = async () => {
+    const result = await fetchData(
+      "User/U_Account/Profile",
+      {
+        method: "GET"
+      },
+      props.ctx
+    );
+    if (result !== undefined && result.isSuccess) {
+      setProfile(result.data);
+      const selfUser = {
+        displayName: result.data.displayName,
+        id: result.data.id,
+        isFollowed: true,
+        phoneNumber: result.data.phoneNumber,
+        qerun: result.data.qerun,
+        userAvatar: result.data.avatar,
+        userName: result.data.userName,
+        self: true
+      };
+      setFollowing([selfUser, ...following]);
+    }
+    const result2 = await fetchData(
+      "User/U_Friends/Following",
+      {
+        method: "GET"
+      },
+      props.ctx
+    );
+    if (result2 !== undefined && result2.isSuccess) {
+      setFollowing(result2.data);
+    }
+  };
   useEffect(() => {
-    if (noFriends && Profile !== null) {
+    if (noFriends && profile !== null) {
       getUserFromClosestPeople();
       //getSuggestionUsers();
     } else {
@@ -195,16 +228,16 @@ function Page(props) {
     <CartCountContext.Provider value={cartCountDispatch}>
       <title>قارون</title>
       <IndexHeader cartCount={cartCount} />
-      <Nav _tkn={props._tkn} orderCount={props.orderCount} eventCount={props.eventCount} statusHub={props.statusHub} cartCount={cartCount} />
-      {noFriends && Profile !== null ? (
+      <Nav _tkn={props._tkn} baseHub={props.baseHub} orderCount={props.orderCount} eventCount={props.eventCount} cartCount={cartCount} />
+      {noFriends && profile !== null ? (
         <>
           <FirstUserSuggest users={suggestionUsers} />
           <CatProductsRow products={marketAround} />
           {showFirstCatProductsRow}
         </>
-      ) : Profile !== null ? (
+      ) : profile !== null ? (
         <>
-          <UserSuggest users={Following} /> <CatProductsRow products={marketAround} />
+          <UserSuggest users={following} /> <CatProductsRow products={marketAround} />
           <ProductsRow products={friendsMarket} />
         </>
       ) : (

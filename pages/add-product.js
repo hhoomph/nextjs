@@ -404,7 +404,7 @@ function Page(props) {
     return (
       <>
         <title>قارون</title>
-        <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+        <Nav _tkn={props._tkn} />
         <div className="container mb-1 rtl add_product">
           <div className="row p-2 _title">
             <div className="col-10 text-center align-self-center">
@@ -539,7 +539,7 @@ function Page(props) {
     return (
       <>
         <title>قارون</title>
-        <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+        <Nav _tkn={props._tkn} />
         <div className="container mb-1 rtl add_product">
           <div className="row mb-3 p-1 header_link_tab image_tabs">
             <div className="col-4 pt-2 text-center active" onClick={() => setView(2)}>
@@ -599,7 +599,7 @@ function Page(props) {
     return (
       <>
         <title>قارون</title>
-        <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+        <Nav _tkn={props._tkn} />
         <div className="container mb-1 rtl add_product">
           <div className="row mb-3 p-1 header_link_tab image_tabs">
             {/* <div className="col-4 pt-2 text-center" onClick={() => setView(2)}>
@@ -712,7 +712,7 @@ function Page(props) {
     return (
       <>
         <title>قارون</title>
-        <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+        <Nav _tkn={props._tkn} />
         <div className="container mb-1 rtl add_product">
           <div className="row mb-3 p-1 header_link_tab image_tabs">
             {/* <div className="col-4 pt-2 text-center" onClick={() => setView(2)}>
@@ -827,7 +827,7 @@ function Page(props) {
     // }
     return (
       <>
-        <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+        <Nav _tkn={props._tkn} />
       </>
     );
     break;

@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import SubmitButton from "../Button/SubmitButton";
 import { FaTimesCircle, FaChevronUp, FaChevronDown, FaArrowLeft } from "react-icons/fa";
 import { FiChevronRight } from "react-icons/fi";
+import { IoMdCall } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
 import fetchData from "../../utils/fetchData";
 import { numberSeparator, removeSeparator } from "../../utils/tools";
@@ -106,23 +107,8 @@ const Order = props => {
           </div>
         </div>
       </div>
-      <Ask
-        header={"لغو سفارش"}
-        text={"سفارش مورد نظر لغو شود؟"}
-        command={cancelOrder}
-        setModalShow={setAskModalShow}
-        modalShow={askModalShow}
-        loading={loading}
-      />
-      <Ask
-        header={"تایید و ارسال"}
-        text={""}
-        sellerSend={true}
-        command={deliveredOrder}
-        setModalShow={setAskModalShow1}
-        modalShow={askModalShow1}
-        loading={loading}
-      />
+      <Ask header={"لغو سفارش"} text={"سفارش مورد نظر لغو شود؟"} command={cancelOrder} setModalShow={setAskModalShow} modalShow={askModalShow} loading={loading} />
+      <Ask header={"تایید و ارسال"} text={""} sellerSend={true} command={deliveredOrder} setModalShow={setAskModalShow1} modalShow={askModalShow1} loading={loading} />
       <div className="container mb-2 mt-2 cart p-0 pr-1 pl-1">
         <div className="row cart_seller p-1 justify-content-end">
           <div className="col-5 m-auto rtl p-0 pl-1 text-center">
@@ -171,11 +157,22 @@ const Order = props => {
             <span className="total_price">{props.totalLastPrice !== undefined ? numberSeparator(props.totalLastPrice) + " تومان" : "0 تومان"}</span>
           </div>
         </div>
-        {props.type === 1 && props.pOrderStatus == "درانتظار تأیید فروشنده" && (
+        {props.type === 1 && props.pOrderStatus == "درانتظار تأیید فروشنده" ? (
           <div className="row d-flex pb-3 justify-content-around rtl contact_row">
             <SubmitButton loading={loading} onClick={() => setAskModalShow1(true)} text="قبول و ارسال" className="d-inline-block delivered" />
+            <a className="tell_call" title="تماس با فروشنده" href={`tel:${props.sellerPhoneNumber}`}>
+              <IoMdCall className="font_icon" />
+            </a>
             <SubmitButton loading={loading} onClick={() => setAskModalShow(true)} text="رد سفارش" className="d-inline-block cancel" />
           </div>
+        ) : props.type === 1 ? (
+          <div className="row d-flex pb-3 justify-content-around rtl contact_row">
+            <a className="tell_call" title="تماس با فروشنده" href={`tel:${props.sellerPhoneNumber}`}>
+              <IoMdCall className="font_icon" />
+            </a>
+          </div>
+        ) : (
+          ""
         )}
       </div>
     </div>

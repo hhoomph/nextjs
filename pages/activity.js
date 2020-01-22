@@ -129,7 +129,7 @@ const Page = props => {
   return (
     <>
       <title>قارون</title>
-      <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+      <Nav _tkn={props._tkn} />
       <div className="container pt-2 pb-2 search_component">
         <div className="row cart_title">
           <div className="col-10 text-center align-self-center">

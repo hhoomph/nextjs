@@ -258,7 +258,7 @@ const Page = props => {
     return (
       <>
         <title>قارون</title>
-        <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+        <Nav _tkn={props._tkn} />
         <MapHeader setView={setView} searchValue={searchValue} handleSearchChange={handleSearchChange} />
         <div className="container mb-1 rtl p-0 mapContainer">
           <MapComponent
@@ -300,7 +300,7 @@ const Page = props => {
     return (
       <>
         <title>قارون</title>
-        <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+        <Nav _tkn={props._tkn} />
         <SearchPage setView={setView} />
       </>
     );
@@ -309,7 +309,7 @@ const Page = props => {
     return (
       <>
         <title>قارون</title>
-        <Nav _tkn={props._tkn} statusHub={props.statusHub} />
+        <Nav _tkn={props._tkn} />
         <MapHeader setView={setView} searchValue={searchValue} handleSearchChange={handleSearchChange} />
         <div className="container mb-1 rtl p-0 mapContainer">
           <MapComponent
