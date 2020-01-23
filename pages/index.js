@@ -169,17 +169,17 @@ function Page(props) {
     );
     if (result !== undefined && result.isSuccess) {
       setProfile(result.data);
-      const selfUser = {
-        displayName: result.data.displayName,
-        id: result.data.id,
-        isFollowed: true,
-        phoneNumber: result.data.phoneNumber,
-        qerun: result.data.qerun,
-        userAvatar: result.data.avatar,
-        userName: result.data.userName,
-        self: true
-      };
-      setFollowing([selfUser, ...following]);
+      // const selfUser = {
+      //   displayName: result.data.displayName,
+      //   id: result.data.id,
+      //   isFollowed: true,
+      //   phoneNumber: result.data.phoneNumber,
+      //   qerun: result.data.qerun,
+      //   userAvatar: result.data.avatar,
+      //   userName: result.data.userName,
+      //   self: true
+      // };
+      // setFollowing([selfUser, ...following]);
     }
     const result2 = await fetchData(
       "User/U_Friends/Following",
@@ -189,7 +189,23 @@ function Page(props) {
       props.ctx
     );
     if (result2 !== undefined && result2.isSuccess) {
-      setFollowing(result2.data);
+      let f = [];
+      if (profile !== null) {
+        const selfUser = {
+          displayName: profile.displayName,
+          id: profile.id,
+          isFollowed: true,
+          phoneNumber: profile.phoneNumber,
+          qerun: profile.qerun,
+          userAvatar: profile.avatar,
+          userName: profile.userName,
+          self: true
+        };
+        f = [selfUser, ...result2.data];
+      } else {
+        f = result2.data;
+      }
+      setFollowing(f);
     }
   };
   useEffect(() => {

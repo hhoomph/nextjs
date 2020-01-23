@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect, useContext, memo } from "react";
 import Link from "../Link";
 import fetchData from "../../utils/fetchData";
 import Router from "next/router";
-import { FaShoppingBasket, FaTimesCircle, FaPlusSquare, FaMinusSquare, FaPlus } from "react-icons/fa";
+import { FaShoppingBasket, FaTimesCircle, FaPlusCircle, FaMinusCircle, FaPlus } from "react-icons/fa";
 import WindowsWidth from "../WindowsWidth";
 import { numberSeparator, removeSeparator } from "../../utils/tools";
 import { CartContext, CartCountContext } from "../../context/context";
@@ -104,7 +104,7 @@ const Product = props => {
         </Link>
         <div className="product_basket" id={props.id} onClick={addToCart}>
           <p>سبد خرید</p>
-          <FaPlus className="font_icon" />
+          <FaPlusCircle className="font_icon" />
         </div>
         <div className="product_text">
           <p className="text-truncate text-center product_name">{props.productName}</p>

@@ -48,7 +48,7 @@ const Nav = props => {
         .start({ withCredentials: false })
         .then(function() {
           console.log("baseHub connected");
-          // baseHub.invoke("GetEventCount", res => {
+          // baseHub.invoke("GetEventsCount", res => {
           // });
           baseHub.on("EventsCount", res => {
             console.log(res);

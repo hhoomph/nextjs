@@ -230,6 +230,9 @@
       width: 14vw !important;
       height: 285px !important;
       margin-bottom: 16px !important;
+      .product_link{
+        max-height: 16vh !important;
+      }
       .product_basket {
         position: absolute !important;
         top: 242px !important;

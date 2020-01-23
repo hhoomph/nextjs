@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import fetchData from "../utils/fetchData";
 import SubmitButton from "../components/Button/SubmitButton";
 import { FaArrowRight, FaArrowLeft, FaTimes, FaFileUpload } from "react-icons/fa";
+import { FiChevronRight } from "react-icons/fi";
 import { numberSeparator, removeSeparator } from "../utils/tools";
 import { ToastContainer, toast } from "react-toastify";
 import "../scss/components/ticket.scss";
@@ -25,12 +26,11 @@ const Page = props => {
   const parentId = Router.query.id;
   const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(false);
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
-  const [createOrReply, setCreateOrReply] = useState(0);
-  const [replyUserName, setReplyUserName] = useState(null);
   console.log(props.Response.data);
   //
+  const mainSubject = props.Response.data !== undefined && props.Response.data.model !== undefined && props.Response.data.model[0] !== undefined ? props.Response.data.model[0].subject : "نامشخص";
   const [messages, setMessages] = useState(props.Response.data !== undefined && props.Response.data.model !== undefined ? props.Response.data.model : []);
   const ParentId = "";
   const [content, setContent] = useState("");
@@ -47,7 +47,10 @@ const Page = props => {
     pauseOnHover: true,
     draggable: true
   });
-  //const showComments = messages.map(tik => <Ticket key={tik.ticketId} ticketId={tik.ticketId} focusOnTextArea={focusOnTextArea} />);
+  const showMesseges = messages.map(tik => {
+    const isAdmin = tik.senderType === 2 ? true : false;
+    return <Ticket key={tik.ticketId} parentId={tik.parentId} ticketId={tik.ticketId} isAdmin={isAdmin} subject={tik.subject} content={tik.content} insertDateP={tik.insertDateP} filesUrl={tik.filesUrl} adminAnswered={tik.adminAnswered} userAnswered={tik.userAnswered} senderName={tik.senderName} senderEmail={tik.senderEmail} senderPhoneNumber={tik.senderPhoneNumber} senderId={tik.senderId} senderType={tik.senderType} focusOnTextArea={focusOnTextArea} />;
+  });
   const answerTicket = async () => {
     toast.dismiss();
     const errs = [];
@@ -100,6 +103,7 @@ const Page = props => {
     setLoading(false);
   };
   const getTickets = async () => {
+    setLoading(true);
     const Response = await fetchData(
       "User/U_Support/GetTicketResponse",
       {
@@ -107,15 +111,29 @@ const Page = props => {
         body: JSON.stringify({
           ticketStatus: "All",
           parentId: parentId,
-          page: 1,
+          page: page,
           pageSize: 10
         })
       },
       props.ctx
     );
-    if (Response.isSuccess) {
+    if (Response !== undefined && Response.isSuccess) {
       console.log(Response.data);
+      if (page === 1) {
+        setMessages(Response.data.model);
+      } else {
+        setMessages(messages.concat(Response.data.model));
+      }
+      if (Response !== undefined && Response.data.model.length >= 9) {
+        setPage(page + 1);
+        setTimeout(() => setIsFetching(false), 200);
+      }
+    } else if (Response !== undefined && Response.message != undefined) {
+      setTimeout(() => setIsFetching(false), 200);
+    } else if (Response !== undefined && Response.error != undefined) {
+      setTimeout(() => setIsFetching(false), 200);
     }
+    setLoading(false);
   };
   const handleScroll = () => {
     if (window.innerHeight + document.documentElement.scrollTop + 60 < document.documentElement.offsetHeight || isFetching) return;
@@ -127,9 +145,9 @@ const Page = props => {
   }, []);
   useEffect(() => {
     if (!isFetching) return;
+    getTickets();
   }, [isFetching]);
   useEffect(() => {
-    getTickets();
     focusOnTextArea();
   }, []);
   return (
@@ -137,98 +155,24 @@ const Page = props => {
       <title>قارون</title>
       <Nav _tkn={props._tkn} />
       <div className="container pb-0 pr-0 ticket_head">
-        <div className="row p-2 cart_title">
-          <div className="col-1 align-self-center pr-2" onClick={() => Router.back()}>
-            <FaArrowLeft className="font_icon back_icon" />
+        <div className="row p-2 cart_title justify-content-end">
+          <div className="col-1 p-0 text-center align-self-center"> </div>
+          <div className="col-8 p-0 text-center align-self-center">
+            <h6 className="mr-0 ml-2 mt-1 page_title">{mainSubject}</h6>
           </div>
-          <div className="col-10 p-0 text-center align-self-center">
-            <h5 className="mr-0 ml-2 mt-1 page_title">موضوع تیکت</h5>
+          <div className="col-2 text-right align-self-center pr-4" onClick={() => Router.back()}>
+            <FiChevronRight className="font_icon back_icon" />
           </div>
         </div>
       </div>
       <div className="container pb-5 rtl ticket_page">
         <div className="row pb-5 mb-5">
-          <div className="col-12 mt-2 _ticket">
-            <div className="row">
-              <div className="col-2 d-flex justify-content-center align-self-center">
-                <a className="user_img">
-                  <img src="/static/img/user.jpg" />
-                </a>
-              </div>
-              <div className="col-10 pl-0 pr-2">
-                <div className="row m-auto p-0 justify-content-end">
-                  <div className="col-12 p-0 rtl content">
-                    <a className="user_name">user name USER_NAME</a>
-                    <div className="message">
-                      متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست
-                      دمو متن پیام متن پیام تست دمو
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-12 pl-5 mt-2 text-left attach_files">
-                <img className="file" src="/static/img/product.png" />
-                <img className="file" src="/static/img/product2.png" />
-                <img className="file" src="/static/img/product5.jpg" />
-                <img className="file" src="/static/img/product6.jpg" />
-                <img className="file" src="/static/img/user.png" />
-              </div>
-              <div className="col-12 text-center">
-                <div className="time ml-2">29 دی ماه 1398 ساعت 10 و نیم</div>
-              </div>
-              <div className="col-12">
-                <hr />
-              </div>
-            </div>
-          </div>
-          <div className="col-12 mt-2 _ticket _admin">
-            <div className="row">
-              <div className="col-2 d-flex justify-content-center align-self-center">
-                <a className="user_img">
-                  <img src="/static/img/user.jpg" />
-                </a>
-              </div>
-              <div className="col-10">
-                <div className="row m-auto p-0 justify-content-end">
-                  <div className="col-12 p-0 rtl content">
-                    <a className="user_name">user name USER_NAME</a>
-                    <div className="message">
-                      متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست دمو متن پیام متن پیام تست
-                      دمو متن پیام متن پیام تست دمو
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-12 pl-2 mt-2 text-left attach_files">
-                <img className="file" src="/static/img/product.png" />
-                <img className="file" src="/static/img/product2.png" />
-                <img className="file" src="/static/img/product5.jpg" />
-                <img className="file" src="/static/img/product6.jpg" />
-                <img className="file" src="/static/img/user.png" />
-              </div>
-              <div className="col-12 text-center">
-                <div className="time ml-2">29 دی ماه 1398 ساعت 10 و نیم</div>
-              </div>
-              <div className="col-12">
-                <hr />
-              </div>
-            </div>
-          </div>
+          {showMesseges}
           {loading2 && (
-            <div className="col-12 mt-2 p-0 _ticket">
+            <div className="col-11 m-auto pt-2 _ticket">
               <Loading />
             </div>
           )}
-        </div>
-        <div className="row reply_to_notify" hidden={createOrReply === 0}>
-          <FaTimes
-            className="font_icon"
-            onClick={() => {
-              setCreateOrReply(0);
-              setContent("");
-            }}
-          />
-          <p> پاسخ دادن به نظر @{replyUserName}</p>
         </div>
         <div className="row fixed-bottom input_text">
           <div className="col-12">

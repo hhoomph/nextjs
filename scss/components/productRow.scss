@@ -85,7 +85,7 @@
         background-color: #ffffff00;
         position: absolute;
         bottom: 4px;
-        border: 1px solid #BDBDBD;
+        // border: 1px solid #BDBDBD;
         border-radius: 50px;
         text-align: center;
         // width: 40px;
@@ -100,15 +100,15 @@
         align-self: center;
         z-index: 1;
         &:hover {
-          border-radius: 150px;
+          // border-radius: 150px;
           animation: shadow_drop 0.8s both;
           animation-iteration-count: infinite;
-          .svg_Icons {
-            fill: #ffe500;
-          }
-          p {
-            color: #ffe500;
-          }
+          // .svg_Icons {
+          //   fill: #ffe500;
+          // }
+          // p {
+          //   color: #ffe500;
+          // }
         }
         p {
           vertical-align: middle;
@@ -118,8 +118,13 @@
           display: none;
         }
         .font_icon {
-          color: #13bf5d;
+          cursor: pointer;
+          color: #757575;
           font-size: 1.4rem;
+          transition: all 0.1s ease;
+          &:hover,&:active{
+            color: #141414;
+          }
         }
         .svg_Icons {
           position: relative;

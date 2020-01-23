@@ -22,7 +22,8 @@
     color: #388e3c !important;
     cursor: pointer;
     transition: all 0.1s ease-in-out;
-    &:hover,&:active{
+    &:hover,
+    &:active {
       font-size: 1.85rem;
       color: #1b5e20 !important;
     }
@@ -31,6 +32,8 @@
 .ticket_page {
   overflow-x: hidden;
   overflow-y: auto;
+  position: relative;
+  z-index: 1030;
   .ticket_row {
     box-shadow: 0px 0px 2px #b1b1b1;
     border-bottom: 1px solid #d2d2d2;
@@ -75,6 +78,11 @@
     }
   }
   ._ticket {
+    .usr_msg_div {
+      border: 1px solid #e0e0e085;
+      border-radius: 10px;
+      padding: 5px;
+    }
     .user_img {
       float: right;
       font-size: 2rem;
@@ -93,28 +101,28 @@
         width: 3rem;
         height: 3rem;
         border-radius: 10rem;
+        padding: 2px;
       }
       .font_icon {
         margin: auto;
       }
     }
     .user_name {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       font-weight: bold;
       clear: both;
       display: block;
     }
     .message {
-      font-size: 0.85rem;
+      font-size: 0.79rem;
       text-align: justify;
       clear: both;
       display: block;
     }
     .time {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: #777;
       margin-top: 10px;
-      margin-bottom: -10px;
     }
     hr {
       max-width: 90%;
@@ -132,17 +140,18 @@
   }
   ._ticket._admin {
     direction: ltr;
-    background: #fafafa;
+    background: #e1e1e133;
     border-radius: 10px;
     padding-top: 10px;
+    padding-bottom: 6px;
     .user_name {
       float: left;
     }
     .message {
-      text-align: left;
+      text-align: right;
     }
     .attach_files {
-      text-align: left !important;
+      text-align: right !important;
     }
   }
   .input_text {
