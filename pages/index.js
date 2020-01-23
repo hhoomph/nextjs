@@ -193,6 +193,7 @@ function Page(props) {
     }
   };
   useEffect(() => {
+    checkProfile();
     if (noFriends && profile !== null) {
       getUserFromClosestPeople();
       //getSuggestionUsers();

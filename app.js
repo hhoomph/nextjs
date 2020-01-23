@@ -2,6 +2,7 @@
 const { join } = require("path");
 const { parse } = require("url");
 const express = require("express");
+const cors = require("cors");
 const next = require("next");
 const cookieParser = require("cookie-parser");
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -19,8 +20,10 @@ app
     server.use(cookieParser());
     server.use((req, res, next) => {
       res.header("Access-Control-Allow-Origin", "*");
-      res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Authorization, Accept");
+      // cors();
+      // res.header("Access-Control-Allow-Origin", req.header("origin"));
+      res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS,HEAD");
+      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Authorization, Accept, Access-Control-Allow-Headers");
       res.header("Access-Control-Allow-Credentials", "true");
       next();
     });
