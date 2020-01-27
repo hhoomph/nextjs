@@ -10,6 +10,7 @@ import SubmitButton from "../Button/SubmitButton";
 import { ToastContainer, toast } from "react-toastify";
 import RRS from "react-responsive-select";
 import { Modal } from "react-bootstrap";
+import { numberSeparator, removeSeparator } from "../../utils/tools";
 import "../../scss/components/cart.scss";
 const ProductRow = dynamic({
   loader: () => import("./ProductRow"),
@@ -31,6 +32,7 @@ const Cart = props => {
   const [askModalShow, setAskModalShow] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [cancelReason, setCancelReason] = useState(null);
+  const showLimit = props.showLimit;
   toast.configure({
     position: "top-right",
     autoClose: 5000,
@@ -195,27 +197,9 @@ const Cart = props => {
         <div className="col-10 text-right p-0 pr-1 pt-1">
           <p className="seller_name d-inline-block mr-2 text-truncate">{props.sellerUserName}</p>
           <img src={props.sellerAvatar} className="userImage" />
-          {type !== 1 && (
+          {type === 1 && props.sellerLimitation > 0 && showLimit && (
             <div className="col-12 p-0 pr-5 text-center d-block " style={{ margin: "auto", marginTop: "-10px" }}>
-              {props.pOrderStatus == "درانتظار تأیید فروشنده" ? (
-                <div className="badge badge-warning">{props.pOrderStatus}</div>
-              ) : props.pOrderStatus == "درانتظار پرداخت" ? (
-                <div className="badge bg-amber">{props.pOrderStatus}</div>
-              ) : props.pOrderStatus == "ارسال شده" || props.pOrderStatus == "درحال ارسال" ? (
-                <div className="badge bg-blue">{props.pOrderStatus}</div>
-              ) : props.pOrderStatus == "عدم تأیید فروشنده" ? (
-                <div className="badge bg-brown">{props.pOrderStatus}</div>
-              ) : props.pOrderStatus == "لغو شده توسط خریدار" ? (
-                <div className="badge bg-pink">{props.pOrderStatus}</div>
-              ) : props.pOrderStatus == "عدم تحویل" ? (
-                <div className="badge bg-red">{props.pOrderStatus}</div>
-              ) : props.pOrderStatus == "تحویل شده" ? (
-                <div className="badge bg-green">{props.pOrderStatus}</div>
-              ) : props.pOrderStatus == "بازگشتی" ? (
-                <div className="badge bg-purple">{props.pOrderStatus}</div>
-              ) : (
-                <div className="badge badge-warning">{props.pOrderStatus}</div>
-              )}
+              <div className="badge badge-warning">محدودیت فروش : {numberSeparator(props.sellerLimitation)} تومان</div>
             </div>
           )}
         </div>
@@ -289,12 +273,12 @@ const Cart = props => {
         <div className="row d-flex justify-content-around rtl contact_row" hidden={!showRow}>
           <SubmitButton
             loading={loading}
-            onClick={() =>
+            onClick={() => {
               Router.push({
                 pathname: "/checkout",
                 query: { id: props.orderId }
-              })
-            }
+              });
+            }}
             text="پرداخت"
             className="d-inline-block payment"
           />

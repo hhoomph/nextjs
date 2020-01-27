@@ -29,6 +29,7 @@ function Page(props) {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
+  const [showLimit, setShowLimit] = useState(false);
   const getCartCount = cartData
     .map(cart => cart.cartDetailsSelectDtos)
     .reduce((acc, val) => acc.concat(val), [])
@@ -46,14 +47,14 @@ function Page(props) {
     draggable: true
   });
   const renderCart = cartData.map(cart => {
-    const sellerImg =
-      cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
+    const sellerImg = cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
     return (
       <Cart
         key={cart.sellerId}
         sellerId={cart.sellerId}
         sellerName={cart.sellerDisplayName}
         sellerUserName={cart.sellerUserName}
+        sellerLimitation={cart.sellerLimitation}
         customerId={cart.userId}
         cartData={cart.cartDetailsSelectDtos}
         sellerAvatar={sellerImg}
@@ -62,12 +63,12 @@ function Page(props) {
         type={view}
         showKey={showKey}
         setShowKey={setShowKey}
+        showLimit={showLimit}
       />
     );
   });
   const renderOpenCart = openCartData.map(cart => {
-    const sellerImg =
-      cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
+    const sellerImg = cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
     return (
       <Cart
         key={cart.orderId + cart.id}
@@ -101,8 +102,7 @@ function Page(props) {
     );
   });
   const renderHistoryCart = historyCartData.map(cart => {
-    const sellerImg =
-      cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
+    const sellerImg = cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
     return (
       <Cart
         key={cart.orderId + cart.id}
@@ -167,9 +167,11 @@ function Page(props) {
         props.ctx
       );
       if (Res !== undefined && Res.isSuccess) {
-        toast.success(Res.message);
+        // toast.success(Res.message);
+        setShowLimit(false);
         Router.push("/checkout");
       } else if (Res !== undefined && Res.message != undefined) {
+        setShowLimit(true);
         toast.warn(Res.message);
       } else if (Res !== undefined && Res.error != undefined) {
         toast.error(Res.error);
