@@ -184,6 +184,17 @@ function Page(props) {
     const data = ctx.getImageData(0, 0, safeArea, safeArea);
     canvas.width = pixelCrop.width;
     canvas.height = pixelCrop.height;
+    // Change canvas black background to white background when creating jpg image from png image
+    let imgData = data.data;
+    for (let i = 0; i < imgData.length; i += 4) {
+      if (imgData[i + 3] < 255) {
+        imgData[i] = 255;
+        imgData[i + 1] = 255;
+        imgData[i + 2] = 255;
+        imgData[i + 3] = 255;
+      }
+    }
+    //
     ctx.putImageData(data, 0 - safeArea / 2 + image.width * 0.5 - pixelCrop.x, 0 - safeArea / 2 + image.height * 0.5 - pixelCrop.y);
     // As Base64 string
     // return canvas.toDataURL('image/jpeg');
