@@ -111,6 +111,9 @@ const Cart = props => {
           pSendDate={props.pSendDate}
           sellerUserName={props.customerUserName}
           sellerPhoneNumber={props.customerPhoneNumber}
+          customerAddress={props.customerAddress}
+          customerLat={props.customerLat}
+          customerLong={props.customerLong}
           incomAmount={props.incomAmount}
           orderPage={props.orderPage}
           setOrderPage={props.setOrderPage}

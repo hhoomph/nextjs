@@ -20,6 +20,11 @@ const Ask = dynamic({
   loading: () => <Loading />,
   ssr: true
 });
+const MapComponent = dynamic({
+  loader: () => import("../Map/Map2"),
+  loading: () => <Loading />,
+  ssr: false
+});
 const Order = props => {
   const Router = useRouter();
   const nextCtx = props.ctx;
@@ -27,6 +32,10 @@ const Order = props => {
   const [loading, setLoading] = useState(false);
   const [askModalShow, setAskModalShow] = useState(false);
   const [askModalShow1, setAskModalShow1] = useState(false);
+  const customerLocation =
+    props.customerLat !== undefined && props.customerLong !== undefined && props.customerLat !== 0
+      ? { lat: props.customerLat, long: props.customerLong, id: props.customerId, userName: props.sellerUserName }
+      : { lat: 0, long: 0, id: null, userName: props.sellerUserName };
   const cartData = props.cartData || [];
   toast.configure({
     position: "top-right",
@@ -144,11 +153,25 @@ const Order = props => {
         </div>
         <div className="row products_rows" hidden={!showRow}>
           {renderProductsRow}
-          {props.description !== "" && (
-            <div className="col-12 mt-2 rtl description">
-              <h6>توضیحات تکمیلی سفارش</h6>
-              <p>{props.description}</p>
+          <div className="col-12 mt-3 rtl description">
+            <h6>آدرس سفارش دهنده :</h6>
+            <p>{props.customerAddress}</p>
+          </div>
+          {props.customerLong !== undefined && props.customerLong !== null && (
+            <div className="container mb-1 rtl p-0 mapContainer">
+              <MapComponent id="map_id" activeUser={customerLocation} center={customerLocation} />
             </div>
+          )}
+          {props.description !== "" && (
+            <>
+              <div className="col-12">
+                <hr className="mr-3 ml-3 mt-0 mb-2" />
+              </div>
+              <div className="col-12 mt-2 rtl description">
+                <h6>توضیحات تکمیلی سفارش</h6>
+                <p>{props.description}</p>
+              </div>
+            </>
           )}
         </div>
         <div className="row mt-0 pt-3 pb-3 cart_amount_detail">

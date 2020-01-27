@@ -1,10 +1,11 @@
 import React, { Fragment, useState, useContext, useRef, useEffect, memo } from "react";
 import L from "leaflet";
-import { Circle, LayerGroup, Map, TileLayer, Marker, Popup, Polyline, Polygon, Rectangle, Tooltip, LayersControl } from "react-leaflet";
+import { Circle, LayerGroup, Map, TileLayer, Marker, Popup, Polyline, Tooltip } from "react-leaflet";
 import { GeoSearchControl, OpenStreetMapProvider, EsriProvider } from "leaflet-geosearch";
-import { ReactComponent as TargetSvg } from "../../public/static/svg/target.svg";
+//import { ReactComponent as TargetSvg } from '../../public/static/svg/target.svg';
+import { ReactComponent as TargetSvg } from "../../public/static/svg/aim.svg";
+import Router from "next/router";
 import "../../scss/components/map.scss";
-import { setTimeout } from "timers";
 const esriProvider = new EsriProvider();
 const provider = new OpenStreetMapProvider();
 /**
@@ -34,17 +35,23 @@ const placeholderIcon = new L.Icon({
 const myIcon = new L.Icon({
   iconUrl: "/static/svg/location-pointer2.png",
   iconRetinaUrl: null,
-  shadowUrl: "/static/img/profile.png"
+  iconSize: [60, 60],
+  className: "my_marker"
+  //shadowUrl: "/static/img/profile.png"
 });
 const Icon = new L.Icon({
   iconUrl: "/static/svg/location-pointer2.png",
   iconRetinaUrl: null,
-  shadowUrl: "/static/img/user.png"
+  iconSize: [36, 36]
+  //shadowUrl: "/static/img/user.png"
 });
 const MapComponent = props => {
   const [markPosition, setMarkPosition] = useState([]);
+  const [searchResult, setSearchResult] = useState([]);
+  const [currentLocationClass, setCurrentLocationClass] = useState("current_location");
   const markRef = useRef();
   const mapRef = useRef();
+  const activeUser = props.activeUser;
   const updatePosition = () => {
     const marker = markRef.current;
     if (marker != null) {
@@ -56,79 +63,42 @@ const MapComponent = props => {
       //console.log(latlng.distanceTo(position));
     }
   };
-  const position = [34.635059, 50.880823];
-  const position1 = [34.635255, 50.876762];
-  const position2 = [34.6327669608, 50.88060376];
   // geolocation Options
   const geoOptions = {
     enableHighAccuracy: true,
-    maximumAge: 30000,
+    maximumAge: 5 * 60 * 1000,
     timeout: 10000
   };
   const getLocation = async () => {
-    /*
-     * Get Current Location With Leaflet Function
-     */
-    // const map = mapRef.current;
-    // if (map != null) {
-    //   map.leafletElement.locate({
-    //     setView: true,
-    //     maxZoom: 18,
-    //     maximumAge: 3000,
-    //     enableHighAccuracy: true
-    //   });
-    // }
-    /*
-     * Get Current Location With Direct web Api
-     */
+    setCurrentLocationClass("current_location spinner_location");
     if (navigator.geolocation) {
       await navigator.geolocation.getCurrentPosition(showPosition, errorGetPosition, geoOptions);
     } else {
       await console.log("Geolocation is not supported by this browser.");
+      setCurrentLocationClass("current_location");
     }
   };
   const showPosition = position => {
     //updatePosition();
     setMarkPosition([position.coords.latitude, position.coords.longitude]);
-    //console.log(`More or less ${position.coords.accuracy} meters.`);
-    // const map = mapRef.current.leafletElement;
-    // L.marker([position.coords.latitude, position.coords.longitude], { icon: placeholderIcon }).addTo(map);
-    // map.setView([position.coords.latitude, position.coords.longitude]);
+    setCurrentLocationClass("current_location");
+    console.log(`More or less ${position.coords.accuracy} meters.`);
+    const map = mapRef.current.leafletElement;
+    L.marker([position.coords.latitude, position.coords.longitude], { icon: placeholderIcon }).addTo(map);
+    map.setView([position.coords.latitude, position.coords.longitude]);
   };
   const errorGetPosition = err => {
+    setCurrentLocationClass("current_location");
     console.warn(`Geolocation ERROR(${err.code}): ${err.message}`);
   };
   const handleLocationFound = e => {
-    //console.log(e.latlng);
     setMarkPosition([e.latlng.lat, e.latlng.lng]);
-  };
-  const handleLoadMap = e => {
-    const map = e.target._map;
-    // Events : map.on('geosearch/marker/dragend', yourEventHandler)
-    const searchControl = new GeoSearchControl({
-      provider: provider,
-      autoComplete: true,
-      autoCompleteDelay: 250,
-      showMarker: true,
-      showPopup: false,
-      marker: {
-        icon: new L.Icon.Default(),
-        draggable: false
-      },
-      popupFormat: ({ query, result }) => result.label,
-      maxMarkers: 1,
-      retainZoomLevel: false,
-      animateZoom: true,
-      autoClose: false,
-      searchLabel: "آدرس مورد نظر را وارد کنید",
-      keepResult: true
-    }).addTo(map);
   };
   const currentMarker = () => {
     return markPosition.length > 1 ? (
-      <LayerGroup>
+      <>
         <Marker
-          id="crn_ps_marker"
+          className="current_location_marker"
           position={markPosition}
           icon={placeholderIcon}
           draggable={true}
@@ -138,49 +108,45 @@ const MapComponent = props => {
             // save the position
           }}
         >
-          <div className="crn_ps_marker" />
           <Tooltip>مکان شما</Tooltip>
         </Marker>
-        <Circle center={markPosition} radius={1000} className="circle_radius" />
-      </LayerGroup>
+      </>
     ) : null;
   };
+  // Calculating Map radius from center to borders
+  // const handleMapChange = () => {
+  //   const map = mapRef.current.leafletElement;
+  //   const mapBoundSouthWest = map.getBounds().getSouthWest();
+  //   const mapDistance = mapBoundSouthWest.distanceTo(map.getCenter()) / 1000;
+  //   props.setMapRadius(mapDistance);
+  // };
   return (
-    <div id={props.id} className={props.className} style={props.style}>
+    <div id="map_id">
       <Map
         closePopupOnClick={true}
-        dragging={false}
-        keyboard={false}
-        tap={true}
-        attributionControl={true}
         animate={true}
-        center={markPosition.length > 1 ? markPosition : position}
-        zoom={15}
+        dragging={true}
+        center={activeUser !== undefined && activeUser.lat !== undefined ? [activeUser.lat, activeUser.long] : props.center}
+        zoom={16}
         maxZoom={18}
         ref={mapRef}
+        tap={true}
         onLocationfound={handleLocationFound}
       >
-        <TileLayer attribution="Qarun" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" onLoad={handleLoadMap} />
-        {currentMarker()}
-        <LayersControl />
-        <Marker position={position} icon={myIcon} draggable={false}>
-          <Popup>
-            مجتمع ناشران <br /> شرکت سپهران
-          </Popup>
-          <Tooltip>سپهران</Tooltip>
-        </Marker>
-        <Marker position={position1} icon={Icon} draggable={false}>
-          <Popup>نام کاربر 1</Popup>
-        </Marker>
-        <Marker position={position2} icon={Icon} draggable={false}>
-          <Popup>نام کاربر 2</Popup>
-          <Tooltip>مکان شما</Tooltip>
-        </Marker>
-        <div className="current_location" onClick={() => getLocation()} title="نمایش مکان شما">
-          <TargetSvg className="svg_icon" />
-        </div>
+        <TileLayer attribution="Qarun" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <Marker
+          position={[activeUser.lat, activeUser.long]}
+          icon={myIcon}
+          draggable={false}
+          key={activeUser.id}
+          onClick={() =>
+            Router.push({
+              pathname: `/user/${activeUser.userName}`
+            })
+          }
+        ></Marker>
       </Map>
     </div>
   );
 };
-export default memo(MapComponent);
+export default MapComponent;

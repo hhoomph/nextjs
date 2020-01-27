@@ -69,6 +69,9 @@ function Page(props) {
         customerUserName={cart.customerUserName}
         sellerPhoneNumber={cart.sellerPhoneNumber}
         customerPhoneNumber={cart.customerPhoneNumber}
+        customerAddress={cart.customerAddress}
+        customerLat={cart.customerLat}
+        customerLong={cart.customerLong}
         incomAmount={cart.incomAmount}
         setOpenData={setOpenData}
         showKey={showKey}
@@ -110,6 +113,9 @@ function Page(props) {
         customerUserName={cart.customerUserName}
         sellerPhoneNumber={cart.sellerPhoneNumber}
         customerPhoneNumber={cart.customerPhoneNumber}
+        customerAddress={cart.customerAddress}
+        customerLat={cart.customerLat}
+        customerLong={cart.customerLong}
         incomAmount={cart.incomAmount}
         showKey={showKey}
         setShowKey={setShowKey}
