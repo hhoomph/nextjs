@@ -45,7 +45,7 @@ function Page(props) {
   const [cityId, setCityId] = useState(null);
   toast.configure({
     position: "top-right",
-    autoClose: 5000,
+    autoClose: false,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

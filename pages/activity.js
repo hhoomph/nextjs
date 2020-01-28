@@ -19,8 +19,17 @@ const User = dynamic({
   loading: () => <Loading />,
   ssr: true
 });
+const FirstUserSuggest = dynamic({
+  loader: () => import("../components/UserSuggest/FirstUserSuggest"),
+  loading: () => <Loading />,
+  ssr: true
+});
 const Page = props => {
   const [activities, setActivities] = useState(props.result.data !== undefined && props.result.data.model !== undefined ? props.result.data.model : []);
+  const [profile, setProfile] = useState(props.Profile.data || null);
+  const lat = profile !== null && profile.lat !== undefined && profile.lat !== null ? profile.lat : 0;
+  const long = profile !== null && profile.long !== undefined && profile.long !== null ? profile.long : 0;
+  const [suggestionUsers, setSuggestionUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(2);
   const [isFetching, setIsFetching] = useState(false);
@@ -54,6 +63,34 @@ const Page = props => {
     }
     setLoading(false);
   };
+  const getUserFromClosestPeople = async () => {
+    const getClosestPeople = await fetchData(
+      "User/U_Friends/ClosestPeople",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          lat: lat,
+          long: long,
+          page: 1,
+          pageSize: 10
+        })
+      },
+      props.ctx
+    );
+    if (getClosestPeople !== undefined && getClosestPeople.isSuccess) {
+      const allUsers = suggestionUsers.concat(getClosestPeople.data.model);
+      // Remove duplicate Users in array with id
+      const res = [];
+      const map = new Map();
+      for (const item of allUsers) {
+        if (!map.has(item.userName)) {
+          map.set(item.userName, true); // set any value to Map
+          res.push(item);
+        }
+      }
+      setSuggestionUsers(res);
+    }
+  };
   const handleScroll = () => {
     if (window.innerHeight + document.documentElement.scrollTop + 100 < document.documentElement.offsetHeight || isFetching) return;
     setIsFetching(true);
@@ -66,6 +103,11 @@ const Page = props => {
     if (!isFetching) return;
     getActivities();
   }, [isFetching]);
+  useEffect(() => {
+    if (suggestionUsers.length <= 0 && profile !== null) {
+      getUserFromClosestPeople();
+    }
+  }, []);
   const showActivities = activities.map(activity => {
     const type = activity.eventLogStatus;
     const userImg = activity.functorAvatar !== null ? `https://api.qarun.ir/${activity.functorAvatar}` : "/static/img/no-userimage.svg";
@@ -142,7 +184,8 @@ const Page = props => {
       </div>
       <div className="container pb-5 rtl search_result activity_page">
         <div className="row pl-1 pr-1 pb-5 mb-5">
-          {showActivities}
+          {/* {showActivities} */}
+          {activities.length > 0 ? showActivities : <FirstUserSuggest users={suggestionUsers} style={{ marginTop: "20vh" }} />}
           {loading && (
             <div className="col-12 mt-2 p-0 user">
               <Loading />
@@ -166,6 +209,14 @@ Page.getInitialProps = async function(context) {
     },
     context
   );
-  return { result };
+  // Get Current User Info
+  const Profile = await fetchData(
+    "User/U_Account/Profile",
+    {
+      method: "GET"
+    },
+    context
+  );
+  return { result, Profile };
 };
 export default Auth(Page);

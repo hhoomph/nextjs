@@ -35,7 +35,7 @@ const Cart = props => {
   const showLimit = props.showLimit;
   toast.configure({
     position: "top-right",
-    autoClose: 5000,
+    autoClose: false,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

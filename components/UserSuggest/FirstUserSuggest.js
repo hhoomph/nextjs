@@ -29,7 +29,7 @@ const FirstUserSuggest = props => {
     );
   });
   return (
-    <div className="container user_Suggestion first_user_suggest">
+    <div className="container user_Suggestion first_user_suggest" style={props.style}>
       <div className="row">
         <div className="col p-0 pt-1 text-center rtl">
           {/* <h2>به بازار قارون خوش آمدید!</h2>

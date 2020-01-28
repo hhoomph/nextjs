@@ -102,7 +102,7 @@
       }
       .product_quantity {
         flex-grow: 0;
-        font-size: 0.75rem;
+        font-size: 0.72rem;
         align-self: center;
         display: flex;
         justify-content: center;
@@ -142,10 +142,18 @@
           float: left;
         }
       }
+      .product_total_price_val {
+        font-size: 0.75rem;
+        text-align: left;
+        padding: 0;
+      }
+      .price_label{
+        font-size: 0.85rem;
+      }
       .product_price {
         flex-grow: 2;
         // text-align: center;
-        font-size: 0.88rem;
+        font-size: 0.85rem;
         align-self: center;
         line-height: normal;
       }

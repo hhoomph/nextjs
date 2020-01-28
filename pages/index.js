@@ -249,12 +249,12 @@ function Page(props) {
       {noFriends && profile !== null ? (
         <>
           <FirstUserSuggest users={suggestionUsers} />
-          <CatProductsRow products={marketAround} />
+          <CatProductsRow products={marketAround} _tkn={props._tkn} />
           {showFirstCatProductsRow}
         </>
       ) : profile !== null ? (
         <>
-          <UserSuggest users={following} /> <CatProductsRow products={marketAround} />
+          <UserSuggest users={following} /> <CatProductsRow products={marketAround} _tkn={props._tkn} />
           <ProductsRow products={friendsMarket} />
         </>
       ) : (

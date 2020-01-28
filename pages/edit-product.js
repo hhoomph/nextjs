@@ -109,7 +109,7 @@ function Page(props) {
   const [view, setView] = useState(1);
   toast.configure({
     position: "top-right",
-    autoClose: 2000,
+    autoClose: false,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

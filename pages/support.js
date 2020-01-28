@@ -62,7 +62,7 @@ const Page = props => {
   const fileInput = useRef();
   toast.configure({
     position: "top-right",
-    autoClose: 4000,
+    autoClose: false,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

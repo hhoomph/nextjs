@@ -31,7 +31,7 @@ function Page(props) {
   const [orderPage, setOrderPage] = useState(false);
   toast.configure({
     position: "top-right",
-    autoClose: 3000,
+    autoClose: false,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

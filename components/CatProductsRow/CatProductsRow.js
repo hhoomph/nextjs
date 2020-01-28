@@ -5,6 +5,7 @@ import Sort from "./Sort";
 import Product from "./Product";
 import fetchData from "../../utils/fetchData";
 import Loading from "../Loader/Loading";
+import { HubConnectionBuilder, LogLevel } from "@aspnet/signalr";
 import "../../scss/components/catProductsRow.scss";
 const CatProductsRow = props => {
   const [products, setProducts] = useState(props.products);
@@ -37,6 +38,40 @@ const CatProductsRow = props => {
     }
     setLoading(false);
   };
+  const getOnlineProducts = async () => {
+    if (props._tkn !== undefined) {
+      setLoading(true);
+      const baseHub = new HubConnectionBuilder()
+        .withUrl("https://api.qarun.ir/baseHub", {
+          accessTokenFactory: () => {
+            return props._tkn;
+          }
+        })
+        .configureLogging(LogLevel.Error)
+        .build();
+      baseHub
+        .start({ withCredentials: false })
+        .then(function() {
+          console.log("OnlineProducts baseHub connected");
+          baseHub
+            .invoke("GetOnlineUserProduct", {
+              page: 1,
+              pageSize: 10
+            })
+            .then(function(res) {
+              console.log(res);
+              let products = res || [];
+              setProducts(products);
+              setLoading(false);
+            })
+            .catch(err => console.error(err.toString()));
+          // baseHub.on("GetStatus", res => {
+          //   setUserOnline(res);
+          // });
+        })
+        .catch(err => console.error(err.toString()));
+    }
+  };
   useEffect(() => {
     getProducts();
   }, [sortFilter]);
@@ -49,8 +84,7 @@ const CatProductsRow = props => {
       );
     } else {
       const productsElements = products.map(product => {
-        const productThumbNail =
-          product.pictures[0] != undefined ? `https://api.qarun.ir/${product.pictures[0].thumbNail}` : "/static/img/no-product-image.png";
+        const productThumbNail = product.pictures[0] != undefined ? `https://api.qarun.ir/${product.pictures[0].thumbNail}` : "/static/img/no-product-image.png";
         return (
           <Product
             key={product.id}
@@ -74,17 +108,15 @@ const CatProductsRow = props => {
         <div className="col">
           {/* <div className="row d-flex justify-content-start rtl pr-2 categories"> <Category /></div> */}
           <div className="row d-flex justify-content-center rtl pr-1 mb-3 cat_sort">
-            <Sort handleSort={handleSort} />
+            <Sort handleSort={handleSort} getOnlineProducts={getOnlineProducts} />
             <div className="col-12 mt-2 cat_title">
               <h3>اطراف</h3>
-              <Link href={`/all-around`} passHref>
+              <Link href={"/all-around"} passHref>
                 <a className="more">همه</a>
               </Link>
             </div>
           </div>
-          <div className="row d-flex justify-content-start rtl products">
-            {renderProducts()}
-          </div>
+          <div className="row d-flex justify-content-start rtl products">{renderProducts()}</div>
         </div>
       </div>
     </div>

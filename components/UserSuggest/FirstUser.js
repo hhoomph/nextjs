@@ -11,7 +11,7 @@ const FirstUser = props => {
   const [hide, setHide] = useState(false);
   toast.configure({
     position: "top-right",
-    autoClose: 4000,
+    autoClose: false,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

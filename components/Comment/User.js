@@ -21,7 +21,7 @@ const User = props => {
   const [liked, setLiked] = useState(props.liked || false);
   toast.configure({
     position: "top-right",
-    autoClose: 4000,
+    autoClose: false,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

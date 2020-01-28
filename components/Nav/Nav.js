@@ -62,6 +62,37 @@ const Nav = props => {
           });
         })
         .catch(err => console.error(err.toString()));
+      // chat hub
+      const chatHub = new HubConnectionBuilder()
+        .withUrl("https://api.qarun.ir/chatHub", {
+          accessTokenFactory: () => {
+            return props._tkn;
+          }
+        })
+        .configureLogging(LogLevel.Error)
+        .build();
+      chatHub
+        .start({ withCredentials: false })
+        .then(function() {
+          console.log("chatHub connected");
+          chatHub.on("ReciveMessage", res => {
+            console.log(res);
+          });
+          chatHub
+            .invoke("SendMessage", {
+              ChatName: "chat name",
+              OtherUserId: "asdasdasd",
+              Content: "asdasdasdasda",
+              ContentType: "Text"
+            })
+            .then(function(res) {
+              //console.log(res);
+            })
+            .catch(err => console.error(err.toString()));
+          // chatHub.invoke("GetOrderCount", res => {
+          // });
+        })
+        .catch(err => console.error(err.toString()));
     }
   }, []);
   return (

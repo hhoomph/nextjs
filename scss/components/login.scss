@@ -18,8 +18,9 @@
   padding-bottom: 2rem;
   height: 30vh;
   .logo {
-    width: 8rem;
-    height: 8rem;
+    width: auto;
+    height: auto;
+    max-width: 10rem;
     display: block;
     margin: auto;
     &:hover {

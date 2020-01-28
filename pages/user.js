@@ -247,6 +247,24 @@ Page.getInitialProps = async function(context) {
       context
     );
   }
+  // Get Current User Info
+  const Profile = await fetchData(
+    "User/U_Account/Profile",
+    {
+      method: "GET"
+    },
+    context
+  );
+  if (Profile !== undefined && Profile.data !== undefined && Profile.data.userName) {
+    if (Profile.data.userName === username) {
+      if (context.req) {
+        context.res.writeHead(301, {
+          Location: "/profile"
+        });
+        context.res.end();
+      }
+    }
+  }
   return { result, userProducts, userCategories };
 };
 export default Auth(Page);

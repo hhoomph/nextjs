@@ -40,7 +40,7 @@ function Page(props) {
   const [cartCount, cartCountDispatch] = useReducer(cartCountReduser, getCartCount);
   toast.configure({
     position: "top-right",
-    autoClose: 3000,
+    autoClose: false,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

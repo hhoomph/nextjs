@@ -16,7 +16,7 @@ const UserSuggest = props => {
   const userClass = width > 992 ? "p-1 text-center col-2 user_div" : "p-1 text-center col-4 user_div";
   toast.configure({
     position: "top-right",
-    autoClose: 4000,
+    autoClose: false,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

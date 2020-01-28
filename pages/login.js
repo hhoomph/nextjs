@@ -19,7 +19,7 @@ const Mobile_RX = /(\+98|0|98|0098)?([ ]|-|[()]){0,2}9[0-9]([ ]|-|[()]){0,2}(?:[
 const Page = props => {
   toast.configure({
     position: "top-right",
-    autoClose: 5000,
+    autoClose: false,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

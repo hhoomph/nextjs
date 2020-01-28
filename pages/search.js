@@ -42,7 +42,7 @@ let lastScrollTop = 0;
 const Page = props => {
   toast.configure({
     position: "top-right",
-    autoClose: 5000,
+    autoClose: false,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

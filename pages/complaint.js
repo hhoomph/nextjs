@@ -9,7 +9,7 @@ import "../scss/components/aboutPage.scss";
 function Page(props) {
   toast.configure({
     position: "top-right",
-    autoClose: 1000,
+    autoClose: false,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

@@ -97,10 +97,12 @@ const ProductRow = props => {
       <div className="col-9 p-0 align-self-center">
         <div className="col-12 p-1 d-flex">
           <div className="product_name text-truncate">{props.productName}</div>
-          {type === 1 && (
+          {type === 1 ? (
             <div className="product_close" onClick={() => deleteProduct(productQuantity)}>
               حذف
             </div>
+          ) : (
+            <div className="mr-2 price_label">مبلغ کل</div>
           )}
         </div>
         <div className="col-12 p-1 d-flex">
@@ -112,7 +114,7 @@ const ProductRow = props => {
           <div className="product_price">
             {numberSeparator(props.productPrice - props.productDiscount)} <span> تومان </span>
           </div>
-          {type === 1 && (
+          {type === 1 ? (
             <div className="product_quantity">
               <span>تعداد : </span>
               <div className="add_quantity" onClick={addProductQuantity}>
@@ -123,6 +125,11 @@ const ProductRow = props => {
                 <FaMinusSquare className="font_icon" />
               </div>
             </div>
+          ) : (
+            <>
+              <div className="col-2 p-0 pl-2 product_quantity">{productQuantity} عدد</div>
+              <div className="col-5 product_total_price_val">{numberSeparator(productQuantity * (props.productPrice - props.productDiscount))} تومان</div>
+            </>
           )}
         </div>
       </div>
