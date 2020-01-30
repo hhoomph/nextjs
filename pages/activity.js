@@ -72,7 +72,7 @@ const Page = props => {
           lat: lat,
           long: long,
           page: 1,
-          pageSize: 10
+          pageSize: 15
         })
       },
       props.ctx
@@ -167,6 +167,10 @@ const Page = props => {
       />
     );
   });
+  const showUserSugestion = suggestionUsers.map(user => {
+    const userImg = user.userAvatar !== null ? `https://api.qarun.ir/${user.userAvatar}` : "/static/img/no-userimage.svg";
+    return <User key={user.id} id={user.id} type="UserFollow" image={userImg} isFollowed={user.isFollowed} message="" name={user.displayName} userName={user.userName} />;
+  });
   //console.log(activities);
   return (
     <>
@@ -184,8 +188,7 @@ const Page = props => {
       </div>
       <div className="container pb-5 rtl search_result activity_page">
         <div className="row pl-1 pr-1 pb-5 mb-5">
-          {/* {showActivities} */}
-          {activities.length > 0 ? showActivities : <FirstUserSuggest users={suggestionUsers} style={{ marginTop: "20vh" }} />}
+          {activities.length > 0 ? showActivities : showUserSugestion}
           {loading && (
             <div className="col-12 mt-2 p-0 user">
               <Loading />

@@ -2,6 +2,7 @@ import React, { Fragment, useContext, useReducer, useRef, useState, useEffect } 
 import dynamic from "next/dynamic";
 import Loading from "../components/Loader/Loading";
 import { useRouter } from "next/router";
+import Link from "../components/Link";
 import Head from "next/head";
 import Nav from "../components/Nav/Nav";
 import ProfileHeader from "../components/Head/profileHeader";
@@ -10,13 +11,13 @@ import Auth from "../components/Auth/Auth";
 import fetchData from "../utils/fetchData";
 import SubmitButton from "../components/Button/SubmitButton";
 import { numberSeparator, removeSeparator, forceNumeric } from "../utils/tools";
-import { FaArrowLeft, FaArrowRight, FaMinus, FaPlus, FaCaretDown, FaCaretUp, FaExchangeAlt, FaMoneyBill } from "react-icons/fa";
+import { FaArrowLeft, FaTimes, FaArrowRight, FaMinus, FaPlus, FaCaretDown, FaCaretUp, FaExchangeAlt, FaMoneyBill, FaSearch } from "react-icons/fa";
 import { FiChevronRight } from "react-icons/fi";
 import Modal from "react-bootstrap/Modal";
 import { ToastContainer, toast } from "react-toastify";
 import "../scss/components/inventory.scss";
 const User = dynamic({
-  loader: () => import("../components/Friend/User"),
+  loader: () => import("../components/Search/User2"),
   loading: () => <Loading />,
   ssr: true
 });
@@ -37,7 +38,10 @@ function Page(props) {
   const GetWithdrawal = props.GetWithdrawal ? props.GetWithdrawal.data : [];
   const [askModalShow, setAskModalShow] = useState(false);
   const [tQerun, setTQerun] = useState(null);
-  const [targetUserId , setTargetUserId] = useState(null);
+  const [targetUserId, setTargetUserId] = useState(null);
+  const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState(props.Following.data || []);
+  const searchInput = useRef();
   toast.configure({
     position: "top-right",
     autoClose: false,
@@ -119,6 +123,27 @@ function Page(props) {
       </div>
     );
   });
+  const showResult = searchResult.map(res => {
+    let img = "/static/img/no-userimage.svg";
+    if (res.avatar !== undefined && res.avatar !== null) {
+      img = `https://api.qarun.ir/${res.avatar}`;
+    } else if (res.userAvatar !== undefined && res.userAvatar !== null) {
+      img = `https://api.qarun.ir/${res.userAvatar}`;
+    }
+    return (
+      <User
+        key={res.userId + res.userName}
+        id={res.userId}
+        image={img}
+        name={res.displayName}
+        userName={res.userName}
+        action={() => {
+          setTargetUserId(res.userId);
+          setAskModalShow(true);
+        }}
+      />
+    );
+  });
   const sellQerunToQarun = async () => {
     if (sellQerun !== "" && sellQerun > 0) {
       setLoading(true);
@@ -146,7 +171,27 @@ function Page(props) {
       toast.warn("لطفا مقدار قرون را مشخص کنید");
     }
   };
-  const transferQerun = async()=>{
+  const handleSearch = async (s = search) => {
+    if (s.length > 0) {
+      const result = await fetchData(
+        "User/U_Search/GetShopsInMap",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            searchType: "UserName",
+            page: 1,
+            pageSize: 15,
+            search: s
+          })
+        },
+        props.ctx
+      );
+      if (result !== undefined && result.isSuccess) {
+        setSearchResult(result.data);
+      }
+    }
+  };
+  const transferQerun = async () => {
     if (tQerun !== null && tQerun > 0) {
       if (targetUserId !== null && targetUserId !== "") {
         setLoading(true);
@@ -171,13 +216,13 @@ function Page(props) {
           toast.error(result.error);
         }
         setLoading(false);
-      }else{
+      } else {
         toast.warn("لطفا کاربر را مشخص کنید.");
       }
     } else {
       toast.warn("لطفا مقدار قرون را مشخص کنید");
     }
-  }
+  };
   return (
     <>
       <Head>
@@ -207,7 +252,16 @@ function Page(props) {
               <SubmitButton loading={loading} onClick={() => setModalShow(true)} text="فروش" className="d-inline-block btn-main btn-green sell"></SubmitButton>
             </div>
             <div className="col-6 text-center float-left">
-              <SubmitButton loading={loading} onClick={() => setTransferModalShow(true)} text="انتقال" className="d-inline-block btn-main transfer"></SubmitButton>
+              <SubmitButton
+                loading={loading}
+                onClick={() => {
+                  setSearch("");
+                  setSearchResult(props.Following.data || []);
+                  setTransferModalShow(true);
+                }}
+                text="انتقال"
+                className="d-inline-block btn-main transfer"
+              ></SubmitButton>
             </div>
           </div>
         </div>
@@ -245,13 +299,32 @@ function Page(props) {
         {/* Transfer Qerun To Users */}
         <Modal onHide={() => setTransferModalShow(false)} show={transferModalShow} size="xl" scrollable className="share_modal">
           <Modal.Header closeButton className="p-2">
-            <Modal.Title id="contained-modal-title-vcenter" style={{fontSize: "1rem"}}>انتقال قرون</Modal.Title>
+            <Modal.Title id="contained-modal-title-vcenter" style={{ fontSize: "1rem" }}>
+              انتقال قرون
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div className="col-12 p-0 rtl d-flex">
-              <label className="col-5 col-form-label text-left">تعداد قرون </label>
-              <input type="text" value={tQerun} onChange={e => setTQerun(forceNumeric(e.target.value))} className="col-7 form-control text-center" placeholder="تعداد قرون" />
+            <div className="col-10 p-0 pb-2 rtl d-flex qerun_v">
+              <label className="col-6 col-form-label text-center">تعداد قرون </label>
+              <input type="text" value={tQerun} onChange={e => setTQerun(forceNumeric(e.target.value))} className="col-6 form-control text-center" placeholder="تعداد قرون" />
             </div>
+            <div className="row justify-content-center">
+              <div className="col-12 mt-2 d-flex rtl align-items-center flex-row-reverse">
+                <FaSearch className="font_icon _srch_icn" onClick={() => handleSearch(searchInput.current.value)} />
+                <input
+                  type="text"
+                  value={search}
+                  onChange={e => {
+                    setSearch(e.target.value);
+                    handleSearch(e.target.value);
+                  }}
+                  className="form-control searchInput"
+                  ref={searchInput}
+                  placeholder="جستجو"
+                />
+              </div>
+            </div>
+            <div className="row p-2 rtl srch_res_container">{searchResult.length > 0 ? showResult : ""}</div>
           </Modal.Body>
         </Modal>
         <Ask header={"انتقال قرون"} text={""} command={transferQerun} setModalShow={setAskModalShow} modalShow={askModalShow} loading={loading} />
@@ -274,6 +347,14 @@ Page.getInitialProps = async function(context) {
     },
     context
   );
-  return { Inventory, GetWithdrawal };
+  // Get User's That Current User Followed Them
+  const Following = await fetchData(
+    "User/U_Friends/Following",
+    {
+      method: "GET"
+    },
+    context
+  );
+  return { Inventory, GetWithdrawal, Following };
 };
 export default Auth(Page);
