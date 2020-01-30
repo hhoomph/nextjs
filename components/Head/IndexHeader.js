@@ -13,7 +13,7 @@ const IndexHeader = props => {
           <Link href="/cart" passHref>
             <a className="nav_Icons active">
               <BasketSvg className="svg_Icons" />
-              <div className="badge badge-success">{props.cartCount}</div>
+              {props.cartCount > 0 && <div className="badge badge-success">{props.cartCount}</div>}
             </a>
           </Link>
         </div>

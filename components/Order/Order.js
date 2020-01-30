@@ -154,7 +154,7 @@ const Order = props => {
         <div className="row products_rows" hidden={!showRow}>
           {renderProductsRow}
           <div className="col-12 mt-3 rtl description">
-            <h6>آدرس سفارش دهنده :</h6>
+            <h6>آدرس خریدار :</h6>
             <p>{props.customerAddress}</p>
           </div>
           {props.customerLong !== undefined && props.customerLong !== null && (

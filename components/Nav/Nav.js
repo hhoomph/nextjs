@@ -102,7 +102,7 @@ const Nav = props => {
           <Link href="/cart" passHref>
             <a className="nav_Icons active">
               <FaShoppingBasket />
-              <div className="badge badge-success">{props.cartCount}</div>
+              {props.cartCount > 0 && <div className="badge badge-success">{props.cartCount}</div>}
             </a>
           </Link>
           <Link href="/profile" passHref>

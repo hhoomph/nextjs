@@ -94,7 +94,7 @@
 .cart_filter {
   position: sticky;
   top: 0;
-  z-index: 999;
+  z-index: 1000;
   margin-bottom: 2px;
   box-shadow: 0 0 1px 0 #c1c1c1;
   ul.filters {
@@ -118,8 +118,10 @@
 }
 .cart_head_continue{
   .header_link {
-    background: #ffffff;
-    box-shadow: 0 -5px 5px 1px #d2d2d2;
+    // background: #ffffff;
+    // box-shadow: 0 -5px 5px 1px #d2d2d2;
+    background: none;
+    box-shadow: none;
     position: fixed;
     width: 100%;
     bottom: 40px;

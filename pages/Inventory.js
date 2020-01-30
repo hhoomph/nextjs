@@ -29,7 +29,10 @@ function Page(props) {
   const Transactions = inventory.transactions || [];
   const GetWithdrawal = props.GetWithdrawal.data || [];
   const [chargeModalShow, setChargeModalShow] = useState(false);
+  const [withdrawalModalShow, setWithdrawalModalShow] = useState(false);
   const [chargeVal, setChargeVal] = useState(" تومان");
+  const [withdrawalVal, setWithdrawalVal] = useState(" تومان");
+  const [iban, setIban] = useState("");
   toast.configure({
     position: "top-right",
     autoClose: false,
@@ -137,6 +140,38 @@ function Page(props) {
       toast.warn("حداقل مبلغ شارژ 1،000 تومان می باشد.");
     }
   };
+  const withdrawalAccount = async () => {
+    if (
+      withdrawalVal.trim() !== "" &&
+      withdrawalVal !== " تومان" &&
+      withdrawalVal.replace("تومان", "").trim() !== " " &&
+      withdrawalVal.trim !== "تومان" &&
+      removeSeparator(withdrawalVal.replace(" تومان", "")) > 1000
+    ) {
+      setLoading(true);
+      const Inventory = await fetchData(
+        "User/U_Financial/Withdrawal",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            amount: removeSeparator(withdrawalVal.replace(" تومان", "")),
+            iban: iban
+          })
+        },
+        props.ctx
+      );
+      if (Inventory !== undefined && Inventory.isSuccess) {
+        setInventory(Inventory.data);
+      } else if (Inventory !== undefined && Inventory.message != undefined) {
+        toast.warn(Inventory.message);
+      } else if (Inventory !== undefined && Inventory.error != undefined) {
+        toast.error(Inventory.error);
+      }
+      setLoading(false);
+    } else {
+      toast.warn("حداقل مبلغ شارژ 1،000 تومان می باشد.");
+    }
+  };
   useEffect(() => {
     getInventory();
   }, []);
@@ -173,7 +208,7 @@ function Page(props) {
               </SubmitButton>
             </div> */}
             <div className="col-12 text-center">
-              <SubmitButton loading={loading} text="برداشت" className="d-inline-block btn-main removal">
+              <SubmitButton loading={loading} onClick={() => setWithdrawalModalShow(true)} text="برداشت" className="d-inline-block btn-main removal">
                 <FaMoneyBill className="font_icon" />
               </SubmitButton>
             </div>
@@ -201,20 +236,35 @@ function Page(props) {
             </SubmitButton>
           </Modal.Footer>
         </Modal>
+        {/* withdrawal Account */}
+        <Modal onHide={() => setWithdrawalModalShow(false)} show={withdrawalModalShow} size="xl" scrollable className="share_modal withdrawal">
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter"> برداشت از حساب</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="col-12 p-0 mt-2 rtl d-flex">
+              <label className="col-4 col-form-label text-center">مبلغ </label>
+              <input
+                type="text"
+                value={withdrawalVal}
+                onChange={e => setWithdrawalVal(numberSeparator(forceNumeric(e.target.value)) + " تومان")}
+                className="col-6 form-control text-center"
+                placeholder="مبلغ به تومان"
+              />
+            </div>
+            <div className="col-12 p-0 mt-2 rtl d-flex">
+              <label className="col-4 col-form-label text-center">شماره شبا </label>
+              <input type="text" value={iban} onChange={e => setIban(e.target.value)} className="col-6 form-control text-center" placeholder="شماره شبا" />
+            </div>
+          </Modal.Body>
+          <Modal.Footer className="justify-content-center">
+            <SubmitButton loading={loading} onClick={withdrawalAccount} text="برداشت" className="d-inline-block btn-main btn-green">
+              <FaMoneyBill className="font_icon" />
+            </SubmitButton>
+          </Modal.Footer>
+        </Modal>
         <hr />
-        <div className="row rtl info_rows">
-          {/* <div className="col-12 d-flex _sell">
-            <p className="amount">1,597,000</p>
-            <p className="date">5/6/98</p>
-            <FaCaretDown className="font_icon" />
-          </div>
-          <div className="col-12 d-flex _buy">
-            <p className="amount">2,435,000</p>
-            <p className="date">12/06/1398</p>
-            <FaCaretUp className="font_icon" />
-          </div> */}
-          {ShowTransactions}
-        </div>
+        <div className="row rtl info_rows">{ShowTransactions}</div>
       </div>
     </>
   );

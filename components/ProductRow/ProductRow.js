@@ -83,7 +83,7 @@ const ProductsRow = props => {
   });
   return (
     <div className="container mt-1 mb-5 p-0 pb-5">
-      <div className="row rtl product_row">
+      <div className="row rtl m-auto product_row">
         <div className="col-12 mt-2 cat_title">
           <h3 className="pb-2">دوستان</h3>
         </div>

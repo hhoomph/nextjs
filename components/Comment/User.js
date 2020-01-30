@@ -104,9 +104,14 @@ const User = props => {
       props.setActiveKey(props.commentId);
     }
   };
+  const holdingEndComment = () => {
+    if (!selected) {
+      props.setActiveKey(props.commentId);
+    }
+  }
   return (
     <div className={`col-12 mt-2 p-0 user ${selected ? " _selected" : ""}`}>
-      <Repeatable repeatCount={1} repeatDelay={800} onHold={holdingComment}>
+      <Repeatable repeatCount={1} repeatDelay={500} onHold={holdingComment}>
         <div className="row">
           <div className="col-2">
             <Link href={`/user/${userName}`} passHref>
