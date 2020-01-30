@@ -166,7 +166,7 @@ function Page(props) {
           </div>
         </div>
         <div className="row">
-          <div className="col-12 d-block pb-2" style={{ position: "relative", zIndex: "1" }}>
+          <div className="col-12 d-block pb-2 mt-2" style={{ position: "relative", zIndex: "1" }}>
             {/* <div className="col-6 text-center float-right">
               <SubmitButton loading={loading} onClick={console.log("")} text="شارژ" className="d-inline-block btn-main btn-green charge">
                 <FaPlus className="font_icon" />

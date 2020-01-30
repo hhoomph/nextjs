@@ -18,7 +18,10 @@
   .trash_icon{
     font-size: 1.5rem;
     cursor: pointer;
+    color: #000;
     transition: all 0.1s ease;
+    animation: shake_bottom 0.7s both;
+    // animation-iteration-count: infinite;
     &:hover,&:active{
       color: #e70c45;
     }
