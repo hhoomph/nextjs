@@ -6,6 +6,7 @@ import Loading from "../Loader/Loading";
 import SubmitButton from "../Button/SubmitButton";
 import { FaTimes, FaHeart, FaRegHeart, FaReply } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
+import Repeatable from "react-repeatable";
 const ChildComment = dynamic({
   loader: () => import("./ChildComment"),
   loading: () => <Loading />,
@@ -19,6 +20,7 @@ const User = props => {
   const [replyCount, setReplyCount] = useState(props.replyCount);
   const { commentId, userId, image, message, name, userName, time, productId } = props;
   const [liked, setLiked] = useState(props.liked || false);
+  const selected = props.commentId === props.activeKey ? true : false;
   toast.configure({
     position: "top-right",
     autoClose: false,
@@ -95,54 +97,57 @@ const User = props => {
       setShowChild(true);
     }
   };
+  const holdingComment = () => {
+    if (selected) {
+      props.setActiveKey(null);
+    } else {
+      props.setActiveKey(props.commentId);
+    }
+  };
   return (
-    <div className="col-12 mt-2 p-0 user">
-      <div className="row">
-        <div className="col-2">
-          <Link href={`/user/${userName}`} passHref>
-            <a className="link">
-              <img src={image} />
-            </a>
-          </Link>
-        </div>
-        <div className="col-10 _txt">
-          <div className="row m-auto p-0 justify-content-end">
-            <div className="col-2 pl-0 text-center heart">
-              {loading ? (
-                <Loading />
-              ) : liked ? (
-                <FaHeart className="font_icon red" onClick={likeToggle} />
-              ) : (
-                <FaRegHeart className="font_icon" onClick={likeToggle} />
-              )}
-            </div>
-            <div className="col-10 p-0 rtl content">
-              <Link href={`/user/${userName}`} passHref>
-                <a className="user_name">{userName}</a>
-              </Link>
-              <div className="message">{message}</div>
-              <div className="reply_btn ml-2" onClick={sendReply}>
-                پاسخ
-                {/* <FaReply className="font_icon" /> */}
+    <div className={`col-12 mt-2 p-0 user ${selected ? " _selected" : ""}`}>
+      <Repeatable repeatCount={1} repeatDelay={800} onHold={holdingComment}>
+        <div className="row">
+          <div className="col-2">
+            <Link href={`/user/${userName}`} passHref>
+              <a className="link">
+                <img src={image} />
+              </a>
+            </Link>
+          </div>
+          <div className="col-10 _txt">
+            <div className="row m-auto p-0 justify-content-end">
+              <div className="col-2 pl-0 pr-2 text-center heart">
+                {loading ? <Loading /> : liked ? <FaHeart className="font_icon red" onClick={likeToggle} /> : <FaRegHeart className="font_icon" onClick={likeToggle} />}
               </div>
-              <div className="time ml-2">{time}</div>
-              {(replyCount > 0 || !showChild) && (
-                <div className="show_replies" onClick={getChildComments}>
-                  +++ نمایش پاسخ ها ({replyCount})
+              <div className="col-10 p-0 rtl content">
+                <Link href={`/user/${userName}`} passHref>
+                  <a className="user_name">{userName}</a>
+                </Link>
+                <div className="message">{message}</div>
+                <div className="reply_btn ml-2" onClick={sendReply}>
+                  پاسخ
+                  {/* <FaReply className="font_icon" /> */}
                 </div>
-              )}
-              {childsComments.length > 0 && replyCount <= 0 && showChild && (
-                <div className="show_replies _hide" onClick={() => setShowChild(false)}>
-                  --- پنهان کردن پاسخ ها
-                </div>
-              )}
+                <div className="time ml-2">{time}</div>
+                {(replyCount > 0 || !showChild) && (
+                  <div className="show_replies" onClick={getChildComments}>
+                    +++ نمایش پاسخ ها ({replyCount})
+                  </div>
+                )}
+                {childsComments.length > 0 && replyCount <= 0 && showChild && (
+                  <div className="show_replies _hide" onClick={() => setShowChild(false)}>
+                    --- پنهان کردن پاسخ ها
+                  </div>
+                )}
+              </div>
             </div>
           </div>
+          {/* Comment Childs */}
+          {showChild && showChildComments}
+          {/* End Of Childs */}
         </div>
-        {/* Comment Childs */}
-        {showChild && showChildComments}
-        {/* End Of Childs */}
-      </div>
+      </Repeatable>
     </div>
   );
 };

@@ -8,8 +8,8 @@ import ProfileHeader from "../components/Head/profileHeader";
 import Product from "../components/Profile/product";
 import Auth from "../components/Auth/Auth";
 import fetchData from "../utils/fetchData";
-import { UserProductsContext } from "../context/context";
-import { userProductsReducer } from "../context/reducer";
+import { UserProductsContext, OrderCountContext } from "../context/context";
+import { userProductsReducer, orderCountReduser } from "../context/reducer";
 import { ReactComponent as AddSvg } from "../public/static/svg/add.svg";
 import { ReactComponent as InviteShare } from "../public/static/svg/invite-share2.svg";
 import { FaShareAlt, FaRegCopy } from "react-icons/fa";
@@ -43,6 +43,7 @@ function Page(props) {
   const [lat, setLat] = useState(resultData.lat || 0);
   const [long, setLong] = useState(resultData.long || 0);
   const [cityId, setCityId] = useState(null);
+  const [orderCount, orderCountDispatch] = useReducer(orderCountReduser, 0);
   toast.configure({
     position: "top-right",
     autoClose: false,

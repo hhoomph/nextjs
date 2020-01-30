@@ -181,6 +181,10 @@
       padding: 0px 8px 0;
       overflow: hidden;
     }
+    .orders.active_order{
+      border: 1px solid #fc8053;
+      line-height: normal;
+    }
     .follow {
       cursor: pointer;
       margin: auto;

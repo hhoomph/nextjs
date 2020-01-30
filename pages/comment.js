@@ -8,6 +8,7 @@ import fetchData from "../utils/fetchData";
 import SubmitButton from "../components/Button/SubmitButton";
 import { FaArrowRight, FaArrowLeft, FaTimes } from "react-icons/fa";
 import { FiChevronRight } from "react-icons/fi";
+import { AiOutlineDelete } from "react-icons/ai";
 import { numberSeparator, removeSeparator } from "../utils/tools";
 import { ToastContainer, toast } from "react-toastify";
 import "../scss/components/commentPage.scss";
@@ -34,6 +35,7 @@ const Page = props => {
   const [parentId, setParentId] = useState(null);
   const [createOrReply, setCreateOrReply] = useState(0);
   const [replyUserName, setReplyUserName] = useState(null);
+  const [activeKey, setActiveKey] = useState(null);
   const textRef = useRef();
   const focusOnTextArea = () => {
     textRef.current.focus();
@@ -46,6 +48,36 @@ const Page = props => {
     pauseOnHover: true,
     draggable: true
   });
+  const deleteHoldingComment = async () => {
+    if (activeKey !== null && activeKey !== "") {
+      console.log("delete comment", activeKey);
+      const commentId = activeKey;
+      setLoading2(true);
+      const result2 = await fetchData(
+        "User/U_Comment/GetComments",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            productId: productId,
+            page: 1,
+            pageSize: 10
+          })
+        },
+        props.ctx
+      );
+      if (result2 !== undefined && result2.isSuccess) {
+        document.documentElement.scrollTop = 0;
+        setComments(result2.data);
+        setPage(2);
+        if (result2.data.length >= 10) {
+          setTimeout(() => setIsFetching(false), 200);
+        }
+      }
+      setLoading2(false);
+    } else {
+      toast.warn("لطفا یک نظر را انتخاب کنید.");
+    }
+  };
   const showComments = comments.map(com => (
     <User
       key={com.commentId}
@@ -66,6 +98,8 @@ const Page = props => {
       replyMessage={message}
       setMessage={setMessage}
       focusOnTextArea={focusOnTextArea}
+      activeKey={activeKey}
+      setActiveKey={setActiveKey}
     />
   ));
   const sendComment = async () => {
@@ -181,6 +215,9 @@ const Page = props => {
     if (result !== undefined && result.isSuccess) {
       if (page === 1) {
         setComments(result.data);
+        if (result.data.length > 0) {
+          setActiveKey(result.data[0].commentId);
+        }
       } else {
         setComments(comments.concat(result.data));
       }
@@ -216,15 +253,16 @@ const Page = props => {
       <Nav _tkn={props._tkn} />
       <div className="container pb-0 comment_head">
         <div className="row p-2 cart_title">
-          <div className="col-10 p-0 text-center align-self-center">
-            <h5 className="ml-5 pl-3 mt-1 page_title">نظرات</h5>
+          <div className="col-1 p-0 text-left align-self-center">{activeKey !== null ? <AiOutlineDelete className="font_icon trash_icon" title="حذف" onClick={deleteHoldingComment} /> : ""}</div>
+          <div className="col-9 p-0 text-center align-self-center">
+            <h5 className="ml-3 pl-3 mt-1 page_title">نظرات</h5>
           </div>
           <div className="col-2 text-right align-self-center pr-1" onClick={() => Router.back()}>
             <FiChevronRight className="font_icon back_icon" />
           </div>
         </div>
       </div>
-      <div className="container pb-5 rtl comment_page">
+      <div className="container pb-5 rtl comment_page" onClick={() => setActiveKey(null)}>
         <div className="row pl-1 pr-1 pb-5 mb-5">
           {/* <User
             id={1}
@@ -257,7 +295,7 @@ const Page = props => {
         </div>
         <div className="row fixed-bottom input_text">
           <div className="col-12">
-            <div className="row p-3">
+            <div className="row p-4">
               <textarea type="text" className="form-control col-9" placeholder="متن نظر" ref={textRef} value={message} onChange={e => setMessage(e.target.value)} />
               <div className="col-2 align-self-center">
                 <SubmitButton loading={loading} onClick={sendComment} text="ارسال" className="btn btn-main send_comment" />

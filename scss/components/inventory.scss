@@ -1,4 +1,34 @@
 @import "../vars";
+.inventory_head {
+  top: 0;
+  border-bottom: 1px solid #e0e0e0;
+  overflow: hidden;
+  .page_title {
+    text-align: center;
+    // font-weight: 600;
+    font-size: 1rem;
+  }
+  .back_icon {
+    font-size: 1.7rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in;
+    color: #9E9E9E;
+    &:hover {
+      color: #000;
+    }
+  }
+  ._add {
+    font-size: 1.8rem;
+    color: #388e3c !important;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    &:hover,
+    &:active {
+      font-size: 1.85rem;
+      color: #1b5e20 !important;
+    }
+  }
+}
 .inventory_page {
   top: 0;
   border-bottom: 1px solid #e0e0e0;
@@ -40,11 +70,18 @@
     }
   }
   .removal {
-    background-image: linear-gradient(90deg, #ef5350, #b31e1e 51%, #c7441b);
-    padding-right: 6px;
-    padding-left: inherit;
-    &:hover {
-      background-image: linear-gradient(90deg, #ff7043, #ff5722 51%, #ff7043);
+    // background-image: linear-gradient(90deg, #ef5350, #b31e1e 51%, #c7441b);
+    background-image: none;
+    background: #fff;
+    color: #000;
+    border: 1px solid #BDBDBD;
+    padding-right: 20px;
+    padding-left: 25px;
+    &:hover,
+    &:active {
+      background-image: linear-gradient(90deg, #828282, #757575 51%, #757575);
+      color: #fff;
+      outline-color: #828282;
     }
   }
   .sell {
@@ -64,10 +101,19 @@
   }
   .info_rows {
     .amount {
+      flex: 3;
+      font-size: 0.9rem;
+    }
+    .type{
       flex: 2;
+      color: #424242;
+      font-size: 0.8rem;
     }
     .date {
       flex: 2;
+      font-size: 0.75rem;
+      color: #757575;
+      text-align: center;
     }
     .font_icon {
       flex: 1;

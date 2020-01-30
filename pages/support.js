@@ -198,7 +198,7 @@ const Page = props => {
     <>
       <title>قارون</title>
       <Nav _tkn={props._tkn} />
-      <div className="container pb-0 pr-0 ticket_head">
+      <div className="container pb-0 pr-1 ticket_head">
         <div className="row p-2 cart_title">
           <div className="col-3 p-0 text-left align-self-center">
             <MdAddBox className="font_icon add_ticket" title="افزودن تیکت" onClick={() => setModalShow(true)} />
@@ -206,7 +206,7 @@ const Page = props => {
           <div className="col-6 p-0 text-center align-self-center">
             <h5 className="mr-0 ml-2 mt-1 page_title">پشتیبانی</h5>
           </div>
-          <div className="col-3 text-right align-self-center pr-3" onClick={() => Router.back()}>
+          <div className="col-3 text-right align-self-center" onClick={() => Router.back()}>
             <FiChevronRight className="font_icon back_icon" />
           </div>
         </div>

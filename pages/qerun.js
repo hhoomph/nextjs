@@ -20,15 +20,24 @@ const User = dynamic({
   loading: () => <Loading />,
   ssr: true
 });
+const Ask = dynamic({
+  loader: () => import("../components/Modal/Ask"),
+  loading: () => <Loading />,
+  ssr: true
+});
 function Page(props) {
   const Router = useRouter();
   const [loading, setLoading] = useState(false);
   const [modalShow, setModalShow] = useState(false);
+  const [transferModalShow, setTransferModalShow] = useState(false);
   const [sellQerun, setSellQerun] = useState("");
   const Inventory = props.Inventory !== undefined && props.Inventory.data !== undefined ? props.Inventory.data : [];
   const [qerun, setQerun] = useState(Inventory.qerun || 0);
   const Transactions = Inventory.transactions || [];
   const GetWithdrawal = props.GetWithdrawal ? props.GetWithdrawal.data : [];
+  const [askModalShow, setAskModalShow] = useState(false);
+  const [tQerun, setTQerun] = useState(null);
+  const [targetUserId , setTargetUserId] = useState(null);
   toast.configure({
     position: "top-right",
     autoClose: false,
@@ -37,20 +46,76 @@ function Page(props) {
     pauseOnHover: true,
     draggable: true
   });
-  const showTransactions = Transactions.map(t => {
-    const type = t.type;
-    const icon = () => {
-      if (type == "Sell" || type == "ByAdmin ") {
-        return <FaCaretUp className="font_icon" />;
-      } else {
+  const showTransactions = Transactions.map((t, index) => {
+    let type = "_sell";
+    const Icon = () => {
+      switch (t.type) {
+      case 1:
         return <FaCaretDown className="font_icon" />;
+        break;
+      case 2:
+        return <FaCaretUp className="font_icon" />;
+        type = "_buy";
+        break;
+      case 3:
+        return <FaCaretDown className="font_icon" />;
+        break;
+      case 4:
+        return <FaCaretDown className="font_icon" />;
+        break;
+      case 5:
+        return <FaCaretDown className="font_icon" />;
+        break;
+      case 6:
+        return <FaCaretUp className="font_icon" />;
+        type = "_buy";
+        break;
+      case 7:
+        return <FaCaretDown className="font_icon" />;
+        break;
+      case 8:
+        return <FaCaretDown className="font_icon" />;
+        break;
+      case 9:
+        return <FaCaretUp className="font_icon" />;
+        type = "_buy";
+        break;
+      default:
+        return <FaCaretDown className="font_icon" />;
+        break;
+      }
+    };
+    const PType = () => {
+      switch (t.paymentType) {
+      case 1:
+        return <p className="type">پرداخت آنلاین</p>;
+        break;
+      case 2:
+        return <p className="type">پرداخت با موبایل</p>;
+        break;
+      case 3:
+        return <p className="type">انتقال به حساب</p>;
+        break;
+      case 4:
+        return <p className="type">نقدی</p>;
+        break;
+      case 5:
+        return <p className="type">قرون</p>;
+        break;
+      case 6:
+        return <p className="type">برداشت از حساب</p>;
+        break;
+      default:
+        return <p className="type">نقدی</p>;
+        break;
       }
     };
     return (
-      <div className={`col-12 d-flex ${type}`} key={t.date + t.amount}>
-        <p className="amount">{numberSeparator(t.amount)}</p>
+      <div className={`col-12 d-flex p-1 ${type}`} key={index}>
+        <p className="amount">{numberSeparator(t.amount)} تومان</p>
+        <PType />
         <p className="date">{t.dateP}</p>
-        {icon}
+        <Icon />
       </div>
     );
   });
@@ -81,6 +146,38 @@ function Page(props) {
       toast.warn("لطفا مقدار قرون را مشخص کنید");
     }
   };
+  const transferQerun = async()=>{
+    if (tQerun !== null && tQerun > 0) {
+      if (targetUserId !== null && targetUserId !== "") {
+        setLoading(true);
+        const result = await fetchData(
+          "User/U_Financial/QerunTransfer",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              qerun: tQerun,
+              targetUserId: targetUserId
+            })
+          },
+          props.ctx
+        );
+        setAskModalShow(false);
+        if (result.isSuccess) {
+          setTransferModalShow(false);
+          toast.success("با موفقیت انجام شد.");
+        } else if (result.message != undefined) {
+          toast.warn(result.message);
+        } else if (result.error != undefined) {
+          toast.error(result.error);
+        }
+        setLoading(false);
+      }else{
+        toast.warn("لطفا کاربر را مشخص کنید.");
+      }
+    } else {
+      toast.warn("لطفا مقدار قرون را مشخص کنید");
+    }
+  }
   return (
     <>
       <Head>
@@ -110,7 +207,7 @@ function Page(props) {
               <SubmitButton loading={loading} onClick={() => setModalShow(true)} text="فروش" className="d-inline-block btn-main btn-green sell"></SubmitButton>
             </div>
             <div className="col-6 text-center float-left">
-              <SubmitButton loading={loading} onClick={console.log("")} text="انتقال" className="d-inline-block btn-main transfer"></SubmitButton>
+              <SubmitButton loading={loading} onClick={() => setTransferModalShow(true)} text="انتقال" className="d-inline-block btn-main transfer"></SubmitButton>
             </div>
           </div>
         </div>
@@ -128,6 +225,7 @@ function Page(props) {
           </div> */}
           {showTransactions}
         </div>
+        {/* Sale Qerun To Qarun */}
         <Modal onHide={() => setModalShow(false)} show={modalShow} size="xl" scrollable className="inventory_page withdrawal">
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">نقد کردن قرون</Modal.Title>
@@ -135,13 +233,7 @@ function Page(props) {
           <Modal.Body>
             <div className="col-12 p-0 rtl d-flex">
               <label className="col-5 col-form-label text-right">تعداد قرون </label>
-              <input
-                type="text"
-                value={sellQerun}
-                onChange={e => setSellQerun(forceNumeric(e.target.value))}
-                className="col-5 form-control text-center"
-                placeholder="تعداد قرون"
-              />
+              <input type="text" value={sellQerun} onChange={e => setSellQerun(forceNumeric(e.target.value))} className="col-5 form-control text-center" placeholder="تعداد قرون" />
             </div>
           </Modal.Body>
           <Modal.Footer className="justify-content-center">
@@ -150,6 +242,19 @@ function Page(props) {
             </SubmitButton>
           </Modal.Footer>
         </Modal>
+        {/* Transfer Qerun To Users */}
+        <Modal onHide={() => setTransferModalShow(false)} show={transferModalShow} size="xl" scrollable className="share_modal">
+          <Modal.Header closeButton className="p-2">
+            <Modal.Title id="contained-modal-title-vcenter" style={{fontSize: "1rem"}}>انتقال قرون</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="col-12 p-0 rtl d-flex">
+              <label className="col-5 col-form-label text-left">تعداد قرون </label>
+              <input type="text" value={tQerun} onChange={e => setTQerun(forceNumeric(e.target.value))} className="col-7 form-control text-center" placeholder="تعداد قرون" />
+            </div>
+          </Modal.Body>
+        </Modal>
+        <Ask header={"انتقال قرون"} text={""} command={transferQerun} setModalShow={setAskModalShow} modalShow={askModalShow} loading={loading} />
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, memo } from "react";
+import React, { useState, useEffect, useRef, memo, useContext } from "react";
 import Link from "../Link";
 import Router from "next/router";
 import fetchData from "../../utils/fetchData";
@@ -17,6 +17,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "../../scss/components/profileHeader.scss";
 import Logout from "../Auth/Logout";
 import { numberSeparator, removeSeparator, forceNumeric } from "../../utils/tools";
+import { OrderCountContext } from "../../context/context";
 const Header = props => {
   const {
     avatar,
@@ -40,6 +41,8 @@ const Header = props => {
   const [loading, setLoading] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const orderCountDispatch = useContext(OrderCountContext);
+  const [active_order, setActive_order] = useState(false);
   const toggleSideBar = () => {
     setIsOpen(!isOpen);
   };
@@ -295,9 +298,9 @@ const Header = props => {
               <p className="debt">{qerun ? `${qerun} ` : "0 "}</p>
             </div>
             <Link href="/order" passHref>
-              <div className="col-4 d-block text-center">
+              <div className="col-4 d-block text-center ">
                 <p>سفارشات</p>
-                <p className="orders">{deliveredOrderCount ? `${deliveredOrderCount} ` : "0 "}</p>
+                <p className={`orders ${active_order ? "active_order" : ""}`}>{deliveredOrderCount ? `${deliveredOrderCount} ` : "0 "}</p>
               </div>
             </Link>
           </div>

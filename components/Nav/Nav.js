@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect, memo, useReducer, useContext } from "react";
 import Link from "../Link";
 import { HubConnectionBuilder, LogLevel } from "@aspnet/signalr";
 import Search from "./Search";
@@ -10,6 +10,8 @@ import { ReactComponent as HeartGray } from "../../public/static/svg/insta/heart
 import { ReactComponent as UserSvg } from "../../public/static/svg/profile.svg";
 import { ReactComponent as AddSvg } from "../../public/static/svg/add.svg";
 import { ReactComponent as SearchSvg } from "../../public/static/svg/search2.svg";
+import { OrderCountContext } from "../../context/context";
+import { orderCountReduser } from "../../context/reducer";
 import "../../scss/components/nav.scss";
 // check prev and next state to use Memo
 const areEqual = (prevProps, nextProps) => {
@@ -32,7 +34,8 @@ const UserIcon = props => {
   );
 };
 const Nav = props => {
-  const [orderCount, setOrderCount] = useState(0);
+  // const [orderCount, setOrderCount] = useState(0);
+  const [orderCount, orderCountDispatch] = useReducer(orderCountReduser, 0);
   const [eventCount, setEventCount] = useState(0);
   useEffect(() => {
     if (props._tkn !== undefined) {
@@ -58,7 +61,8 @@ const Nav = props => {
           // });
           baseHub.on("OrderCount", res => {
             console.log(res);
-            setOrderCount(res);
+            // setOrderCount(res);
+            orderCountDispatch({ type: "refresh", payload: res });
           });
         })
         .catch(err => console.error(err.toString()));
@@ -79,12 +83,7 @@ const Nav = props => {
             console.log(res);
           });
           chatHub
-            .invoke("SendMessage", {
-              ChatName: "chat name",
-              OtherUserId: "asdasdasd",
-              Content: "asdasdasdasda",
-              ContentType: "Text"
-            })
+            .invoke("SendMessage", "chat name", "OtherUserId", "Content", "ContentType")
             .then(function(res) {
               //console.log(res);
             })
@@ -155,11 +154,13 @@ const Nav = props => {
             {orderCount > 0 ? (
               <a className="nav_Icons notify">
                 <UserIcon className="svg_Icons" />
-                <div className="badge badge-success">
-                  <FaShoppingBasket className="font_icon" />
-                  {orderCount}
-                  <span className="arrow-down"></span>
-                </div>
+                <Link href="/order" passHref>
+                  <div className="badge badge-success">
+                    <FaShoppingBasket className="font_icon" />
+                    {orderCount}
+                    <span className="arrow-down"></span>
+                  </div>
+                </Link>
               </a>
             ) : (
               <a className="nav_Icons">

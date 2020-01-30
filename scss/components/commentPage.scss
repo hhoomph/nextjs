@@ -15,6 +15,14 @@
       color: #9E9E9E;
     }
   }
+  .trash_icon{
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    &:hover,&:active{
+      color: #e70c45;
+    }
+  }
 }
 .comment_page {
   overflow: hidden;
@@ -64,6 +72,11 @@
       color: #757575;
     }
   }
+  .user._selected {
+    background: #E0E0E0;
+    border-radius: 12px;
+    padding: 2px !important;
+  }
   .no_result_div {
     display: block;
     width: 100%;
@@ -111,7 +124,7 @@
     .heart {
       .font_icon {
         color: #757575;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         cursor: pointer;
         &:hover,
         &:active {
@@ -171,7 +184,7 @@
           font-weight: bold;
         }
       }
-      .show_replies._hide{
+      .show_replies._hide {
         color: #ef9a9a;
       }
     }
@@ -203,7 +216,7 @@
       }
     }
     .heart .font_icon {
-      font-size: 1.2rem;
+      font-size: 1rem;
     }
     .content .reply_btn {
       font-size: 0.78rem;
