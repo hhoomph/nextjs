@@ -289,11 +289,24 @@ function Page(props) {
                   })
                 }
               >
-                <div className="comment_count">{productData.commentCount || "0"}</div>
+                {/* <div className="comment_count">{productData.commentCount || "0"}</div> */}
                 <CommentSvg className="svg_icon" />
                 {/* <FaRegComment className="font_icon" /> */}
               </div>
               {isFavorite ? <IoIosHeart className="font_icon red" onClick={toggleFavorite} /> : <IoIosHeartEmpty className="font_icon" onClick={toggleFavorite} />}
+              {productData.commentCount > 0 && (
+                <div
+                  className="rtl p-1 comment_info"
+                  onClick={() =>
+                    Router.push({
+                      pathname: "/comment",
+                      query: { id: productId }
+                    })
+                  }
+                >
+                  {productData.commentCount || "0"} نظر
+                </div>
+              )}
             </div>
             <div className="col-12 mt-1">
               <p className="text-right product_name">{productData.title || ""}</p>

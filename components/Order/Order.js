@@ -158,7 +158,7 @@ const Order = props => {
             <p>{props.customerAddress}</p>
           </div>
           {props.customerLong !== undefined && props.customerLong !== null && (
-            <div className="container mb-1 rtl p-0 mapContainer">
+            <div className="container rtl p-0">
               <MapComponent id="map_id" activeUser={customerLocation} center={customerLocation} />
             </div>
           )}

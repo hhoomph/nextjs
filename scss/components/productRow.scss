@@ -99,6 +99,7 @@
         align-items: center;
         align-self: center;
         z-index: 1;
+        transition: all 0.1s ease-in-out;
         &:hover {
           // border-radius: 150px;
           animation: shadow_drop 0.8s both;
@@ -122,7 +123,8 @@
           color: #019e06;
           font-size: 1.4rem;
           transition: all 0.1s ease;
-          &:hover,&:active{
+          &:hover,
+          &:active {
             color: #141414;
           }
         }
@@ -132,6 +134,75 @@
           top: 5px;
           fill: #fff;
           padding-top: 5px;
+        }
+      }
+      .cart_basket_div.hide_crt {
+        opacity: 0.01;
+        transform: scale(1.1);
+        transition: all 0.1s ease;
+      }
+      .cart_basket_div {
+        position: absolute;
+        z-index: 99;
+        bottom: 4px;
+        right: auto;
+        opacity: 1;
+        transform: scale(1);
+        transition: all 0.1s ease;
+        .basket_value {
+          cursor: pointer;
+          position: absolute;
+          right: 3px;
+          border: 1px solid #9e9e9e;
+          border-radius: 100px;
+          width: 25px;
+          height: 25px;
+          font-size: 0.83rem;
+          text-align: center;
+          display: block;
+          padding: 1px;
+          line-height: normal;
+          transition: all 0.13s ease;
+        }
+        .basket_add {
+          cursor: pointer;
+          width: 24px;
+          height: 24px;
+          font-size: 1.4rem;
+          position: relative;
+          right: 3px;
+          bottom: 4px;
+          background: #ffffff;
+          border-radius: 60px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: 1px solid #EEEEEE;
+          transition: all 0.13s ease;
+          .font_icon {
+            color: #019e06;
+            border-radius: 60px;
+          }
+        }
+        .basket_reduce {
+          cursor: pointer;
+          right: 32px;
+          width: 24px;
+          height: 24px;
+          font-size: 1.4rem;
+          position: relative;
+          bottom: -1px;
+          background: #ffffff;
+          border-radius: 60px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: 1px solid #EEEEEE;
+          transition: all 0.13s ease;
+          .font_icon {
+            color: #cf0c35;
+            border-radius: 60px;
+          }
         }
       }
       .product_user {

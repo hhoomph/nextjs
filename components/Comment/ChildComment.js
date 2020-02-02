@@ -5,12 +5,14 @@ import Loading from "../Loader/Loading";
 import SubmitButton from "../Button/SubmitButton";
 import { FaTimes, FaHeart, FaRegHeart, FaReply } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
+import Repeatable from "react-repeatable";
 const ChildComment = props => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [childsComments, setChildsComments] = useState([]);
   const { commentId, userId, image, message, name, userName, time, productId, replyCount } = props;
   const [liked, setLiked] = useState(props.liked || false);
+  const selected = props.commentId === props.activeKey ? true : false;
   toast.configure({
     position: "top-right",
     autoClose: false,
@@ -56,6 +58,13 @@ const ChildComment = props => {
     props.setCreateOrReply(1);
     props.focusOnTextArea();
   };
+  const holdingComment = () => {
+    if (selected) {
+      props.setActiveKey(null);
+    } else if (props.currentUserId === props.userId) {
+      props.setActiveKey(props.commentId);
+    }
+  };
   // const getChildComments = async () => {
   //   if (showChild) {
   //     setLoading(true);
@@ -82,38 +91,35 @@ const ChildComment = props => {
   //   }
   // };
   return (
-    <div className="col-11 d-flex justify-content-center m-auto p-1 user comment_child">
-      <div className="col-2">
-        <Link href={`/user/${userName}`} passHref>
-          <a className="link">
-            <img src={image} />
-          </a>
-        </Link>
-      </div>
-      <div className="col-10 _txt">
-        <div className="row m-auto p-0 justify-content-end">
-          <div className="col-2 pl-0 text-center heart">
-            {loading ? (
-              <Loading />
-            ) : liked ? (
-              <FaHeart className="font_icon red" onClick={likeToggle} />
-            ) : (
-              <FaRegHeart className="font_icon" onClick={likeToggle} />
-            )}
-          </div>
-          <div className="col-10 p-0 rtl content">
-            <Link href={`/user/${userName}`} passHref>
-              <a className="user_name">{userName}</a>
-            </Link>
-            <div className="message">{message}</div>
-            <div className="reply_btn ml-2" onClick={sendReply}>
-              پاسخ
+    <Repeatable repeatCount={1} repeatDelay={500} onHold={holdingComment}>
+      <div className={`col-11 d-flex justify-content-center m-auto p-1 user comment_child ${selected ? " _selected" : ""}`}>
+        <div className="col-2">
+          <Link href={`/user/${userName}`} passHref>
+            <a className="link">
+              <img src={image} />
+            </a>
+          </Link>
+        </div>
+        <div className="col-10 _txt">
+          <div className="row m-auto p-0 justify-content-end">
+            <div className="col-2 pl-0 text-center heart">
+              {loading ? <Loading /> : liked ? <FaHeart className="font_icon red" onClick={likeToggle} /> : <FaRegHeart className="font_icon" onClick={likeToggle} />}
             </div>
-            <div className="time ml-2">{time}</div>
+            <div className="col-10 p-0 rtl content">
+              <Link href={`/user/${userName}`} passHref>
+                <a className="user_name">{userName}</a>
+              </Link>
+              <div className="message">{message}</div>
+              <div className="reply_btn ml-2" onClick={sendReply}>
+                پاسخ
+              </div>
+              <div className="time ml-2">{time}</div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Repeatable>
   );
 };
-export default memo(ChildComment);
+// export default memo(ChildComment);
+export default ChildComment;

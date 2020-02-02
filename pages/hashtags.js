@@ -23,7 +23,7 @@ function Page(props) {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
-  const catTitle = allCategories.filter(cat => cat.id == id);
+  const catTitle = id;
   const productRef = useRef();
   const showProducts = products.map(product => (
     <Product
@@ -43,12 +43,11 @@ function Page(props) {
   const getProducts = async () => {
     setLoading(true);
     const result = await fetchData(
-      "User/U_Product/Home",
+      "User/U_Product/GetByHashTag",
       {
         method: "POST",
         body: JSON.stringify({
-          filters: "New",
-          categoryId: id,
+          hashTag: id,
           page: page,
           pageSize: 10
         })
@@ -122,26 +121,17 @@ function Page(props) {
 Page.getInitialProps = async function(context) {
   const { id } = context.query;
   const GetProducts = await fetchData(
-    "User/U_Product/Home",
+    "User/U_Product/GetByHashTag",
     {
       method: "POST",
       body: JSON.stringify({
-        filters: "New",
-        categoryId: id,
+        hashTag: id,
         page: 1,
         pageSize: 10
       })
     },
     context
   );
-  // Get All Categories
-  const allCategories = await fetchData(
-    "Common/C_Category/GetAllParentAsync",
-    {
-      method: "GET"
-    },
-    context
-  );
-  return { GetProducts, allCategories };
+  return { GetProducts };
 };
 export default Auth(Page);

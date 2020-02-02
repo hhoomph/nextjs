@@ -44,6 +44,7 @@ function Page(props) {
   const [long, setLong] = useState(resultData.long || 0);
   const [cityId, setCityId] = useState(null);
   const [orderCount, orderCountDispatch] = useReducer(orderCountReduser, 0);
+  const [updateLocation, setUpdateLocation] = useState(false);
   toast.configure({
     position: "top-right",
     autoClose: false,
@@ -170,6 +171,7 @@ function Page(props) {
       props.ctx
     );
     if (result.isSuccess) {
+      setUpdateLocation(!updateLocation);
       console.log("location Updated");
     }
   };
@@ -201,7 +203,7 @@ function Page(props) {
   }, [isFetching]);
   useEffect(() => {
     getProfileData();
-  }, [view]);
+  }, [view, updateLocation]);
   useEffect(() => {
     getUserProductFromCat();
   }, [catActive]);
@@ -311,11 +313,7 @@ function Page(props) {
                   </div>
                   <div className="col-12 p-0 rtl d-flex justify-content-between align-items-center">
                     <textarea
-                      value={
-                        "خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." +
-                          "\n" +
-                          `https://qarun.ir/login?user=${profileData.userName !== undefined ? profileData.userName : ""}`
-                      }
+                      value={"خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." + "\n" + `https://qarun.ir/login?user=${profileData.userName !== undefined ? profileData.userName : ""}`}
                       readOnly
                       className="share_text"
                       ref={textCopy}
@@ -435,11 +433,7 @@ function Page(props) {
                 </div>
                 <div className="col-12 p-0 rtl d-flex justify-content-between align-items-center">
                   <textarea
-                    value={
-                      "خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." +
-                        "\n" +
-                        `https://qarun.ir/login?user=${profileData.userName !== undefined ? profileData.userName : ""}`
-                    }
+                    value={"خرید، فروش و درآمد نامحدود، در بازار آنلاین اجتماعی قارون." + "\n" + `https://qarun.ir/login?user=${profileData.userName !== undefined ? profileData.userName : ""}`}
                     readOnly
                     className="share_text"
                     ref={textCopy}

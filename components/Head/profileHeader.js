@@ -145,7 +145,7 @@ const Header = props => {
     }
   };
   const [showFirstEdit, setShowFirstEdit] = useState(
-    props.profileData !== null && props.profileData.userName !== undefined && props.profileData.userName !== "" && props.profileData.userName !== null ? false : true
+    props.profileData !== null && props.profileData.userName !== undefined && props.profileData.userName !== "" && props.profileData.userName !== null && props.profileData.canInvite === true ? false : true
   );
   return (
     <>

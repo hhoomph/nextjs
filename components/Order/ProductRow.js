@@ -58,7 +58,7 @@ const ProductRow = props => {
       {
         method: "POST",
         body: JSON.stringify({
-          shopingCartId: shopingCartId
+          productId: productId
         })
       },
       props.ctx

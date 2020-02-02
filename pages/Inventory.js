@@ -32,7 +32,8 @@ function Page(props) {
   const [withdrawalModalShow, setWithdrawalModalShow] = useState(false);
   const [chargeVal, setChargeVal] = useState(" تومان");
   const [withdrawalVal, setWithdrawalVal] = useState(" تومان");
-  const [iban, setIban] = useState("");
+  const [profile, setProfile] = useState(props.Profile.data || null);
+  const [iban, setIban] = useState(props.Profile.data.iban || "");
   toast.configure({
     position: "top-right",
     autoClose: false,
@@ -284,6 +285,14 @@ Page.getInitialProps = async function(context) {
     },
     context
   );
-  return { Inventory, GetWithdrawal };
+  // Get Current User Info
+  const Profile = await fetchData(
+    "User/U_Account/Profile",
+    {
+      method: "GET"
+    },
+    context
+  );
+  return { Inventory, GetWithdrawal, Profile };
 };
 export default Auth(Page);

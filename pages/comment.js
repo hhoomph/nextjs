@@ -36,6 +36,7 @@ const Page = props => {
   const [createOrReply, setCreateOrReply] = useState(0);
   const [replyUserName, setReplyUserName] = useState(null);
   const [activeKey, setActiveKey] = useState(null);
+  const currentUserId = props.Profile !== undefined && props.Profile.data && props.Profile.data !== null && props.Profile.data.id !== undefined ? props.Profile.data.id : null;
   const textRef = useRef();
   const focusOnTextArea = () => {
     textRef.current.focus();
@@ -48,36 +49,6 @@ const Page = props => {
     pauseOnHover: true,
     draggable: true
   });
-  const deleteHoldingComment = async () => {
-    if (activeKey !== null && activeKey !== "") {
-      console.log("delete comment", activeKey);
-      const commentId = activeKey;
-      setLoading2(true);
-      const result2 = await fetchData(
-        "User/U_Comment/GetComments",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            productId: productId,
-            page: 1,
-            pageSize: 10
-          })
-        },
-        props.ctx
-      );
-      if (result2 !== undefined && result2.isSuccess) {
-        document.documentElement.scrollTop = 0;
-        setComments(result2.data);
-        setPage(2);
-        if (result2.data.length >= 10) {
-          setTimeout(() => setIsFetching(false), 200);
-        }
-      }
-      setLoading2(false);
-    } else {
-      toast.warn("لطفا یک نظر را انتخاب کنید.");
-    }
-  };
   const showComments = comments.map(com => (
     <User
       key={com.commentId}
@@ -100,8 +71,53 @@ const Page = props => {
       focusOnTextArea={focusOnTextArea}
       activeKey={activeKey}
       setActiveKey={setActiveKey}
+      currentUserId={currentUserId}
     />
   ));
+  const deleteHoldingComment = async () => {
+    if (activeKey !== null && activeKey !== "") {
+      const commentId = activeKey;
+      setLoading2(true);
+      const result = await fetchData(
+        `User/U_Comment/Delete?commentId=${commentId}`,
+        {
+          method: "GET"
+        },
+        props.ctx
+      );
+      if (result !== undefined && result.isSuccess) {
+        setActiveKey(null);
+        const result2 = await fetchData(
+          "User/U_Comment/GetComments",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              productId: productId,
+              page: 1,
+              pageSize: 10
+            })
+          },
+          props.ctx
+        );
+        if (result2 !== undefined && result2.isSuccess) {
+          document.documentElement.scrollTop = 0;
+          setComments([]);
+          setComments(result2.data);
+          setPage(2);
+          if (result2.data.length >= 10) {
+            setTimeout(() => setIsFetching(false), 200);
+          }
+        }
+      } else if (result !== undefined && result.Message != undefined) {
+        toast.warn(result.Message);
+      } else if (result !== undefined && result.error != undefined) {
+        toast.error(result.error);
+      }
+      setLoading2(false);
+    } else {
+      toast.warn("لطفا یک نظر را انتخاب کنید.");
+    }
+  };
   const sendComment = async () => {
     if (message.trim() !== "") {
       if (createOrReply === 0) {
@@ -136,6 +152,7 @@ const Page = props => {
           );
           if (result2 !== undefined && result2.isSuccess) {
             document.documentElement.scrollTop = 0;
+            setComments([]);
             setComments(result2.data);
             setPage(2);
             if (result2.data.length >= 10) {
@@ -180,6 +197,7 @@ const Page = props => {
           );
           if (result2 !== undefined && result2.isSuccess) {
             document.documentElement.scrollTop = 0;
+            setComments([]);
             setComments(result2.data);
             setPage(2);
             if (result2.data.length >= 10) {
@@ -321,6 +339,14 @@ Page.getInitialProps = async function(context) {
     },
     context
   );
-  return { Comments };
+  // Get Current User Info
+  const Profile = await fetchData(
+    "User/U_Account/Profile",
+    {
+      method: "GET"
+    },
+    context
+  );
+  return { Comments, Profile };
 };
 export default Auth(Page);

@@ -10,7 +10,7 @@ import Product from "../components/Profile/product";
 import Auth from "../components/Auth/Auth";
 import fetchData from "../utils/fetchData";
 import SubmitButton from "../components/Button/SubmitButton";
-import { numberSeparator, removeSeparator, forceNumeric } from "../utils/tools";
+import { numberSeparator, removeSeparator, forceNumeric, fixNumbers } from "../utils/tools";
 import { FaArrowLeft, FaTimes, FaArrowRight, FaMinus, FaPlus, FaCaretDown, FaCaretUp, FaExchangeAlt, FaMoneyBill, FaSearch } from "react-icons/fa";
 import { FiChevronRight } from "react-icons/fi";
 import Modal from "react-bootstrap/Modal";
@@ -32,15 +32,17 @@ function Page(props) {
   const [modalShow, setModalShow] = useState(false);
   const [transferModalShow, setTransferModalShow] = useState(false);
   const [sellQerun, setSellQerun] = useState("");
-  const Inventory = props.Inventory !== undefined && props.Inventory.data !== undefined ? props.Inventory.data : [];
-  const [qerun, setQerun] = useState(Inventory.qerun || 0);
-  const Transactions = Inventory.transactions || [];
+  const _Inventory = props.Inventory !== undefined && props.Inventory.data !== undefined ? props.Inventory.data : [];
+  const [inventory, setInventory] = useState(_Inventory);
+  const [qerun, setQerun] = useState(inventory.qerun || 0);
+  const [transactions, setTransactions] = useState(inventory.transactions || []);
   const GetWithdrawal = props.GetWithdrawal ? props.GetWithdrawal.data : [];
   const [askModalShow, setAskModalShow] = useState(false);
   const [tQerun, setTQerun] = useState(null);
   const [targetUserId, setTargetUserId] = useState(null);
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState(props.Following.data || []);
+  const [update, setUpdate] = useState(false);
   const searchInput = useRef();
   toast.configure({
     position: "top-right",
@@ -50,7 +52,7 @@ function Page(props) {
     pauseOnHover: true,
     draggable: true
   });
-  const showTransactions = Transactions.map((t, index) => {
+  const showTransactions = transactions.map((t, index) => {
     let type = "_sell";
     const Icon = () => {
       switch (t.type) {
@@ -125,10 +127,16 @@ function Page(props) {
   });
   const showResult = searchResult.map(res => {
     let img = "/static/img/no-userimage.svg";
+    let usrId = null;
     if (res.avatar !== undefined && res.avatar !== null) {
       img = `https://api.qarun.ir/${res.avatar}`;
     } else if (res.userAvatar !== undefined && res.userAvatar !== null) {
       img = `https://api.qarun.ir/${res.userAvatar}`;
+    }
+    if (res.userId !== undefined && res.userId !== null) {
+      usrId = res.userId;
+    } else if (res.id !== undefined && res.id !== null) {
+      usrId = res.id;
     }
     return (
       <User
@@ -138,21 +146,21 @@ function Page(props) {
         name={res.displayName}
         userName={res.userName}
         action={() => {
-          setTargetUserId(res.userId);
+          setTargetUserId(usrId);
           setAskModalShow(true);
         }}
       />
     );
   });
   const sellQerunToQarun = async () => {
-    if (sellQerun !== "" && sellQerun > 0) {
+    if (sellQerun !== "" && fixNumbers(sellQerun) > 0) {
       setLoading(true);
       const result = await fetchData(
         "User/U_Financial/SaleQerun",
         {
           method: "POST",
           body: JSON.stringify({
-            qerun: sellQerun
+            qerun: fixNumbers(sellQerun)
           })
         },
         props.ctx
@@ -160,6 +168,7 @@ function Page(props) {
       setModalShow(false);
       if (result.isSuccess) {
         setModalShow(false);
+        setUpdate(!update);
         toast.success("با موفقیت انجام شد.");
       } else if (result.message != undefined) {
         toast.warn(result.message);
@@ -192,7 +201,7 @@ function Page(props) {
     }
   };
   const transferQerun = async () => {
-    if (tQerun !== null && tQerun > 0) {
+    if (tQerun !== null && fixNumbers(tQerun) > 0) {
       if (targetUserId !== null && targetUserId !== "") {
         setLoading(true);
         const result = await fetchData(
@@ -200,7 +209,7 @@ function Page(props) {
           {
             method: "POST",
             body: JSON.stringify({
-              qerun: tQerun,
+              qerun: fixNumbers(tQerun),
               targetUserId: targetUserId
             })
           },
@@ -209,6 +218,7 @@ function Page(props) {
         setAskModalShow(false);
         if (result.isSuccess) {
           setTransferModalShow(false);
+          setUpdate(!update);
           toast.success("با موفقیت انجام شد.");
         } else if (result.message != undefined) {
           toast.warn(result.message);
@@ -223,6 +233,27 @@ function Page(props) {
       toast.warn("لطفا مقدار قرون را مشخص کنید");
     }
   };
+  const updateInventory = async () => {
+    const result = await fetchData(
+      "User/U_Financial/Inventory",
+      {
+        method: "GET"
+      },
+      props.ctx
+    );
+    if (result !== undefined && result.isSuccess) {
+      setInventory(result.data);
+      setQerun(result.data.qerun);
+      setTransactions(result.data.transactions);
+    } else if (result !== undefined && result.message !== undefined) {
+      toast.warn(result.message);
+    } else if (result !== undefined && result.error !== undefined) {
+      toast.error(result.error);
+    }
+  };
+  useEffect(() => {
+    updateInventory();
+  }, [update]);
   return (
     <>
       <Head>
@@ -242,8 +273,8 @@ function Page(props) {
       <div className="container pt-3 inventory_page">
         <div className="row">
           <div className="col-12 text-center">
-            <p className="inventory_price rtl">{numberSeparator(qerun)} قرون</p>
-            <p className="inventory_price inventory_price_toman rtl pt-2">{numberSeparator(0)} تومان</p>
+            <p className="inventory_price rtl">{qerun} قرون</p>
+            <p className="inventory_price inventory_price_toman rtl pt-2">{numberSeparator(1000 * qerun)} تومان</p>
           </div>
         </div>
         <div className="row mt-3">
@@ -287,7 +318,7 @@ function Page(props) {
           <Modal.Body>
             <div className="col-12 p-0 rtl d-flex">
               <label className="col-5 col-form-label text-right">تعداد قرون </label>
-              <input type="text" value={sellQerun} onChange={e => setSellQerun(forceNumeric(e.target.value))} className="col-5 form-control text-center" placeholder="تعداد قرون" />
+              <input type="text" value={sellQerun} onChange={e => setSellQerun(fixNumbers(forceNumeric(e.target.value)))} className="col-5 form-control text-center" placeholder="تعداد قرون" />
             </div>
           </Modal.Body>
           <Modal.Footer className="justify-content-center">
@@ -306,7 +337,7 @@ function Page(props) {
           <Modal.Body>
             <div className="col-10 p-0 pb-2 rtl d-flex qerun_v">
               <label className="col-6 col-form-label text-center">تعداد قرون </label>
-              <input type="text" value={tQerun} onChange={e => setTQerun(forceNumeric(e.target.value))} className="col-6 form-control text-center" placeholder="تعداد قرون" />
+              <input type="text" value={tQerun} onChange={e => setTQerun(fixNumbers(forceNumeric(e.target.value)))} className="col-6 form-control text-center" placeholder="تعداد قرون" />
             </div>
             <div className="row justify-content-center">
               <div className="col-12 mt-2 d-flex rtl align-items-center flex-row-reverse">

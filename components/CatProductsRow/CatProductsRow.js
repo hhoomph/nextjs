@@ -65,9 +65,10 @@ const CatProductsRow = props => {
               setLoading(false);
             })
             .catch(err => console.error(err.toString()));
-          // baseHub.on("GetStatus", res => {
-          //   setUserOnline(res);
-          // });
+          baseHub.on("OnlineUserProduct", res => {
+            let products = res || [];
+            setProducts(products);
+          });
         })
         .catch(err => console.error(err.toString()));
     }
