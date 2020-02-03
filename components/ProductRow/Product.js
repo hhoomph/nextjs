@@ -7,11 +7,13 @@ import { IoMdAdd, IoMdRemove } from "react-icons/io";
 import WindowsWidth from "../WindowsWidth";
 import { numberSeparator, removeSeparator } from "../../utils/tools";
 import { CartContext, CartCountContext } from "../../context/context";
+import { setTimeout } from "core-js";
 const Product = props => {
   const cartDispatch = useContext(CartContext);
   const cartCountDispatch = useContext(CartCountContext);
   const width = WindowsWidth();
   const [cartCountNumb, setCartCountNumb] = useState(props.cartCount);
+  const [showCartBtn, setShowCartBtn] = useState(false);
   const productClass = () => {
     // If Windows.Width < 992 (large) just show 5 column users else show 11 users
     if (width > 1442) {
@@ -37,6 +39,10 @@ const Product = props => {
       //toast.success('محصول شما با موفقیت به سبد خرید اضافه شد.');
       cartCountDispatch({ type: "add" });
       setCartCountNumb(cartCountNumb + 1);
+      setShowCartBtn(true);
+      setTimeout(() => {
+        setShowCartBtn(false);
+      }, 3000);
     } else if (result.message != undefined) {
       //toast.warn(result.message);
     } else if (result.error != undefined) {
@@ -44,20 +50,6 @@ const Product = props => {
     }
     //setLoading(false);
   };
-  // const getCartData = async () => {
-  //   const getCartDataRes = await fetchData(
-  //     "User/U_Cart/GetAll",
-  //     {
-  //       method: "GET"
-  //     },
-  //     props.ctx
-  //   );
-  //   if (getCartDataRes !== undefined && getCartDataRes.isSuccess) {
-  //     let cData = getCartDataRes.data || [];
-  //     cartDispatch({ type: "refresh", payload: [] });
-  //     cartDispatch({ type: "refresh", payload: cData });
-  //   }
-  // };
   const addProductQuantity = async () => {
     const result = await fetchData(
       "User/U_Cart/Add",
@@ -114,11 +106,21 @@ const Product = props => {
         {/* <div className={`cart_basket_div ${cartCountNumb > 0 ? "" : "hide_crt"}`}> */}
         {cartCountNumb > 0 && (
           <div className={"cart_basket_div"}>
-            <div className="basket_add" onClick={addProductQuantity}>
+            <div className="basket_add" onClick={addProductQuantity} hidden={!showCartBtn}>
               <IoMdAdd className="font_icon" />
             </div>
-            <div className="basket_value">{cartCountNumb}</div>
-            <div className="basket_reduce" onClick={reduceProductQuantity}>
+            <div
+              className="basket_value"
+              onClick={() => {
+                setShowCartBtn(true);
+                setTimeout(() => {
+                  setShowCartBtn(false);
+                }, 4000);
+              }}
+            >
+              {cartCountNumb}
+            </div>
+            <div className="basket_reduce" onClick={reduceProductQuantity} hidden={!showCartBtn}>
               <IoMdRemove className="font_icon" />
             </div>
           </div>

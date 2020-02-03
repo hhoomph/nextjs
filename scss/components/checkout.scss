@@ -1,14 +1,14 @@
 @import '../vars';
 .checkout_page {
   padding-bottom: 5rem;
-  padding-top: 16%;
+  padding-top: 1%;
+  min-height: 90vh;
   .header_link {
-    background: #ffffff;
-    box-shadow: 0 -5px 5px 1px #d2d2d2;
+    background: none;
+    box-shadow: none;
     position: fixed;
     width: 100%;
-    top: 0;
-    bottom: auto;
+    bottom: 40px;
     z-index: 1000;
     a {
       cursor: pointer;
@@ -54,6 +54,7 @@
         padding-top: 15px;
         height: auto;
         margin-bottom: 1rem !important;
+        resize: none;
         &::placeholder {
           // padding-top: 10px;
         }
@@ -87,11 +88,8 @@
     .header_link {
       width: 90% !important;
       max-width: 90%;
-      top: auto !important;
-      bottom: -15px !important;
       margin: auto;
-      left: 5%;
-      right: 5%;
+      right: 0;
     }
   }
 }

@@ -44,7 +44,7 @@ const ProductsRow = dynamic({
 });
 function Page(props) {
   const [following, setFollowing] = useState(props.Following.data || []);
-  const noFriends = following.length <= 0 ? true : false;
+  const noFriends = following !== null && following.length <= 0 ? true : false;
   const [marketAround, setMarketAround] = useState(props.GetMarketAround.data || []);
   const [friendsMarket, setFriendsMarket] = useState(props.FriendsMarket.data || []);
   const [profile, setProfile] = useState(props.Profile.data || null);
@@ -201,9 +201,13 @@ function Page(props) {
           userName: profile.userName,
           self: true
         };
-        f = [selfUser, ...result2.data];
+        if (result2.data !== null && result2.data.length > 0) {
+          f = [selfUser, ...result2.data];
+        }
       } else {
-        f = result2.data;
+        if (result2.data !== null && result2.data.length > 0) {
+          f = result2.data;
+        }
       }
       setFollowing(f);
     }

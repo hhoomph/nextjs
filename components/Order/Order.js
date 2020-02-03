@@ -118,7 +118,7 @@ const Order = props => {
       </div>
       <Ask header={"لغو سفارش"} text={"سفارش مورد نظر لغو شود؟"} command={cancelOrder} setModalShow={setAskModalShow} modalShow={askModalShow} loading={loading} />
       <Ask header={"تایید و ارسال"} text={""} sellerSend={true} command={deliveredOrder} setModalShow={setAskModalShow1} modalShow={askModalShow1} loading={loading} />
-      <div className="container mb-2 mt-2 cart p-0 pr-1 pl-1">
+      <div className="container mb-5 mt-2 cart p-0 pr-1 pl-1">
         <div className="row cart_seller p-1 justify-content-end">
           <div className="col-5 m-auto rtl p-0 pl-1 text-center">
             <div className="status_div">
@@ -174,6 +174,14 @@ const Order = props => {
             </>
           )}
         </div>
+        {props.pOrderPaymentType == "پرداخت نقدی" && (
+          <div className="col-12 mt-3 pr-2 rtl description">
+            <div className="badge badge-danger cashe_badge">پرداخت نقدی</div>
+            <div className="cash_payment_alert">
+              <p>تمام وجه سفارش را نقدی دریافت کنید</p>
+            </div>
+          </div>
+        )}
         <div className="row mt-0 pt-3 pb-3 cart_amount_detail">
           <div className="col-12 d-block rtl">
             <span className="total">مبلغ کل سفارش : </span>
@@ -181,7 +189,7 @@ const Order = props => {
           </div>
         </div>
         {props.type === 1 && props.pOrderStatus == "درانتظار تأیید فروشنده" ? (
-          <div className="row d-flex pb-3 justify-content-around rtl contact_row">
+          <div className="row d-flex mt-1 pt-3 pb-3 justify-content-around rtl contact_row">
             <SubmitButton loading={loading} onClick={() => setAskModalShow1(true)} text="قبول و ارسال" className="d-inline-block delivered" />
             <a className="tell_call" title="تماس با فروشنده" href={`tel:${props.sellerPhoneNumber}`}>
               <IoMdCall className="font_icon" />
@@ -189,7 +197,7 @@ const Order = props => {
             <SubmitButton loading={loading} onClick={() => setAskModalShow(true)} text="رد سفارش" className="d-inline-block cancel" />
           </div>
         ) : props.type === 1 ? (
-          <div className="row d-flex pb-3 justify-content-around rtl contact_row">
+          <div className="row d-flex mt-1 pt-3 pb-3 justify-content-around rtl contact_row">
             <a className="tell_call" title="تماس با فروشنده" href={`tel:${props.sellerPhoneNumber}`}>
               <IoMdCall className="font_icon" />
             </a>

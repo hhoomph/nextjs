@@ -1,5 +1,6 @@
 import React, { useState, useEffect, memo, useReducer, useContext } from "react";
 import Link from "../Link";
+import Router from "next/router";
 import { HubConnectionBuilder, LogLevel } from "@aspnet/signalr";
 import Search from "./Search";
 import { FiGrid } from "react-icons/fi";
@@ -127,26 +128,6 @@ const Nav = props => {
           </Link>
         </div>
       </nav>
-      {/* Bottom Navbar in Desktop Mode */}
-      {/* <nav className="d-none d-lg-flex fixed-bottom top_nav navbar navbar-expand navbar-white desktop_bottom">
-        <div className="col-12 d-flex justify-content-center">
-          <Link href="/help" passHref>
-            <a className="nav-link">راهنمای ثبت سفارش</a>
-          </Link>
-          <Link href="/terms" passHref>
-            <a className="nav-link">شرایط و قوانین</a>
-          </Link>
-          <Link href="/complaint" passHref>
-            <a className="nav-link">ثبت شکایات</a>
-          </Link>
-          <Link href="/contact" passHref>
-            <a className="nav-link">تماس با ما</a>
-          </Link>
-          <Link href="/about-us" passHref>
-            <a className="nav-link">درباره ما</a>
-          </Link>
-        </div>
-      </nav> */}
       {/* Bottom Navbar in Mobile Mode */}
       <nav className="d-flex d-lg-none bottom_nav navbar fixed-bottom navbar-white bg-white">
         <div className="col-12 d-flex justify-content-center p-1">

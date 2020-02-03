@@ -8,7 +8,7 @@ const Header = props => {
         <div className="col d-flex justify-content-center">
           <Link href="/" passHref>
             <a>
-              <img className="logo" src="/static/img/splash.png" />
+              <img className="logo" src="/static/img/login-logo.png" />
             </a>
           </Link>
         </div>

@@ -265,7 +265,7 @@ function Page(props) {
         {view === 1 && (
           <div className="container cart_head_continue">
             <div className="row mb-3 p-2 header_link">
-              <div className="col pt-2 text-center">
+              <div className="col pt-2 pb-3 text-center">
                 <a className="d-inline-block btn-main btn-green" onClick={handleOrder}>
                   ادامه
                   {loading ? <Loading className="font_icon" /> : <FaArrowLeft className="font_icon" />}

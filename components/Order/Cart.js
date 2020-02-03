@@ -39,7 +39,7 @@ const Cart = props => {
   case 1:
     return (
       <div
-        className="container mb-2 cart"
+        className="container mb-2 pr-1 pl-1 cart"
         onClick={() => {
           setView(2);
         }}
@@ -60,12 +60,12 @@ const Cart = props => {
             </div>
             <img src={props.customerAvatar} className="col-3 userImage" />
           </div>
-          <div className="col-12 m-auto rtl p-0 pb-1 text-center">
+          <div className="col-12 m-auto rtl p-0 pb-1 pl-2 pr-2 order_status_badge">
             {props.pOrderStatus == "درانتظار تأیید فروشنده" ? (
               <div className="badge badge-warning">{props.pOrderStatus}</div>
             ) : props.pOrderStatus == "درانتظار پرداخت" ? (
               <div className="badge bg-amber">{props.pOrderStatus}</div>
-            ) : props.pOrderStatus == "ارسال شده" || props.pOrderStatus == "درحال ارسال" ? (
+            ) : props.pOrderStatus == "ارسال شده" ? (
               <div className="badge bg-blue">{props.pOrderStatus}</div>
             ) : props.pOrderStatus == "عدم تأیید فروشنده" ? (
               <div className="badge bg-brown">{props.pOrderStatus}</div>
@@ -80,6 +80,7 @@ const Cart = props => {
             ) : (
               <div className="badge badge-warning">{props.pOrderStatus}</div>
             )}
+            {props.pOrderPaymentType == "پرداخت نقدی" && <div className="badge badge-danger cashe_badge">پرداخت نقدی</div>}
           </div>
         </div>
       </div>
@@ -146,7 +147,7 @@ const Cart = props => {
             </div>
             <img src={props.customerAvatar} className="col-3 userImage" />
           </div>
-          <div className="col-12 m-auto rtl p-0 pb-1 text-center">
+          <div className="col-12 m-auto rtl p-0 pb-1 pl-2 pr-2 order_status_badge">
             {props.pOrderStatus == "درانتظار تأیید فروشنده" ? (
               <div className="badge badge-warning">{props.pOrderStatus}</div>
             ) : props.pOrderStatus == "درانتظار پرداخت" ? (
@@ -166,6 +167,7 @@ const Cart = props => {
             ) : (
               <div className="badge badge-warning">{props.pOrderStatus}</div>
             )}
+            {props.pOrderPaymentType == "پرداخت نقدی" && <div className="badge badge-danger cashe_badge">پرداخت نقدی</div>}
           </div>
         </div>
       </div>

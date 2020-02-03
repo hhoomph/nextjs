@@ -190,7 +190,7 @@ const MapComponent = props => {
   };
   const showUsers = users.map(user => {
     const userImg = user.userAvatar !== null ? `https://api.qarun.ir/${user.userAvatar}` : "/static/img/no-userimage.svg";
-    if (user.id == activeUser.id) {
+    if (user.id === activeUser.id) { 
       return (
         <Marker position={[user.lat, user.long]} icon={myIcon} draggable={false} key={user.id} onClick={() =>
           Router.push({

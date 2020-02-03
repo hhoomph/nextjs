@@ -274,7 +274,7 @@ function Page(props) {
         <div className="row">
           <div className="col-12 text-center">
             <p className="inventory_price rtl">{qerun} قرون</p>
-            <p className="inventory_price inventory_price_toman rtl pt-2">{numberSeparator(1000 * qerun)} تومان</p>
+            <p className="inventory_price inventory_price_toman rtl pt-2">{numberSeparator(inventory.qerunAmount)} تومان</p>
           </div>
         </div>
         <div className="row mt-3">

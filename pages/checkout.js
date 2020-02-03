@@ -6,6 +6,7 @@ import Nav from "../components/Nav/Nav";
 import Auth from "../components/Auth/Auth";
 import fetchData from "../utils/fetchData";
 import { FaCheck, FaArrowLeft, FaArrowRight, FaTimes, FaCheckDouble } from "react-icons/fa";
+import { FiChevronRight } from "react-icons/fi";
 import { ToastContainer, toast } from "react-toastify";
 import { numberSeparator, removeSeparator, forceNumeric } from "../utils/tools";
 import SubmitButton from "../components/Button/SubmitButton";
@@ -14,7 +15,6 @@ import "../scss/components/checkout.scss";
 function Page(props) {
   const nextCtx = props.ctx;
   const _orderId = props.id !== undefined && props.id !== null ? props.id : 0;
-  console.log(_orderId);
   const [view, setView] = useState(1);
   const [loading, setLoading] = useState(false);
   // const _addresses =
@@ -119,39 +119,47 @@ function Page(props) {
       <>
         <title>قارون</title>
         <Nav _tkn={props._tkn} />
-        <div className="container mb-1 rtl checkout_page">
+        <div className="container friends_page">
+          <div className="row p-2 cart_title">
+            <div className="col-12 p-0 text-center">
+              <h6 className="ml-5 mt-1 page_title">پرداخت</h6>
+              <div className="mr-1 pl-1 d-inline-block text-right float-right">
+                <FiChevronRight className="font_icon back_icon" onClick={() => Router.back()} />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="container rtl checkout_page">
+          <div className="row p-3 mb-5 checkout_form">
+            <div className="col">
+              <form className="checkoutForm">
+                <div className="form-group row">
+                  <label htmlFor="email" className="col-form-label">
+                      آدرس
+                  </label>
+                  <textarea value={address} onChange={e => setAddress(e.target.value)} id="address" className="form-control mt-1 mb-4  col-sm-12" placeholder="آدرس" />
+                </div>
+                <div className="form-group row">
+                  <label htmlFor="name" className="col-form-label">
+                      تلفن
+                  </label>
+                  <input value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} type="text" id="phoneNumber" className="form-control mt-1 mb-4 col-sm-12" placeholder="تلفن" />
+                </div>
+                <div className="form-group row">
+                  <label htmlFor="email" className="col-form-label">
+                      توضیحات تکمیلی
+                  </label>
+                  <textarea value={description} onChange={e => setDescription(e.target.value)} id="description" className="form-control mt-1 mb-4  col-sm-12" placeholder="توضیحات تکمیلی" />
+                </div>
+              </form>
+            </div>
+          </div>
           <div className="row mb-3 p-2 header_link">
-            <div className="col pt-2 text-center">
+            <div className="col pt-2 pb-3 text-center">
               <a className="d-inline-block btn-main btn-green" onClick={stepTwo}>
                   ثبت نهایی
                 {loading ? <Loading className="font_icon" /> : <FaCheck className="font_icon" />}
               </a>
-            </div>
-          </div>
-          <div className="container">
-            <div className="row mt-3 mb-5 checkout_form">
-              <div className="col">
-                <form className="checkoutForm">
-                  <div className="form-group row">
-                    <label htmlFor="email" className="col-form-label">
-                        آدرس
-                    </label>
-                    <textarea value={address} onChange={e => setAddress(e.target.value)} id="address" className="form-control mt-1 mb-4  col-sm-12" placeholder="آدرس" />
-                  </div>
-                  <div className="form-group row">
-                    <label htmlFor="name" className="col-form-label">
-                        تلفن
-                    </label>
-                    <input value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} type="text" id="phoneNumber" className="form-control mt-1 mb-4 col-sm-12" placeholder="تلفن" />
-                  </div>
-                  <div className="form-group row">
-                    <label htmlFor="email" className="col-form-label">
-                        توضیحات تکمیلی
-                    </label>
-                    <textarea value={description} onChange={e => setDescription(e.target.value)} id="description" className="form-control mt-1 mb-4  col-sm-12" placeholder="توضیحات تکمیلی" />
-                  </div>
-                </form>
-              </div>
             </div>
           </div>
         </div>

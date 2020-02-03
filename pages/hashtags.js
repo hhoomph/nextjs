@@ -16,14 +16,13 @@ const User = dynamic({
 });
 function Page(props) {
   const Router = useRouter();
-  const id = Router.query.id || 0;
+  const id = Router.query.id || null;
   const _products = props.GetProducts.data || [];
   const [products, setProducts] = useState(_products);
-  const allCategories = props.allCategories.data || [];
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
-  const catTitle = id;
+  const catTitle = "#" + id;
   const productRef = useRef();
   const showProducts = products.map(product => (
     <Product
@@ -80,6 +79,7 @@ function Page(props) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   useEffect(() => {
+    getProducts();
     if (!isFetching) return;
     getProducts();
   }, [isFetching]);
@@ -90,7 +90,7 @@ function Page(props) {
       <div className="container favorite_title">
         <div className="row p-2 cart_title">
           <div className="col-10 text-center align-self-center">
-            <h6 className="ml-5 pl-3 mt-1 page_title">{catTitle !== undefined && catTitle[0]["titel"] !== undefined ? catTitle[0]["titel"] : " "}</h6>
+            <h6 className="ml-5 pl-3 mt-1 rtl page_title">{catTitle !== undefined && catTitle !== null ? catTitle : " "}</h6>
           </div>
           <div className="col-2 text-right align-self-center pr-1">
             <FiChevronRight className="font_icon" onClick={() => Router.back()} />

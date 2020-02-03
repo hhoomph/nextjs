@@ -1,6 +1,7 @@
 @import "../vars";
 .cart_page {
   padding-bottom: 4rem;
+  min-height: 90vh;
   .header_link {
     background: #ffffff;
     box-shadow: 0 -5px 5px 1px #d2d2d2;
@@ -10,6 +11,11 @@
     z-index: 1000;
     a {
       cursor: pointer;
+    }
+    @media screen and (min-width: 992px) {
+      width: 90% !important;
+      max-width: 90%;
+      margin: auto;
     }
   }
   .btn-main {
@@ -116,7 +122,7 @@
     }
   }
 }
-.cart_head_continue{
+.cart_head_continue {
   .header_link {
     // background: #ffffff;
     // box-shadow: 0 -5px 5px 1px #d2d2d2;

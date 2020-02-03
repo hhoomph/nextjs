@@ -426,7 +426,7 @@ function Page(props) {
             </div>
           </div>
           <div className="row mb-3 p-2 header_link">
-            <div className="col pt-2 text-center">
+            <div className="col pt-2 pb-3 text-center">
               <a className="d-inline-block btn-main btn-green" onClick={() => addProduct()}>
                   ادامه
                 {loading ? <Loading className="font_icon" /> : <FaArrowLeft className="font_icon" />}
@@ -553,7 +553,7 @@ function Page(props) {
         <Nav _tkn={props._tkn} />
         <div className="container mb-1 rtl add_product">
           <div className="row mb-3 p-1 header_link_tab image_tabs">
-            <div className="col-4 pt-2 text-center active" onClick={() => setView(2)}>
+            <div className="col-4 pt-2 pb-3 text-center active" onClick={() => setView(2)}>
               <a className="d-inline-block tab_link">پیشنهادی</a>
             </div>
             <div
@@ -594,7 +594,7 @@ function Page(props) {
                 </div>
               </div>
               <div className="row mb-3 p-2 header_link">
-                <div className="col pt-2 text-center">
+                <div className="col pt-2 pb-3 text-center">
                   <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main btn-green">
                     <FaCheck className="font_icon" />
                   </SubmitButton>
@@ -655,7 +655,7 @@ function Page(props) {
                 </div>
               </div>
               <div className="row mb-3 p-2 header_link">
-                <div className="col pt-2 text-center">
+                <div className="col pt-2 pb-3 text-center">
                   <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main btn-green">
                     <FaCheck className="font_icon" />
                   </SubmitButton>
@@ -768,7 +768,7 @@ function Page(props) {
                 </div>
               </div>
               <div className="row mb-3 p-2 header_link">
-                <div className="col pt-2 text-center">
+                <div className="col pt-2 pb-3 text-center">
                   <SubmitButton loading={loading || uploading} onClick={() => setProductImages()} text="ثبت نهایی محصول" className="d-inline-block btn-main btn-green">
                     <FaCheck className="font_icon" />
                   </SubmitButton>

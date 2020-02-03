@@ -202,6 +202,29 @@ const Cart = props => {
               <div className="badge badge-warning">محدودیت فروش : {numberSeparator(props.sellerLimitation)} تومان</div>
             </div>
           )}
+          {type !== 1 && (
+            <div className="col-12 p-0 pr-5 text-center d-block " style={{ margin: "auto", marginTop: "-10px" }}>
+              {props.pOrderStatus == "درانتظار تأیید فروشنده" ? (
+                <div className="badge badge-warning">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "درانتظار پرداخت" ? (
+                <div className="badge bg-amber">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "ارسال شده" || props.pOrderStatus == "درحال ارسال" ? (
+                <div className="badge bg-blue">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "عدم تأیید فروشنده" ? (
+                <div className="badge bg-brown">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "لغو شده توسط خریدار" ? (
+                <div className="badge bg-pink">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "عدم تحویل" ? (
+                <div className="badge bg-red">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "تحویل شده" ? (
+                <div className="badge bg-green">{props.pOrderStatus}</div>
+              ) : props.pOrderStatus == "بازگشتی" ? (
+                <div className="badge bg-purple">{props.pOrderStatus}</div>
+              ) : (
+                <div className="badge badge-warning">{props.pOrderStatus}</div>
+              )}
+            </div>
+          )}
         </div>
       </div>
       <div className="row products_rows" hidden={!showRow}>

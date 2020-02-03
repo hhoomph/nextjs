@@ -1,5 +1,6 @@
 @import "../vars";
 .add_product {
+  min-height: 90vh;
   padding-bottom: 50px;
   ._title {
     top: 0;
@@ -22,13 +23,18 @@
   }
   .header_link {
     background: #fafafa00;
-    box-shadow: 0 -5px 5px 1px #fff;
+    // box-shadow: 0 -5px 5px 1px #fff;
     position: fixed;
     width: 100%;
     bottom: 40px;
     z-index: 1000;
     a {
       cursor: pointer;
+    }
+    @media screen and (min-width: 992px) {
+      width: 90% !important;
+      max-width: 90%;
+      margin: auto;
     }
   }
   .header_link_tab {
@@ -331,13 +337,12 @@
     }
   }
   @media screen and (min-width: 992px) {
-    padding-top: 25px !important;
-    padding-bottom: 50px !important;
+    // padding-top: 25px !important;
+    // padding-bottom: 50px !important;
     .header_link {
       width: 90% !important;
       max-width: 90%;
-      top: auto !important;
-      bottom: -15px !important;
+      right: 5%;
     }
   }
 }
