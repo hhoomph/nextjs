@@ -76,7 +76,7 @@ const ProductsRow = props => {
         oldPrice={product.price}
         image={productThumbNail}
         userId={product.sellerUserName}
-        sellerAvatar={product.sellerAvatar !== undefined && product.sellerAvatar !== null ? `https://api.qarun.ir/${product.sellerAvatar}` : "/static/img/no-userimage.png"}
+        sellerAvatar={product.sellerAvatar !== undefined && product.sellerAvatar !== null ? `https://api.qarun.ir/${product.sellerAvatar}` : "/static/img/no-userimage.svg"}
         sellerUserName={product.sellerUserName}
         cartCount={product.cartCount}
       />

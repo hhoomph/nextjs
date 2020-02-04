@@ -39,7 +39,7 @@ function Page(props) {
   });
   const renderOpen = openData.map(cart => {
     const customerImg =
-      cart.customerAvatar !== undefined && cart.customerAvatar !== null ? `https://api.qarun.ir/${cart.customerAvatar}` : "/static/img/no-userimage.png";
+      cart.customerAvatar !== undefined && cart.customerAvatar !== null ? `https://api.qarun.ir/${cart.customerAvatar}` : "/static/img/no-userimage.svg";
     return (
       <Cart
         key={cart.orderId + cart.id}
@@ -83,7 +83,7 @@ function Page(props) {
   });
   const renderHistory = historyData.map(cart => {
     const customerImg =
-      cart.customerAvatar !== undefined && cart.customerAvatar !== null ? `https://api.qarun.ir/${cart.customerAvatar}` : "/static/img/no-userimage.png";
+      cart.customerAvatar !== undefined && cart.customerAvatar !== null ? `https://api.qarun.ir/${cart.customerAvatar}` : "/static/img/no-userimage.svg";
     return (
       <Cart
         key={cart.orderId + cart.id}

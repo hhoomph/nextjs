@@ -54,7 +54,7 @@ const Page = props => {
       key={com.commentId}
       commentId={com.commentId}
       userId={com.userId}
-      image={com.userAvatar !== undefined && com.userAvatar !== null ? `https://api.qarun.ir/${com.userAvatar}` : "/static/img/no-userimage.png"}
+      image={com.userAvatar !== undefined && com.userAvatar !== null ? `https://api.qarun.ir/${com.userAvatar}` : "/static/img/no-userimage.svg"}
       liked={com.liked}
       productImage={"/static/img/product5.jpg"}
       productId={productId}

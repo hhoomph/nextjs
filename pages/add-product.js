@@ -757,7 +757,7 @@ function Page(props) {
           <div className="row mt-5 pt-3 mb-5 add_image">
             <div className="col">
               <div className="row">
-                <div className="col">
+                <div className="col pt-3">
                   <h5 className="text-center">تصاویر انتخاب شده</h5>
                 </div>
               </div>

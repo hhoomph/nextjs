@@ -86,71 +86,128 @@ const Page = props => {
     />
   ));
   const addTicket = async () => {
+    // toast.dismiss();
+    // const errs = [];
+    // const formData = new FormData();
+    // if (subject.trim() === "") {
+    //   errs.push("لطفا موضوع تیکت را مشخص کنید.");
+    // } else {
+    //   formData.append("Subject", subject);
+    // }
+    // if (content.trim() === "") {
+    //   errs.push("لطفا متن تیکت را مشخص کنید.");
+    // } else {
+    //   formData.append("Content", content);
+    // }
+    // const types = ["image/png", "image/jpeg", "image/gif"];
+    // const files = Array.from(fileInput.current.files);
+    // if (files.length > 1) {
+    //   return toast.warn("تنها امکان آپلود 1 فایل همزمان وجود دارد.");
+    // }
+    // files.forEach((file, i) => {
+    //   if (types.every(type => file.type !== type)) {
+    //     errs.push(`فرمت '${file.type}' پشتیبانی نمی شود.`);
+    //   }
+    //   if (file.size > 2550000) {
+    //     errs.push(`حجم فایل '${file.name}' بیشتر از حد مجاز است، لطفا فایل کم حجم تری انتخاب کنید.`);
+    //   }
+    //   //formData.append(`Files${i}`, file);
+    // });
+    // if (errs.length) {
+    //   return errs.forEach(err => toast.warn(err));
+    // }
+    // formData.append("File", files[0]);
+    // // const fileList = [];
+    // // for (let i = 0; i < fileInput.current.files.length; i++) {
+    // //   fileList.push(fileInput.current.files[i]);
+    // //   console.log(fileInput.current.files[i]);
+    // // }
+    // setLoading(true);
+    // const result = await fetchData(
+    //   "User/U_Support/Create",
+    //   {
+    //     method: "POST",
+    //     body: formData
+    //     // body: JSON.stringify({
+    //     //   Subject: subject,
+    //     //   Content: content,
+    //     //   File : files[0]
+    //     // })
+    //   },
+    //   props.ctx,
+    //   true
+    // );
+    // if (result.isSuccess) {
+    //   setModalShow(false);
+    //   fileInput.current.value = "";
+    //   setSubject("");
+    //   setContent("");
+    //   toast.success("تیکت شما با موفقیت ثبت شد.");
+    //   setPage(1);
+    //   setTimeout(() => setIsFetching(false), 200);
+    //   getTickets();
+    // } else if (result.message != undefined) {
+    //   toast.warn(result.message);
+    // } else if (result.error != undefined) {
+    //   toast.error(result.error);
+    // }
+    // setLoading(false);
     toast.dismiss();
     const errs = [];
-    const formData = new FormData();
-    if (subject.trim() === "") {
-      errs.push("لطفا موضوع تیکت را مشخص کنید.");
-    } else {
-      formData.append("Subject", subject);
-    }
-    if (content.trim() === "") {
-      errs.push("لطفا متن تیکت را مشخص کنید.");
-    } else {
-      formData.append("Content", content);
-    }
-    const types = ["image/png", "image/jpeg", "image/gif"];
-    const files = Array.from(fileInput.current.files);
-    if (files.length > 5) {
-      return toast.warn("تنها امکان آپلود 5 فایل همزمان وجود دارد.");
-    }
-    files.forEach((file, i) => {
+    const file = fileInput.current.files[0];
+    try {
+      fileInput.current.value = "";
+      const formData = new FormData();
+      const types = ["image/png", "image/jpeg", "image/gif"];
       if (types.every(type => file.type !== type)) {
         errs.push(`فرمت '${file.type}' پشتیبانی نمی شود.`);
       }
-      if (file.size > 2550000) {
+      if (file.size > 4550000) {
         errs.push(`حجم فایل '${file.name}' بیشتر از حد مجاز است، لطفا فایل کم حجم تری انتخاب کنید.`);
       }
-      //formData.append(`Files${i}`, file);
-    });
-    if (errs.length) {
-      return errs.forEach(err => toast.warn(err));
+      formData.append("File", file);
+      if (subject.trim() === "") {
+        errs.push("لطفا موضوع تیکت را مشخص کنید.");
+      } else {
+        formData.append("Subject", subject);
+      }
+      if (content.trim() === "") {
+        errs.push("لطفا متن تیکت را مشخص کنید.");
+      } else {
+        formData.append("Content", content);
+      }
+      if (errs.length) {
+        return errs.forEach(err => toast.warn(err));
+      }
+      setLoading(true);
+      const result = await fetchData(
+        "User/U_Support/Create",
+        {
+          method: "POST",
+          body: formData
+        },
+        props.ctx,
+        true
+      );
+      if (result.isSuccess) {
+        setModalShow(false);
+        fileInput.current.value = "";
+        setSubject("");
+        setContent("");
+        toast.success("تیکت شما با موفقیت ثبت شد.");
+        setPage(1);
+        setTimeout(() => setIsFetching(false), 200);
+        getTickets();
+      } else if (result.message != undefined) {
+        toast.warn(result.message);
+      } else if (result.error != undefined) {
+        toast.error(result.error);
+      }
+      setLoading(false);
+    } catch (e) {
+      toast.warn("متاسفانه خطایی رخ داده است.");
+      console.error(e);
     }
-    formData.append("Files", files);
-    // const fileList = [];
-    // for (let i = 0; i < fileInput.current.files.length; i++) {
-    //   fileList.push(fileInput.current.files[i]);
-    //   console.log(fileInput.current.files[i]);
-    // }
-    setLoading(true);
-    const result = await fetchData(
-      "User/U_Support/Create",
-      {
-        method: "POST",
-        //body: formData
-        body: JSON.stringify({
-          Subject: subject,
-          Content: content,
-          Files: files
-        })
-      },
-      props.ctx
-    );
-    if (result.isSuccess) {
-      setModalShow(false);
-      fileInput.current.value = "";
-      setSubject("");
-      setContent("");
-      toast.success("تیکت شما با موفقیت ثبت شد.");
-      setPage(1);
-      setTimeout(() => setIsFetching(false), 200);
-      getTickets();
-    } else if (result.message != undefined) {
-      toast.warn(result.message);
-    } else if (result.error != undefined) {
-      toast.error(result.error);
-    }
-    setLoading(false);
   };
   const getTickets = async () => {
     setLoading(true);

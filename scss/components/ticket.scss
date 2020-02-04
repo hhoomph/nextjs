@@ -33,6 +33,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   position: relative;
+  min-height: 80vh;
   z-index: 1030;
   .ticket_row {
     box-shadow: 0px 0px 2px #b1b1b1;
@@ -172,7 +173,7 @@
   .file_upload_btn {
     position: absolute;
     left: 27%;
-    top: 18.2px;
+    top: 26.2px;
     width: 1.7rem;
     height: 1.7rem;
     background: #2196f3;

@@ -32,7 +32,6 @@ const Page = props => {
   //
   const mainSubject = props.Response.data !== undefined && props.Response.data.model !== undefined && props.Response.data.model[0] !== undefined ? props.Response.data.model[0].subject : "نامشخص";
   const [messages, setMessages] = useState(props.Response.data !== undefined && props.Response.data.model !== undefined ? props.Response.data.model : []);
-  const ParentId = "";
   const [content, setContent] = useState("");
   const fileInput = useRef();
   const textRef = useRef();
@@ -49,36 +48,31 @@ const Page = props => {
   });
   const showMesseges = messages.map(tik => {
     const isAdmin = tik.senderType === 2 ? true : false;
-    return <Ticket key={tik.ticketId} parentId={tik.parentId} ticketId={tik.ticketId} isAdmin={isAdmin} subject={tik.subject} content={tik.content} insertDateP={tik.insertDateP} filesUrl={tik.filesUrl} adminAnswered={tik.adminAnswered} userAnswered={tik.userAnswered} senderName={tik.senderName} senderEmail={tik.senderEmail} senderPhoneNumber={tik.senderPhoneNumber} senderId={tik.senderId} senderType={tik.senderType} focusOnTextArea={focusOnTextArea} />;
+    return <Ticket key={tik.ticketId} parentId={tik.parentId} ticketId={tik.ticketId} isAdmin={isAdmin} subject={tik.subject} content={tik.content} insertDateP={tik.insertDateP} filesUrl={tik.filesUrl} adminAnswered={tik.adminAnswered} userAnswered={tik.userAnswered} senderName={tik.senderName}  senderUserName={tik.senderUserName}  senderAvatar={tik.senderAvatar !== undefined && tik.senderAvatar !== null ? `https://api.qarun.ir/${tik.senderAvatar}` : "/static/img/no-userimage.svg"} senderEmail={tik.senderEmail} senderPhoneNumber={tik.senderPhoneNumber} senderId={tik.senderId} senderType={tik.senderType} focusOnTextArea={focusOnTextArea} />;
   });
   const answerTicket = async () => {
     toast.dismiss();
     const errs = [];
     const formData = new FormData();
-    formData.append("ParentId", ParentId);
+    formData.append("ParentId", parseInt(parentId, 10));
+    formData.append("Subject", mainSubject);
     if (content.trim() === "") {
       errs.push("لطفا متن تیکت را مشخص کنید.");
     } else {
       formData.append("Content", content);
     }
+    const file = fileInput.current.files[0];
     const types = ["image/png", "image/jpeg", "image/gif"];
-    const files = Array.from(fileInput.current.files);
-    if (files.length > 5) {
-      return toast.warn("تنها امکان آپلود 5 فایل همزمان وجود دارد.");
+    if (types.every(type => file.type !== type)) {
+      errs.push(`فرمت '${file.type}' پشتیبانی نمی شود.`);
     }
-    files.forEach((file, i) => {
-      if (types.every(type => file.type !== type)) {
-        errs.push(`فرمت '${file.type}' پشتیبانی نمی شود.`);
-      }
-      if (file.size > 2550000) {
-        errs.push(`حجم فایل '${file.name}' بیشتر از حد مجاز است، لطفا فایل کم حجم تری انتخاب کنید.`);
-      }
-      //formData.append(`Files${i}`, file);
-    });
+    if (file.size > 4550000) {
+      errs.push(`حجم فایل '${file.name}' بیشتر از حد مجاز است، لطفا فایل کم حجم تری انتخاب کنید.`);
+    }
     if (errs.length) {
       return errs.forEach(err => toast.warn(err));
     }
-    formData.append("Files", files);
+    formData.append("File", file);
     setLoading(true);
     const result = await fetchData(
       "User/U_Support/CreateTicketAnswer",
@@ -92,8 +86,9 @@ const Page = props => {
     if (result.isSuccess) {
       fileInput.current.value = "";
       setContent("");
-      toast.success("تیکت شما با موفقیت ثبت شد.");
+      toast.success("پیام شما با موفقیت ارسال شد.");
       setPage(1);
+      getTickets();
       setTimeout(() => setIsFetching(false), 200);
     } else if (result.message != undefined) {
       toast.warn(result.message);
@@ -165,8 +160,8 @@ const Page = props => {
           </div>
         </div>
       </div>
-      <div className="container pb-5 rtl ticket_page">
-        <div className="row pb-5 mb-5">
+      <div className="container rtl ticket_page">
+        <div className="row">
           {showMesseges}
           {loading2 && (
             <div className="col-11 m-auto pt-2 _ticket">
@@ -176,14 +171,14 @@ const Page = props => {
         </div>
         <div className="row fixed-bottom input_text">
           <div className="col-12">
-            <div className="row p-3">
+            <div className="row p-4">
               <textarea type="text" className="form-control col-9" placeholder="متن پیام" ref={textRef} value={content} onChange={e => setContent(e.target.value)} />
               <input type="file" accept="image/*" ref={fileInput} multiple={true} hidden={true} />
               <div className="btn btn_main file_upload_btn" onClick={() => fileInput.current.click()}>
                 <FaFileUpload className="font_icon" />
               </div>
               <div className="col-2 align-self-center">
-                <SubmitButton loading={loading} text="ارسال" className="btn btn-main send_comment" />
+                <SubmitButton onClick={answerTicket} loading={loading} text="ارسال" className="btn btn-main send_comment" />
               </div>
             </div>
           </div>

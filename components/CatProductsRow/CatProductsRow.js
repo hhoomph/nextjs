@@ -39,6 +39,7 @@ const CatProductsRow = props => {
     setLoading(false);
   };
   const getOnlineProducts = async () => {
+    setProducts([]);
     if (props._tkn !== undefined) {
       setLoading(true);
       const baseHub = new HubConnectionBuilder()
@@ -52,26 +53,81 @@ const CatProductsRow = props => {
       baseHub
         .start({ withCredentials: false })
         .then(function() {
-          console.log("OnlineProducts baseHub connected");
-          baseHub
-            .invoke("GetOnlineUserProduct", {
-              page: 1,
-              pageSize: 10
-            })
-            .then(function(res) {
-              console.log(res);
-              let products = res || [];
-              setProducts(products);
-              setLoading(false);
-            })
-            .catch(err => console.error(err.toString()));
-          baseHub.on("OnlineUserProduct", res => {
-            let products = res || [];
-            setProducts(products);
+          console.log("user baseHub connected");
+          // baseHub
+          //   .invoke("GetUserStatus", profileData.userName)
+          //   .then(function(e) {})
+          //   .catch(err => console.error(err.toString()));
+          // baseHub.on("GetStatus", res => {
+          //   setUserOnline(res);
+          // });
+          baseHub.on("OnlineUsers", res => {
+            if (res.length > 0) {
+              const userIds = res.map(u => u.userName);
+              fetchData(
+                "User/U_Product/GetOnlineUsersProduct",
+                {
+                  method: "POST",
+                  body: JSON.stringify({
+                    userIds: userIds,
+                    page: 1,
+                    pageSize: 20
+                  })
+                },
+                props.ctx
+              ).then(r => {
+                if (r !== undefined && r.isSuccess) {
+                  let products = r.data || [];
+                  console.log(products);
+                  setProducts(products);
+                  baseHub.stop();
+                }
+              });
+            } else {
+              //setProducts([]);
+            }
+            setLoading(false);
+            // baseHub.stop();
           });
         })
-        .catch(err => console.error(err.toString()));
+        .catch(err => {
+          console.error(err.toString());
+          setLoading(false);
+        });
     }
+    // if (props._tkn !== undefined) {
+    //   setLoading(true);
+    //   const baseHub = new HubConnectionBuilder()
+    //     .withUrl("https://api.qarun.ir/baseHub", {
+    //       accessTokenFactory: () => {
+    //         return props._tkn;
+    //       }
+    //     })
+    //     .configureLogging(LogLevel.Error)
+    //     .build();
+    //   baseHub
+    //     .start({ withCredentials: false })
+    //     .then(function() {
+    //       console.log("OnlineProducts baseHub connected");
+    //       baseHub
+    //         .invoke("GetOnlineUserProduct", {
+    //           page: 1,
+    //           pageSize: 10
+    //         })
+    //         .then(function(res) {
+    //           console.log(res);
+    //           let products = res || [];
+    //           setProducts(products);
+    //           setLoading(false);
+    //         })
+    //         .catch(err => console.error(err.toString()));
+    //       baseHub.on("OnlineUserProduct", res => {
+    //         let products = res || [];
+    //         setProducts(products);
+    //       });
+    //     })
+    //     .catch(err => console.error(err.toString()));
+    // }
   };
   useEffect(() => {
     getProducts();
@@ -95,7 +151,7 @@ const CatProductsRow = props => {
             oldPrice={product.price}
             image={productThumbNail}
             userId={product.sellerUserName}
-            sellerAvatar={product.sellerAvatar !== undefined && product.sellerAvatar !== null ? `https://api.qarun.ir/${product.sellerAvatar}` : "/static/img/no-userimage.png"}
+            sellerAvatar={product.sellerAvatar !== undefined && product.sellerAvatar !== null ? `https://api.qarun.ir/${product.sellerAvatar}` : "/static/img/no-userimage.svg"}
             sellerUserName={product.sellerUserName}
           />
         );

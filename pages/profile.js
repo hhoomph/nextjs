@@ -13,9 +13,11 @@ import { userProductsReducer, orderCountReduser } from "../context/reducer";
 import { ReactComponent as AddSvg } from "../public/static/svg/add.svg";
 import { ReactComponent as InviteShare } from "../public/static/svg/invite-share2.svg";
 import { FaShareAlt, FaRegCopy } from "react-icons/fa";
+import { TiTickOutline } from "react-icons/ti";
 import { Modal } from "react-bootstrap";
 import SubmitButton from "../components/Button/SubmitButton";
 import { ToastContainer, toast } from "react-toastify";
+import { forceNumeric, fixNumbers } from "../utils/tools";
 const Category = dynamic({
   loader: () => import("../components/Profile/Category"),
   loading: () => <Loading />,
@@ -207,20 +209,6 @@ function Page(props) {
   useEffect(() => {
     getUserProductFromCat();
   }, [catActive]);
-  useEffect(() => {
-    //props.statusHub
-    // setTimeout(() => {
-    //   if (profileData !== null && profileData.userName !== undefined && profileData.userName !== "" && profileData.userName !== null) {
-    //     props.baseHub
-    //       .invoke("GetUserStatus", profileData.userName)
-    //       .then(function(e) {})
-    //       .catch(err => console.error(err.toString()));
-    //     props.statusHub.on("GetStatus", res => {
-    //       console.log(res);
-    //     });
-    //   }
-    // }, 3000);
-  }, []);
   const [showFirstAdd, setShowFirstAdd] = useState(profileData !== null && profileData.productCount > 0 ? false : true);
   const [modalShow, setModalShow] = useState(false);
   const textCopy = useRef();
@@ -250,6 +238,39 @@ function Page(props) {
       toast.warn("لطفا اطلاعات نمایه خود را تکمیل کنید.");
     }
   };
+  const [emailModalShow, setEmailModalShow] = useState(false);
+  const [emailCode, setEmailCode] = useState(null);
+  const confirmEmail = async () => {
+    if (emailCode !== null && fixNumbers(emailCode.trim()) !== "") {
+      setLoading(true);
+      const result = await fetchData(
+        "User/U_Account/EmailConfirmation",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            email: profileData.email,
+            code: fixNumbers(emailCode.trim())
+          })
+        },
+        props.ctx
+      );
+      if (result !== undefined && result.isSuccess) {
+        setEmailModalShow(false);
+      } else if (result !== undefined && result.message != undefined) {
+        toast.warn(result.message);
+      } else if (result !== undefined && result.error != undefined) {
+        toast.error(result.error);
+      }
+      setLoading(false);
+    } else {
+      toast.warn("لطفا کد ارسال شده به ایمیل خود را وارد کنید.");
+    }
+  };
+  useEffect(() => {
+    if ( profileData.email !== null && profileData.emailConfirmed === false) {
+      setEmailModalShow(true);
+    }
+  }, [view]);
   switch (view) {
   case 1:
     if (typeof window !== "undefined") {
@@ -327,6 +348,26 @@ function Page(props) {
                   </SubmitButton>
                 </Modal.Footer>
               </Modal>
+              {/* Email Modal */}
+              <Modal onHide={() => setEmailModalShow(false)} show={emailModalShow} size="xl" scrollable className="share_modal">
+                <Modal.Header closeButton>
+                  <Modal.Title id="contained-modal-title-vcenter">تایید ایمیل</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <div className="col-12 mt-2 rtl">
+                    <p className="text-center invite_info">لطفا کد ارسالی به ایمیل خود را وارد کنید.</p>
+                  </div>
+                  <div className="col-12 p-0 mt-4 rtl d-flex">
+                    <label className="col-4 col-form-label text-center">کد ارسالی : </label>
+                    <input type="text" value={emailCode} onChange={e => setEmailCode(e.target.value)} className="col-6 form-control text-center" placeholder="کد ارسالی به ایمیل" />
+                  </div>
+                </Modal.Body>
+                <Modal.Footer className="justify-content-center">
+                  <SubmitButton loading={loading} onClick={confirmEmail} text="تایید" className="d-inline-block btn-main rtl">
+                    <TiTickOutline className="font_icon" />
+                  </SubmitButton>
+                </Modal.Footer>
+              </Modal>
             </div>
           ) : (
             <>
@@ -356,7 +397,7 @@ function Page(props) {
                     <Loading />
                   </div>
                 )}
-              </div>{" "}
+              </div>
             </>
           )}
         </div>

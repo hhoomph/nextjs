@@ -6,7 +6,7 @@ import axios from "axios";
 import nextCookie from "next-cookies";
 import cookie from "js-cookie";
 import "../scss/components/login.scss";
-import { secondsToMs, forceNumeric } from "../utils/tools";
+import { secondsToMs, forceNumeric, fixNumbers } from "../utils/tools";
 import useInterval from "../components/useInterval";
 import SubmitButton from "../components/Button/SubmitButton";
 import Nav from "../components/Nav/Nav";
@@ -35,7 +35,7 @@ const Page = props => {
     const handleSubmitStep1 = async () => {
       toast.dismiss();
       if (userName.trim().length > 0) {
-        if ((Mobile_RX.test(userName.trim()) && userName.trim().length < 12) || EMAIL_RX.test(userName.trim())) {
+        if ((Mobile_RX.test(fixNumbers(userName.trim())) && userName.trim().length < 12) || EMAIL_RX.test(fixNumbers(userName.trim()))) {
           setIsLoading(true);
           const apiUrl = `${getHost()}Common/C_Account/RegisterOrLogin`;
           const response = await fetch(apiUrl, {
@@ -45,7 +45,7 @@ const Page = props => {
               "Content-Type": "application/json",
               "Access-Control-Allow-Origin": "*"
             },
-            body: JSON.stringify({ phoneNumber_Or_Email: userName.trim(), marketerCode: reagent.trim() }),
+            body: JSON.stringify({ phoneNumber_Or_Email: fixNumbers(userName.trim()), marketerCode: reagent.trim() }),
             credentials: "include"
           });
           if (response != undefined && response.ok) {

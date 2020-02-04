@@ -25,7 +25,7 @@ const Ask = dynamic({
 const Cart = props => {
   const nextCtx = props.ctx;
   const type = props.type;
-  const showRow = props.id === props.showKey ? true : false;
+  const showRow = props.sellerUserName === props.showKey ? true : false;
   const [loading, setLoading] = useState(false);
   const [call, setCall] = useState(false);
   const { cartData } = props;
@@ -98,7 +98,7 @@ const Cart = props => {
     if (showRow) {
       props.setShowKey(null);
     } else {
-      props.setShowKey(props.id);
+      props.setShowKey(props.sellerUserName);
     }
   };
   const showToggleRow = () => {

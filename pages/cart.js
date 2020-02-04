@@ -47,7 +47,7 @@ function Page(props) {
     draggable: true
   });
   const renderCart = cartData.map(cart => {
-    const sellerImg = cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
+    const sellerImg = cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.svg";
     return (
       <Cart
         key={cart.sellerId}
@@ -68,7 +68,7 @@ function Page(props) {
     );
   });
   const renderOpenCart = openCartData.map(cart => {
-    const sellerImg = cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
+    const sellerImg = cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.svg";
     return (
       <Cart
         key={cart.orderId + cart.id}
@@ -102,7 +102,7 @@ function Page(props) {
     );
   });
   const renderHistoryCart = historyCartData.map(cart => {
-    const sellerImg = cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.png";
+    const sellerImg = cart.sellerAvatar !== undefined && cart.sellerAvatar !== null ? `https://api.qarun.ir/${cart.sellerAvatar}` : "/static/img/no-userimage.svg";
     return (
       <Cart
         key={cart.orderId + cart.id}
@@ -194,7 +194,7 @@ function Page(props) {
       if (getCartDataRes !== undefined && getCartDataRes.isSuccess) {
         let cData = getCartDataRes.data || [];
         if (cData.length > 0) {
-          setShowKey(cData[0].id);
+          setShowKey(cData[0].sellerUserName);
         }
         cartDispatch({ type: "refresh", payload: [] });
         cartDispatch({ type: "refresh", payload: cData });
@@ -210,7 +210,7 @@ function Page(props) {
       if (getCartDataRes !== undefined && getCartDataRes.isSuccess) {
         let cData = getCartDataRes.data || [];
         if (cData.length > 0) {
-          setShowKey(cData[0].id);
+          setShowKey(cData[0].sellerUserName);
         }
         setOpenCartData(cData);
       }
@@ -230,6 +230,10 @@ function Page(props) {
       if (getCartDataRes1 !== undefined && getCartDataRes1.isSuccess) {
         if (page === 1) {
           setHistoryCartData(getCartDataRes1.data);
+          let cData = getCartDataRes1.data || [];
+          if (cData.length > 0) {
+            setShowKey(cData[0].sellerUserName);
+          }
         } else {
           let cData = historyCartData.concat(getCartDataRes1.data);
           setHistoryCartData(cData);
@@ -251,7 +255,7 @@ function Page(props) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   useEffect(() => {
-    if (!isFetching) return;
+    if (!isFetching || view !== 3) return;
     getCartData();
   }, [isFetching]);
   useEffect(() => {

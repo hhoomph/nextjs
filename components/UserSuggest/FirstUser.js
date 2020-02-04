@@ -63,10 +63,12 @@ const FirstUser = props => {
         <a className="user_close" onClick={showToggle}>
           <FaTimes className="font_Icons" />
         </a>
-        <div className="user_text mb-1">
-          <p className="user_name">{props.userName}</p>
-          <p className="user_display_name">{props.displayName}</p>
-        </div>
+        <Link href={`/user/${props.userName}`} passHref>
+          <div className="user_text mb-1">
+            <p className="user_name">{props.userName}</p>
+            <p className="user_display_name">{props.displayName}</p>
+          </div>
+        </Link>
         <div className={"user_follow"}>
           {followed ? (
             <SubmitButton loading={loading} onClick={() => unFollowToggle()} text="لغو دنبال" className="btn btn-main unfollow" />

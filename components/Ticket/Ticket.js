@@ -9,13 +9,16 @@ import { MdHeadsetMic } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 const Ticket = props => {
   const [loading, setLoading] = useState(false);
+  const showImage = props.filesUrl.map((img, index) => <a key={index} target="_blank" href={`https://api.qarun.ir/${img}`}>
+    <img className="file" src={`https://api.qarun.ir/${img}`} />
+  </a>);
   return (
     <>
       <div className={"col-11 m-auto pt-2 _ticket $(if(props.isAdmin === true) ? \"_admin\" : \""}>
         <div className="row">
           <div className="col-2 d-flex justify-content-center align-self-center">
             <a className="user_img">
-              <img src="/static/img/user.jpg" />
+              <img src={props.senderAvatar} />
             </a>
           </div>
           <div className="col-10 usr_msg_div">
@@ -28,13 +31,9 @@ const Ticket = props => {
               </div>
             </div>
           </div>
-          <div className="col-10 offset-2 mt-2 text-left attach_files">
-            <a target="_blank" href="/static/img/product5.jpg">
-              <img className="file" src="/static/img/product5.jpg" />
-            </a>
-            <a target="_blank" href="/static/img/product6.jpg">
-              <img className="file" src="/static/img/product6.jpg" />
-            </a>
+          {/* <div className="col-10 offset-2 mt-2 text-left attach_files"> */}
+          <div className="col-12 mt-2 text-center attach_files">
+            {showImage}
           </div>
           <div className="col-12 text-center">
             <div className="time ml-2">{props.insertDateP}</div>
