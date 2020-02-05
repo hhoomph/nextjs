@@ -103,7 +103,7 @@ const Page = props => {
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*"
           },
-          body: JSON.stringify({ phoneNumber_Or_Email: userName.trim(), code: code }),
+          body: JSON.stringify({ phoneNumber_Or_Email: fixNumbers(userName.trim()), code: code }),
           credentials: "include"
         });
         if (response != undefined && response.ok) {
