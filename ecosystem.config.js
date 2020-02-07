@@ -1,17 +1,17 @@
 module.exports = {
   apps: [
     {
-      name: 'Qarun',
-      script: './server.js',
+      name: "Qarun",
+      script: "./server.js",
       watch: true,
       env: {
-        NODE_ENV: 'development'
+        NODE_ENV: "development"
       },
       env_production: {
-        NODE_ENV: 'production'
+        NODE_ENV: "production"
       },
       instances: 0,
-      exec_mode: 'cluster'
+      exec_mode: "cluster"
     }
   ]
 };

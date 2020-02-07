@@ -39,7 +39,7 @@ module.exports = withPlugins([withSass, withSize, withOffline], {
     //       cacheName: "offlineCache",
     //       expiration: {
     //         maxEntries: 50,
-    //         maxAgeSeconds: 1 * 60 * 60,
+    //         maxAgeSeconds: 30 * 24 * 60 * 60, // 1 month
     //         purgeOnQuotaError: true
     //       }
     //     }
@@ -47,13 +47,14 @@ module.exports = withPlugins([withSass, withSize, withOffline], {
     // ]
     runtimeCaching: [
       {
-        urlPattern: /^https?.*/,
-        handler: "NetworkFirst",
+        // urlPattern: /^https?.*/,
+        urlPattern: /.*\.(?:png|jpg|jpeg|svg|gif)/,
+        handler: "image-cache",
         options: {
           cacheName: "https-calls",
           networkTimeoutSeconds: 15,
           expiration: {
-            maxEntries: 100,
+            maxEntries: 300,
             maxAgeSeconds: 1 * 60 * 60 // 1 hour
           },
           cacheableResponse: {
