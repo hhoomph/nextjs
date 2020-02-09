@@ -52,7 +52,7 @@ const Page = props => {
   const allCategories = props.allCategories.data || [];
   const [loading, setLoading] = useState(false);
   const [people, setPeople] = useState([]);
-  const [mapRadius, setMapRadius] = useState(1);
+  const [mapRadius, setMapRadius] = useState(10);
   const [mapPeople, setMapPeople] = useState([]);
   const [activeUser, setActiveUser] = useState({ id: 0, lat: 34.635059, long: 50.880823 });
   const [topScale, setTopScale] = useState(0.9);

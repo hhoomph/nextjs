@@ -40,7 +40,7 @@ function Page(props) {
     updateUsers();
   }, [update]);
   const showUsers = following.map(res => {
-    const img = res.userAvatar !== null ? `https://api.qarun.ir/${res.userAvatar}` : "/static/img/no-product-image.png";
+    const img = res.userAvatar !== null ? `https://api.qarun.ir/${res.userAvatar}` : "/static/img/no-userimage.svg";
     return <User key={res.id} id={res.id} image={img} name={res.displayName} followed={res.isFollowed} userName={res.userName} setUpdate={setUpdate} />;
   });
   return (

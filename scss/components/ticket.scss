@@ -61,6 +61,14 @@
       .font_icon {
         margin: auto;
       }
+      img {
+        font-size: 2rem;
+        width: 3rem;
+        height: 3rem;
+        color: #212121;
+        background: #eee;
+        border-radius: 10rem;
+      }
     }
     .subject {
       font-size: 0.9rem;
@@ -186,5 +194,24 @@
   .send_comment {
     padding: 3px 12px;
     font-size: 0.8rem;
+  }
+}
+.direct_page {
+  z-index: 1020 !important;
+  @media only screen and (min-width: 920px) {
+    min-height: 77vh;
+  }
+  .ticket_row {
+    .last_message {
+      .badge {
+        color: #9E9E9E;
+        font-weight: normal;
+        font-size: 0.78rem;
+      }
+    }
+    .time {
+      font-size: .7rem;
+      color: #BDBDBD;
+    }
   }
 }

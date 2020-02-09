@@ -153,6 +153,19 @@ app
       const queryParams = { id: req.params.id };
       app.render(req, res, actualPage, queryParams);
     });
+    server.get("/chat/manifest.json", (req, res) => {
+      const filePath = join(__dirname, "public", "/manifest.json");
+      app.serveStatic(req, res, filePath);
+    });
+    server.get("/chat/favicon.ico", (req, res) => {
+      const filePath = join(__dirname, "public", "/favicon.ico");
+      app.serveStatic(req, res, filePath);
+    });
+    server.get("/chat/:user/:id", (req, res) => {
+      const actualPage = "/chat";
+      const queryParams = { id: req.params.id };
+      app.render(req, res, actualPage, queryParams);
+    });
     server.get("/service-worker.js", (req, res) => {
       const parsedUrl = parse(req.url, true);
       const { pathname } = parsedUrl;

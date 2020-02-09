@@ -7,7 +7,7 @@ import SubmitButton from "../Button/SubmitButton";
 import { FaShoppingBasket, FaRegUserCircle } from "react-icons/fa";
 import { IoMdMore } from "react-icons/io";
 // import { ReactComponent as SendSvg } from "../../public/static/svg/send.svg";
-import { ReactComponent as SendSvg } from "../../public/static/svg/new/send.svg";
+import { ReactComponent as SendSvg } from "../../public/static/svg/send.svg";
 import { ReactComponent as AddUserSvg } from "../../public/static/svg/add-user.svg";
 import { ReactComponent as DistanceSvg } from "../../public/static/svg/distance.svg";
 import { ToastContainer, toast } from "react-toastify";
@@ -162,7 +162,7 @@ const Header = props => {
           <div className="col-6 pl-2 d-flex">
             <Dropdown drop="right" className="dropDownMenu more_menu_dropdown">
               <Dropdown.Toggle>
-                <a className="nav_Icons">
+                <a className="nav_Icons pl-1">
                   <IoMdMore className="svg_Icons more_menu" />
                 </a>
               </Dropdown.Toggle>
@@ -202,11 +202,22 @@ const Header = props => {
             </Modal.Footer>
           </Modal>
           <div className="col-6 pr-4 d-flex justify-content-end">
-            <Link href="" passHref>
+            <div
+              className="direct_send"
+              onClick={() =>
+                Router.push(
+                  {
+                    pathname: "/friends",
+                    query: { id: profileData.id }
+                  },
+                  `/chat/${profileData.userName}/${profileData.id}`
+                )
+              }
+            >
               <a className="nav_Icons">
                 <SendSvg className="svg_Icons send_icon" />
               </a>
-            </Link>
+            </div>
           </div>
         </div>
         <div className="row">

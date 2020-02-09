@@ -29,9 +29,10 @@ export const convertLatlngToArray = position => {
   return [position.lat, position.lng];
 };
 const placeholderIcon = new L.Icon({
-  iconUrl: "/static/svg/placeholder-for-map.svg",
+  iconUrl: "/static/svg/user-pin.svg",
   shadowUrl: null,
-  className: "current_pos_marker"
+  className: "current_pos_marker",
+  iconSize: [36, 36]
 });
 const MapComponent = props => {
   //const [markPosition, setMarkPosition] = useState(props.laLong);

@@ -10,6 +10,7 @@ import { FaArrowRight, FaArrowLeft, FaTimes, FaFileUpload } from "react-icons/fa
 import { FiChevronRight } from "react-icons/fi";
 import { numberSeparator, removeSeparator } from "../utils/tools";
 import { ToastContainer, toast } from "react-toastify";
+import { HubConnectionBuilder, LogLevel } from "@aspnet/signalr";
 import "../scss/components/ticket.scss";
 const Nav = dynamic({
   loader: () => import("../components/Nav/Nav"),

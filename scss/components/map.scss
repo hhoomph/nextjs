@@ -30,10 +30,11 @@
   // width: 4rem !important;
   height: auto !important;
   border-radius: 100px;
-  filter: invert(57%) sepia(90%) saturate(999%) hue-rotate(346deg) brightness(100%) contrast(100%);
+  z-index: 999 !important;
+  // filter: invert(57%) sepia(90%) saturate(999%) hue-rotate(346deg) brightness(100%) contrast(100%);
 }
 .leaflet-marker-icon.my_marker{
-  filter: invert(33%) sepia(10%) saturate(999%) hue-rotate(0deg) brightness(100%) contrast(100%);
+  // filter: invert(33%) sepia(10%) saturate(999%) hue-rotate(0deg) brightness(100%) contrast(100%);
   z-index: 9991 !important;
 }
 .leaflet-shadow-pane {
@@ -46,8 +47,8 @@
   height: auto !important;
 }
 .current_pos_marker {
-  margin-left: -20px !important;
-  margin-top: -40px !important;
+  margin-left: -25px!important;
+  margin-top: -30px!important;
   width: 3rem !important;
   animation: geo_location_marker 1s infinite;
 }

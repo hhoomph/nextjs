@@ -7,7 +7,6 @@ import { FiGrid } from "react-icons/fi";
 import { FaShoppingBasket, FaRegUserCircle } from "react-icons/fa";
 import { ReactComponent as HomeSvg } from "../../public/static/svg/home.svg";
 import { ReactComponent as MenuSvg } from "../../public/static/svg/menu.svg";
-import { ReactComponent as HeartGray } from "../../public/static/svg/insta/heart-gray.svg";
 import { ReactComponent as UserSvg } from "../../public/static/svg/profile.svg";
 import { ReactComponent as AddSvg } from "../../public/static/svg/add.svg";
 import { ReactComponent as SearchSvg } from "../../public/static/svg/search2.svg";
@@ -68,31 +67,31 @@ const Nav = props => {
         })
         .catch(err => console.error(err.toString()));
       // chat hub
-      const chatHub = new HubConnectionBuilder()
-        .withUrl("https://api.qarun.ir/chatHub", {
-          accessTokenFactory: () => {
-            return props._tkn;
-          }
-        })
-        .configureLogging(LogLevel.Error)
-        .build();
-      chatHub
-        .start({ withCredentials: false })
-        .then(function() {
-          console.log("chatHub connected");
-          chatHub.on("ReciveMessage", res => {
-            console.log(res);
-          });
-          chatHub
-            .invoke("SendMessage", "chat name", "OtherUserId", "Content", "ContentType")
-            .then(function(res) {
-              //console.log(res);
-            })
-            .catch(err => console.error(err.toString()));
-          // chatHub.invoke("GetOrderCount", res => {
-          // });
-        })
-        .catch(err => console.error(err.toString()));
+      // const chatHub = new HubConnectionBuilder()
+      //   .withUrl("https://api.qarun.ir/chatHub", {
+      //     accessTokenFactory: () => {
+      //       return props._tkn;
+      //     }
+      //   })
+      //   .configureLogging(LogLevel.Error)
+      //   .build();
+      // chatHub
+      //   .start({ withCredentials: false })
+      //   .then(function() {
+      //     console.log("chatHub connected");
+      //     chatHub.on("ReciveMessage", res => {
+      //       console.log(res);
+      //     });
+      //     chatHub
+      //       .invoke("SendMessage", "chat name", "OtherUserId", "Content", "ContentType")
+      //       .then(function(res) {
+      //         //console.log(res);
+      //       })
+      //       .catch(err => console.error(err.toString()));
+      //     // chatHub.invoke("GetOrderCount", res => {
+      //     // });
+      //   })
+      //   .catch(err => console.error(err.toString()));
     }
   }, []);
   return (

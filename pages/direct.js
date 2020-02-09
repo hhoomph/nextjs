@@ -6,24 +6,30 @@ import Auth from "../components/Auth/Auth";
 import { useRouter } from "next/router";
 import fetchData from "../utils/fetchData";
 import SubmitButton from "../components/Button/SubmitButton";
-import { FaArrowLeft, FaPlusCircle, FaFileUpload } from "react-icons/fa";
+import { FaArrowLeft, FaPlusCircle, FaFileUpload, FaSearch } from "react-icons/fa";
 import { FiChevronRight } from "react-icons/fi";
 import { MdAddBox } from "react-icons/md";
 import { numberSeparator, removeSeparator } from "../utils/tools";
 import { ToastContainer, toast } from "react-toastify";
 import { MdHeadsetMic } from "react-icons/md";
 import { Modal } from "react-bootstrap";
+import { HubConnectionBuilder, LogLevel } from "@aspnet/signalr";
 import "../scss/components/ticket.scss";
 const Nav = dynamic({
   loader: () => import("../components/Nav/Nav"),
   loading: () => <Loading />,
   ssr: true
 });
-const Ticket = props => {
+const Search = dynamic({
+  loader: () => import("../components/Chat/Search"),
+  loading: () => <Loading />,
+  ssr: true
+});
+const Conversation = props => {
   const Router = useRouter();
   return (
     <div
-      className="col-12 mt-2 p-0 pt-1 ticket_row"
+      className="col-12 mt-2 p-1 ticket_row"
       onClick={() =>
         Router.push({
           pathname: "/ticket",
@@ -34,14 +40,16 @@ const Ticket = props => {
       <div className="row">
         <div className="col-2 col-md-1 align-self-center">
           <a className="ticket_icon">
-            <MdHeadsetMic className="font_icon" />
+            <img src={props.senderAvatar !== undefined && props.senderAvatar !== null ? `https://api.qarun.ir/${props.senderAvatar}` : "/static/img/no-userimage.svg"} className="font_icon" />
           </a>
         </div>
         <div className="col-10 p-0">
           <div className="row m-auto p-0 pl-2 justify-content-start">
             <div className="col-10 p-0 rtl content">
               <div className="subject">{props.subject}</div>
-              <div className="status ml-2">{props.adminAnswered ? <span className="badge badge-success">پاسخ داده شده</span> : <span className="badge badge-warning">در انتظار پاسخ</span>}</div>
+              <div className="last_message">
+                <span className="badge">{props.lastMessage !== undefined ? props.adminAnswered : "متن پیام متن پیام"}</span>
+              </div>
               <div className="time ml-2">{props.insertDateP}</div>
             </div>
           </div>
@@ -60,6 +68,10 @@ const Page = props => {
   const [subject, setSubject] = useState("");
   const [content, setContent] = useState("");
   const fileInput = useRef();
+  const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+  const [update, setUpdate] = useState(false);
+  const searchInput = useRef();
   toast.configure({
     position: "top-right",
     autoClose: false,
@@ -69,7 +81,7 @@ const Page = props => {
     draggable: true
   });
   const showTickets = tickets.map(t => (
-    <Ticket
+    <Conversation
       key={t.ticketId}
       ticketId={t.ticketId}
       subject={t.subject}
@@ -86,72 +98,6 @@ const Page = props => {
     />
   ));
   const addTicket = async () => {
-    // toast.dismiss();
-    // const errs = [];
-    // const formData = new FormData();
-    // if (subject.trim() === "") {
-    //   errs.push("لطفا موضوع تیکت را مشخص کنید.");
-    // } else {
-    //   formData.append("Subject", subject);
-    // }
-    // if (content.trim() === "") {
-    //   errs.push("لطفا متن تیکت را مشخص کنید.");
-    // } else {
-    //   formData.append("Content", content);
-    // }
-    // const types = ["image/png", "image/jpeg", "image/gif"];
-    // const files = Array.from(fileInput.current.files);
-    // if (files.length > 1) {
-    //   return toast.warn("تنها امکان آپلود 1 فایل همزمان وجود دارد.");
-    // }
-    // files.forEach((file, i) => {
-    //   if (types.every(type => file.type !== type)) {
-    //     errs.push(`فرمت '${file.type}' پشتیبانی نمی شود.`);
-    //   }
-    //   if (file.size > 2550000) {
-    //     errs.push(`حجم فایل '${file.name}' بیشتر از حد مجاز است، لطفا فایل کم حجم تری انتخاب کنید.`);
-    //   }
-    //   //formData.append(`Files${i}`, file);
-    // });
-    // if (errs.length) {
-    //   return errs.forEach(err => toast.warn(err));
-    // }
-    // formData.append("File", files[0]);
-    // // const fileList = [];
-    // // for (let i = 0; i < fileInput.current.files.length; i++) {
-    // //   fileList.push(fileInput.current.files[i]);
-    // //   console.log(fileInput.current.files[i]);
-    // // }
-    // setLoading(true);
-    // const result = await fetchData(
-    //   "User/U_Support/Create",
-    //   {
-    //     method: "POST",
-    //     body: formData
-    //     // body: JSON.stringify({
-    //     //   Subject: subject,
-    //     //   Content: content,
-    //     //   File : files[0]
-    //     // })
-    //   },
-    //   props.ctx,
-    //   true
-    // );
-    // if (result.isSuccess) {
-    //   setModalShow(false);
-    //   fileInput.current.value = "";
-    //   setSubject("");
-    //   setContent("");
-    //   toast.success("تیکت شما با موفقیت ثبت شد.");
-    //   setPage(1);
-    //   setTimeout(() => setIsFetching(false), 200);
-    //   getTickets();
-    // } else if (result.message != undefined) {
-    //   toast.warn(result.message);
-    // } else if (result.error != undefined) {
-    //   toast.error(result.error);
-    // }
-    // setLoading(false);
     toast.dismiss();
     const errs = [];
     const file = fileInput.current.files[0];
@@ -251,17 +197,69 @@ const Page = props => {
     if (!isFetching) return;
     getTickets();
   }, [isFetching]);
+  useEffect(() => {
+    if (props._tkn !== undefined) {
+      const chatHub = new HubConnectionBuilder()
+        .withUrl("https://api.qarun.ir/chatHub", {
+          accessTokenFactory: () => {
+            return props._tkn;
+          }
+        })
+        .configureLogging(LogLevel.Error)
+        .build();
+      chatHub
+        .start({ withCredentials: false })
+        .then(function() {
+          console.log("direct chat connected");
+          // chatHub
+          //   .invoke("GetAllChat", 1, 20)
+          //   .then(function(e) {})
+          //   .catch(err => console.error(err.toString()));
+          chatHub.on("AllChat", res => {
+            console.log(res);
+          });
+          //
+          // chatHub.on("OnlineUsers", res => {
+          //   if (res.length > 0) {
+          //     const userIds = res.map(u => u.userName);
+          //     fetchData(
+          //       "User/U_Product/GetOnlineUsersProduct",
+          //       {
+          //         method: "POST",
+          //         body: JSON.stringify({
+          //           userIds: userIds,
+          //           page: 1,
+          //           pageSize: 20
+          //         })
+          //       },
+          //       props.ctx
+          //     ).then(r => {
+          //       if (r !== undefined && r.isSuccess) {
+          //         let directs = r.data || [];
+          //         console.log(directs);
+          //         setTickets(directs);
+          //         //chatHub.stop();
+          //       }
+          //     });
+          //   } else {
+          //     //setProducts([]);
+          //   }
+          //   setLoading(false);
+          //   // chatHub.stop();
+          // });
+        })
+        .catch(err => console.error(err.toString()));
+    }
+  }, []);
   return (
     <>
       <title>قارون</title>
       <Nav _tkn={props._tkn} />
       <div className="container pb-0 pr-1 ticket_head">
         <div className="row p-2 cart_title">
-          <div className="col-3 p-0 text-left align-self-center">
-            <MdAddBox className="font_icon add_ticket" title="افزودن تیکت" onClick={() => setModalShow(true)} />
-          </div>
+          <div className="col-3 p-0 text-left align-self-center">{/* <MdAddBox className="font_icon add_ticket" title="افزودن تیکت" onClick={() => setModalShow(true)} /> */}</div>
           <div className="col-6 p-0 text-center align-self-center">
-            <h5 className="mr-0 ml-2 mt-1 page_title">پشتیبانی</h5>
+            <h5 className="mr-0 ml-1 mt-1 page_title">گپ</h5>
           </div>
           <div className="col-3 text-right align-self-center" onClick={() => Router.back()}>
             <FiChevronRight className="font_icon back_icon" />
@@ -302,8 +300,28 @@ const Page = props => {
           </SubmitButton>
         </Modal.Footer>
       </Modal>
-      <div className="container pb-5 rtl ticket_page">
+      <div className="container share_modal">
+        <div className="row justify-content-center">
+          <div className="col-12 mt-2 d-flex rtl align-items-center flex-row-reverse">
+            <FaSearch className="font_icon _srch_icn" />
+            <input
+              type="text"
+              value={search}
+              onChange={e => {
+                setSearch(e.target.value);
+              }}
+              className="form-control searchInput"
+              ref={searchInput}
+              placeholder="جستجو"
+            />
+          </div>
+        </div>
+      </div>
+      <div className="container pb-5 rtl ticket_page direct_page">
         <div className="row pl-1 pr-1 pb-5 mb-5">
+          <div className="col-12 pt-3">
+            <h6>پیام ها</h6>
+          </div>
           {showTickets}
           {loading && (
             <div className="col-12 mt-2 p-0 user">

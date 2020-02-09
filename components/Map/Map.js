@@ -33,21 +33,22 @@ export const convertLatlngToArray = position => {
   return [position.lat, position.lng];
 };
 const placeholderIcon = new L.Icon({
-  iconUrl: "/static/svg/placeholder-for-map.svg",
+  iconUrl: "/static/svg/user-pin.svg",
   shadowUrl: null,
-  className: "current_pos_marker"
+  className: "current_pos_marker",
+  iconSize: [36, 36]
 });
 const myIcon = new L.Icon({
-  iconUrl: "/static/svg/location-pointer2.png",
+  iconUrl: "/static/svg/seller-pin-active.svg",
   iconRetinaUrl: null,
-  iconSize: [70, 70],
+  iconSize: [56, 56],
   className: "my_marker"
   //shadowUrl: "/static/img/profile.png"
 });
 const Icon = new L.Icon({
-  iconUrl: "/static/svg/location-pointer2.png",
+  iconUrl: "/static/svg/seller-pin.svg",
   iconRetinaUrl: null,
-  iconSize: [36, 36]
+  iconSize: [34, 34]
   //shadowUrl: "/static/img/user.png"
 });
 const MapComponent = props => {
@@ -182,7 +183,8 @@ const MapComponent = props => {
     const map = mapRef.current.leafletElement;
     const mapBoundSouthWest = map.getBounds().getSouthWest();
     const mapDistance = mapBoundSouthWest.distanceTo(map.getCenter()) / 1000;
-    props.setMapRadius(mapDistance);
+    // props.setMapRadius(mapDistance);
+    props.setMapRadius(5 * mapDistance); // 5X larger radius
     //const mapCenter = map.getCenter();
     //const zoom = map.getZoom();
     //const bounds = map.getBounds();
@@ -190,13 +192,19 @@ const MapComponent = props => {
   };
   const showUsers = users.map(user => {
     const userImg = user.userAvatar !== null ? `https://api.qarun.ir/${user.userAvatar}` : "/static/img/no-userimage.svg";
-    if (user.id === activeUser.id) { 
+    if (user.id === activeUser.id) {
       return (
-        <Marker position={[user.lat, user.long]} icon={myIcon} draggable={false} key={user.id} onClick={() =>
-          Router.push({
-            pathname: `/user/${user.userName}`
-          })
-        }>
+        <Marker
+          position={[user.lat, user.long]}
+          icon={myIcon}
+          draggable={false}
+          key={user.id}
+          onClick={() =>
+            Router.push({
+              pathname: `/user/${user.userName}`
+            })
+          }
+        >
           <Popup>
             {user.userName} <br /> {user.displayName}
           </Popup>

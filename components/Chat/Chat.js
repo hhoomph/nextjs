@@ -7,7 +7,7 @@ import SubmitButton from "../Button/SubmitButton";
 import { FaTimes, FaReply, FaFileUpload } from "react-icons/fa";
 import { MdHeadsetMic } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
-const Ticket = props => {
+const Chat = props => {
   const [loading, setLoading] = useState(false);
   const showImage = props.filesUrl.map((img, index) => <a key={index} target="_blank" href={`https://api.qarun.ir/${img}`}>
     <img className="file" src={`https://api.qarun.ir/${img}`} />
@@ -46,4 +46,4 @@ const Ticket = props => {
     </>
   );
 };
-export default memo(Ticket);
+export default memo(Chat);
