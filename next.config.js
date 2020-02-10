@@ -49,7 +49,7 @@ module.exports = withPlugins([withSass, withSize, withOffline], {
       {
         // urlPattern: /^https?.*/,
         urlPattern: /.*\.(?:png|jpg|jpeg|svg|gif)/,
-        handler: "image-cache",
+        handler: "NetworkFirst",
         options: {
           cacheName: "https-calls",
           networkTimeoutSeconds: 15,
