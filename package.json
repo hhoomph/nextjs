@@ -21,7 +21,7 @@
     "@material-ui/lab": "^4.0.0-alpha.40",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.4.1",
     "bootstrap-v4-rtl": "^4.4.1-1",
